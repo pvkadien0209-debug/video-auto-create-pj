@@ -1,5 +1,27 @@
 /* animations.css */
 
+@keyframes shake {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.5);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate(-50%, -50%) rotate(-2deg) scale(1);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate(-50%, -50%) rotate(2deg) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+}
+
 /* ⭐ Scale 0 → 1.1 → 0 (Fade in/out) */
 @keyframes scaleLoop {
   0% {

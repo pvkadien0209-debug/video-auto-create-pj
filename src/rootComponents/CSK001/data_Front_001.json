@@ -1,85 +1,412 @@
 [
   [
     {
-      "tieude": "Phòng chữa bệnh Cơ xương khớp!",
-      "action": "Hook",
+      "code": "CSKA_001",
+      "action": "HOOK",
       "id": null,
       "class": null,
-      "text": "+1 Kiến thức về phòng chữa bệnh Cơ xương khớp!",
-      "code": "CSKA_000",
-      "imgHook": "CSK_001.png"
+      "text": "Cộng 1 kiến thức về phòng chữa bệnh cơ xương khớp P1"
     },
     {
-      "tieude": null,
-      "action": "QSAW",
-      "id": null,
-      "class": "AN",
-      "text": "Tôi bị đau khớp kéo dài hơn 2 tuần không giảm, nhận định nào là đúng nhất?",
-      "code": "CSKA_001",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "QSAW",
-      "id": "OPACITY",
-      "class": "AN",
-      "text": "A. Đau khớp nào cũng tự hết.",
       "code": "CSKA_002",
-      "imgHook": null
+      "action": "COUNT",
+      "id": null,
+      "class": null,
+      "text": "Câu 1"
     },
     {
-      "tieude": null,
-      "action": "QSAW",
-      "id": null,
-      "class": "AN",
-      "text": "B. Chỉ cần uống thuốc giảm đau là đủ.",
       "code": "CSKA_003",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "QSAW",
-      "id": "DUNG",
-      "class": "AN",
-      "text": "C. Đau kéo dài có thể là bệnh, nên đi khám.",
-      "code": "CSKA_004",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
       "action": "QSAW",
       "id": null,
-      "class": "AN",
-      "text": "D. Chỉ người già mới bị bệnh khớp.",
-      "code": "CSKA_005",
-      "imgHook": null
+      "class": "ques1",
+      "text": "Tôi bị đau khớp kéo dài hơn 2 tuần không giảm, nhận định nào là đúng nhất?"
     },
     {
-      "tieude": null,
+      "code": "CSKA_004",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques1",
+      "text": "A. Đau khớp nào cũng tự hết."
+    },
+    {
+      "code": "CSKA_005",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques1",
+      "text": "B. Chỉ cần uống thuốc giảm đau là đủ."
+    },
+    {
+      "code": "CSKA_006",
+      "action": "QSAW",
+      "id": "DUNG1",
+      "class": "ques1",
+      "text": "C. Đau kéo dài có thể là bệnh, nên đi khám."
+    },
+    {
+      "code": "CSKA_007",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques1",
+      "text": "D. Chỉ người già mới bị bệnh khớp."
+    },
+    {
+      "code": "CSKA_008",
       "action": "DEMNGUOC",
       "id": null,
       "class": null,
-      "text": null,
-      "code": null,
-      "imgHook": null
+      "text": null
     },
     {
-      "tieude": null,
-      "action": "CHONDAPAN",
+      "code": "CSKA_009",
+      "action": "CHONDAPAN1",
       "id": null,
       "class": null,
-      "text": "Đáp án đúng: C. Đau kéo dài có thể là bệnh, nên đi khám.",
-      "code": "CSKA_006",
-      "imgHook": null
+      "text": "Đáp án đúng: C. Đau kéo dài có thể là bệnh, nên đi khám."
     },
     {
-      "tieude": null,
-      "action": "END",
+      "code": "CSKA_010",
+      "action": "MOTA1",
       "id": null,
       "class": null,
-      "text": "Đau khớp kéo dài là dấu hiệu không bình thường. Việc cố chịu hoặc chỉ uống thuốc giảm đau có thể làm chậm phát hiện bệnh, khiến khớp tổn thương nặng hơn.",
-      "code": "CSKA_007",
-      "imgHook": null
+      "text": "Đau khớp kéo dài là dấu hiệu không bình thường. Việc cố chịu hoặc chỉ uống thuốc giảm đau có thể làm chậm phát hiện bệnh, khiến khớp tổn thương nặng hơn."
+    },
+    {
+      "code": "CSKA_011",
+      "action": "COUNT",
+      "id": null,
+      "class": null,
+      "text": "Câu 2"
+    },
+    {
+      "code": "CSKA_012",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques2",
+      "text": "Bạn nghĩ đau là thói quen chủ yếu gây đau nhức xương khớp vào dịp lễ tết"
+    },
+    {
+      "code": "CSKA_013",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques2",
+      "text": "A. Làm việc sai tư thế"
+    },
+    {
+      "code": "CSKA_014",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques2",
+      "text": "B. Uống thuốc không đúng chỉ định"
+    },
+    {
+      "code": "CSKA_015",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques2",
+      "text": "C. Ngủ quá nhiều"
+    },
+    {
+      "code": "CSKA_016",
+      "action": "QSAW",
+      "id": "DUNG2",
+      "class": "ques2",
+      "text": "D. Ăn uống thả ga"
+    },
+    {
+      "code": "CSKA_017",
+      "action": "DEMNGUOC",
+      "id": null,
+      "class": null,
+      "text": null
+    },
+    {
+      "code": "CSKA_018",
+      "action": "CHONDAPAN2",
+      "id": null,
+      "class": null,
+      "text": "Đáp án đúng: D. Ăn uống thả ga"
+    },
+    {
+      "code": "CSKA_019",
+      "action": "MOTA2",
+      "id": null,
+      "class": null,
+      "text": "Cả 4 đáp án đều là nguyên nhân gây đau nhức xương khớp, tuy nhiên khi tết đến, nhu cầu ăn uống và vui chơi của mọi người tăng cao, đi kèm với việc tiêu thụ đồ chế biến sẵn, đồ chiên dòn, ăn uống không điều độ, làm tăng axit uric máu, mỡ máu, giảm hấp thụ canxi, gây ra nhiều loại bệnh về xương khớp"
+    },
+    {
+      "code": "CSKA_020",
+      "action": "COUNT",
+      "id": null,
+      "class": null,
+      "text": "Câu 3"
+    },
+    {
+      "code": "CSKA_021",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques3",
+      "text": "Đau cổ vai gáy kéo dài thường KHÔNG do nguyên nhân nào sau đây?"
+    },
+    {
+      "code": "CSKA_022",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques3",
+      "text": "A. Thoái hóa cột sống cổ"
+    },
+    {
+      "code": "CSKA_023",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques3",
+      "text": "B. Ngồi sai tư thế lâu ngày"
+    },
+    {
+      "code": "CSKA_024",
+      "action": "QSAW",
+      "id": "DUNG3",
+      "class": "ques3",
+      "text": "C. Thiếu canxi cấp tính"
+    },
+    {
+      "code": "CSKA_025",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques3",
+      "text": "D. Co cứng cơ vùng cổ – vai"
+    },
+    {
+      "code": "CSKA_026",
+      "action": "DEMNGUOC",
+      "id": null,
+      "class": null,
+      "text": null
+    },
+    {
+      "code": "CSKA_027",
+      "action": "CHONDAPAN3",
+      "id": null,
+      "class": null,
+      "text": "Đáp án đúng: C. Thiếu canxi cấp tính"
+    },
+    {
+      "code": "CSKA_028",
+      "action": "MOTA3",
+      "id": null,
+      "class": null,
+      "text": "Thiếu canxi hiếm khi gây đau cổ vai gáy kéo dài đơn độc. Phần lớn đau cổ vai gáy là do thoái hóa, co cơ, tư thế xấu, đặc biệt ở người ngồi máy tính nhiều."
+    },
+    {
+      "code": "CSKA_029",
+      "action": "FOLLOW",
+      "id": null,
+      "class": null,
+      "text": "Hãy follow để biết thêm nhiều thông tin hữu ích!!"
+    }
+  ],
+  [
+    {
+      "code": "CSKA_030",
+      "action": "HOOK",
+      "id": null,
+      "class": null,
+      "text": "Cộng 1 kiến thức về phòng chữa bệnh cơ xương khớp P2"
+    },
+    {
+      "code": "CSKA_031",
+      "action": "COUNT",
+      "id": null,
+      "class": null,
+      "text": "Câu 1"
+    },
+    {
+      "code": "CSKA_032",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques1",
+      "text": "Thoát vị đĩa đệm thường gặp nhất ở vị trí nào?"
+    },
+    {
+      "code": "CSKA_033",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques1",
+      "text": "A. Cột sống cổ"
+    },
+    {
+      "code": "CSKA_034",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques1",
+      "text": "B. Cột sống ngực"
+    },
+    {
+      "code": "CSKA_035",
+      "action": "QSAW",
+      "id": "DUNG1",
+      "class": "ques1",
+      "text": "C. Cột sống thắt lưng"
+    },
+    {
+      "code": "CSKA_036",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques1",
+      "text": "D. Xương cùng – cụt"
+    },
+    {
+      "code": "CSKA_037",
+      "action": "DEMNGUOC",
+      "id": null,
+      "class": null,
+      "text": null
+    },
+    {
+      "code": "CSKA_038",
+      "action": "CHONDAPAN1",
+      "id": null,
+      "class": null,
+      "text": "Đáp án đúng: C. Cột sống thắt lưng"
+    },
+    {
+      "code": "CSKA_039",
+      "action": "MOTA1",
+      "id": null,
+      "class": null,
+      "text": "Vùng thắt lưng chịu trọng lực lớn nhất, vận động nhiều nên rất dễ thoát vị, đặc biệt là L4–L5, L5–S1."
+    },
+    {
+      "code": "CSKA_040",
+      "action": "COUNT",
+      "id": null,
+      "class": null,
+      "text": "Câu 2"
+    },
+    {
+      "code": "CSKA_041",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques2",
+      "text": "Triệu chứng nào gợi ý thoát vị đĩa đệm chèn ép thần kinh?"
+    },
+    {
+      "code": "CSKA_042",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques2",
+      "text": "A. Đau âm ỉ tại chỗ"
+    },
+    {
+      "code": "CSKA_043",
+      "action": "QSAW",
+      "id": "DUNG2",
+      "class": "ques2",
+      "text": "B. Đau lan theo đường đi của dây thần kinh"
+    },
+    {
+      "code": "CSKA_044",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques2",
+      "text": "C. Đau tăng khi thay đổi thời tiết"
+    },
+    {
+      "code": "CSKA_045",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques2",
+      "text": "D. Đau nhiều về đêm"
+    },
+    {
+      "code": "CSKA_046",
+      "action": "DEMNGUOC",
+      "id": null,
+      "class": null,
+      "text": null
+    },
+    {
+      "code": "CSKA_047",
+      "action": "CHONDAPAN2",
+      "id": null,
+      "class": null,
+      "text": "Đáp án đúng: B. Đau lan theo đường đi của dây thần kinh"
+    },
+    {
+      "code": "CSKA_048",
+      "action": "MOTA2",
+      "id": null,
+      "class": null,
+      "text": "Đây là dấu hiệu đặc trưng nhất, ví dụ đau từ thắt lưng lan xuống mông – đùi – cẳng chân (đau kiểu thần kinh tọa)."
+    },
+    {
+      "code": "CSKA_049",
+      "action": "COUNT",
+      "id": null,
+      "class": null,
+      "text": "Câu 3"
+    },
+    {
+      "code": "CSKA_050",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques3",
+      "text": "Khớp nào trong cơ thể dễ bị thoái hóa nhất?"
+    },
+    {
+      "code": "CSKA_051",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques3",
+      "text": "A. Khớp vai"
+    },
+    {
+      "code": "CSKA_052",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques3",
+      "text": "B. Khớp háng"
+    },
+    {
+      "code": "CSKA_053",
+      "action": "QSAW",
+      "id": "DUNG3",
+      "class": "ques3",
+      "text": "C. Khớp gối"
+    },
+    {
+      "code": "CSKA_054",
+      "action": "QSAW",
+      "id": null,
+      "class": "ques3",
+      "text": "D. Khớp cổ tay"
+    },
+    {
+      "code": "CSKA_055",
+      "action": "DEMNGUOC",
+      "id": null,
+      "class": null,
+      "text": null
+    },
+    {
+      "code": "CSKA_056",
+      "action": "CHONDAPAN3",
+      "id": null,
+      "class": null,
+      "text": "Đáp án đúng: C. Khớp gối"
+    },
+    {
+      "code": "CSKA_057",
+      "action": "MOTA3",
+      "id": null,
+      "class": null,
+      "text": "Khớp gối chịu toàn bộ trọng lượng cơ thể, lại vận động liên tục nên rất dễ bị thoái hóa, nhất là người lớn tuổi, béo phì."
+    },
+    {
+      "code": "CSKA_058",
+      "action": "FOLLOW",
+      "id": null,
+      "class": null,
+      "text": "Hãy follow để biết thêm nhiều thông tin hữu ích!!"
     }
   ]
 ]

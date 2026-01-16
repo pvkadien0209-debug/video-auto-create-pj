@@ -19,7 +19,7 @@ const TypingText = ({
   dataAction = {},
   // ⭐ Nhận toàn bộ data object
 }) => {
-  const typingDuration = 3; // 3 giây
+  const typingDuration = 2; // 3 giây
   const typingFrames = typingDuration * fps;
 
   if (frame < startFrame || frame > endFrame) return null;
