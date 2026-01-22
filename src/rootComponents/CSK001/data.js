@@ -11,103 +11,24 @@ import {
 const colorBG = ["yellow", "red", "green", "purple", "blue"];
 const CMD_Fetch = CMD;
 
-// {
-//   typingText: "typingText",
-//   countdown: "countdown",
-//   imageViewActionToID: "imageViewActionToID",
-//   videoView: "videoView",
-//   divAction: "divAction",
-//   layer001ViewAction: "layer001ViewAction",
-//   typingTextActionToID: "typingTextActionToID",
-//   actionCssClass: "actionCssClass",
-//   actionCssId: "actionCssId",
-//   soundPlayerAction: "soundPlayerAction",
-// };
-
 const SpaceSound = "SOUNDCHUNG_SpaceSound";
+let mode = "BBBB"; //chinh ở excel
 
+let fileArrInput = [{ img: "" }, { text: "MỘT CÂU MỚI ĐƯỢC NHẬP TỪ EXCEL" }]; //chinh ở excel
+
+let Agroup001 = group001_type02(fileArrInput);
+
+if (mode === "AAAA") {
+  Agroup001 = group001(fileArrInput);
+}
+
+const Agroup002 = Cauhoi4dapan();
+const Agroup001group003 = group003();
 let videoData01 = [];
 
-DataFront.forEach((groupArray) => {
-  const colorSets = ["blue", "yellow"];
+let tempSets = [].concat(Agroup001, Agroup002);
 
-  //THIET LAP SO OBJ
-  let processedGroup = [];
-
-  groupArray.forEach((e, i) => {
-    if (i === 0) {
-      // push bản chỉnh sửa
-      processedGroup.push({
-        ...e,
-        action: "BEGIN",
-        code: SpaceSound,
-        timeFixed: 7,
-      });
-
-      // push bản nguyên gốc
-      processedGroup.push(e);
-    } else {
-      processedGroup.push(e);
-    }
-  });
-  // processedGroup.push({ action: "END" });
-
-  // LAY KEY MAC DINH ID CLASS CODE timeFixed
-  processedGroup = processedGroup.map((e, i) => {
-    const obj = { ...e };
-    obj.stt = i;
-    if (obj.id) {
-      obj.IDMark = obj.id;
-    }
-    obj.ClassMark = (obj.class ? obj.class : "") + " all";
-
-    if (!obj.code) {
-      obj.code = SpaceSound;
-      obj.timeFixed = 5;
-    }
-
-    return obj;
-  });
-  //TUY CHINH
-  let QSAWPX = 0;
-
-  processedGroup.forEach((e, i) => {
-    switch (e.action) {
-      case "BEGIN":
-        e.actions = OBJ_BEGIN(e);
-        break; //
-      case "Hook":
-        e.timePlus = 3;
-        e.actions = OBJ_Hook(e);
-        break; //
-      case "END":
-        e.actions = OBJ_END(e);
-        break;
-      case "DEMNGUOC":
-        e.timeFixed = 1;
-        e.actions = OBJ_DEMNGUOC(e);
-        break;
-
-      case "QSAW":
-        let topPX =
-          QSAWPX === 1 ? 50 + QSAWPX * 350 + "px" : 50 + QSAWPX * 250 + "px";
-        QSAWPX++;
-        e.actions = OBJ_QSAW(e, topPX, QSAWPX, i);
-        break;
-
-      case "CHONDAPAN":
-        e.actions = OBJ_CHONDAPAN(e);
-        break;
-      default:
-        e.actions = []; // ⭐ Default actions
-        break;
-    }
-  });
-
-  processedGroup = Sort0toN(processedGroup);
-
-  videoData01.push(processedGroup);
-});
+videoData01.push(tempSets);
 
 console.log(JSON.stringify(keepOnlyActionsCodeTimeFixedStt(videoData01)));
 
@@ -172,6 +93,14 @@ function OBJ_BEGIN(e) {
         }),
       },
     },
+    {
+      cmd: CMD_Fetch.divAction,
+      id: "DIV001C",
+      toID: "DIV001B",
+      delay: 70, // ⭐ Xuất hiện sau 60 frames
+      styleCss: {},
+    },
+
     // VideoPresets.loopingBackground("LoopingVideo001.mp4", {
     //   id: "IDvideo001", // ⭐ ID cụ thể
     //   panAnimation: false,
@@ -343,6 +272,566 @@ function OBJ_Hook(e) {
     {
       cmd: CMD_Fetch.soundPlayerAction,
       soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+    },
+  ];
+}
+
+function Cauhoi4dapan(
+  arrInput = [{}, {}, {}, {}, {}],
+  group = "groupDefaulte",
+) {
+  return [
+    {
+      actions: [
+        {
+          cmd: "typingTextActionToID",
+          text: "Tôi bị đau khớp kéo dài hơn 2 tuần không giảm, nhận định nào là đúng nhất?",
+          group: "1",
+          styleCss: {
+            width: "1000px",
+            minHeight: "100px",
+            border: "1px solid black",
+            fontSize: "100px",
+            position: "absolute",
+            top: "50px",
+            backgroundColor: "yellow",
+          },
+        },
+      ],
+      code: "CSKA_001",
+      timeFixed: null,
+      stt: 2,
+    },
+    {
+      actions: [
+        {
+          cmd: "typingTextActionToID",
+          text: "A. Đau khớp nào cũng tự hết.",
+          group: "1",
+          styleCss: {
+            width: "1000px",
+            minHeight: "100px",
+            border: "1px solid black",
+            fontSize: "100px",
+            position: "absolute",
+            top: "400px",
+            backgroundColor: "red",
+          },
+        },
+      ],
+      code: "CSKA_002",
+      timeFixed: null,
+      stt: 3,
+    },
+    {
+      actions: [
+        {
+          cmd: "typingTextActionToID",
+          text: "B. Chỉ cần uống thuốc giảm đau là đủ.",
+          group: "1",
+          styleCss: {
+            width: "1000px",
+            minHeight: "100px",
+            border: "1px solid black",
+            fontSize: "100px",
+            position: "absolute",
+            top: "550px",
+            backgroundColor: "green",
+          },
+        },
+      ],
+      code: "CSKA_003",
+      timeFixed: null,
+      stt: 4,
+    },
+    {
+      actions: [
+        {
+          cmd: "typingTextActionToID",
+          text: "C. Đau kéo dài có thể là bệnh, nên đi khám.",
+          group: "1",
+          styleCss: {
+            width: "1000px",
+            minHeight: "100px",
+            border: "1px solid black",
+            fontSize: "100px",
+            position: "absolute",
+            top: "800px",
+            backgroundColor: "purple",
+          },
+        },
+      ],
+      code: "CSKA_004",
+      timeFixed: null,
+      stt: 5,
+    },
+    {
+      actions: [
+        {
+          cmd: "typingTextActionToID",
+          text: "D. Chỉ người già mới bị bệnh khớp.",
+          group: "1",
+          styleCss: {
+            width: "1000px",
+            minHeight: "100px",
+            border: "1px solid black",
+            fontSize: "100px",
+            position: "absolute",
+            top: "1050px",
+            backgroundColor: "blue",
+          },
+        },
+      ],
+      code: "CSKA_005",
+      timeFixed: null,
+      stt: 6,
+    },
+    {
+      actions: [
+        {
+          cmd: "countdown",
+          countDownFrom: 1,
+          colorTheme: "orange",
+          group: "1",
+          zIndex: 100,
+          styleCss: {
+            transform: "translate(-50%, -50%) scale(2)",
+            top: "50%",
+            left: "50%",
+            position: "absolute",
+            animation: "slowRotate 5.000000s linear 0.000000s infinite both",
+          },
+        },
+      ],
+      code: "SOUNDCHUNG_SpaceSound",
+      timeFixed: 1,
+      stt: 7,
+    },
+  ];
+}
+
+function group001(
+  arrInput = [{ text: "HÌNH" }, { text: "text ...." }],
+  groupD = "groupDefaulte",
+) {
+  let idInputText = "AAAAA";
+  return [
+    {
+      actions: [
+        {
+          cmd: "divAction",
+          id: "DIV001",
+          group: groupD,
+          styleCss: {
+            position: "absolute",
+            display: "flex",
+            flexDirection: "row",
+            gap: "20px",
+            top: "100px",
+            zIndex: "10",
+            width: "1000px",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: "DIV001A",
+          toID: "DIV001",
+          group: groupD,
+          delay: 30,
+          styleCss: {
+            zIndex: "10",
+            width: "200px",
+            height: "100px",
+            backgroundColor: "yellow",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: idInputText,
+          group: groupD,
+          toID: "DIV001",
+          delay: 60,
+          styleCss: {
+            zIndex: "10",
+            width: "200px",
+            height: "300px",
+            backgroundColor: "blue",
+          },
+        },
+      ],
+      code: "SOUNDCHUNG_SpaceSound",
+      timeFixed: 3,
+      stt: 0,
+    },
+    {
+      actions: [
+        {
+          cmd: CMD_Fetch.typingTextActionToID,
+          toID: idInputText,
+          text: arrInput[1].text,
+          styleCss: {
+            fontSize: "100px",
+          },
+          group: groupD,
+        },
+        {
+          cmd: "soundPlayerAction",
+          soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+        },
+      ],
+      code: "CSKA_000",
+      timeFixed: null,
+      stt: 1,
+    },
+  ];
+}
+
+function group003() {
+  return [
+    {
+      actions: [
+        null,
+        {
+          cmd: "divAction",
+          id: "DUNG",
+          styleCss: {
+            position: "flex",
+            top: "100px",
+            zIndex: "10",
+            width: "100%",
+            backgroundColor: "red",
+            transition: "height 5s ease-out",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: "DUNG1",
+          styleCss: {
+            position: "flex",
+            backgroundColor: "yellow",
+            width: "1000px",
+            height: "100px",
+          },
+        },
+        null,
+        {
+          cmd: "actionCssId",
+          toID: "DUNG",
+          cssMode: "add",
+          css: { backgroundColor: "yellow", color: "black" },
+        },
+        {
+          cmd: "typingTextActionToID",
+          toID: "DUNG",
+          text: "e.text",
+          styleCss: {
+            width: "1000px",
+            minHeight: "100px",
+            border: "1px solid black",
+            fontSize: "100px",
+            position: "flex",
+          },
+        },
+        {
+          cmd: "actionCssId",
+          toID: "B25",
+          cssMode: "add",
+          css: {
+            backgroundColor: "yellow",
+            color: "black",
+            height: "300px",
+          },
+        },
+        {
+          cmd: "imageViewActionToID",
+          toID: "DUNG",
+          img: "CSK_001.png",
+          styleCss: { width: "100px", position: "relative" },
+        },
+        {
+          cmd: "imageViewActionToID",
+          toID: "DUNG1",
+          img: "CSK_001.png",
+          styleCss: { width: "100px", position: "relative" },
+        },
+        {
+          cmd: "imageViewActionToID",
+          toID: "DUNG",
+          delay: 30,
+          img: "CSK_001.png",
+          positionMode: "before",
+          styleCss: {
+            width: "200px",
+            display: "block",
+            animation: "fadeInScale 1.666667s linear 0.000000s 1 both",
+          },
+        },
+        null,
+      ],
+      code: "CSKA_006",
+      timeFixed: null,
+      stt: 8,
+    },
+    {
+      actions: [
+        {
+          cmd: "typingTextActionToID",
+          text: "HÃY FOLLOW TÔI",
+          sound: true,
+          noTyping: false,
+          styleCss: {
+            position: "absolute",
+            top: "100px",
+            fontSize: "70px",
+            borderTop: "1px solid black",
+            borderRadius: "20px",
+            textAlign: "left",
+            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            padding: "20px",
+            lineHeight: 1.75,
+            letterSpacing: "0.5px",
+            color: "#ffffff",
+            zIndex: 2,
+          },
+        },
+      ],
+      code: "CSKA_007",
+      timeFixed: null,
+      stt: 9,
+    },
+  ];
+}
+
+function group001_type02(
+  arrInput = [
+    { text: "HÌNH" },
+    { text: "text ...texxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx." },
+  ],
+  groupD = "groupDefaulte",
+) {
+  let idInputText = "AAAAA";
+  return [
+    {
+      actions: [
+        {
+          cmd: "divAction",
+          id: "DIV001",
+          group: groupD,
+          styleCss: {
+            position: "absolute",
+            gap: "20px",
+            top: "100px",
+            zIndex: "10",
+            width: "100%",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: "DIV-A",
+          toID: "DIV001",
+          group: groupD,
+          delay: 1,
+          styleCss: {
+            zIndex: "10",
+            width: "100%",
+            minHeight: "100px",
+            // backgroundColor: "yellow",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: "DIV-B",
+          group: groupD,
+          toID: "DIV001",
+          delay: 1,
+          styleCss: {
+            zIndex: "10",
+            width: "100%",
+            height: "300px",
+            // backgroundColor: "blue",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: "DIV-C",
+          group: groupD,
+          toID: "DIV001",
+          delay: 1,
+          styleCss: {
+            zIndex: "10",
+            width: "100%",
+            height: "300px",
+            // backgroundColor: "green",
+          },
+        },
+        {
+          cmd: CMD_Fetch.imageViewActionToID,
+          img: "CSK_001.png",
+          toID: "DIV-C",
+          group: groupD,
+          delay: 1,
+          styleCss: {
+            zIndex: "10",
+            width: "100%",
+            height: "500px",
+            // backgroundColor: "green",
+          },
+        },
+        {
+          cmd: CMD_Fetch.typingTextActionToID,
+          toID: "DIV-B",
+          text: arrInput[1].text,
+          styleCss: {
+            fontSize: "100px",
+          },
+          group: groupD,
+        },
+        {
+          cmd: "soundPlayerAction",
+          soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+        },
+      ],
+      code: "CSKA_000",
+      timeFixed: null,
+      stt: 0,
+    },
+    {
+      actions: [
+        {
+          cmd: CMD_Fetch.imageViewActionToID,
+          toID: "DIV-A",
+          img: "CSK_001.png",
+          styleCss: { zIndex: "10", width: "100%", height: "600px" },
+          group: groupD,
+        },
+        {
+          cmd: "soundPlayerAction",
+          soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+        },
+      ],
+      code: "CSKA_000",
+      timeFixed: null,
+      stt: 1,
+    },
+  ];
+}
+function group001_type03(
+  arrInput = [
+    { text: "HÌNH" },
+    { text: "text ...texxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx." },
+  ],
+  groupD = "groupDefaulte",
+) {
+  let idInputText = "AAAAA";
+  return [
+    {
+      actions: [
+        {
+          cmd: "divAction",
+          id: "DIV001",
+          group: groupD,
+          styleCss: {
+            position: "absolute",
+            gap: "20px",
+            top: "100px",
+            zIndex: "10",
+            width: "100%",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: "DIV-A",
+          toID: "DIV001",
+          group: groupD,
+          delay: 1,
+          styleCss: {
+            zIndex: "10",
+            width: "100%",
+            minHeight: "100px",
+            // backgroundColor: "yellow",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: "DIV-B",
+          group: groupD,
+          toID: "DIV001",
+          delay: 1,
+          styleCss: {
+            zIndex: "10",
+            width: "100%",
+            height: "300px",
+            // backgroundColor: "blue",
+          },
+        },
+        {
+          cmd: "divAction",
+          id: "DIV-C",
+          group: groupD,
+          toID: "DIV001",
+          delay: 1,
+          styleCss: {
+            zIndex: "10",
+            width: "100%",
+            height: "300px",
+            // backgroundColor: "green",
+          },
+        },
+        {
+          cmd: CMD_Fetch.imageViewActionToID,
+          img: "CSK_001.png",
+          toID: "DIV-C",
+          group: groupD,
+          delay: 1,
+          styleCss: {
+            zIndex: "10",
+            width: "100%",
+            height: "500px",
+            // backgroundColor: "green",
+          },
+        },
+      ],
+      code: "SOUNDCHUNG_SpaceSound",
+      timeFixed: 3,
+      stt: 0,
+    },
+    {
+      actions: [
+        {
+          cmd: CMD_Fetch.typingTextActionToID,
+          toID: "DIV-B",
+          text: arrInput[1].text,
+          styleCss: {
+            fontSize: "100px",
+          },
+          group: groupD,
+        },
+        {
+          cmd: "soundPlayerAction",
+          soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+        },
+      ],
+      code: "CSKA_000",
+      timeFixed: null,
+      stt: 1,
+    },
+    {
+      actions: [
+        {
+          cmd: CMD_Fetch.imageViewActionToID,
+          toID: "DIV-A",
+          img: "CSK_001.png",
+          styleCss: { zIndex: "10", width: "100%", height: "600px" },
+          group: groupD,
+        },
+        {
+          cmd: "soundPlayerAction",
+          soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+        },
+      ],
+      code: "CSKA_000",
+      timeFixed: null,
+      stt: 1,
     },
   ];
 }

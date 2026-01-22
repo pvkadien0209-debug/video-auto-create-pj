@@ -2,7 +2,54 @@
   [
     {
       "actions": [
-        { "cmd": "layer001ViewAction", "ToEndFrame": true, "id": "ROOOOO" }
+        {
+          "cmd": "divAction",
+          "id": "DIV001",
+          "styleCss": {
+            "position": "absolute",
+            "display": "flex",
+            "flexDirection": "row",
+            "gap": "20px",
+            "top": "100px",
+            "zIndex": "10",
+            "width": "1000px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "DIV001A",
+          "toID": "DIV001",
+          "delay": 30,
+          "styleCss": {
+            "zIndex": "10",
+            "width": "200px",
+            "height": "100px",
+            "backgroundColor": "yellow",
+            "opacity": 0,
+            "animation": "fadeInSlideUp 2.000000s ease-out 0.000000s 1 forwards"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "DIV001B",
+          "toID": "DIV001",
+          "delay": 60,
+          "styleCss": {
+            "zIndex": "10",
+            "width": "200px",
+            "height": "300px",
+            "backgroundColor": "blue",
+            "opacity": 0,
+            "animation": "fadeInSlideUp 2.000000s ease-out 0.000000s 1 forwards"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "DIV001C",
+          "toID": "DIV001B",
+          "delay": 70,
+          "styleCss": {}
+        }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
       "timeFixed": 7,
@@ -17,9 +64,12 @@
             "width": "1000px",
             "minHeight": "100px",
             "border": "1px solid black",
-            "backgroundColor": "yellow",
             "fontSize": "100px"
           }
+        },
+        {
+          "cmd": "soundPlayerAction",
+          "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut"
         }
       ],
       "code": "CSKA_000",
@@ -31,13 +81,15 @@
         {
           "cmd": "typingTextActionToID",
           "text": "Tôi bị đau khớp kéo dài hơn 2 tuần không giảm, nhận định nào là đúng nhất?",
+          "group": "1",
           "styleCss": {
             "width": "1000px",
             "minHeight": "100px",
             "border": "1px solid black",
-            "backgroundColor": "yellow",
             "fontSize": "100px",
-            "position": "flex"
+            "position": "absolute",
+            "top": "50px",
+            "backgroundColor": "yellow"
           }
         }
       ],
@@ -50,13 +102,15 @@
         {
           "cmd": "typingTextActionToID",
           "text": "A. Đau khớp nào cũng tự hết.",
+          "group": "1",
           "styleCss": {
             "width": "1000px",
             "minHeight": "100px",
             "border": "1px solid black",
-            "backgroundColor": "yellow",
             "fontSize": "100px",
-            "position": "flex"
+            "position": "absolute",
+            "top": "400px",
+            "backgroundColor": "red"
           }
         }
       ],
@@ -69,13 +123,15 @@
         {
           "cmd": "typingTextActionToID",
           "text": "B. Chỉ cần uống thuốc giảm đau là đủ.",
+          "group": "1",
           "styleCss": {
             "width": "1000px",
             "minHeight": "100px",
             "border": "1px solid black",
-            "backgroundColor": "yellow",
             "fontSize": "100px",
-            "position": "flex"
+            "position": "absolute",
+            "top": "550px",
+            "backgroundColor": "green"
           }
         }
       ],
@@ -88,13 +144,15 @@
         {
           "cmd": "typingTextActionToID",
           "text": "C. Đau kéo dài có thể là bệnh, nên đi khám.",
+          "group": "1",
           "styleCss": {
             "width": "1000px",
             "minHeight": "100px",
             "border": "1px solid black",
-            "backgroundColor": "yellow",
             "fontSize": "100px",
-            "position": "flex"
+            "position": "absolute",
+            "top": "800px",
+            "backgroundColor": "purple"
           }
         }
       ],
@@ -107,13 +165,15 @@
         {
           "cmd": "typingTextActionToID",
           "text": "D. Chỉ người già mới bị bệnh khớp.",
+          "group": "1",
           "styleCss": {
             "width": "1000px",
             "minHeight": "100px",
             "border": "1px solid black",
-            "backgroundColor": "yellow",
             "fontSize": "100px",
-            "position": "flex"
+            "position": "absolute",
+            "top": "1050px",
+            "backgroundColor": "blue"
           }
         }
       ],
@@ -181,7 +241,6 @@
             "width": "1000px",
             "minHeight": "100px",
             "border": "1px solid black",
-            "backgroundColor": "yellow",
             "fontSize": "100px",
             "position": "flex"
           }
