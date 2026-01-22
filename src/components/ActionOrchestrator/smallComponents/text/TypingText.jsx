@@ -1,6 +1,6 @@
 import React from "react";
 import { Html5Audio, Sequence, useCurrentFrame } from "remotion";
-import typingSound from "../../../../assets/soundDefault/TypingSoundCapcut.mp3";
+// import typingSound from "../../../../assets/soundDefault/TypingSoundCapcut.mp3";
 import {
   useAnimations,
   getAnimationStyle,
@@ -11,6 +11,8 @@ import {
  * ⭐ Nhận data object - access bất kỳ field nào qua data.fieldName
  * ⭐ HỖ TRỢ REMOTION ANIMATIONS thông qua animations array
  */
+// ✅ SAU - Dùng path tương đối hoặc static path
+// const typingSound = "/assets/soundDefault/TypingSoundCapcut.mp3";
 const TypingText = ({
   text = [{ text: "I love you!", type: "normal" }],
   frame,
@@ -73,7 +75,7 @@ const TypingText = ({
     <div id={elementId} className={elementClass} style={containerStyle}>
       {displayText}
       {/* ✅ Typing sound with all options */}
-      {sound && !noTyping && (
+      {/* {sound && !noTyping && (
         <Sequence from={startFrame}>
           <Html5Audio
             src={data.customTypingSound || typingSound}
@@ -87,7 +89,7 @@ const TypingText = ({
             }}
           />
         </Sequence>
-      )}
+      )} */}
     </div>
   );
 };

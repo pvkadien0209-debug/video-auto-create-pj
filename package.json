@@ -20,7 +20,8 @@
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.286",
     "eslint": "9.19.0",
-    "prettier": "3.3.3"
+    "prettier": "3.3.3",
+    "tsx": "^4.21.0"
   },
   "scripts": {
     "dev": "remotion studio",
@@ -28,8 +29,12 @@
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "renderimg": "node render-all6image.js",
+    "rendervideo": "tsx render-all_video_tiktok.js",
     "rendervideoSLOW": "node render-all_video_tiktok.js",
     "lint": "eslint src"
   },
-  "type": "module"
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  }
 }

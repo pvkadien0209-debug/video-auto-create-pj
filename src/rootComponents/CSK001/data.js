@@ -340,5 +340,9 @@ function OBJ_Hook(e) {
       text: e.text,
       styleCss: ObjCSS.CSStypingtextAA001,
     },
+    {
+      cmd: CMD_Fetch.soundPlayerAction,
+      soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+    },
   ];
 }
