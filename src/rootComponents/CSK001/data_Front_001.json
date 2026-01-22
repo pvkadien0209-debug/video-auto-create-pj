@@ -1,85 +1,74 @@
 [
-  [
-    {
-      "tieude": "Phòng chữa bệnh Cơ xương khớp!",
-      "action": "Hook",
-      "id": null,
-      "class": null,
-      "text": "+1 Kiến thức về phòng chữa bệnh Cơ xương khớp!",
-      "code": "CSKA_000",
-      "imgHook": "CSK_001.png"
-    },
-    {
-      "tieude": null,
-      "action": "QSAW",
-      "id": null,
-      "class": "AN",
-      "text": "Tôi bị đau khớp kéo dài hơn 2 tuần không giảm, nhận định nào là đúng nhất?",
-      "code": "CSKA_001",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "QSAW",
-      "id": "OPACITY",
-      "class": "AN",
-      "text": "A. Đau khớp nào cũng tự hết.",
-      "code": "CSKA_002",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "QSAW",
-      "id": null,
-      "class": "AN",
-      "text": "B. Chỉ cần uống thuốc giảm đau là đủ.",
-      "code": "CSKA_003",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "QSAW",
-      "id": "DUNG",
-      "class": "AN",
-      "text": "C. Đau kéo dài có thể là bệnh, nên đi khám.",
-      "code": "CSKA_004",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "QSAW",
-      "id": null,
-      "class": "AN",
-      "text": "D. Chỉ người già mới bị bệnh khớp.",
-      "code": "CSKA_005",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "DEMNGUOC",
-      "id": null,
-      "class": null,
-      "text": null,
-      "code": null,
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "CHONDAPAN",
-      "id": null,
-      "class": null,
-      "text": "Đáp án đúng: C. Đau kéo dài có thể là bệnh, nên đi khám.",
-      "code": "CSKA_006",
-      "imgHook": null
-    },
-    {
-      "tieude": null,
-      "action": "END",
-      "id": null,
-      "class": null,
-      "text": "Đau khớp kéo dài là dấu hiệu không bình thường. Việc cố chịu hoặc chỉ uống thuốc giảm đau có thể làm chậm phát hiện bệnh, khiến khớp tổn thương nặng hơn.",
-      "code": "CSKA_007",
-      "imgHook": null
-    }
-  ]
+  {
+    "stt": 1,
+    "code": "SOUNDCHUNG_SpaceSound",
+    "timeFixed": 5,
+    "group": "A1",
+    "background": "CSK_001.png",
+    "img": "CSK_001.png",
+    "text": "Đây là Hoàng Anh"
+  },
+  {
+    "stt": 2,
+    "code": "SOUNDCHUNG_SpaceSound",
+    "timeFixed": 5,
+    "group": "A1",
+    "background": null,
+    "img": "CSK_001.png",
+    "text": "Một boy phố thứ thiệt."
+  },
+  {
+    "stt": 3,
+    "code": "SOUNDCHUNG_SpaceSound",
+    "timeFixed": 5,
+    "group": "A1",
+    "background": "CSK_001.png",
+    "img": "CSK_001.png",
+    "text": "Đây là Ông A"
+  },
+  {
+    "stt": 4,
+    "code": "SOUNDCHUNG_SpaceSound",
+    "timeFixed": 5,
+    "group": "A1",
+    "background": null,
+    "img": "CSK_001.png",
+    "text": "Người đã đánh bại kẻ hủy diệt"
+  },
+  {
+    "stt": 5,
+    "code": "SOUNDCHUNG_SpaceSound",
+    "timeFixed": 5,
+    "group": "A1",
+    "background": "CSK_001.png",
+    "img": "CSK_001.png",
+    "text": "Đây là Bà B"
+  },
+  {
+    "stt": 6,
+    "code": "SOUNDCHUNG_SpaceSound",
+    "timeFixed": 5,
+    "group": "A1",
+    "background": null,
+    "img": "CSK_001.png",
+    "text": "Người đàn bà thép."
+  },
+  {
+    "stt": 7,
+    "code": "SOUNDCHUNG_SpaceSound",
+    "timeFixed": 5,
+    "group": "A1",
+    "background": "CSK_001.png",
+    "img": "CSK_001.png",
+    "text": "Đây là chị D"
+  },
+  {
+    "stt": 8,
+    "code": "SOUNDCHUNG_SpaceSound",
+    "timeFixed": 5,
+    "group": "A1",
+    "background": null,
+    "img": "CSK_001.png",
+    "text": "Thứ trưởng trẻ nhất của Việt nam."
+  }
 ]

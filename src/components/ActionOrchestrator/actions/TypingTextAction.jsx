@@ -1,5 +1,6 @@
 // src/Components/ActionOrchestrator/actions/TypingTextAction.jsx
 import React from "react";
+import { createPortal } from "react-dom";
 import TypingText from "../smallComponents/text/TypingText.jsx";
 import { mergeStyles } from "../utils/cssOverrideManager.js";
 
@@ -8,6 +9,7 @@ import { mergeStyles } from "../utils/cssOverrideManager.js";
  *
  * Hiển thị text với typing animation
  * ⭐ Component này chỉ làm trung chuyển data, không xử lý logic
+ * ⭐ Hỗ trợ render text vào element có ID (toID)
  */
 function TypingTextAction({ data }) {
   const {
@@ -41,8 +43,8 @@ function TypingTextAction({ data }) {
     cssOverrides,
   );
 
-  // ⭐ Pass props cần thiết + toàn bộ data object
-  return (
+  // ⭐ Component TypingText
+  const typingTextComponent = (
     <TypingText
       text={textData}
       frame={frame}
@@ -55,6 +57,24 @@ function TypingTextAction({ data }) {
       data={data}
     />
   );
+
+  // ⭐ Nếu có toID, render vào container đó
+  if (action.toID) {
+    const targetElement = document.getElementById(action.toID);
+
+    if (!targetElement) {
+      console.warn(`⚠️ Element with ID "${action.toID}" not found`);
+      return null;
+    }
+
+    console.log("🎯 TypingTextAction rendering to ID:", action.toID);
+
+    // ⭐ Dùng React Portal để render vào element có ID
+    return createPortal(typingTextComponent, targetElement);
+  }
+
+  // ⭐ Render bình thường (không có toID)
+  return typingTextComponent;
 }
 
 export default TypingTextAction;
