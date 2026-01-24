@@ -4,313 +4,165 @@
       "actions": [
         {
           "cmd": "divAction",
-          "id": "DIV001",
+          "id": "BG001",
+          "ToEndFrame": true,
           "styleCss": {
             "position": "absolute",
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "BG001",
+          "ToEndFrame": true,
+          "img": "BG_005.png",
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": "100%",
+            "height": "100%",
+            "objectFit": "cover"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div1",
+          "group": "group_2",
+          "styleCss": {
+            "position": "absolute",
+            "height": "100%",
+            "width": "100%",
+            "padding": "50px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "divA",
+          "toID": "div1",
+          "group": "group_2",
+          "styleCss": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "40%",
+            "width": "100%"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": "Đây là đầu gối",
+          "id": "text",
+          "toID": "divA",
+          "styleCss": {
+            "fontSize": "96px",
+            "fontWeight": 800,
+            "letterSpacing": "2px",
+            "lineHeight": "1.1",
+            "textTransform": "uppercase",
+            "WebkitTextStroke": "3px #fff",
+            "textShadow": "0 0 20px rgba(255,255,255,0.4)",
+            "animation": "bounceIn 0.5s ease-out forwards"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "divB",
+          "toID": "div1",
+          "group": "group_2",
+          "styleCss": {
             "display": "flex",
             "flexDirection": "row",
             "gap": "20px",
-            "top": "100px",
-            "zIndex": "10",
-            "width": "1000px"
+            "height": "40%",
+            "padding": "50px"
           }
         },
         {
           "cmd": "divAction",
-          "id": "DIV001A",
-          "toID": "DIV001",
-          "delay": 30,
+          "id": "divC",
+          "toID": "divB",
+          "group": "group_2",
           "styleCss": {
-            "zIndex": "10",
-            "width": "200px",
-            "height": "100px",
-            "backgroundColor": "yellow",
-            "opacity": 0,
-            "animation": "fadeInSlideUp 2.000000s ease-out 0.000000s 1 forwards"
+            "flexBasis": "100%",
+            "flexShrink": 0,
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center"
           }
         },
         {
-          "cmd": "divAction",
-          "id": "DIV001B",
-          "toID": "DIV001",
-          "delay": 60,
+          "cmd": "imageViewActionToID",
+          "img": "CSK_daugoi.png",
+          "toID": "divC",
+          "group": "group_2",
           "styleCss": {
-            "zIndex": "10",
-            "width": "200px",
-            "height": "300px",
-            "backgroundColor": "blue",
-            "opacity": 0,
-            "animation": "fadeInSlideUp 2.000000s ease-out 0.000000s 1 forwards"
+            "width": "600px",
+            "height": "600px",
+            "maxWidth": "100%",
+            "maxHeight": "100%",
+            "borderRadius": "20%"
           }
         },
         {
           "cmd": "divAction",
-          "id": "DIV001C",
-          "toID": "DIV001B",
-          "delay": 70,
-          "styleCss": {}
+          "id": "divD",
+          "toID": "divB",
+          "group": "group_2",
+          "styleCss": {
+            "height": "auto",
+            "flexGrow": 1,
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "img": "CSK_doctor1.png",
+          "toID": "divD",
+          "group": "group_2",
+          "styleCss": {
+            "width": "600px",
+            "height": "600px",
+            "maxWidth": "100%",
+            "maxHeight": "100%"
+          }
         }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
-      "timeFixed": 7,
+      "timeFixed": 2,
       "stt": 0
     },
     {
       "actions": [
         {
           "cmd": "typingText",
-          "text": "+1 Kiến thức về phòng chữa bệnh Cơ xương khớp!",
+          "text": "Ít ai biết rằng, phần lớn các cơn đau đầu gối không bắt đầu từ khớp, mà từ một thói quen rất quen thuộc.",
+          "toID": "divA",
+          "delay": 15,
+          "group": "group_2",
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px"
+            "textAlign": "center",
+            "fontSize": "60px",
+            "fontWeight": 700,
+            "WebkitTextStroke": "2px green",
+            "color": "#fff"
           }
         },
         {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut"
-        }
-      ],
-      "code": "CSKA_000",
-      "timeFixed": null,
-      "stt": 1
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "Tôi bị đau khớp kéo dài hơn 2 tuần không giảm, nhận định nào là đúng nhất?",
-          "group": "1",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "50px",
-            "backgroundColor": "yellow"
-          }
-        }
-      ],
-      "code": "CSKA_001",
-      "timeFixed": null,
-      "stt": 2
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "A. Đau khớp nào cũng tự hết.",
-          "group": "1",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "400px",
-            "backgroundColor": "red"
-          }
-        }
-      ],
-      "code": "CSKA_002",
-      "timeFixed": null,
-      "stt": 3
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "B. Chỉ cần uống thuốc giảm đau là đủ.",
-          "group": "1",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "550px",
-            "backgroundColor": "green"
-          }
-        }
-      ],
-      "code": "CSKA_003",
-      "timeFixed": null,
-      "stt": 4
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "C. Đau kéo dài có thể là bệnh, nên đi khám.",
-          "group": "1",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "800px",
-            "backgroundColor": "purple"
-          }
-        }
-      ],
-      "code": "CSKA_004",
-      "timeFixed": null,
-      "stt": 5
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "D. Chỉ người già mới bị bệnh khớp.",
-          "group": "1",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "1050px",
-            "backgroundColor": "blue"
-          }
-        }
-      ],
-      "code": "CSKA_005",
-      "timeFixed": null,
-      "stt": 6
-    },
-    {
-      "actions": [
-        {
-          "cmd": "countdown",
-          "countDownFrom": 1,
-          "colorTheme": "orange",
-          "zIndex": 100,
-          "styleCss": {
-            "transform": "translate(-50%, -50%) scale(2)",
-            "top": "50%",
-            "left": "50%",
-            "position": "absolute",
-            "animation": "slowRotate 5.000000s linear 0.000000s infinite both"
-          }
+          "cmd": "actionCssId",
+          "toID": "divC",
+          "mode": "add",
+          "css": { "animation": "collapseWidth 1s ease-in-out forwards" }
         }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
-      "timeFixed": 1,
-      "stt": 7
-    },
-    {
-      "actions": [
-        null,
-        {
-          "cmd": "divAction",
-          "id": "DUNG",
-          "styleCss": {
-            "position": "flex",
-            "top": "100px",
-            "zIndex": "10",
-            "width": "100%",
-            "backgroundColor": "red",
-            "transition": "height 5s ease-out"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "DUNG1",
-          "styleCss": {
-            "position": "flex",
-            "backgroundColor": "yellow",
-            "width": "1000px",
-            "height": "100px"
-          }
-        },
-        null,
-        {
-          "cmd": "actionCssId",
-          "toID": "DUNG",
-          "cssMode": "add",
-          "css": { "backgroundColor": "yellow", "color": "black" }
-        },
-        {
-          "cmd": "typingTextActionToID",
-          "toID": "DUNG",
-          "text": "e.text",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "flex"
-          }
-        },
-        {
-          "cmd": "actionCssId",
-          "toID": "B25",
-          "cssMode": "add",
-          "css": {
-            "backgroundColor": "yellow",
-            "color": "black",
-            "height": "300px"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG",
-          "img": "CSK_001.png",
-          "styleCss": { "width": "100px", "position": "relative" }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG1",
-          "img": "CSK_001.png",
-          "styleCss": { "width": "100px", "position": "relative" }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG",
-          "delay": 30,
-          "img": "CSK_001.png",
-          "positionMode": "before",
-          "styleCss": {
-            "width": "200px",
-            "display": "block",
-            "animation": "fadeInScale 1.666667s linear 0.000000s 1 both"
-          }
-        },
-        null
-      ],
-      "code": "CSKA_006",
-      "timeFixed": null,
-      "stt": 8
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "HÃY FOLLOW TÔI",
-          "sound": true,
-          "noTyping": false,
-          "styleCss": {
-            "position": "absolute",
-            "top": "100px",
-            "fontSize": "70px",
-            "borderTop": "1px solid black",
-            "borderRadius": "20px",
-            "textAlign": "left",
-            "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            "padding": "20px",
-            "lineHeight": 1.75,
-            "letterSpacing": "0.5px",
-            "color": "#ffffff",
-            "zIndex": 2
-          }
-        }
-      ],
-      "code": "CSKA_007",
-      "timeFixed": null,
-      "stt": 9
+      "timeFixed": 5,
+      "stt": 1
     }
   ]
 ]

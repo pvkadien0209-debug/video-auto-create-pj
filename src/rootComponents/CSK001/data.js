@@ -8,36 +8,26 @@ import {
   anim,
   keepOnlyActionsCodeTimeFixedStt,
 } from "../../components/ActionOrchestrator/utils/dataSupportFuntions.js";
-const colorBG = ["yellow", "red", "green", "purple", "blue"];
+
 const CMD_Fetch = CMD;
+
+//nhom video
 let Data_middle_001 = [];
 for (let i = 0; i < DataFront.length; i += 2) {
   Data_middle_001.push(DataFront.slice(i, i + 2));
 }
-
 console.log("Data_middle_001", JSON.stringify(Data_middle_001));
 
+//add layout
 let videoData01 = [];
 
 Data_middle_001.forEach((e, i) => {
   videoData01.push(group001_type02(e));
 });
-
-const SpaceSound = "SOUNDCHUNG_SpaceSound";
-
 console.log(JSON.stringify(keepOnlyActionsCodeTimeFixedStt(videoData01)));
-
 export { videoData01 };
 
-function group001_type02(
-  arrInput = [
-    { text: "HÌNH" },
-    { text: "text ...texxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx." },
-  ],
-  groupD = "groupDefaulte",
-) {
-  let idInputText = "AAAAA";
-
+function group001_type02(arr) {
   const obj_001 = {
     actions: [
       {
@@ -50,157 +40,173 @@ function group001_type02(
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: "red",
-        },
-      },
-      // {
-      //   cmd: CMD_Fetch.imageViewActionToID,
-      //   toID: "BG001",
-      //   ToEndFrame: true,
-      //   img: arrInput[0].background,
-      //   styleCss: {
-      //     position: "absolute",
-      //     top: 0,
-      //     bottom: 0,
-      //     left: 0,
-      //     right: 0,
-      //   },
-      // },
-      {
-        cmd: "divAction",
-        id: "DIV001",
-        group: groupD,
-        styleCss: {
-          position: "absolute",
-          gap: "20px",
-          top: "100px",
-          zIndex: "10",
-          width: "100%",
-          textAlign: "center",
-        },
-      },
-
-      {
-        cmd: "divAction",
-        id: "DIV-D",
-        group: groupD,
-        toID: "DIV001",
-        delay: 1,
-        styleCss: {
-          zIndex: "10",
-          width: "100%",
-          minHeight: "100px",
-          // backgroundColor: "green",
-        },
-      },
-      {
-        cmd: "divAction",
-        id: "DIV-A",
-        toID: "DIV001",
-        group: groupD,
-        delay: 1,
-        styleCss: {
-          zIndex: "10",
-          width: "100%",
-          maxHeight: "100px",
-          overFlow: "hidden",
-          // backgroundColor: "yellow",
-        },
-      },
-      {
-        cmd: "divAction",
-        id: "DIV-B",
-        group: groupD,
-        toID: "DIV001",
-        delay: 1,
-        styleCss: {
-          zIndex: "10",
-          width: "100%",
-          height: "300px",
-          // backgroundColor: "blue",
-        },
-      },
-      {
-        cmd: "divAction",
-        id: "DIV-C",
-        group: groupD,
-        toID: "DIV001",
-        delay: 1,
-        styleCss: {
-          zIndex: "10",
-          width: "100%",
-          height: "300px",
-          // backgroundColor: "green",
         },
       },
       {
         cmd: CMD_Fetch.imageViewActionToID,
-        img: arrInput[0].img,
-        toID: "DIV-C",
-        group: groupD,
-        delay: 1,
+        toID: "BG001",
+        ToEndFrame: true,
+        img: arr[0].backgroundIMG,
         styleCss: {
-          zIndex: "10",
-          width: "700px",
-          height: "700px",
-          borderRadius: "20px",
-          // backgroundColor: "green",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        },
+      },
+      {
+        cmd: CMD_Fetch.divAction,
+        id: "div1",
+        group: arr[0].group,
+        styleCss: {
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+          padding: "50px",
+        },
+      },
+      {
+        cmd: CMD_Fetch.divAction,
+        id: "divA",
+        toID: "div1",
+        group: arr[0].group,
+        styleCss: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "40%",
+          width: "100%",
         },
       },
       {
         cmd: CMD_Fetch.typingText,
-        toID: "DIV-B",
-        text: arrInput[0].text,
-        delay: 15,
+        text: arr[0].text,
+        id: "text",
+        toID: "divA",
+        group: arr[0].group,
         styleCss: {
-          fontSize: "100px",
+          fontSize: "96px",
+          fontWeight: 800,
+          letterSpacing: "2px",
+          lineHeight: "1.1",
+          textTransform: "uppercase",
+          WebkitTextStroke: "3px #fff",
+          textShadow: "0 0 20px rgba(255,255,255,0.4)",
+          animation: "bounceIn 0.5s ease-out forwards",
         },
-        group: groupD,
       },
       {
-        cmd: "soundPlayerAction",
+        cmd: CMD_Fetch.soundPlayerAction,
         soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
       },
+      {
+        cmd: CMD_Fetch.divAction,
+        id: "divB",
+        toID: "div1",
+        group: arr[0].group,
+        styleCss: {
+          display: "flex", // ⭐
+          flexDirection: "row", // ⭐ mặc định
+          gap: "20px", // optional
+          height: "40%",
+          padding: "50px",
+        },
+      },
+      {
+        cmd: CMD_Fetch.divAction,
+        id: "divC",
+        toID: "divB",
+        group: arr[0].group,
+        styleCss: {
+          flexBasis: "100%",
+          flexShrink: 0,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      },
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        img: arr[0].img,
+        toID: "divC",
+        group: arr[0].group,
+        styleCss: {
+          width: "600px",
+          height: "600px",
+          maxWidth: "100%",
+          maxHeight: "100%",
+          borderRadius: "20%",
+        },
+      },
+      {
+        cmd: CMD_Fetch.divAction,
+        id: "divD",
+        toID: "divB",
+        group: arr[0].group,
+        styleCss: {
+          height: "auto",
+          flexGrow: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      },
+
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        img: arr[1].img,
+        toID: "divD",
+        group: arr[0].group,
+        styleCss: {
+          width: "600px",
+          height: "600px",
+          maxWidth: "100%",
+          maxHeight: "100%",
+        },
+      },
     ],
-    code: "CSKA_000",
-    timeFixed: 5,
+    code: arr[0].code,
+    timeFixed: 2,
     stt: 0,
   };
   const obj_002 = {
     actions: [
       {
-        cmd: CMD_Fetch.imageViewActionToID,
-        toID: "DIV-A",
-        img: arrInput[1].img,
-        styleCss: { zIndex: "10", width: "500px", height: "600px" },
-        group: groupD,
-      },
-
-      {
-        cmd: CMD_Fetch.typingTextActionToID,
-        toID: "DIV-D",
-        text: arrInput[1].text,
-        styleCss: {
-          fontSize: "100px",
-          color: "yellow",
-          fontWeight: "800",
+        cmd: CMD_Fetch.actionCssId,
+        toID: "text",
+        mode: "replace",
+        css: {
+          display: "none",
         },
-        group: groupD,
+      },
+      {
+        cmd: CMD_Fetch.typingText,
+        text: arr[1].text,
+        toID: "divA",
+        delay: 15,
+        group: arr[0].group,
+        styleCss: {
+          textAlign: "center",
+          fontSize: "60px",
+          fontWeight: 700,
+          WebkitTextStroke: "2px yellow",
+          color: "#fff",
+        },
       },
 
       {
         cmd: CMD_Fetch.actionCssId,
-        toID: "DIV-A",
-        cssMode: "add",
+        toID: "divC",
+        mode: "add",
         css: {
-          // Yêu cầu mở rộng maxHeight 100->500 trong 5s
-          maxHeight: "600px",
-          transition: "max-height 1s ease-in-out",
+          animation: "collapseWidth 1s ease-in-out forwards",
         },
       },
     ],
-    code: "CSKA_000",
-    timeFixed: null,
+    code: arr[1].code,
+    timeFixed: 5,
     stt: 1,
   };
   let finalSet = [];
@@ -208,3 +214,196 @@ function group001_type02(
   finalSet.push(obj_002);
   return finalSet;
 }
+
+//type2
+// function group001_type02(arr) {
+//   const obj_001 = {
+//     actions: [
+//       {
+//         cmd: "divAction",
+//         id: "BG001",
+//         ToEndFrame: true,
+//         styleCss: {
+//           position: "absolute",
+//           top: 0,
+//           bottom: 0,
+//           left: 0,
+//           right: 0,
+//         },
+//       },
+//       {
+//         cmd: CMD_Fetch.imageViewActionToID,
+//         toID: "BG001",
+//         ToEndFrame: true,
+//         img: arr[0].backgroundIMG,
+//         styleCss: {
+//           position: "absolute",
+//           top: 0,
+//           left: 0,
+//           width: "100%",
+//           height: "100%",
+//           objectFit: "cover",
+//         },
+//       },
+//       {
+//         cmd: "divAction",
+//         id: "DIV001",
+//         group: arr[0].group,
+//         styleCss: {
+//           position: "absolute",
+//           zIndex: "10",
+//           height: "1920px",
+//           width: "100%",
+//           display: "flex",
+//           flexDirection: "column",
+//           justifyContent: "center",
+//           alignItems: "center",
+//           gap: "40px",
+//         },
+//       },
+
+//       {
+//         cmd: "divAction",
+//         id: "DIV-D",
+//         group: arr[0].group,
+//         toID: "DIV001",
+//         styleCss: {
+//           zIndex: "10",
+//           width: "100%",
+//           textAlign: "center",
+//           opacity: 0.9,
+//         },
+//       },
+//       {
+//         cmd: "divAction",
+//         id: "DIV-A",
+//         toID: "DIV001",
+//         group: arr[0].group,
+//         styleCss: {
+//           zIndex: "10",
+//           width: "100%",
+//           overflow: "hidden",
+//           textAlign: "center",
+//         },
+//       },
+//       {
+//         cmd: "divAction",
+//         id: "DIV-B",
+//         group: arr[0].group,
+//         toID: "DIV001",
+//         styleCss: {
+//           zIndex: "10",
+//           width: "100%",
+//           overflow: "hidden",
+//           textAlign: "center",
+//         },
+//       },
+//       {
+//         cmd: "divAction",
+//         id: "DIV-C",
+//         group: arr[0].group,
+//         toID: "DIV001",
+//         styleCss: {
+//           zIndex: "10",
+//           width: "100%",
+//           overflow: "hidden",
+//           textAlign: "center",
+//         },
+//       },
+//       {
+//         cmd: CMD_Fetch.imageViewActionToID,
+//         img: arr[0].img,
+//         toID: "DIV-C",
+//         group: arr[0].group,
+//         styleCss: {
+//           zIndex: "10",
+//           width: "680px",
+//           height: "680px",
+//           borderRadius: "48px",
+//           objectFit: "cover",
+//           boxShadow: "0 40px 80px rgba(0,0,0,0.35)",
+//         },
+//       },
+//       {
+//         cmd: CMD_Fetch.typingText,
+//         toID: "DIV-B",
+//         text: arr[0].text,
+//         styleCss: {
+//           fontSize: "96px",
+//           fontWeight: "900",
+//           color: "#ffffff",
+//           WebkitTextStroke: "4px #00ff88",
+//           textStroke: "4px #00ff88",
+//           letterSpacing: "2px",
+//           lineHeight: "1.1",
+//           textShadow: "0 12px 30px rgba(0,0,0,0.45)", // 👈 dễ đọc
+//           marginTop: "40px",
+//         },
+//         group: arr[0].group,
+//       },
+//       {
+//         cmd: "soundPlayerAction",
+//         soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+//       },
+//     ],
+//     code: arr[0].code,
+//     timeFixed: 2,
+//     stt: 0,
+//   };
+//   const obj_002 = {
+//     actions: [
+//       {
+//         cmd: CMD_Fetch.imageViewActionToID,
+//         toID: "DIV-A",
+//         img: arr[1].img,
+//         styleCss: {
+//           zIndex: "10",
+//           width: "500px",
+//           height: "500px",
+//           transformOrigin: "50% 50%",
+//           animation: "wobbleZoom 1s ease-out",
+//           marginBottom: "50px",
+//         },
+//         group: arr[0].group,
+//       },
+
+//       {
+//         cmd: CMD_Fetch.typingTextActionToID,
+//         toID: "DIV-D",
+//         text: arr[1].text,
+//         styleCss: {
+//           fontSize: "50px",
+//           color: "#ffe066",
+//           fontWeight: "800",
+//           letterSpacing: "1px",
+//           textShadow: "0 6px 20px rgba(0,0,0,0.35)",
+//         },
+//         group: arr[0].group,
+//       },
+//       {
+//         cmd: CMD_Fetch.actionCssId,
+//         toID: "DIV-B",
+//         cssMode: "replace",
+//         css: {
+//           height: "0px",
+//         },
+//       },
+//       {
+//         cmd: CMD_Fetch.actionCssId,
+//         toID: "DIV-C",
+//         cssMode: "add",
+//         css: {
+//           scale: "0.6",
+//           transition: "scale 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+//         },
+//       },
+//     ],
+//     code: arr[1].code,
+//     timeFixed: 5,
+//     stt: 1,
+//   };
+//   let finalSet = [];
+//   finalSet.push(obj_001);
+//   finalSet.push(obj_002);
+//   return finalSet;
+// }

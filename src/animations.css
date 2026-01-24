@@ -1,5 +1,36 @@
 /* animations.css */
 
+/* hieu ung slide */
+@keyframes collapseWidth {
+  from {
+    flex-basis: 100%;
+  }
+  to {
+    flex-basis: 0%;
+  }
+}
+
+/* hiệu ứng scale */
+@keyframes wobbleZoom {
+  0% {
+    transform: scale(0.6) rotate(0deg);
+  }
+  20% {
+    transform: scale(0.8) rotate(6deg);
+  }
+  40% {
+    transform: scale(1) rotate(-6deg);
+  }
+  60% {
+    transform: scale(1) rotate(4deg);
+  }
+  80% {
+    transform: scale(1) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
 /* ⭐ Scale 0 → 1.1 → 0 (Fade in/out) */
 @keyframes scaleLoop {
   0% {
@@ -131,15 +162,11 @@
     opacity: 0;
     transform: scale(0.5);
   }
-  60% {
+  70% {
     opacity: 1;
-    transform: scale(1.1);
-  }
-  80% {
-    transform: scale(0.95);
+    transform: scale(2);
   }
   100% {
-    opacity: 1;
     transform: scale(1);
   }
 }

@@ -35,6 +35,7 @@ const ObjCSS = {
     color: "#ffffff",
     zIndex: 2,
   },
+  A9991: {},
 };
 
 export { ObjCSS };

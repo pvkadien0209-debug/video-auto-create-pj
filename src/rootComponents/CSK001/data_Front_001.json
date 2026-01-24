@@ -1,74 +1,36 @@
 [
   {
-    "stt": 1,
     "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": "CSK_001.png",
-    "img": "CSK_001.png",
-    "text": "Đây là Hoàng Anh"
+    "script": "script1",
+    "group": "group_2",
+    "mode": 1,
+    "text": "Đây là đầu gối",
+    "textSize": "60px",
+    "textStyle": 1,
+    "img": "CSK_daugoi.png",
+    "imgEffect": null,
+    "sizeX": null,
+    "sizeY": null,
+    "soundEffect": null,
+    "delay": null,
+    "backgroundIMG": "BG_005.png",
+    "backgroundSound": null
   },
   {
-    "stt": 2,
     "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": null,
-    "img": "CSK_001.png",
-    "text": "Một boy phố thứ thiệt."
-  },
-  {
-    "stt": 3,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": "CSK_001.png",
-    "img": "CSK_001.png",
-    "text": "Đây là Ông A"
-  },
-  {
-    "stt": 4,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": null,
-    "img": "CSK_001.png",
-    "text": "Người đã đánh bại kẻ hủy diệt"
-  },
-  {
-    "stt": 5,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": "CSK_001.png",
-    "img": "CSK_001.png",
-    "text": "Đây là Bà B"
-  },
-  {
-    "stt": 6,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": null,
-    "img": "CSK_001.png",
-    "text": "Người đàn bà thép."
-  },
-  {
-    "stt": 7,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": "CSK_001.png",
-    "img": "CSK_001.png",
-    "text": "Đây là chị D"
-  },
-  {
-    "stt": 8,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": null,
-    "img": "CSK_001.png",
-    "text": "Thứ trưởng trẻ nhất của Việt nam."
+    "script": "script2",
+    "group": "group_2",
+    "mode": 1,
+    "text": "Ít ai biết rằng, phần lớn các cơn đau đầu gối không bắt đầu từ khớp, mà từ một thói quen rất quen thuộc.",
+    "textSize": "30px",
+    "textStyle": 1,
+    "img": "CSK_doctor1.png",
+    "imgEffect": null,
+    "sizeX": null,
+    "sizeY": null,
+    "soundEffect": null,
+    "delay": 20,
+    "backgroundIMG": null,
+    "backgroundSound": null
   }
 ]
