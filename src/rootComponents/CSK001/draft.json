@@ -4,313 +4,601 @@
       "actions": [
         {
           "cmd": "divAction",
-          "id": "DIV001",
+          "id": "BG001_1",
+          "ToEndFrame": true,
           "styleCss": {
             "position": "absolute",
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "BG001_1",
+          "ToEndFrame": true,
+          "img": "BG_003.png",
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": "100%",
+            "height": "100%",
+            "objectFit": "cover"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "main_1",
+          "group": 1,
+          "styleCss": {
+            "position": "absolute",
+            "height": "100%",
+            "width": "100%",
             "display": "flex",
-            "flexDirection": "row",
-            "gap": "20px",
-            "top": "100px",
-            "zIndex": "10",
-            "width": "1000px"
+            "flexDirection": "column",
+            "padding": "50px"
           }
         },
         {
           "cmd": "divAction",
-          "id": "DIV001A",
-          "toID": "DIV001",
-          "delay": 30,
+          "id": "textCont_1",
+          "toID": "main_1",
+          "group": 1,
           "styleCss": {
-            "zIndex": "10",
-            "width": "200px",
-            "height": "100px",
-            "backgroundColor": "yellow",
-            "opacity": 0,
-            "animation": "fadeInSlideUp 2.000000s ease-out 0.000000s 1 forwards"
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "30%",
+            "width": "100%"
           }
         },
         {
-          "cmd": "divAction",
-          "id": "DIV001B",
-          "toID": "DIV001",
-          "delay": 60,
+          "cmd": "typingText",
+          "text": "Thưa bác sĩ, vì sao tôi bị đau vai dù không hề bị va chạm hay chấn thương gì?",
+          "toID": "textCont_1",
+          "group": 1,
           "styleCss": {
-            "zIndex": "10",
-            "width": "200px",
-            "height": "300px",
-            "backgroundColor": "blue",
-            "opacity": 0,
-            "animation": "fadeInSlideUp 2.000000s ease-out 0.000000s 1 forwards"
+            "fontSize": "35px",
+            "fontWeight": 800,
+            "color": "yellow",
+            "textAlign": "center",
+            "textTransform": "uppercase",
+            "WebkitTextStroke": "4px black",
+            "textShadow": "0 0 30px rgba(255,255,0,0.5)",
+            "letterSpacing": "3px"
+          }
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "soundEffect_success" },
+        {
+          "cmd": "divAction",
+          "id": "imgCont_1",
+          "toID": "main_1",
+          "group": 1,
+          "styleCss": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "70%",
+            "width": "100%"
           }
         },
         {
-          "cmd": "divAction",
-          "id": "DIV001C",
-          "toID": "DIV001B",
-          "delay": 70,
-          "styleCss": {}
+          "cmd": "imageViewActionToID",
+          "img": null,
+          "toID": "imgCont_1",
+          "group": 1,
+          "styleCss": {
+            "width": "700px",
+            "height": "700px",
+            "maxWidth": "90%",
+            "maxHeight": "90%",
+            "objectFit": "contain",
+            "borderRadius": "20px",
+            "animation": "scaleUp 0.7s ease-out forwards"
+          }
         }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
-      "timeFixed": 7,
-      "stt": 0
+      "timeFixed": 4,
+      "stt": null
     },
     {
       "actions": [
         {
-          "cmd": "typingText",
-          "text": "+1 Kiến thức về phòng chữa bệnh Cơ xương khớp!",
+          "cmd": "divAction",
+          "id": "BG001_2",
+          "ToEndFrame": true,
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px"
+            "position": "absolute",
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "BG001_2",
+          "ToEndFrame": true,
+          "img": "BG_003.png",
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": "100%",
+            "height": "100%",
+            "objectFit": "cover"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "main_2",
+          "group": 2,
+          "styleCss": {
+            "position": "absolute",
+            "height": "100%",
+            "width": "100%",
+            "display": "flex",
+            "flexDirection": "column",
+            "padding": "50px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "textCont_2",
+          "toID": "main_2",
+          "group": 2,
+          "styleCss": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "30%",
+            "width": "100%"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": "Trong đa số trường hợp, cơn đau này không đến từ chấn thương, mà xuất phát từ sự quá tải kéo dài bên trong cơ – khớp.",
+          "toID": "textCont_2",
+          "group": 2,
+          "styleCss": {
+            "fontSize": "35px",
+            "fontWeight": 800,
+            "color": "yellow",
+            "textAlign": "center",
+            "textTransform": "uppercase",
+            "WebkitTextStroke": "4px black",
+            "textShadow": "0 0 30px rgba(255,255,0,0.5)",
+            "letterSpacing": "3px"
+          }
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "soundEffect_swoosh" },
+        {
+          "cmd": "divAction",
+          "id": "imgCont_2",
+          "toID": "main_2",
+          "group": 2,
+          "styleCss": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "70%",
+            "width": "100%"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "img": "CSK_lung.jpeg",
+          "toID": "imgCont_2",
+          "group": 2,
+          "styleCss": {
+            "width": "700px",
+            "height": "700px",
+            "maxWidth": "90%",
+            "maxHeight": "90%",
+            "objectFit": "contain",
+            "borderRadius": "20px",
+            "animation": "scaleUp 0.7s ease-out forwards"
+          }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 4,
+      "stt": null
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "id": "BG001_3",
+          "ToEndFrame": true,
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "BG001_3",
+          "ToEndFrame": true,
+          "img": "BG_003.png",
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": "100%",
+            "height": "100%",
+            "objectFit": "cover"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "mainDiv_3",
+          "group": 3,
+          "styleCss": {
+            "position": "absolute",
+            "height": "100%",
+            "width": "100%",
+            "padding": "50px",
+            "display": "flex",
+            "flexDirection": "column",
+            "gap": "30px",
+            "justifyContent": "flex-start",
+            "alignItems": "center"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div0_3",
+          "toID": "mainDiv_3",
+          "group": 3,
+          "styleCss": {
+            "display": "flex",
+            "flexDirection": "row",
+            "gap": "20px",
+            "width": "100%",
+            "height": "30%",
+            "alignItems": "center",
+            "opacity": 0,
+            "transform": "translateX(-100%)",
+            "transition": "all 0.8s ease-out"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div0Img_3",
+          "toID": "div0_3",
+          "group": 3,
+          "styleCss": {
+            "flexBasis": "50%",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "img": "CSK_cobap.png",
+          "toID": "div0Img_3",
+          "group": 3,
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "maxWidth": "100%",
+            "maxHeight": "100%",
+            "borderRadius": "15px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div0Text_3",
+          "toID": "div0_3",
+          "group": 3,
+          "styleCss": {
+            "flexBasis": "50%",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": "Cơ bị căng liên tục do tư thế sinh hoạt sai",
+          "toID": "div0Text_3",
+          "group": 3,
+          "styleCss": {
+            "fontSize": "30px",
+            "fontWeight": 700,
+            "color": "#fff",
+            "textAlign": "center",
+            "WebkitTextStroke": "2px #000"
+          }
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "soundEffect_punch" },
+        {
+          "cmd": "actionCssId",
+          "toID": "div0_3",
+          "mode": "replace",
+          "css": { "opacity": 1, "transform": "translateX(0)" }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div1_3",
+          "toID": "mainDiv_3",
+          "group": 3,
+          "styleCss": {
+            "display": "flex",
+            "flexDirection": "row",
+            "gap": "20px",
+            "width": "100%",
+            "height": "30%",
+            "alignItems": "center",
+            "opacity": 0,
+            "transform": "translateX(100%)",
+            "transition": "all 0.8s ease-out"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div1Text_3",
+          "toID": "div1_3",
+          "group": 3,
+          "styleCss": {
+            "flexBasis": "50%",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": "Khớp thiếu vận động",
+          "toID": "div1Text_3",
+          "group": 3,
+          "styleCss": {
+            "fontSize": "35px",
+            "fontWeight": 700,
+            "color": "#fff",
+            "textAlign": "center",
+            "WebkitTextStroke": "2px #000"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div1Img_3",
+          "toID": "div1_3",
+          "group": 3,
+          "styleCss": {
+            "flexBasis": "50%",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "img": "CSK_khop.png",
+          "toID": "div1Img_3",
+          "group": 3,
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "maxWidth": "100%",
+            "maxHeight": "100%",
+            "borderRadius": "15px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div2_3",
+          "toID": "mainDiv_3",
+          "group": 3,
+          "styleCss": {
+            "display": "flex",
+            "flexDirection": "row",
+            "gap": "20px",
+            "width": "100%",
+            "height": "30%",
+            "alignItems": "center",
+            "opacity": 0,
+            "transform": "translateX(-100%)",
+            "transition": "all 0.8s ease-out"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div2Img_3",
+          "toID": "div2_3",
+          "group": 3,
+          "styleCss": {
+            "flexBasis": "50%",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "img": "CSK_cotsong.png",
+          "toID": "div2Img_3",
+          "group": 3,
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "maxWidth": "100%",
+            "maxHeight": "100%",
+            "borderRadius": "15px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "div2Text_3",
+          "toID": "div2_3",
+          "group": 3,
+          "styleCss": {
+            "flexBasis": "50%",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": "Thoái hóa âm thầm, diễn ra từ rất lâu mà không để ý",
+          "toID": "div2Text_3",
+          "group": 3,
+          "styleCss": {
+            "fontSize": "30px",
+            "fontWeight": 700,
+            "color": "#fff",
+            "textAlign": "center",
+            "WebkitTextStroke": "2px #000"
+          }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 3,
+      "stt": null
+    },
+    {
+      "actions": [
+        { "cmd": "soundPlayerAction", "soundSource": "soundEffect_suprise" },
+        {
+          "cmd": "actionCssId",
+          "toID": "div1_3",
+          "mode": "replace",
+          "css": { "opacity": 1, "transform": "translateX(0)" }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 3,
+      "stt": null
+    },
+    {
+      "actions": [
+        { "cmd": "soundPlayerAction", "soundSource": "soundEffect_false" },
+        {
+          "cmd": "actionCssId",
+          "toID": "div2_3",
+          "mode": "replace",
+          "css": { "opacity": 1, "transform": "translateX(0)" }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 3,
+      "stt": null
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "id": "BG001_4",
+          "ToEndFrame": true,
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "BG001_4",
+          "ToEndFrame": true,
+          "img": "BG_003.png",
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": "100%",
+            "height": "100%",
+            "objectFit": "cover"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "main_4",
+          "group": 4,
+          "styleCss": {
+            "position": "absolute",
+            "height": "100%",
+            "width": "100%",
+            "display": "flex",
+            "flexDirection": "column",
+            "padding": "50px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "textCont_4",
+          "toID": "main_4",
+          "group": 4,
+          "styleCss": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "30%",
+            "width": "100%"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": null,
+          "toID": "textCont_4",
+          "group": 4,
+          "styleCss": {
+            "fontSize": null,
+            "fontWeight": 800,
+            "color": "yellow",
+            "textAlign": "center",
+            "textTransform": "uppercase",
+            "WebkitTextStroke": "4px black",
+            "textShadow": "0 0 30px rgba(255,255,0,0.5)",
+            "letterSpacing": "3px"
           }
         },
         {
           "cmd": "soundPlayerAction",
-          "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut"
-        }
-      ],
-      "code": "CSKA_000",
-      "timeFixed": null,
-      "stt": 1
-    },
-    {
-      "actions": [
+          "soundSource": "soundEffect_funnyspring"
+        },
         {
-          "cmd": "typingTextActionToID",
-          "text": "Tôi bị đau khớp kéo dài hơn 2 tuần không giảm, nhận định nào là đúng nhất?",
-          "group": "1",
+          "cmd": "divAction",
+          "id": "imgCont_4",
+          "toID": "main_4",
+          "group": 4,
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "50px",
-            "backgroundColor": "yellow"
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "70%",
+            "width": "100%"
           }
-        }
-      ],
-      "code": "CSKA_001",
-      "timeFixed": null,
-      "stt": 2
-    },
-    {
-      "actions": [
+        },
         {
-          "cmd": "typingTextActionToID",
-          "text": "A. Đau khớp nào cũng tự hết.",
-          "group": "1",
+          "cmd": "imageViewActionToID",
+          "img": "CSK_meo3.png",
+          "toID": "imgCont_4",
+          "group": 4,
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "400px",
-            "backgroundColor": "red"
-          }
-        }
-      ],
-      "code": "CSKA_002",
-      "timeFixed": null,
-      "stt": 3
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "B. Chỉ cần uống thuốc giảm đau là đủ.",
-          "group": "1",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "550px",
-            "backgroundColor": "green"
-          }
-        }
-      ],
-      "code": "CSKA_003",
-      "timeFixed": null,
-      "stt": 4
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "C. Đau kéo dài có thể là bệnh, nên đi khám.",
-          "group": "1",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "800px",
-            "backgroundColor": "purple"
-          }
-        }
-      ],
-      "code": "CSKA_004",
-      "timeFixed": null,
-      "stt": 5
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "D. Chỉ người già mới bị bệnh khớp.",
-          "group": "1",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "absolute",
-            "top": "1050px",
-            "backgroundColor": "blue"
-          }
-        }
-      ],
-      "code": "CSKA_005",
-      "timeFixed": null,
-      "stt": 6
-    },
-    {
-      "actions": [
-        {
-          "cmd": "countdown",
-          "countDownFrom": 1,
-          "colorTheme": "orange",
-          "zIndex": 100,
-          "styleCss": {
-            "transform": "translate(-50%, -50%) scale(2)",
-            "top": "50%",
-            "left": "50%",
-            "position": "absolute",
-            "animation": "slowRotate 5.000000s linear 0.000000s infinite both"
+            "width": "700px",
+            "height": "700px",
+            "maxWidth": "90%",
+            "maxHeight": "90%",
+            "objectFit": "contain",
+            "borderRadius": "20px",
+            "animation": "scaleUp 0.7s ease-out forwards"
           }
         }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
-      "timeFixed": 1,
-      "stt": 7
-    },
-    {
-      "actions": [
-        null,
-        {
-          "cmd": "divAction",
-          "id": "DUNG",
-          "styleCss": {
-            "position": "flex",
-            "top": "100px",
-            "zIndex": "10",
-            "width": "100%",
-            "backgroundColor": "red",
-            "transition": "height 5s ease-out"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "DUNG1",
-          "styleCss": {
-            "position": "flex",
-            "backgroundColor": "yellow",
-            "width": "1000px",
-            "height": "100px"
-          }
-        },
-        null,
-        {
-          "cmd": "actionCssId",
-          "toID": "DUNG",
-          "cssMode": "add",
-          "css": { "backgroundColor": "yellow", "color": "black" }
-        },
-        {
-          "cmd": "typingTextActionToID",
-          "toID": "DUNG",
-          "text": "e.text",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "flex"
-          }
-        },
-        {
-          "cmd": "actionCssId",
-          "toID": "B25",
-          "cssMode": "add",
-          "css": {
-            "backgroundColor": "yellow",
-            "color": "black",
-            "height": "300px"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG",
-          "img": "CSK_001.png",
-          "styleCss": { "width": "100px", "position": "relative" }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG1",
-          "img": "CSK_001.png",
-          "styleCss": { "width": "100px", "position": "relative" }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG",
-          "delay": 30,
-          "img": "CSK_001.png",
-          "positionMode": "before",
-          "styleCss": {
-            "width": "200px",
-            "display": "block",
-            "animation": "fadeInScale 1.666667s linear 0.000000s 1 both"
-          }
-        },
-        null
-      ],
-      "code": "CSKA_006",
-      "timeFixed": null,
-      "stt": 8
-    },
-    {
-      "actions": [
-        {
-          "cmd": "typingTextActionToID",
-          "text": "HÃY FOLLOW TÔI",
-          "sound": true,
-          "noTyping": false,
-          "styleCss": {
-            "position": "absolute",
-            "top": "100px",
-            "fontSize": "70px",
-            "borderTop": "1px solid black",
-            "borderRadius": "20px",
-            "textAlign": "left",
-            "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            "padding": "20px",
-            "lineHeight": 1.75,
-            "letterSpacing": "0.5px",
-            "color": "#ffffff",
-            "zIndex": 2
-          }
-        }
-      ],
-      "code": "CSKA_007",
-      "timeFixed": null,
-      "stt": 9
+      "timeFixed": 4,
+      "stt": null
     }
   ]
 ]

@@ -1,74 +1,94 @@
 [
-  {
-    "stt": 1,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": "CSK_001.png",
-    "img": "CSK_001.png",
-    "text": "Đây là Hoàng Anh"
-  },
-  {
-    "stt": 2,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": null,
-    "img": "CSK_001.png",
-    "text": "Một boy phố thứ thiệt."
-  },
-  {
-    "stt": 3,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": "CSK_001.png",
-    "img": "CSK_001.png",
-    "text": "Đây là Ông A"
-  },
-  {
-    "stt": 4,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": null,
-    "img": "CSK_001.png",
-    "text": "Người đã đánh bại kẻ hủy diệt"
-  },
-  {
-    "stt": 5,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": "CSK_001.png",
-    "img": "CSK_001.png",
-    "text": "Đây là Bà B"
-  },
-  {
-    "stt": 6,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": null,
-    "img": "CSK_001.png",
-    "text": "Người đàn bà thép."
-  },
-  {
-    "stt": 7,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": "CSK_001.png",
-    "img": "CSK_001.png",
-    "text": "Đây là chị D"
-  },
-  {
-    "stt": 8,
-    "code": "SOUNDCHUNG_SpaceSound",
-    "timeFixed": 5,
-    "group": "A1",
-    "background": null,
-    "img": "CSK_001.png",
-    "text": "Thứ trưởng trẻ nhất của Việt nam."
-  }
+  [
+    {
+      "code": "SOUNDCHUNG_SpaceSound",
+      "script": null,
+      "group": 1,
+      "mode": 2,
+      "text": "Thưa bác sĩ, vì sao tôi bị đau vai dù không hề bị va chạm hay chấn thương gì?",
+      "textSize": "80px",
+      "textStyle": 1,
+      "img": null,
+      "imgStyle": 1,
+      "soundEffect": "soundEffect_success",
+      "delay": null,
+      "backgroundIMG": "BG_004.png",
+      "backgroundSound": "SOUNDCHUNG_1"
+    },
+    {
+      "code": "SOUNDCHUNG_SpaceSound",
+      "script": null,
+      "group": 2,
+      "mode": 1,
+      "text": "Trong đa số trường hợp, cơn đau này không đến từ chấn thương, mà xuất phát từ sự quá tải kéo dài bên trong cơ – khớp.",
+      "textSize": "55px",
+      "textStyle": 1,
+      "img": "CSK_lung.jpeg",
+      "imgStyle": 1,
+      "soundEffect": "soundEffect_swoosh",
+      "delay": null,
+      "backgroundIMG": "BG_004.png",
+      "backgroundSound": null
+    },
+    {
+      "code": "SOUNDCHUNG_SpaceSound",
+      "script": null,
+      "group": 3,
+      "mode": 1,
+      "text": "Cơ bị căng liên tục do tư thế sinh hoạt sai",
+      "textSize": "55px",
+      "textStyle": 1,
+      "img": "CSK_cobap.png",
+      "imgStyle": 1,
+      "soundEffect": "soundEffect_punch",
+      "delay": null,
+      "backgroundIMG": "BG_004.png",
+      "backgroundSound": null
+    },
+    {
+      "code": "SOUNDCHUNG_SpaceSound",
+      "script": null,
+      "group": 3,
+      "mode": 1,
+      "text": "Khớp thiếu vận động",
+      "textSize": "55px",
+      "textStyle": 1,
+      "img": "CSK_khop.png",
+      "imgStyle": 1,
+      "soundEffect": "soundEffect_suprise",
+      "delay": null,
+      "backgroundIMG": "BG_004.png",
+      "backgroundSound": null
+    },
+    {
+      "code": "SOUNDCHUNG_SpaceSound",
+      "script": null,
+      "group": 3,
+      "mode": 1,
+      "text": "Thoái hóa âm thầm, diễn ra từ rất lâu mà không để ý",
+      "textSize": "55px",
+      "textStyle": 1,
+      "img": "CSK_cotsong.png",
+      "imgStyle": 1,
+      "soundEffect": "soundEffect_false",
+      "delay": null,
+      "backgroundIMG": "BG_004.png",
+      "backgroundSound": null
+    },
+    {
+      "code": "SOUNDCHUNG_SpaceSound",
+      "script": null,
+      "group": 4,
+      "mode": 3,
+      "text": null,
+      "textSize": null,
+      "textStyle": 1,
+      "img": "CSK_meo3.png",
+      "imgStyle": 1,
+      "soundEffect": "soundEffect_funnyspring",
+      "delay": null,
+      "backgroundIMG": "BG_004.png",
+      "backgroundSound": null
+    }
+  ]
 ]

@@ -1,31 +1,44 @@
 /* animations.css */
 
-/* ⭐ Scale 0 → 1.1 → 0 (Fade in/out) */
-@keyframes scaleLoop {
+/* hiệu ứng xoay vong */
+@keyframes spinSlowDown {
   0% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: rotate(0deg) scale(0.3);
     opacity: 0;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: rotate(720deg) scale(1.1);
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
+    transform: rotate(1080deg) scale(1);
+    opacity: 1;
   }
 }
 
-/* ⭐ Breathing (1 → 1.1 → 1) - Smooth */
-@keyframes breathingScale {
+/* hieu ung slide */
+@keyframes collapseWidth {
+  from {
+    flex-basis: 100%;
+  }
+  to {
+    flex-basis: 0%;
+  }
+}
+
+/* ⭐ Scale 0.3 → 1 */
+@keyframes scaleUp {
   0% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(0.3);
+    opacity: 0;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: scale(1);
+    opacity: 1;
   }
   100% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
@@ -131,15 +144,11 @@
     opacity: 0;
     transform: scale(0.5);
   }
-  60% {
+  70% {
     opacity: 1;
-    transform: scale(1.1);
-  }
-  80% {
-    transform: scale(0.95);
+    transform: scale(2);
   }
   100% {
-    opacity: 1;
     transform: scale(1);
   }
 }
