@@ -12,16 +12,23 @@ import {
 const CMD_Fetch = CMD;
 
 const handlerMap = {
-  //text trên chữ dưới
-  group1_type01: group1_type01,
-  //chỉ có text theo kieu comment
-  group1_type02: group1_type02,
-  //chỉ có anh xoay vong
-  group1_type03: group1_type03,
-  //2 mục nội dung, ảnh đẩy nhau
-  group2_type01: group2_type01,
-  //3 muc noi dung
-  group3_type01: group3_type01,
+  //1object
+  //chỉ có chữ
+  group1_text: group1_text,
+  //text trên ảnh dưới
+  group1_1: group1_1,
+  //hiển thị như 1 comment (với chữ đè lên ảnh)
+  group1_comment: group1_comment,
+  //ảnh xoay vòng
+  group1_3: group1_3,
+
+  //2object
+  //2 text, ảnh đẩy nhau
+  group2_1: group2_1,
+
+  //3object
+  //liet ke
+  group3_lietke: group3_lietke,
 };
 
 //lay OBJcss
@@ -48,9 +55,9 @@ function getImgCSS(style) {
 //controller cho group
 function handleItem(group) {
   const groupStr = String(group.length);
-  const typeStr = String(group[0].mode).padStart(2, "0");
+  const typeStr = String(group[0].mode);
 
-  const key = `group${groupStr}_type${typeStr}`;
+  const key = `group${groupStr}_${typeStr}`;
   const handler = handlerMap[key];
 
   if (handler) {
@@ -66,25 +73,21 @@ let videoData01 = [];
 
 DataFront.forEach((videoData) => {
   const bg_sound = {
-    actions: [
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: " ",
-      },
-    ],
-    code: arr[0].code,
-    timeFixed: 3,
+    cmd: CMD_Fetch.soundPlayerAction,
+    ToEndFrame: true,
+    soundSource: "SOUNDCHUNG_1",
   };
   let video = [];
   let group = [];
   let flag = videoData[0].group;
+
+  //them actions
   videoData.forEach((obj) => {
     if (obj.group === flag) {
       group.push(obj);
     } else {
       ///controller
       group = handleItem(group);
-
       for (let i = 0; i < group.length; i++) {
         video.push(group[i]);
       }
@@ -92,11 +95,15 @@ DataFront.forEach((videoData) => {
       flag = obj.group;
     }
   });
-
-  //controller
+  //controller cuoi
   group = handleItem(group);
   for (let i = 0; i < group.length; i++) {
     video.push(group[i]);
+  }
+
+  // Thêm background sound
+  if (video.length > 0 && video[0].actions) {
+    video[0].actions.unshift(bg_sound);
   }
 
   videoData01.push(video);
@@ -105,8 +112,436 @@ DataFront.forEach((videoData) => {
 console.log(JSON.stringify(keepOnlyActionsCodeTimeFixedStt(videoData01)));
 export { videoData01 };
 
-//2 object loại 1
-function group2_type01(arr) {
+//group 1 object
+function group1_text(arr) {
+  const uid = `${arr[0].group}`;
+
+  const BG001 = `BG001_${uid}`;
+  const mainContainer = `main_${uid}`;
+  const textContainer = `textCont_${uid}`;
+
+  const obj1 = {
+    actions: [
+      // Background
+      {
+        cmd: "divAction",
+        id: BG001,
+        ToEndFrame: true,
+        styleCss: {
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+      },
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        toID: BG001,
+        ToEndFrame: true,
+        img: arr[0].backgroundIMG,
+        styleCss: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        },
+      },
+      // Main container
+      {
+        cmd: CMD_Fetch.divAction,
+        id: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          padding: "50px",
+        },
+      },
+      // Text container (phía trên)
+      {
+        cmd: CMD_Fetch.divAction,
+        id: textContainer,
+        toID: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "60%",
+          width: "100%",
+        },
+      },
+      // Text với style to, màu vàng, border đen
+      {
+        cmd: CMD_Fetch.typingText,
+        text: arr[0].text,
+        toID: textContainer,
+        group: arr[0].group,
+
+        noTyping: true,
+        styleCss: getTextCSS(arr[0].textStyle),
+      },
+    ],
+    code: arr[0].code,
+    timeFixed: 1,
+  };
+
+  return [obj1];
+}
+function group1_1(arr) {
+  const uid = `${arr[0].group}`;
+
+  const BG001 = `BG001_${uid}`;
+  const mainContainer = `main_${uid}`;
+  const textContainer = `textCont_${uid}`;
+  const imageContainer = `imgCont_${uid}`;
+
+  const obj1 = {
+    actions: [
+      // Background
+      {
+        cmd: "divAction",
+        id: BG001,
+        ToEndFrame: true,
+        styleCss: {
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+      },
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        toID: BG001,
+        ToEndFrame: true,
+        img: arr[0].backgroundIMG,
+        styleCss: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        },
+      },
+      // Main container
+      {
+        cmd: CMD_Fetch.divAction,
+        id: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          padding: "50px",
+        },
+      },
+
+      // Text container (phía trên)
+      {
+        cmd: CMD_Fetch.divAction,
+        id: textContainer,
+        toID: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "30%",
+          width: "100%",
+        },
+      },
+
+      // Text với style to, màu vàng, border đen
+      {
+        cmd: CMD_Fetch.typingText,
+        text: arr[0].text,
+        toID: textContainer,
+        group: arr[0].group,
+
+        noTyping: true,
+        styleCss: {
+          fontSize: arr[0].textSize,
+          fontWeight: 800,
+          color: "yellow",
+          textAlign: "center",
+          textTransform: "uppercase",
+          WebkitTextStroke: "4px black",
+          textShadow: "0 0 30px rgba(255,255,0,0.5)",
+          letterSpacing: "3px",
+        },
+      },
+
+      // Sound khi text xuất hiện
+      {
+        cmd: CMD_Fetch.soundPlayerAction,
+        soundSource: arr[0].soundEffect,
+      },
+
+      // Image container (phía dưới)
+      {
+        cmd: CMD_Fetch.divAction,
+        id: imageContainer,
+        toID: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "70%",
+          width: "100%",
+        },
+      },
+
+      // Image với hiệu ứng to dần
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        img: arr[0].img,
+        toID: imageContainer,
+        group: arr[0].group,
+        styleCss: {
+          width: "700px",
+          height: "700px",
+          maxWidth: "90%",
+          maxHeight: "90%",
+          objectFit: "contain",
+          borderRadius: "20px",
+          animation: "scaleUp 0.7s ease-out forwards",
+        },
+      },
+    ],
+    code: arr[0].code,
+    timeFixed: 4,
+  };
+
+  return [obj1];
+}
+function group1_comment(arr) {
+  const uid = `${arr[0].group}`;
+
+  const BG001 = `BG001_${uid}`;
+  const mainContainer = `main_${uid}`;
+  const textContainer = `textCont_${uid}`;
+
+  const obj1 = {
+    actions: [
+      // Background
+      {
+        cmd: "divAction",
+        id: BG001,
+        ToEndFrame: true,
+        styleCss: {
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+      },
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        toID: BG001,
+        ToEndFrame: true,
+        img: arr[0].backgroundIMG,
+        styleCss: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        },
+      },
+      // Main container
+      {
+        cmd: CMD_Fetch.divAction,
+        id: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          padding: "50px",
+        },
+      },
+
+      // Text container (phía trên)
+      {
+        cmd: CMD_Fetch.divAction,
+        id: textContainer,
+        toID: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          width: "100%",
+        },
+      },
+      {
+        cmd: CMD_Fetch.divAction,
+        id: "commentBubble",
+        toID: textContainer,
+        group: arr[0].group,
+        styleCss: {
+          height: "700px",
+          width: "70%",
+          backgroundColor: "rgba(255,255,255,0.95)",
+          padding: "12px 16px",
+          borderRadius: "30px",
+          maxWidth: "75%",
+          boxShadow: "0 8px 25px rgba(0,0,0,0.18)",
+
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      },
+
+      // Text với style to, màu vàng, border đen
+      {
+        cmd: CMD_Fetch.typingText,
+        text: arr[0].text,
+        toID: "commentBubble",
+        group: arr[0].group,
+        styleCss: {
+          fontSize: arr[0].textSize,
+          fontWeight: 600,
+          color: "#111",
+          textAlign: "center",
+          lineHeight: "1.4",
+          letterSpacing: "0.3px",
+          fontFamily: "'Inter', 'Segoe UI', sans-serif",
+        },
+      },
+      // Sound khi text xuất hiện
+      {
+        cmd: CMD_Fetch.soundPlayerAction,
+        soundSource: arr[0].soundEffect,
+      },
+      {
+        cmd: CMD_Fetch.soundPlayerAction,
+        soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
+      },
+    ],
+    code: arr[0].code,
+    timeFixed: 3,
+  };
+
+  return [obj1];
+}
+function group1_3(arr) {
+  const uid = `${arr[0].group}`;
+
+  const BG001 = `BG001_${uid}`;
+  const mainContainer = `main_${uid}`;
+  const imageContainer = `imgCont_${uid}`;
+
+  const obj1 = {
+    actions: [
+      // Background
+      {
+        cmd: "divAction",
+        id: BG001,
+        ToEndFrame: true,
+        styleCss: {
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+      },
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        toID: BG001,
+        ToEndFrame: true,
+        img: arr[0].backgroundIMG,
+        styleCss: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        },
+      },
+      // Main container
+      {
+        cmd: CMD_Fetch.divAction,
+        id: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          padding: "50px",
+        },
+      },
+
+      // Image container (ở giữa)
+      {
+        cmd: CMD_Fetch.divAction,
+        id: imageContainer,
+        toID: mainContainer,
+        group: arr[0].group,
+        styleCss: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          width: "100%",
+        },
+      },
+
+      // Image với hiệu ứng xoay vòng giảm dần
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        img: arr[0].img,
+        toID: imageContainer,
+        group: arr[0].group,
+        styleCss: {
+          width: "600px",
+          height: "600px",
+          maxWidth: "90%",
+          maxHeight: "90%",
+          objectFit: "contain", // ⭐ Đổi từ "cover" thành "contain" để giữ nguyên ảnh
+          filter:
+            "drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(0 0 20px rgba(255,255,0,0.5))", // ⭐ Viền phát sáng
+          animation: "spinSlowDown 3s ease-out forwards",
+          animationIterationCount: "1",
+        },
+      },
+
+      // Sound khi ảnh xuất hiện
+      {
+        cmd: CMD_Fetch.soundPlayerAction,
+        soundSource: arr[0].soundEffect,
+      },
+    ],
+    code: arr[0].code,
+    timeFixed: 3,
+  };
+
+  return [obj1];
+}
+
+//group 2 object
+function group2_1(arr) {
   const uid = `${arr[0].group}`;
 
   const BG001 = `BG001_${uid}`;
@@ -307,355 +742,8 @@ function group2_type01(arr) {
   return finalSet;
 }
 
-function group1_type01(arr) {
-  const uid = `${arr[0].group}`;
-
-  const BG001 = `BG001_${uid}`;
-  const mainContainer = `main_${uid}`;
-  const textContainer = `textCont_${uid}`;
-  const imageContainer = `imgCont_${uid}`;
-
-  const obj1 = {
-    actions: [
-      // Background
-      {
-        cmd: "divAction",
-        id: BG001,
-        ToEndFrame: true,
-        styleCss: {
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        },
-      },
-      {
-        cmd: CMD_Fetch.imageViewActionToID,
-        toID: BG001,
-        ToEndFrame: true,
-        img: arr[0].backgroundIMG,
-        styleCss: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        },
-      },
-      // Main container
-      {
-        cmd: CMD_Fetch.divAction,
-        id: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          position: "absolute",
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          padding: "50px",
-        },
-      },
-
-      // Text container (phía trên)
-      {
-        cmd: CMD_Fetch.divAction,
-        id: textContainer,
-        toID: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "30%",
-          width: "100%",
-        },
-      },
-
-      // Text với style to, màu vàng, border đen
-      {
-        cmd: CMD_Fetch.typingText,
-        text: arr[0].text,
-        toID: textContainer,
-        group: arr[0].group,
-
-        noTyping: true,
-        styleCss: {
-          fontSize: arr[0].textSize,
-          fontWeight: 800,
-          color: "yellow",
-          textAlign: "center",
-          textTransform: "uppercase",
-          WebkitTextStroke: "4px black",
-          textShadow: "0 0 30px rgba(255,255,0,0.5)",
-          letterSpacing: "3px",
-        },
-      },
-
-      // Sound khi text xuất hiện
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: arr[0].soundEffect,
-      },
-
-      // Image container (phía dưới)
-      {
-        cmd: CMD_Fetch.divAction,
-        id: imageContainer,
-        toID: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "70%",
-          width: "100%",
-        },
-      },
-
-      // Image với hiệu ứng to dần
-      {
-        cmd: CMD_Fetch.imageViewActionToID,
-        img: arr[0].img,
-        toID: imageContainer,
-        group: arr[0].group,
-        styleCss: {
-          width: "700px",
-          height: "700px",
-          maxWidth: "90%",
-          maxHeight: "90%",
-          objectFit: "contain",
-          borderRadius: "20px",
-          animation: "scaleUp 0.7s ease-out forwards",
-        },
-      },
-    ],
-    code: arr[0].code,
-    timeFixed: 4,
-  };
-
-  return [obj1];
-}
-
-function group1_type02(arr) {
-  const uid = `${arr[0].group}`;
-
-  const BG001 = `BG001_${uid}`;
-  const mainContainer = `main_${uid}`;
-  const textContainer = `textCont_${uid}`;
-
-  const obj1 = {
-    actions: [
-      // Background
-      {
-        cmd: "divAction",
-        id: BG001,
-        ToEndFrame: true,
-        styleCss: {
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        },
-      },
-      {
-        cmd: CMD_Fetch.imageViewActionToID,
-        toID: BG001,
-        ToEndFrame: true,
-        img: arr[0].backgroundIMG,
-        styleCss: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        },
-      },
-      // Main container
-      {
-        cmd: CMD_Fetch.divAction,
-        id: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          position: "absolute",
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          padding: "50px",
-        },
-      },
-
-      // Text container (phía trên)
-      {
-        cmd: CMD_Fetch.divAction,
-        id: textContainer,
-        toID: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          width: "100%",
-        },
-      },
-      {
-        cmd: CMD_Fetch.divAction,
-        id: "commentBubble",
-        toID: textContainer,
-        group: arr[0].group,
-        styleCss: {
-          height: "700px",
-          width: "70%",
-          backgroundColor: "rgba(255,255,255,0.95)",
-          padding: "12px 16px",
-          borderRadius: "30px",
-          maxWidth: "75%",
-          boxShadow: "0 8px 25px rgba(0,0,0,0.18)",
-
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        },
-      },
-
-      // Text với style to, màu vàng, border đen
-      {
-        cmd: CMD_Fetch.typingText,
-        text: arr[0].text,
-        toID: "commentBubble",
-        group: arr[0].group,
-        styleCss: {
-          fontSize: arr[0].textSize,
-          fontWeight: 600,
-          color: "#111",
-          textAlign: "center",
-          lineHeight: "1.4",
-          letterSpacing: "0.3px",
-          fontFamily: "'Inter', 'Segoe UI', sans-serif",
-        },
-      },
-      // Sound khi text xuất hiện
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: arr[0].soundEffect,
-      },
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
-      },
-    ],
-    code: arr[0].code,
-    timeFixed: 3,
-  };
-
-  return [obj1];
-}
-
-function group1_type03(arr) {
-  const uid = `${arr[0].group}`;
-
-  const BG001 = `BG001_${uid}`;
-  const mainContainer = `main_${uid}`;
-  const imageContainer = `imgCont_${uid}`;
-
-  const obj1 = {
-    actions: [
-      // Background
-      {
-        cmd: "divAction",
-        id: BG001,
-        ToEndFrame: true,
-        styleCss: {
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        },
-      },
-      {
-        cmd: CMD_Fetch.imageViewActionToID,
-        toID: BG001,
-        ToEndFrame: true,
-        img: arr[0].backgroundIMG,
-        styleCss: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        },
-      },
-      // Main container
-      {
-        cmd: CMD_Fetch.divAction,
-        id: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          position: "absolute",
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          padding: "50px",
-        },
-      },
-
-      // Image container (ở giữa)
-      {
-        cmd: CMD_Fetch.divAction,
-        id: imageContainer,
-        toID: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          width: "100%",
-        },
-      },
-
-      // Image với hiệu ứng xoay vòng giảm dần
-      {
-        cmd: CMD_Fetch.imageViewActionToID,
-        img: arr[0].img,
-        toID: imageContainer,
-        group: arr[0].group,
-        styleCss: {
-          width: "600px",
-          height: "600px",
-          maxWidth: "90%",
-          maxHeight: "90%",
-          objectFit: "contain", // ⭐ Đổi từ "cover" thành "contain" để giữ nguyên ảnh
-          filter:
-            "drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(0 0 20px rgba(255,255,0,0.5))", // ⭐ Viền phát sáng
-          animation: "spinSlowDown 3s ease-out forwards",
-          animationIterationCount: "1",
-        },
-      },
-
-      // Sound khi ảnh xuất hiện
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: arr[0].soundEffect,
-      },
-    ],
-    code: arr[0].code,
-    timeFixed: 3,
-  };
-
-  return [obj1];
-}
-
-function group3_type01(arr) {
+//group 3 object
+function group3_lietke(arr) {
   const uid = `${arr[0].group}`;
 
   const BG001 = `BG001_${uid}`;
