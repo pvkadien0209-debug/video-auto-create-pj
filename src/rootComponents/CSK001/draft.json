@@ -6,14 +6,7 @@
           "cmd": "soundPlayerAction",
           "ToEndFrame": true,
           "soundSource": "SOUNDCHUNG_1"
-        }
-      ],
-      "code": null,
-      "timeFixed": null,
-      "stt": null
-    },
-    {
-      "actions": [
+        },
         {
           "cmd": "divAction",
           "id": "BG001_A",
@@ -29,7 +22,6 @@
         {
           "cmd": "imageViewActionToID",
           "toID": "BG001_A",
-          "ToEndFrame": true,
           "img": "BG_003.png",
           "styleCss": {
             "position": "absolute",
@@ -46,11 +38,10 @@
           "group": "A",
           "styleCss": {
             "position": "absolute",
-            "height": "100%",
-            "width": "100%",
+            "inset": 0,
             "display": "flex",
-            "flexDirection": "column",
-            "padding": "50px"
+            "alignItems": "center",
+            "justifyContent": "center"
           }
         },
         {
@@ -59,37 +50,177 @@
           "toID": "main_A",
           "group": "A",
           "styleCss": {
+            "position": "relative",
+            "height": "750px",
+            "maxWidth": "1000px",
+            "width": "100%",
+            "padding": "32px",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "flex-start",
+            "borderRadius": "32px",
+            "background": "#ffffff",
+            "boxShadow": "0 20px 60px rgba(0,0,0,0.25)",
+            "zIndex": 2
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "chatHeader_A",
+          "toID": "textCont_A",
+          "group": "A",
+          "styleCss": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "16px",
+            "marginBottom": "24px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "chatHeader_A",
+          "group": "A",
+          "styleCss": {
+            "width": "56px",
+            "height": "56px",
+            "borderRadius": "50%",
+            "objectFit": "cover",
+            "flexShrink": 0,
+            "backgroundColor": "red"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": "@nguoidung_tiktok",
+          "toID": "chatHeader_A",
+          "group": "A",
+          "noTyping": true,
+          "styleCss": {
+            "fontSize": "40px",
+            "fontWeight": 500,
+            "color": "rgba(0,0,0,0.45)",
+            "marginLeft": "24px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "textCont_A_body",
+          "toID": "textCont_A",
+          "group": "A",
+          "styleCss": {
+            "flex": 1,
             "display": "flex",
             "alignItems": "center",
             "justifyContent": "center",
-            "height": "60%",
+            "textAlign": "left",
+            "padding": "0 12px"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": "Vì sao tôi ngủ dậy là khớp gối cứng đơ, đi vài bước mới đỡ?",
+          "toID": "textCont_A_body",
+          "group": "A",
+          "styleCss": {
+            "fontSize": "70px",
+            "fontWeight": 600,
+            "lineHeight": 1.6,
+            "letterSpacing": "0.3px",
+            "color": "#111",
+            "textAlign": "center",
+            "padding": "20px 32px",
+            "borderRadius": "16px",
+            "zIndex": 2
+          }
+        },
+        {
+          "cmd": "soundPlayerAction",
+          "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut"
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 3,
+      "stt": null
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "id": "BG001_G",
+          "ToEndFrame": true,
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "BG001_G",
+          "ToEndFrame": true,
+          "zIndex": 0,
+          "img": "BG_003.png",
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": "100%",
+            "height": "100%",
+            "objectFit": "cover"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "main_G",
+          "group": "G",
+          "styleCss": {
+            "position": "absolute",
+            "inset": 0,
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "main_G",
+          "img": "CSK_co.png",
+          "styleCss": { "position": "absolute" }
+        },
+        {
+          "cmd": "divAction",
+          "id": "textCont_G",
+          "toID": "main_G",
+          "group": "G",
+          "styleCss": {
+            "position": "relative",
+            "height": "750px",
+            "maxWidth": "1000px",
+            "zIndex": 2,
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "textAlign": "center",
             "width": "100%"
           }
         },
         {
           "cmd": "typingText",
-          "text": "Kiến thức xương khớp phần 1",
-          "toID": "textCont_A",
-          "group": "A",
-          "noTyping": true,
-          "styleCss": {
-            "position": "absolute",
-            "top": "100px",
-            "fontSize": "70px",
-            "borderTop": "1px solid black",
-            "borderRadius": "20px",
-            "textAlign": "left",
-            "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            "padding": "20px",
-            "lineHeight": 1.75,
-            "letterSpacing": "0.5px",
-            "color": "#ffffff",
-            "zIndex": 2
-          }
+          "text": null,
+          "toID": "textCont_G",
+          "group": "G",
+          "styleCss": { "display": "none", "fontSize": null }
+        },
+        { "cmd": "soundPlayerAction" },
+        {
+          "cmd": "soundPlayerAction",
+          "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut"
         }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
-      "timeFixed": 1,
+      "timeFixed": 4,
       "stt": null
     },
     {
@@ -109,7 +240,6 @@
         {
           "cmd": "imageViewActionToID",
           "toID": "BG001_B",
-          "ToEndFrame": true,
           "img": "BG_003.png",
           "styleCss": {
             "position": "absolute",
@@ -126,11 +256,10 @@
           "group": "B",
           "styleCss": {
             "position": "absolute",
-            "height": "100%",
-            "width": "100%",
+            "inset": 0,
             "display": "flex",
-            "flexDirection": "column",
-            "padding": "50px"
+            "alignItems": "center",
+            "justifyContent": "center"
           }
         },
         {
@@ -139,47 +268,92 @@
           "toID": "main_B",
           "group": "B",
           "styleCss": {
+            "position": "relative",
+            "height": "750px",
+            "maxWidth": "1000px",
+            "width": "100%",
+            "padding": "32px",
             "display": "flex",
-            "alignItems": "center",
-            "justifyContent": "center",
-            "height": "100%",
-            "width": "100%"
+            "flexDirection": "column",
+            "justifyContent": "flex-start",
+            "borderRadius": "32px",
+            "background": "#ffffff",
+            "boxShadow": "0 20px 60px rgba(0,0,0,0.25)",
+            "zIndex": 2
           }
         },
         {
           "cmd": "divAction",
-          "id": "commentBubble",
+          "id": "chatHeader_B",
           "toID": "textCont_B",
           "group": "B",
           "styleCss": {
-            "height": "700px",
-            "width": "70%",
-            "backgroundColor": "rgba(255,255,255,0.95)",
-            "padding": "12px 16px",
-            "borderRadius": "30px",
-            "maxWidth": "75%",
-            "boxShadow": "0 8px 25px rgba(0,0,0,0.18)",
             "display": "flex",
             "alignItems": "center",
-            "justifyContent": "center"
+            "gap": "16px",
+            "marginBottom": "24px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "chatHeader_B",
+          "group": "B",
+          "styleCss": {
+            "width": "56px",
+            "height": "56px",
+            "borderRadius": "50%",
+            "objectFit": "cover",
+            "flexShrink": 0,
+            "backgroundColor": "red"
+          }
+        },
+        {
+          "cmd": "typingText",
+          "text": "@nguoidung_tiktok",
+          "toID": "chatHeader_B",
+          "group": "B",
+          "noTyping": true,
+          "styleCss": {
+            "fontSize": "40px",
+            "fontWeight": 500,
+            "color": "rgba(0,0,0,0.45)",
+            "marginLeft": "24px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "textCont_B_body",
+          "toID": "textCont_B",
+          "group": "B",
+          "styleCss": {
+            "flex": 1,
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "textAlign": "left",
+            "padding": "0 12px"
           }
         },
         {
           "cmd": "typingText",
           "text": "Vì sao tôi ngủ dậy là khớp gối cứng đơ, đi vài bước mới đỡ?",
-          "toID": "commentBubble",
+          "toID": "textCont_B_body",
           "group": "B",
           "styleCss": {
+            "position": "absolute",
+            "top": "100px",
             "fontSize": null,
-            "fontWeight": 600,
+            "borderTop": "1px solid black",
+            "borderRadius": "20px",
+            "textAlign": "left",
+            "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            "padding": "20px",
+            "lineHeight": 1.6,
+            "letterSpacing": "0.5px",
             "color": "#111",
-            "textAlign": "center",
-            "lineHeight": "1.4",
-            "letterSpacing": "0.3px",
-            "fontFamily": "'Inter', 'Segoe UI', sans-serif"
+            "zIndex": 2
           }
         },
-        { "cmd": "soundPlayerAction" },
         {
           "cmd": "soundPlayerAction",
           "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut"
@@ -584,6 +758,7 @@
           "cmd": "imageViewActionToID",
           "toID": "BG001_E",
           "ToEndFrame": true,
+          "zIndex": 0,
           "img": "BG_003.png",
           "styleCss": {
             "position": "absolute",
@@ -600,11 +775,22 @@
           "group": "E",
           "styleCss": {
             "position": "absolute",
-            "height": "100%",
-            "width": "100%",
+            "inset": 0,
             "display": "flex",
-            "flexDirection": "column",
-            "padding": "50px"
+            "alignItems": "center",
+            "justifyContent": "center"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "main_E",
+          "img": "CSK_co.png",
+          "styleCss": {
+            "width": "300px",
+            "height": "300px",
+            "objectFit": "cover",
+            "borderRadius": "16px",
+            "position": "absolute"
           }
         },
         {
@@ -613,10 +799,14 @@
           "toID": "main_E",
           "group": "E",
           "styleCss": {
+            "position": "relative",
+            "height": "750px",
+            "maxWidth": "1000px",
+            "zIndex": 2,
             "display": "flex",
             "alignItems": "center",
             "justifyContent": "center",
-            "height": "30%",
+            "textAlign": "center",
             "width": "100%"
           }
         },
@@ -625,46 +815,12 @@
           "text": "Giải pháp",
           "toID": "textCont_E",
           "group": "E",
-          "noTyping": true,
-          "styleCss": {
-            "fontSize": null,
-            "fontWeight": 800,
-            "color": "yellow",
-            "textAlign": "center",
-            "textTransform": "uppercase",
-            "WebkitTextStroke": "4px black",
-            "textShadow": "0 0 30px rgba(255,255,0,0.5)",
-            "letterSpacing": "3px"
-          }
+          "styleCss": { "fontSize": null }
         },
         { "cmd": "soundPlayerAction" },
         {
-          "cmd": "divAction",
-          "id": "imgCont_E",
-          "toID": "main_E",
-          "group": "E",
-          "styleCss": {
-            "display": "flex",
-            "alignItems": "center",
-            "justifyContent": "center",
-            "height": "70%",
-            "width": "100%"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "img": "CSK_co.png",
-          "toID": "imgCont_E",
-          "group": "E",
-          "styleCss": {
-            "width": "700px",
-            "height": "700px",
-            "maxWidth": "90%",
-            "maxHeight": "90%",
-            "objectFit": "contain",
-            "borderRadius": "20px",
-            "animation": "scaleUp 0.7s ease-out forwards"
-          }
+          "cmd": "soundPlayerAction",
+          "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut"
         }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
@@ -687,6 +843,82 @@
       "actions": [],
       "code": "SOUNDCHUNG_SpaceSound",
       "timeFixed": null,
+      "stt": null
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "id": "BG001_G",
+          "ToEndFrame": true,
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "BG001_G",
+          "ToEndFrame": true,
+          "img": "BG_003.png",
+          "styleCss": {
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": "100%",
+            "height": "100%",
+            "objectFit": "cover"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "main_G",
+          "group": "G",
+          "styleCss": {
+            "position": "absolute",
+            "height": "100%",
+            "width": "100%",
+            "display": "flex",
+            "flexDirection": "column",
+            "padding": "50px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "id": "imgCont_G",
+          "toID": "main_G",
+          "group": "G",
+          "styleCss": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "100%",
+            "width": "100%"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "img": "CSK_co.png",
+          "toID": "imgCont_G",
+          "group": "G",
+          "styleCss": {
+            "width": "600px",
+            "height": "600px",
+            "maxWidth": "90%",
+            "maxHeight": "90%",
+            "objectFit": "contain",
+            "filter": "drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(0 0 20px rgba(255,255,0,0.5))",
+            "animation": "spinSlowDown 3s ease-out forwards",
+            "animationIterationCount": "1"
+          }
+        },
+        { "cmd": "soundPlayerAction" }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 3,
       "stt": null
     }
   ]

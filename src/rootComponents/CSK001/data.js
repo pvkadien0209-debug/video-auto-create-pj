@@ -13,14 +13,12 @@ const CMD_Fetch = CMD;
 
 const handlerMap = {
   //1object
-  //chỉ có chữ
-  group1_text: group1_text,
-  //text trên ảnh dưới
+  //chữ đè lên ảnh
   group1_1: group1_1,
-  //hiển thị như 1 comment (với chữ đè lên ảnh)
+  //text trên ảnh dưới
+  group1_2: group1_2,
+  //hiển thị như 1 comment
   group1_comment: group1_comment,
-  //ảnh xoay vòng
-  group1_3: group1_3,
 
   //2object
   //2 text, ảnh đẩy nhau
@@ -75,7 +73,7 @@ DataFront.forEach((videoData) => {
   const bg_sound = {
     cmd: CMD_Fetch.soundPlayerAction,
     ToEndFrame: true,
-    soundSource: "SOUNDCHUNG_1",
+    soundSource: videoData[0].backgroundSound,
   };
   let video = [];
   let group = [];
@@ -113,7 +111,7 @@ console.log(JSON.stringify(keepOnlyActionsCodeTimeFixedStt(videoData01)));
 export { videoData01 };
 
 //group 1 object
-function group1_text(arr) {
+function group1_1(arr) {
   const uid = `${arr[0].group}`;
 
   const BG001 = `BG001_${uid}`;
@@ -139,6 +137,7 @@ function group1_text(arr) {
         cmd: CMD_Fetch.imageViewActionToID,
         toID: BG001,
         ToEndFrame: true,
+        zIndex: 0,
         img: arr[0].backgroundIMG,
         styleCss: {
           position: "absolute",
@@ -156,45 +155,63 @@ function group1_text(arr) {
         group: arr[0].group,
         styleCss: {
           position: "absolute",
-          height: "100%",
-          width: "100%",
+          inset: 0, // top:0 left:0 right:0 bottom:0
           display: "flex",
-          flexDirection: "column",
-          padding: "50px",
+          alignItems: "center",
+          justifyContent: "center",
         },
       },
-      // Text container (phía trên)
+      //img
+      {
+        cmd: CMD_Fetch.imageViewActionToID,
+        toID: mainContainer,
+        img: arr[0].img,
+        styleCss: {
+          ...getImgCSS(arr[0].imgStyle),
+          position: "absolute",
+        },
+      },
+      //text container
       {
         cmd: CMD_Fetch.divAction,
         id: textContainer,
         toID: mainContainer,
         group: arr[0].group,
         styleCss: {
+          position: "relative",
+          height: "750px",
+          zIndex: 2,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "60%",
+          textAlign: "center",
           width: "100%",
         },
       },
-      // Text với style to, màu vàng, border đen
       {
         cmd: CMD_Fetch.typingText,
         text: arr[0].text,
         toID: textContainer,
-        group: arr[0].group,
-
         noTyping: true,
-        styleCss: getTextCSS(arr[0].textStyle),
+        group: arr[0].group,
+        styleCss: {
+          ...getTextCSS(arr[0].textStyle),
+          fontSize: arr[0].textSize,
+        },
+      },
+
+      {
+        cmd: CMD_Fetch.soundPlayerAction,
+        soundSource: arr[0].soundEffect,
       },
     ],
     code: arr[0].code,
-    timeFixed: 1,
+    timeFixed: 3,
   };
 
   return [obj1];
 }
-function group1_1(arr) {
+function group1_2(arr) {
   const uid = `${arr[0].group}`;
 
   const BG001 = `BG001_${uid}`;
@@ -261,7 +278,6 @@ function group1_1(arr) {
         },
       },
 
-      // Text với style to, màu vàng, border đen
       {
         cmd: CMD_Fetch.typingText,
         text: arr[0].text,
@@ -331,6 +347,7 @@ function group1_comment(arr) {
   const BG001 = `BG001_${uid}`;
   const mainContainer = `main_${uid}`;
   const textContainer = `textCont_${uid}`;
+  const chatHeader = `chatHeader_${uid}`;
 
   const obj1 = {
     actions: [
@@ -350,7 +367,6 @@ function group1_comment(arr) {
       {
         cmd: CMD_Fetch.imageViewActionToID,
         toID: BG001,
-        ToEndFrame: true,
         img: arr[0].backgroundIMG,
         styleCss: {
           position: "absolute",
@@ -368,169 +384,106 @@ function group1_comment(arr) {
         group: arr[0].group,
         styleCss: {
           position: "absolute",
-          height: "100%",
-          width: "100%",
+          inset: 0, // top:0 left:0 right:0 bottom:0
           display: "flex",
-          flexDirection: "column",
-          padding: "50px",
+          alignItems: "center",
+          justifyContent: "center",
         },
       },
-
-      // Text container (phía trên)
+      //text container
       {
         cmd: CMD_Fetch.divAction,
         id: textContainer,
         toID: mainContainer,
         group: arr[0].group,
         styleCss: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
+          position: "relative",
+          height: "750px",
+          maxWidth: "1000px",
           width: "100%",
+          padding: "32px",
+
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+
+          borderRadius: "32px",
+          background: "#ffffff",
+          boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
+
+          zIndex: 2,
         },
       },
+      //chat header
       {
         cmd: CMD_Fetch.divAction,
-        id: "commentBubble",
+        id: chatHeader,
         toID: textContainer,
         group: arr[0].group,
         styleCss: {
-          height: "700px",
-          width: "70%",
-          backgroundColor: "rgba(255,255,255,0.95)",
-          padding: "12px 16px",
-          borderRadius: "30px",
-          maxWidth: "75%",
-          boxShadow: "0 8px 25px rgba(0,0,0,0.18)",
-
+          display: "flex",
+          alignItems: "center",
+          gap: "16px",
+          marginBottom: "24px",
+        },
+      },
+      //avatar
+      {
+        cmd: CMD_Fetch.divAction,
+        toID: chatHeader,
+        group: arr[0].group,
+        styleCss: {
+          width: "56px",
+          height: "56px",
+          borderRadius: "50%",
+          objectFit: "cover",
+          flexShrink: 0,
+          backgroundColor: "red",
+        },
+      },
+      {
+        cmd: CMD_Fetch.typingText,
+        text: "@nguoidung_tiktok",
+        toID: chatHeader,
+        group: arr[0].group,
+        noTyping: true,
+        styleCss: {
+          fontSize: "40px",
+          fontWeight: 500,
+          color: "rgba(0,0,0,0.45)",
+          marginLeft: "24px",
+        },
+      },
+      //noi dung
+      {
+        cmd: CMD_Fetch.divAction,
+        id: `${textContainer}_body`,
+        toID: textContainer,
+        group: arr[0].group,
+        styleCss: {
+          flex: 1,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          textAlign: "left",
+          padding: "0 12px",
         },
       },
-
-      // Text với style to, màu vàng, border đen
       {
         cmd: CMD_Fetch.typingText,
         text: arr[0].text,
-        toID: "commentBubble",
+        toID: `${textContainer}_body`,
         group: arr[0].group,
         styleCss: {
+          ...getTextCSS(arr[0].textStyle),
           fontSize: arr[0].textSize,
-          fontWeight: 600,
           color: "#111",
-          textAlign: "center",
-          lineHeight: "1.4",
-          letterSpacing: "0.3px",
-          fontFamily: "'Inter', 'Segoe UI', sans-serif",
+          lineHeight: 1.6,
         },
-      },
-      // Sound khi text xuất hiện
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: arr[0].soundEffect,
       },
       {
         cmd: CMD_Fetch.soundPlayerAction,
         soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
-      },
-    ],
-    code: arr[0].code,
-    timeFixed: 3,
-  };
-
-  return [obj1];
-}
-function group1_3(arr) {
-  const uid = `${arr[0].group}`;
-
-  const BG001 = `BG001_${uid}`;
-  const mainContainer = `main_${uid}`;
-  const imageContainer = `imgCont_${uid}`;
-
-  const obj1 = {
-    actions: [
-      // Background
-      {
-        cmd: "divAction",
-        id: BG001,
-        ToEndFrame: true,
-        styleCss: {
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        },
-      },
-      {
-        cmd: CMD_Fetch.imageViewActionToID,
-        toID: BG001,
-        ToEndFrame: true,
-        img: arr[0].backgroundIMG,
-        styleCss: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        },
-      },
-      // Main container
-      {
-        cmd: CMD_Fetch.divAction,
-        id: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          position: "absolute",
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          padding: "50px",
-        },
-      },
-
-      // Image container (ở giữa)
-      {
-        cmd: CMD_Fetch.divAction,
-        id: imageContainer,
-        toID: mainContainer,
-        group: arr[0].group,
-        styleCss: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          width: "100%",
-        },
-      },
-
-      // Image với hiệu ứng xoay vòng giảm dần
-      {
-        cmd: CMD_Fetch.imageViewActionToID,
-        img: arr[0].img,
-        toID: imageContainer,
-        group: arr[0].group,
-        styleCss: {
-          width: "600px",
-          height: "600px",
-          maxWidth: "90%",
-          maxHeight: "90%",
-          objectFit: "contain", // ⭐ Đổi từ "cover" thành "contain" để giữ nguyên ảnh
-          filter:
-            "drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(0 0 20px rgba(255,255,0,0.5))", // ⭐ Viền phát sáng
-          animation: "spinSlowDown 3s ease-out forwards",
-          animationIterationCount: "1",
-        },
-      },
-
-      // Sound khi ảnh xuất hiện
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: arr[0].soundEffect,
       },
     ],
     code: arr[0].code,
@@ -741,7 +694,6 @@ function group2_1(arr) {
   finalSet.push(obj_002);
   return finalSet;
 }
-
 //group 3 object
 function group3_lietke(arr) {
   const uid = `${arr[0].group}`;
@@ -851,6 +803,7 @@ function group3_lietke(arr) {
           maxWidth: "100%",
           maxHeight: "100%",
           borderRadius: "25px",
+          animation: "fadeInSlideUp 1s ease-in-out forwards",
         },
       },
       // Chữ bên phải
@@ -871,21 +824,19 @@ function group3_lietke(arr) {
         text: arr[0].text,
         toID: div0Text,
         group: arr[0].group,
+        noTyping: true,
         styleCss: {
           fontSize: arr[0].textSize || "50px",
           fontWeight: 700,
           color: "#fff",
           textAlign: "center",
           WebkitTextStroke: "2px #000",
+          animation: "fadeInSlideUp 1s ease-in-out forwards",
         },
       },
       {
         cmd: CMD_Fetch.soundPlayerAction,
         soundSource: arr[0].soundEffect,
-      },
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
       },
       // ===== DIV 1 (arr[1]): Chữ trái - Ảnh phải - ẨN =====
       {
@@ -992,12 +943,14 @@ function group3_lietke(arr) {
           maxWidth: "100%",
           maxHeight: "100%",
           borderRadius: "15px",
+          animation: "fadeInSlideUp 1s ease-in-out forwards",
         },
       },
       {
         cmd: CMD_Fetch.typingText,
         text: arr[1].text,
         toID: div1Text,
+        noTyping: true,
         group: arr[0].group,
         styleCss: {
           fontSize: arr[1].textSize || "50px",
@@ -1005,11 +958,8 @@ function group3_lietke(arr) {
           color: "#fff",
           textAlign: "center",
           WebkitTextStroke: "2px #000",
+          animation: "fadeInSlideUp 1s ease-in-out forwards",
         },
-      },
-      {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
       },
     ],
     code: arr[1].code,
@@ -1023,20 +973,18 @@ function group3_lietke(arr) {
         soundSource: arr[2].soundEffect,
       },
       {
-        cmd: CMD_Fetch.soundPlayerAction,
-        soundSource: "SOUNDCHUNG_tiktokTypingSoundCapcut",
-      },
-      {
         cmd: CMD_Fetch.typingText,
         text: arr[2].text,
         toID: div2Text,
         group: arr[0].group,
+        noTyping: true,
         styleCss: {
           fontSize: arr[2].textSize || "50px",
           fontWeight: 700,
           color: "#fff",
           textAlign: "center",
           WebkitTextStroke: "2px #000",
+          animation: "fadeInSlideUp 1s ease-in-out forwards",
         },
       },
       {
@@ -1050,6 +998,7 @@ function group3_lietke(arr) {
           maxWidth: "100%",
           maxHeight: "100%",
           borderRadius: "15px",
+          animation: "fadeInSlideUp 1s ease-in-out forwards",
         },
       },
     ],
