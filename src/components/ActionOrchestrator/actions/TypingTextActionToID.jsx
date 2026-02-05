@@ -31,10 +31,10 @@ function TypingTextActionToID({ data }) {
       ? [{ text: item.text, type: "normal" }]
       : [{ text: "", type: "normal" }];
 
-  console.log("TypingTextActionToID:", {
-    toID: action.toID,
-    text: action.text,
-  });
+  // console.log("TypingTextActionToID:", {
+  //   toID: action.toID,
+  //   text: action.text,
+  // });
 
   // ✅ Merge styles (hỗ trợ cả styleCss và styCss)
   const baseStyle = action.styleCss || action.styCss || {};

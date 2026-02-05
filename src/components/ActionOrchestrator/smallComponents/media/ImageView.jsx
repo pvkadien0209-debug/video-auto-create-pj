@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   staticFile,
   continueRender,
@@ -9,11 +9,15 @@ import {
   useAnimations,
   getAnimationStyle,
 } from "../../utils/animations/animationResolver.js";
+import {
+  useTransition,
+  applyTransitionToStyle,
+} from "../../utils/transitions/transitionResolver.js";
 
 /**
- * Component hiển thị hình ảnh với pre-loading và custom styling
- * ⭐ Pattern giống TypingText - nhận data object
- * ⭐ HỖ TRỢ REMOTION ANIMATIONS thay vì CSS animation loops
+ * Component hiển thị hình ảnh với pre-loading, custom styling và smooth transitions
+ * ⭐ Sử dụng centralized transition system
+ * ⭐ Hỗ trợ transition loop (infinite)
  */
 const ImageView = ({
   img,
@@ -27,20 +31,19 @@ const ImageView = ({
   dataAction = {},
 }) => {
   const currentFrame = useCurrentFrame();
-
   const [imageLoaded, setImageLoaded] = useState(false);
   const [loadedImageSrc, setLoadedImageSrc] = useState(null);
   const [handle] = useState(() => delayRender("Loading image"));
 
-  // ⭐ Lấy id/class từ dataAction hoặc data
+  // Lấy id/class từ dataAction hoặc data
   const elementId = dataAction.id || data.id;
   const elementClass = dataAction.className || data.className;
 
-  // ⭐ Lấy animations từ data
+  // Lấy animations từ data
   const animations = dataAction.animations || data.animations || [];
   const animationStyles = useAnimations(animations);
 
-  // ✅ Logic lấy image path (giống logic trong code cũ)
+  // Logic lấy image path
   const getImagePath = (imgName) => {
     if (!imgName) return null;
     if (imgName.includes("_")) {
@@ -53,7 +56,25 @@ const ImageView = ({
 
   const imgPath = getImagePath(img);
 
-  // ✅ Pre-load image với delayRender/continueRender
+  // ⭐ Calculate relative frame for transition
+  const relativeFrame = useMemo(() => {
+    return frame - startFrame;
+  }, [frame, startFrame]);
+
+  const durationInFrames = useMemo(() => {
+    return endFrame - startFrame;
+  }, [endFrame, startFrame]);
+
+  // ⭐ USE TRANSITION HOOK
+  const transitionValues = useTransition(
+    relativeFrame,
+    data,
+    dataAction,
+    durationInFrames,
+    { type: "fadeIn", duration: 15, loop: false }, // default
+  );
+
+  // Pre-load image với delayRender/continueRender
   useEffect(() => {
     if (!imgPath) {
       setImageLoaded(true);
@@ -66,6 +87,9 @@ const ImageView = ({
 
     image.onload = () => {
       console.log(`✅ Image loaded: ${imgPath}`);
+      console.log(
+        ` 🎭 Transition: ${transitionValues.config.type} (${transitionValues.config.duration} frames, loop: ${transitionValues.config.loop})`,
+      );
       setLoadedImageSrc(image.src);
       setImageLoaded(true);
       continueRender(handle);
@@ -78,35 +102,26 @@ const ImageView = ({
     };
 
     return () => {
-      // Cleanup nếu component unmount
       image.onload = null;
       image.onerror = null;
     };
   }, [imgPath, handle]);
 
-  // ✅ Check visibility (giống TypingText)
+  // Check visibility
   if (frame < startFrame || frame > endFrame) return null;
   if (!imageLoaded) return null;
   if (!imgPath) return null;
 
-  // ✅ Nếu image load fail
+  // Nếu image load fail
   if (!loadedImageSrc) {
     return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "white",
-          fontSize: "24px",
-        }}
-      >
-        Image not found: {img}
+      <div style={{ color: "red", padding: "10px" }}>
+        ⚠️ Image not found: {img}
       </div>
     );
   }
 
-  // ✅ Default style nếu không có custom
+  // Default style nếu không có custom
   const defaultStyle = {
     width: imgSize,
     height: imgSize,
@@ -115,13 +130,11 @@ const ImageView = ({
     boxShadow: "0 10px 40px rgba(0, 0, 0, 0.3)",
   };
 
-  // ⭐ BUILD SELECTOR
+  // BUILD SELECTOR
   const containerSelector = elementId ? `#${elementId}` : null;
 
-  // ⭐ MERGE: defaultStyle + styCss + animation
-  const baseStyle = {
-    ...styCss,
-  };
+  // ⭐ MERGE: defaultStyle + styCss + transition
+  const baseStyle = applyTransitionToStyle(styCss, transitionValues);
 
   const finalStyle = containerSelector
     ? getAnimationStyle(animationStyles, containerSelector, baseStyle)
@@ -133,6 +146,8 @@ const ImageView = ({
       containerSelector,
       hasAnimation: !!animationStyles[containerSelector],
       animationCount: animations.length,
+      transition: transitionValues.config,
+      relativeFrame,
     });
   }
 
@@ -141,7 +156,7 @@ const ImageView = ({
       id={elementId}
       className={elementClass}
       src={loadedImageSrc}
-      alt={data.alt || img || "..."}
+      alt={img}
       style={finalStyle}
     />
   );

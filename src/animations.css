@@ -155,3 +155,324 @@
     transform: scale(1);
   }
 }
+/* ===== ANIMATIONS KEYFRAMES ===== */
+
+/* Rotate Animations */
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate180 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes rotateReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* Scale Animations */
+@keyframes scaleUp {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.5);
+  }
+}
+
+@keyframes scaleDown {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.5);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes bounceScale {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10%,
+  30% {
+    transform: scale(1.1);
+  }
+  20%,
+  40% {
+    transform: scale(1);
+  }
+}
+
+@keyframes breathing {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Shake Animations */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes shakeHard {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-20px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(20px);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(15deg);
+  }
+  40% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes jello {
+  0%,
+  100% {
+    transform: skewX(0deg) skewY(0deg);
+  }
+  30% {
+    transform: skewX(25deg) skewY(25deg);
+  }
+  40% {
+    transform: skewX(-15deg) skewY(-15deg);
+  }
+  50% {
+    transform: skewX(15deg) skewY(15deg);
+  }
+  65% {
+    transform: skewX(-5deg) skewY(-5deg);
+  }
+  75% {
+    transform: skewX(5deg) skewY(5deg);
+  }
+}
+
+/* Combined Animations */
+@keyframes rotateScale {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.3);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes shakeGrow {
+  0%,
+  100% {
+    transform: translateX(0) scale(1);
+  }
+  25%,
+  75% {
+    transform: translateX(-10px) scale(1.1);
+  }
+  50% {
+    transform: translateX(10px) scale(1.2);
+  }
+}
+
+@keyframes spinBounce {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(90deg) translateY(-20px);
+  }
+  50% {
+    transform: rotate(180deg) translateY(0);
+  }
+  75% {
+    transform: rotate(270deg) translateY(-10px);
+  }
+}
+
+@keyframes rotatePulse {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(90deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+  }
+  75% {
+    transform: rotate(270deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes swingScale {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(10deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(0deg) scale(1);
+  }
+  75% {
+    transform: rotate(-10deg) scale(1.1);
+  }
+}
+/* Morphing từ circle sang square */
+@keyframes morphCircleToSquare {
+  0% {
+    clip-path: circle(50%);
+  }
+  100% {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
+/* Morphing từ heart sang star */
+@keyframes morphHeartToStar {
+  0% {
+    clip-path: polygon(
+      50% 20%,
+      20% 0%,
+      0% 20%,
+      0% 40%,
+      50% 90%,
+      100% 40%,
+      100% 20%,
+      80% 0%
+    );
+  }
+  100% {
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+  }
+}
+
+/* Pulse với clip-path */
+@keyframes clipPathPulse {
+  0%,
+  100% {
+    clip-path: circle(40%);
+  }
+  50% {
+    clip-path: circle(60%);
+  }
+}

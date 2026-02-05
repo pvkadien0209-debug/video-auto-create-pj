@@ -5,15 +5,15 @@ import { calculateCssOverrides } from "./utils/cssOverrideManager";
 import { ACTION_REGISTRY } from "./utils/actionRegistry";
 
 /**
- * 🎯 ACTION ORCHESTRATOR - File trung gian điều hành các actions
+ * 🎯 ACTION ORCHESTRATOR - FIXED VERSION
  *
- * Chức năng:
- * - Quản lý timeline và frame calculations
- * - Tìm các actions đang active
- * - Tính toán CSS overrides tích lũy
- * - Render actions thông qua registry
- * ⭐ Hỗ trợ delay actions
- * ⭐ Hỗ trợ parent-child hierarchy với 3 style levels
+ * ✅ FIX: actionDuration tính từ item.startFrame (không phải actionStartFrame)
+ *
+ * TIMING PRIORITY:
+ * 1. actionDuration (highest) - actionEndFrame = item.startFrame + actionDuration
+ * 2. ToEndFrame - Kéo dài đến cuối video
+ * 3. group - Sync với group
+ * 4. item.endFrame (default) - Fallback
  */
 function ActionOrchestrator({ codeFrame = [], textEnd }) {
   const frame = useCurrentFrame();
@@ -23,7 +23,8 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
     if (codeFrame.length === 0) return 0;
     return Math.max(...codeFrame.map((item) => item.endFrame));
   }, [codeFrame]);
-  // ⭐ Tính toán group endFrames (endFrame lớn nhất của mỗi group)
+
+  // ⭐ Tính toán group endFrames
   const groupEndFrames = React.useMemo(() => {
     const groupMap = new Map();
 
@@ -37,14 +38,11 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
       actions.forEach((action) => {
         if (!action || !action.cmd) return;
 
-        // Chỉ xét các action có group (không phải undefined, null)
         const group = action.group;
         if (group === undefined || group === null) return;
 
-        // Lấy endFrame hiện tại của group (nếu đã có)
         const currentGroupEndFrame = groupMap.get(group) || 0;
 
-        // So sánh và lưu endFrame lớn nhất
         if (item.endFrame > currentGroupEndFrame) {
           groupMap.set(group, item.endFrame);
         }
@@ -54,14 +52,14 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
     return groupMap;
   }, [codeFrame]);
 
-  // ✅ Tìm currentItem (fallback logic)
+  // ✅ Tìm currentItem
   const currentItem = React.useMemo(() => {
     return codeFrame.find(
       (item) => frame >= item.startFrame && frame < item.endFrame,
     );
   }, [codeFrame, frame]);
 
-  // ✅ Tìm TẤT CẢ actions đang active (với delay support)
+  // ✅ Tìm TẤT CẢ actions đang active
   const activeActions = React.useMemo(() => {
     const allActiveActions = [];
 
@@ -75,36 +73,59 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
       actions.forEach((action, actionIndex) => {
         if (!action || !action.cmd) return;
 
-        // ⭐ Tính toán frame range với DELAY support
+        // ⭐ Tính toán frame range
         let actionStartFrame = item.startFrame;
         let actionEndFrame = item.endFrame;
 
         // ⭐ 1. Apply delay trước (nếu có)
         if (typeof action.delay === "number") {
-          actionStartFrame = item.startFrame + action.delay;
+          actionStartFrame = actionStartFrame + action.delay;
         }
 
-        // ⭐ 2. Xử lý ToEndFrame và ChangeStartFrame/ChangeEndFrame
-        if (action.ToEndFrame === true) {
+        // ⭐ 2. ƯU TIÊN CAO NHẤT: actionDuration
+        if (typeof action.actionDuration === "number") {
+          // ✅ FIX: Tính từ actionStartFrame, đã tính delay!
+          actionEndFrame = actionStartFrame + action.actionDuration;
+
+          // Debug log
+          if (process.env.NODE_ENV === "development") {
+            console.log(`📊 Action ${actionIndex + 1} [${action.cmd}]:`, {
+              delay: action.delay || 0,
+              actionDuration: action.actionDuration,
+              itemStartFrame: item.startFrame,
+              actionStartFrame,
+              actionEndFrame,
+              visibleDuration: actionEndFrame - actionStartFrame,
+            });
+          }
+
+          // Vẫn cho phép ChangeStartFrame nếu cần
+          if (typeof action.ChangeStartFrame === "number") {
+            actionStartFrame = actionStartFrame + action.ChangeStartFrame;
+          }
+        }
+        // ⭐ 3. Xử lý ToEndFrame (nếu không có actionDuration)
+        else if (action.ToEndFrame === true) {
           actionEndFrame = toEndFrame;
           if (typeof action.ChangeStartFrame === "number") {
             actionStartFrame = actionStartFrame + action.ChangeStartFrame;
           }
-        } else if (action.group !== undefined && action.group !== null) {
-          // ✅ Ưu tiên 2: Group
+        }
+        // ⭐ 4. Xử lý group (nếu không có actionDuration và ToEndFrame)
+        else if (action.group !== undefined && action.group !== null) {
           const groupEndFrame = groupEndFrames.get(action.group);
           if (groupEndFrame !== undefined) {
             actionEndFrame = groupEndFrame;
           }
-
-          // Vẫn cho phép ChangeStartFrame và ChangeEndFrame
           if (typeof action.ChangeStartFrame === "number") {
             actionStartFrame = actionStartFrame + action.ChangeStartFrame;
           }
           if (typeof action.ChangeEndFrame === "number") {
             actionEndFrame = actionEndFrame + action.ChangeEndFrame;
           }
-        } else {
+        }
+        // ⭐ 5. Fallback
+        else {
           if (typeof action.ChangeStartFrame === "number") {
             actionStartFrame = actionStartFrame + action.ChangeStartFrame;
           }
@@ -113,7 +134,7 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
           }
         }
 
-        // ⭐ 3. Check active (với frame range đã tính delay)
+        // ⭐ 6. Check active
         if (frame >= actionStartFrame && frame <= actionEndFrame) {
           allActiveActions.push({
             action,
@@ -128,9 +149,9 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
     });
 
     return allActiveActions;
-  }, [codeFrame, frame, toEndFrame]);
+  }, [codeFrame, frame, toEndFrame, groupEndFrames]);
 
-  // ✅ Tính toán CSS Overrides tích lũy
+  // ✅ Tính toán CSS Overrides
   const cssOverrides = React.useMemo(() => {
     return calculateCssOverrides(codeFrame, frame, toEndFrame);
   }, [codeFrame, frame, toEndFrame]);
@@ -149,8 +170,8 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
       actionEndFrame,
     } = activeActionData;
 
-    // Lấy ActionComponent từ registry
     const ActionComponent = ACTION_REGISTRY[action.cmd];
+
     if (!ActionComponent) {
       console.warn(
         `[ActionOrchestrator] ⚠️ Unknown action cmd: "${action.cmd}"`,
@@ -158,25 +179,18 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
       return null;
     }
 
-    // ✅ Chuẩn bị data object - SPREAD TOÀN BỘ item properties
     const actionData = {
-      // ⭐ SPREAD TOÀN BỘ properties của item trước
       ...item,
-      // Core data (có thể override item properties nếu trùng tên)
       action,
-      item, // Giữ lại reference đầy đủ
+      item,
       frame,
-      // Frame timing
       actionStartFrame,
       actionEndFrame,
       toEndFrame,
-      // Styling
       cssOverrides,
       defaultTextStyle,
-      // Identifiers
       itemIndex,
       actionIndex,
-      // ⭐ Class & ID - Ưu tiên action TRƯỚC, sau đó item
       className:
         action.className || action.class || item.ClassMark || item.className,
       id: action.id || item.IDMark || item.id,
@@ -189,25 +203,18 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
   const renderActionWithWrapper = (activeActionData, index) => {
     const { action } = activeActionData;
 
-    // Lấy parentID và childID từ action
     const parentID = action.parentID || action.parentId;
     const childID = action.childID || action.childId;
-
     const parentClass = action.parentClass || "";
     const childClass = action.childClass || "";
 
-    // Generate unique key
     const key = `${action.cmd}-${activeActionData.itemIndex}-${activeActionData.actionIndex}`;
 
-    // ✅ Render component
     const component = renderActionComponent(activeActionData);
 
-    // ⭐ CHỈ xét trường hợp có CẢ parentID và childID
     if (parentID && childID) {
-      // Lấy 3 style riêng biệt
       const parentStyle = action.styleCssParent || {};
       const childStyle = action.styleCssChild || {};
-      // styleCss sẽ được component tự xử lý thông qua action data
 
       return (
         <div
@@ -222,7 +229,6 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
       );
     }
 
-    // ⭐ Không có cả 2 - render trực tiếp
     return <React.Fragment key={key}>{component}</React.Fragment>;
   };
 

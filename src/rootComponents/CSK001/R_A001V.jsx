@@ -90,7 +90,8 @@ const FrameCalculator = ({ items, volume = 2, onDataReady }) => {
 
         if (e.timeFixed && e.timeFixed > 0) {
           // Nếu có timeFixed, dùng timeFixed
-          duration = e.timeFixed * 30;
+          duration = Math.max(1, Math.round(e.timeFixed * 30));
+
           soundDuration = duration; // SoundPlay cũng dùng timeFixed
         } else if (e.duration) {
           // Nếu có duration thủ công
@@ -175,9 +176,9 @@ const FrameCalculator = ({ items, volume = 2, onDataReady }) => {
 
         if (e.timeFixed && e.timeFixed > 0) {
           // Nếu có timeFixed, dùng timeFixed
-          duration = e.timeFixed * 30;
+          duration = Math.max(1, Math.round(e.timeFixed * 30));
           // SoundPlay tối đa bằng timeFixed
-          soundDuration = Math.min(audioDuration, e.timeFixed * 30);
+          soundDuration = Math.min(audioDuration, duration);
         } else if (e.duration) {
           // Nếu có duration thủ công
           duration = e.duration * 30;

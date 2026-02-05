@@ -3,314 +3,891 @@
     {
       "actions": [
         {
-          "cmd": "divAction",
-          "id": "DIV001",
+          "cmd": "imageViewActionToID",
+          "ToEndFrame": true,
+          "img": "BG_mau-do.jpg",
+          "ChangeStartFrame": -10,
           "styleCss": {
             "position": "absolute",
-            "display": "flex",
-            "flexDirection": "row",
-            "gap": "20px",
-            "top": "100px",
-            "zIndex": "10",
-            "width": "1000px"
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0",
+            "inset": "0",
+            "scale": 6
           }
         },
         {
+          "cmd": "soundPlayer",
+          "soundSource": "SOUNDCHUNG_Anxiety",
+
+          "loop": true,
+          "ToEndFrame": true
+        },
+        {
           "cmd": "divAction",
-          "id": "DIV001A",
-          "toID": "DIV001",
-          "delay": 30,
+          "group": "G1A",
+          "id": "A001",
           "styleCss": {
-            "zIndex": "10",
-            "width": "200px",
-            "height": "100px",
-            "backgroundColor": "yellow",
-            "opacity": 0,
-            "animation": "fadeInSlideUp 2.000000s ease-out 0.000000s 1 forwards"
+            "position": "absolute",
+            "top": "300px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
           }
         },
         {
-          "cmd": "divAction",
-          "id": "DIV001B",
-          "toID": "DIV001",
-          "delay": 60,
+          "cmd": "typingTextActionToID",
+          "group": "G1A",
+          "toID": "A001",
+          "text": "🎯 Muốn làm TikTok?",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        },
+        {
+          "cmd": "videoView",
+          "group": "G1A",
+          "video": "kd_video001.mp4",
+          "videoStartFrom": 0,
+          "volume": 0,
+          "loop": true,
           "styleCss": {
-            "zIndex": "10",
-            "width": "200px",
-            "height": "300px",
-            "backgroundColor": "blue",
-            "opacity": 0,
-            "animation": "fadeInSlideUp 2.000000s ease-out 0.000000s 1 forwards"
+            "position": "absolute",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "top": "1000px",
+            "border": "5px solid black",
+            "overflow": "hidden",
+            "height": "500px",
+            "width": "888px"
           }
-        },
-        {
-          "cmd": "divAction",
-          "id": "DIV001C",
-          "toID": "DIV001B",
-          "delay": 70,
-          "styleCss": {}
         }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
-      "timeFixed": 7,
+      "timeFixed": 2,
       "stt": 0
     },
     {
       "actions": [
         {
-          "cmd": "typingText",
-          "text": "+1 Kiến thức về phòng chữa bệnh Cơ xương khớp!",
+          "cmd": "divAction",
+          "group": "G1A",
+          "id": "A002",
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
+            "position": "absolute",
+            "top": "500px",
             "border": "1px solid black",
-            "fontSize": "100px"
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
           }
         },
         {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut"
+          "cmd": "typingTextActionToID",
+          "group": "G1A",
+          "toID": "A002",
+          "text": "❌ Bận ❌ Không biết edit",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
         }
       ],
-      "code": "CSKA_000",
-      "timeFixed": null,
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
       "stt": 1
     },
     {
       "actions": [
         {
-          "cmd": "typingTextActionToID",
-          "text": "Tôi bị đau khớp kéo dài hơn 2 tuần không giảm, nhận định nào là đúng nhất?",
-          "group": "1",
+          "cmd": "divAction",
+          "group": "G1A",
+          "id": "A003",
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
             "position": "absolute",
-            "top": "50px",
-            "backgroundColor": "yellow"
+            "top": "700px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
           }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G1A",
+          "toID": "A003",
+          "text": "😩 Đăng 3 hôm rồi bỏ",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
         }
       ],
-      "code": "CSKA_001",
-      "timeFixed": null,
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
       "stt": 2
     },
     {
       "actions": [
         {
-          "cmd": "typingTextActionToID",
-          "text": "A. Đau khớp nào cũng tự hết.",
-          "group": "1",
+          "cmd": "divAction",
+          "group": "G3AB",
+          "id": "IMG002",
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
             "position": "absolute",
-            "top": "400px",
-            "backgroundColor": "red"
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "top": "550px",
+            "border": "5px solid black",
+            "overflow": "hidden",
+            "height": "500px",
+            "width": "500px"
           }
+        },
+        {
+          "cmd": "divAction",
+          "group": "G3AB",
+          "id": "A004",
+          "styleCss": {
+            "position": "absolute",
+            "top": "300px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G3AB",
+          "toID": "A004",
+          "text": "🚀 CẦN GIẢI PHÁP",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "IMG002",
+          "img": "kd_img001.png",
+          "styleCss": { "width": "500px" }
         }
       ],
-      "code": "CSKA_002",
-      "timeFixed": null,
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
       "stt": 3
     },
     {
       "actions": [
         {
-          "cmd": "typingTextActionToID",
-          "text": "B. Chỉ cần uống thuốc giảm đau là đủ.",
-          "group": "1",
+          "cmd": "divAction",
+          "group": "G3AB1",
+          "id": "A005",
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
             "position": "absolute",
-            "top": "550px",
-            "backgroundColor": "green"
+            "top": "1100px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
           }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G3AB1",
+          "toID": "A005",
+          "text": "📅 Video mỗi ngày",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "IMG002",
+          "img": "kd_img002.png",
+          "styleCss": { "width": "500px" }
         }
       ],
-      "code": "CSKA_003",
-      "timeFixed": null,
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
       "stt": 4
     },
     {
       "actions": [
         {
-          "cmd": "typingTextActionToID",
-          "text": "C. Đau kéo dài có thể là bệnh, nên đi khám.",
-          "group": "1",
+          "cmd": "divAction",
+          "group": "G3AB2",
+          "id": "A006",
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
             "position": "absolute",
-            "top": "800px",
-            "backgroundColor": "purple"
+            "top": "1100px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
           }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G3AB2",
+          "toID": "A006",
+          "text": "🔁 Đều đặn",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "IMG002",
+          "img": "kd_img003.png",
+          "styleCss": { "width": "500px" }
         }
       ],
-      "code": "CSKA_004",
-      "timeFixed": null,
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
       "stt": 5
     },
     {
       "actions": [
         {
-          "cmd": "typingTextActionToID",
-          "text": "D. Chỉ người già mới bị bệnh khớp.",
-          "group": "1",
+          "cmd": "divAction",
+          "group": "G3AB3",
+          "id": "A007",
           "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
             "position": "absolute",
-            "top": "1050px",
-            "backgroundColor": "blue"
+            "top": "1100px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
           }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G3AB3",
+          "toID": "A007",
+          "text": "✨ Dễ dàng",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "IMG002",
+          "img": "kd_img004.png",
+          "styleCss": { "width": "500px" }
         }
       ],
-      "code": "CSKA_005",
-      "timeFixed": null,
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
       "stt": 6
     },
     {
       "actions": [
         {
-          "cmd": "countdown",
-          "countDownFrom": 1,
-          "colorTheme": "orange",
-          "zIndex": 100,
+          "cmd": "divAction",
+          "group": "G3AB",
+          "id": "A008",
           "styleCss": {
-            "transform": "translate(-50%, -50%) scale(2)",
-            "top": "50%",
-            "left": "50%",
             "position": "absolute",
-            "animation": "slowRotate 5.000000s linear 0.000000s infinite both"
+            "top": "1100px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
           }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G3AB",
+          "toID": "A008",
+          "text": "💰 Chi phí hợp lý",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "IMG002",
+          "img": "kd_img005.png",
+          "styleCss": { "width": "500px" }
         }
       ],
       "code": "SOUNDCHUNG_SpaceSound",
-      "timeFixed": 1,
+      "timeFixed": 2,
       "stt": 7
     },
     {
       "actions": [
-        null,
         {
-          "cmd": "divAction",
-          "id": "DUNG",
+          "cmd": "videoView",
+          "group": "G4A",
+          "video": "kd_vdA1.mp4",
+          "videoStartFrom": 0,
+          "volume": 0,
           "styleCss": {
-            "position": "flex",
-            "top": "100px",
-            "zIndex": "10",
-            "width": "100%",
-            "backgroundColor": "red",
-            "transition": "height 5s ease-out"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "DUNG1",
-          "styleCss": {
-            "position": "flex",
-            "backgroundColor": "yellow",
+            "position": "absolute",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "top": "50px",
+            "border": "5px solid black",
+            "overflow": "hidden",
+            "height": "1776px",
             "width": "1000px",
-            "height": "100px"
+            "zIndex": "0",
+            "opacity": "0.5"
           }
         },
-        null,
         {
-          "cmd": "actionCssId",
-          "toID": "DUNG",
-          "cssMode": "add",
-          "css": { "backgroundColor": "yellow", "color": "black" }
+          "cmd": "divAction",
+          "group": "G4A",
+          "id": "A009",
+          "styleCss": {
+            "position": "absolute",
+            "top": "300px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "blue",
+            "width": "100%",
+            "zIndex": "1"
+          }
         },
         {
           "cmd": "typingTextActionToID",
-          "toID": "DUNG",
-          "text": "e.text",
-          "styleCss": {
-            "width": "1000px",
-            "minHeight": "100px",
-            "border": "1px solid black",
-            "fontSize": "100px",
-            "position": "flex"
-          }
-        },
-        {
-          "cmd": "actionCssId",
-          "toID": "B25",
-          "cssMode": "add",
-          "css": {
-            "backgroundColor": "yellow",
-            "color": "black",
-            "height": "300px"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG",
-          "img": "CSK_001.png",
-          "styleCss": { "width": "100px", "position": "relative" }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG1",
-          "img": "CSK_001.png",
-          "styleCss": { "width": "100px", "position": "relative" }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "DUNG",
-          "delay": 30,
-          "img": "CSK_001.png",
-          "positionMode": "before",
-          "styleCss": {
-            "width": "200px",
-            "display": "block",
-            "animation": "fadeInScale 1.666667s linear 0.000000s 1 both"
-          }
-        },
-        null
+          "group": "G4A",
+          "toID": "A009",
+          "text": "✅ Vẫn đảm bảo",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
       ],
-      "code": "CSKA_006",
-      "timeFixed": null,
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
       "stt": 8
     },
     {
       "actions": [
         {
-          "cmd": "typingTextActionToID",
-          "text": "HÃY FOLLOW TÔI",
-          "sound": true,
-          "noTyping": false,
+          "cmd": "videoView",
+          "group": "G4A",
+          "video": "kd_vdA2.mp4",
+          "videoStartFrom": 0,
+          "volume": 0,
           "styleCss": {
             "position": "absolute",
-            "top": "100px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "top": "50px",
+            "border": "5px solid black",
+            "overflow": "hidden",
+            "height": "1776px",
+            "width": "1000px",
+            "zIndex": "0",
+            "opacity": "0.5"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "group": "G4A",
+          "id": "A010",
+          "styleCss": {
+            "position": "absolute",
+            "top": "500px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G4A",
+          "toID": "A010",
+          "text": "👤 Có mặt bạn",
+          "styleCss": {
             "fontSize": "70px",
-            "borderTop": "1px solid black",
-            "borderRadius": "20px",
-            "textAlign": "left",
-            "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            "padding": "20px",
-            "lineHeight": 1.75,
-            "letterSpacing": "0.5px",
-            "color": "#ffffff",
-            "zIndex": 2
+            "color": "yellow",
+            "fontWeight": 1000
           }
         }
       ],
-      "code": "CSKA_007",
-      "timeFixed": null,
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
       "stt": 9
+    },
+    {
+      "actions": [
+        {
+          "cmd": "videoView",
+          "group": "G4A",
+          "video": "kd_vdA3.mp4",
+          "videoStartFrom": 0,
+          "volume": 0,
+          "styleCss": {
+            "position": "absolute",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "top": "50px",
+            "border": "5px solid black",
+            "overflow": "hidden",
+            "height": "1776px",
+            "width": "1000px",
+            "zIndex": "0",
+            "opacity": "0.5"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "group": "G4A",
+          "id": "A011",
+          "styleCss": {
+            "position": "absolute",
+            "top": "700px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G4A",
+          "toID": "A011",
+          "text": "🎤 Có giọng bạn",
+          "styleCss": {
+            "fontSize": "70px",
+            "color": "yellow",
+            "fontWeight": 1000
+          }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 10
+    },
+    {
+      "actions": [
+        {
+          "cmd": "videoView",
+          "group": "G4A",
+          "video": "kd_vdA4.mp4",
+          "videoStartFrom": 0,
+          "volume": 0,
+          "styleCss": {
+            "position": "absolute",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "top": "50px",
+            "border": "5px solid black",
+            "overflow": "hidden",
+            "height": "1776px",
+            "width": "1000px",
+            "zIndex": "0",
+            "opacity": "0.5"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "group": "G4A",
+          "id": "A012",
+          "styleCss": {
+            "position": "absolute",
+            "top": "900px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G4A",
+          "toID": "A012",
+          "text": "🖼️ Hiệu ứng hình",
+          "styleCss": {
+            "fontSize": "70px",
+            "color": "yellow",
+            "fontWeight": 1000
+          }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 11
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G4A",
+          "id": "A013",
+          "styleCss": {
+            "position": "absolute",
+            "top": "1100px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G4A",
+          "toID": "A013",
+          "text": "🔊 Hiệu ứng âm",
+          "styleCss": {
+            "fontSize": "70px",
+            "color": "yellow",
+            "fontWeight": 1000
+          }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 12
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G6A",
+          "id": "A017",
+          "styleCss": {
+            "position": "absolute",
+            "top": "300px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "padding": "20px",
+            "boxShadow": "0 10px 40px rgba(0,0,0,0.3)",
+            "borderRadius": "32px",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G6A",
+          "toID": "A017",
+          "text": "🛠️ Hỗ trợ xây dựng kênh",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 13
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G6A",
+          "id": "A018",
+          "styleCss": {
+            "position": "absolute",
+            "top": "600px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "padding": "20px",
+            "boxShadow": "0 10px 40px rgba(0,0,0,0.3)",
+            "borderRadius": "32px",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G6A",
+          "toID": "A018",
+          "text": "⏱️ Gói 100 videos",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 14
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G6A",
+          "id": "A019",
+          "styleCss": {
+            "position": "absolute",
+            "top": "900px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "padding": "20px",
+            "boxShadow": "0 10px 40px rgba(0,0,0,0.3)",
+            "borderRadius": "32px",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G6A",
+          "toID": "A019",
+          "text": "📦 Dịch vụ quản lí đăng bài",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 15
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G6A",
+          "id": "A020",
+          "styleCss": {
+            "position": "absolute",
+            "top": "1200px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "padding": "20px",
+            "boxShadow": "0 10px 40px rgba(0,0,0,0.3)",
+            "borderRadius": "32px",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G6A",
+          "toID": "A020",
+          "text": "🎬 Dịch vụ quản lí tài khoản",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 16
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G7A",
+          "id": "A021",
+          "styleCss": {
+            "position": "absolute",
+            "top": "300px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G7A",
+          "toID": "A021",
+          "text": "👇 Phù hợp cho",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 17
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G7A",
+          "id": "A022",
+          "styleCss": {
+            "position": "absolute",
+            "top": "500px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "400px",
+            "width": "50%",
+            "left": "50%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G7A",
+          "toID": "A022",
+          "text": "🌱 Người mới",
+          "styleCss": {
+            "fontSize": "70px",
+            "color": "yellow",
+            "fontWeight": 900
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "A022",
+          "img": "kd_img006.png",
+          "styleCss": { "width": "500px" }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 18
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G7A",
+          "id": "A023",
+          "styleCss": {
+            "position": "absolute",
+            "top": "900px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "400px",
+            "width": "50%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G7A",
+          "toID": "A023",
+          "text": "🏃‍♂️ Người bận",
+          "styleCss": {
+            "fontSize": "70px",
+            "color": "yellow",
+            "fontWeight": 900
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "A023",
+          "img": "kd_img007.png",
+          "styleCss": { "width": "500px" }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 19
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G7A",
+          "id": "A024",
+          "styleCss": {
+            "position": "absolute",
+            "top": "1400px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G7A",
+          "toID": "A024",
+          "text": "⭐ Thương hiệu cá nhân",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 20
+    },
+    {
+      "actions": [
+        {
+          "cmd": "videoView",
+          "group": "G8A",
+          "video": "kd_Video003.mp4",
+          "videoStartFrom": 0,
+          "volume": 1,
+          "styleCss": {
+            "position": "absolute",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "top": "50px",
+            "overflow": "hidden",
+            "height": "1776px",
+            "width": "1000px",
+            "zIndex": "0",
+            "opacity": "0.5"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "group": "G8A",
+          "id": "A025",
+          "styleCss": {
+            "position": "absolute",
+            "top": "300px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G8A",
+          "toID": "A025",
+          "text": "📩 Liên hệ ngay",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 21
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "group": "G8A",
+          "id": "A026",
+          "styleCss": {
+            "position": "absolute",
+            "top": "500px",
+            "border": "1px solid black",
+            "overflow": "hidden",
+            "height": "200px",
+            "background": "yellow",
+            "width": "100%",
+            "zIndex": "1"
+          }
+        },
+        {
+          "cmd": "typingTextActionToID",
+          "group": "G8A",
+          "toID": "A026",
+          "text": "🎁 Demo miễn phí",
+          "styleCss": { "fontSize": "70px", "color": "red", "fontWeight": 900 }
+        }
+      ],
+      "code": "SOUNDCHUNG_SpaceSound",
+      "timeFixed": 2,
+      "stt": 22
     }
   ]
 ]

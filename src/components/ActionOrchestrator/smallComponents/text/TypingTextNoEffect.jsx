@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useMemo } from "react";
+import {
+  useTransition,
+  applyTransitionToStyle,
+} from "../../utils/transitions/transitionResolver.js";
 
 /**
  * Component hiển thị text không có animation
- * ⭐ Hiển thị trực tiếp text từ action.text hoặc data.text
+ * ⭐ Có transition support
  */
 const TypingTextNoEffect = ({
   frame,
@@ -12,12 +16,31 @@ const TypingTextNoEffect = ({
   data = {},
   dataAction = {},
 }) => {
+  // ⭐ Calculate relative frame
+  const relativeFrame = useMemo(() => frame - startFrame, [frame, startFrame]);
+  const durationInFrames = useMemo(
+    () => endFrame - startFrame,
+    [endFrame, startFrame],
+  );
+
+  // ⭐ USE TRANSITION HOOK
+  const transitionValues = useTransition(
+    relativeFrame,
+    data,
+    dataAction,
+    durationInFrames,
+    { type: "fadeIn", duration: 15, loop: false }, // default
+  );
+
   if (frame < startFrame || frame > endFrame) return null;
 
   // ⭐ Lấy text trực tiếp từ dataAction hoặc data
   const displayText = dataAction.text || data.text || "";
 
-  return <div style={styCss}>{displayText}</div>;
+  // ⭐ Apply transition to style
+  const finalStyle = applyTransitionToStyle(styCss, transitionValues);
+
+  return <div style={finalStyle}>{displayText}</div>;
 };
 
 export default TypingTextNoEffect;
