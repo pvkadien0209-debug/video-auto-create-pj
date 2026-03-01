@@ -3,7 +3,7 @@ import React from "react";
 import { Composition, staticFile } from "remotion";
 import { VideoTemplate } from "./R_A001V";
 import { videoData01 } from "./data";
-
+import { ensureFontsLoaded } from "../../utils/load-fonts";
 let videoData = videoData01;
 if (!videoData01[0].id) {
   let temVideoData = [];
@@ -62,7 +62,8 @@ export const RemotionVideo = () => {
             console.log("🚀 calculateMetadata STARTED for video:", props.id);
             console.log("Number of audio items:", props.item.data.length);
             console.log("========================================");
-
+            // ✅ LOAD FONT TRƯỚC TIÊN
+            await ensureFontsLoaded();
             let totalDurationInSeconds = 0;
             let successCount = 0;
             let failCount = 0;

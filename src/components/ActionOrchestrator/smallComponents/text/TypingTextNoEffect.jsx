@@ -29,7 +29,7 @@ const TypingTextNoEffect = ({
     data,
     dataAction,
     durationInFrames,
-    { type: "fadeIn", duration: 15, loop: false }, // default
+    { type: "none", duration: 0, loop: false }, // default
   );
 
   if (frame < startFrame || frame > endFrame) return null;

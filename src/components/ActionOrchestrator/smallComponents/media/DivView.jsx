@@ -40,7 +40,7 @@ const DivView = ({
     data,
     dataAction,
     durationInFrames,
-    { type: "fadeIn", duration: 15, loop: false }, // default
+    { type: "none", duration: 0, loop: false }, // default
   );
 
   // Visibility check
@@ -76,6 +76,7 @@ const DivView = ({
   return (
     <div id={elementId} className={elementClass} style={containerStyle}>
       {/* Div content here */}
+      {dataAction.text ? dataAction.text : null}
     </div>
   );
 };

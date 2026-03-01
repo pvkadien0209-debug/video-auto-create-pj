@@ -1,0 +1,130 @@
+/* ====================================
+   FONT TEXT STYLE CLASSES
+   ==================================== */
+.font-text-001 {
+  font-family: "Montserrat";
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  color: white;
+  -webkit-text-stroke: 15px black;
+  paint-order: stroke fill;
+}
+
+.font-text-002 {
+  font-family: "Nunito";
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  color: white;
+  -webkit-text-stroke: 10px #000000ff;
+  paint-order: stroke fill;
+}
+
+.font-text-003 {
+  font-family: "Be Vietnam Pro";
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  color: white;
+  -webkit-text-stroke: 11px #00eeffff;
+  paint-order: stroke fill;
+}
+
+.font-text-004 {
+  font-family: "Dancing Script";
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  color: white;
+  -webkit-text-stroke: 11px #ff0101ff;
+  paint-order: stroke fill;
+}
+
+.font-text-005 {
+  font-family: "Fuzzy Bubbles";
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  color: white;
+  -webkit-text-stroke: 15px #000000ff;
+  paint-order: stroke fill;
+}
+
+.font-text-006 {
+  font-family: "Fuzzy Bubbles";
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  color: #ff8800ff;
+  -webkit-text-stroke: 15px #500202ff;
+  text-shadow: 10px 10px 10px #000000ff;
+  paint-order: stroke fill;
+}
+
+.font-text-007 {
+  font-family: "Dancing Script";
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  color: #24d31eff;
+  -webkit-text-stroke: 10px #2e6b22ff;
+  text-shadow:
+    0 0 10px red,
+    0 0 20px red;
+  paint-order: stroke fill;
+}
+
+.font-text-008 {
+  font-family: "Bangers";
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  color: black;
+}
+
+.font-text-009 {
+  font-family: "Nunito";
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: 900;
+  color: #8d4343c5;
+}
+
+.font-text-010 {
+  font-family: "Fuzzy Bubbles";
+  letter-spacing: 10px;
+  font-weight: 800;
+  color: black;
+  -webkit-text-stroke: 3px #000000ff;
+}
+
+.font-text-011 {
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  font-weight: 900;
+  color: black;
+}
+
+.font-text-012 {
+  font-family: "Montserrat";
+  letter-spacing: 7px;
+  font-weight: 700;
+  color: black;
+}
+
+.font-text-013 {
+  font-family: "Nunito";
+  letter-spacing: 7px;
+  font-weight: 700;
+  color: black;
+}
+
+.font-text-014 {
+  font-family: "Fuzzy Bubbles";
+  letter-spacing: 7px;
+  font-weight: 700;
+  color: black;
+}

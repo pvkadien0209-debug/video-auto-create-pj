@@ -292,13 +292,20 @@ export const VideoTemplate = ({ item, duration }) => {
   const [codeFrame, setCodeFrame] = useState([]);
   const [imgFrame, setImgFrame] = useState([]);
   const [isDataReady, setIsDataReady] = useState(false);
+  const [handle] = useState(() => delayRender("⏳ Waiting for fonts..."));
 
   const handleDataReady = (codeFrameData, imgFrameData) => {
     setCodeFrame(codeFrameData);
     setImgFrame(imgFrameData);
     setIsDataReady(true);
   };
-
+  useEffect(() => {
+    // Chỉ cần check document.fonts.ready
+    // vì calculateMetadata đã load xong rồi
+    document.fonts.ready
+      .then(() => continueRender(handle))
+      .catch(() => continueRender(handle));
+  }, [handle]);
   return (
     <div
       style={{

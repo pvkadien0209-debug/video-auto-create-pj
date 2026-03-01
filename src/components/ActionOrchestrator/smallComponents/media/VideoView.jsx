@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Html5Video, staticFile, continueRender, delayRender } from "remotion";
+import {
+  Html5Video,
+  staticFile,
+  continueRender,
+  delayRender,
+  interpolate,
+} from "remotion";
 import {
   useTransition,
   applyTransitionToStyle,
@@ -9,7 +15,12 @@ import {
  * 🎬 VIDEO VIEW - WITH INTELLIGENT SIZING & SMOOTH TRANSITIONS
  * ⭐ Sử dụng centralized transition system
  * ⭐ Hỗ trợ transition loop (infinite)
+ * ⭐ Auto fadeOut 15f khi transition !== "none"
+ *    Override qua dataAction.fadeOutFrames / data.fadeOutFrames / fadeFrames
  */
+
+const DEFAULT_FADEOUT_FRAMES = 15;
+
 const VideoView = React.memo(
   ({
     video,
@@ -56,6 +67,48 @@ const VideoView = React.memo(
       return undefined;
     }, [videoStartFrom, videoDuration]);
 
+    // ⭐ Resolve transition type
+    const resolvedTransitionType = useMemo(() => {
+      if (dataAction.transition !== undefined) return dataAction.transition;
+      if (data.transition !== undefined) return data.transition;
+      return "fadeIn"; // default cho VideoView
+    }, [dataAction.transition, data.transition]);
+
+    const isTransitionNone = useMemo(() => {
+      const t = String(resolvedTransitionType || "none").toLowerCase();
+      return t === "none";
+    }, [resolvedTransitionType]);
+
+    // ⭐ FadeOut frames (override qua dataAction/data)
+    const fadeOutFrames = useMemo(() => {
+      if (dataAction.fadeOutFrames !== undefined)
+        return dataAction.fadeOutFrames;
+      if (data.fadeOutFrames !== undefined) return data.fadeOutFrames;
+      if (dataAction.fadeFrames !== undefined) return dataAction.fadeFrames;
+      if (data.fadeFrames !== undefined) return data.fadeFrames;
+      return DEFAULT_FADEOUT_FRAMES;
+    }, [
+      dataAction.fadeOutFrames,
+      data.fadeOutFrames,
+      dataAction.fadeFrames,
+      data.fadeFrames,
+    ]);
+
+    // ⭐ Auto fadeOut opacity khi transition !== "none"
+    const fadeOutOpacity = useMemo(() => {
+      if (isTransitionNone || fadeOutFrames <= 0) return 1;
+      const totalFrames = durationInFrames;
+      if (relativeFrame > totalFrames - fadeOutFrames) {
+        return interpolate(
+          relativeFrame,
+          [totalFrames - fadeOutFrames, totalFrames],
+          [1, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+        );
+      }
+      return 1;
+    }, [isTransitionNone, fadeOutFrames, relativeFrame, durationInFrames]);
+
     // ⭐ USE TRANSITION HOOK
     const transitionValues = useTransition(
       relativeFrame,
@@ -78,7 +131,6 @@ const VideoView = React.memo(
 
       videoElement.onloadedmetadata = () => {
         const aspectRatio = videoElement.videoWidth / videoElement.videoHeight;
-
         setVideoMetadata({
           width: videoElement.videoWidth,
           height: videoElement.videoHeight,
@@ -91,7 +143,7 @@ const VideoView = React.memo(
         );
         console.log(` 📊 Aspect Ratio: ${aspectRatio.toFixed(3)}`);
         console.log(
-          ` 🎭 Transition: ${transitionValues.config.type} (${transitionValues.config.duration} frames, loop: ${transitionValues.config.loop})`,
+          ` 🎭 Transition: ${transitionValues.config.type} (${transitionValues.config.duration} frames, loop: ${transitionValues.config.loop}) | Auto fadeOut: ${!isTransitionNone ? fadeOutFrames + "f" : "off"}`,
         );
 
         if (videoStartFrom > 0) {
@@ -161,7 +213,7 @@ const VideoView = React.memo(
     if (!videoLoaded || !videoPath || !loadedVideoSrc) return null;
 
     // ⭐ Container style - Combine với calculated dimensions và transition
-    const containerStyle = applyTransitionToStyle(
+    const transitionedStyle = applyTransitionToStyle(
       {
         ...styCss,
         width: calculatedDimensions.width,
@@ -173,6 +225,15 @@ const VideoView = React.memo(
       },
       transitionValues,
     );
+
+    // ⭐ Apply fadeOut opacity × transition opacity
+    const containerStyle = {
+      ...transitionedStyle,
+      opacity:
+        (transitionedStyle.opacity !== undefined
+          ? transitionedStyle.opacity
+          : 1) * fadeOutOpacity,
+    };
 
     // Video style
     const videoStyle = {
@@ -206,5 +267,4 @@ const VideoView = React.memo(
 );
 
 VideoView.displayName = "VideoView";
-
 export default VideoView;

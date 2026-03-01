@@ -5,16 +5,20 @@ import { calculateCssOverrides } from "./utils/cssOverrideManager";
 import { ACTION_REGISTRY } from "./utils/actionRegistry";
 
 /**
- * 🎯 ACTION ORCHESTRATOR - FIXED VERSION
+ * 🎯 ACTION ORCHESTRATOR - FIXED TIMING LOGIC
  *
- * ✅ FIX: actionDuration tính từ item.startFrame (không phải actionStartFrame)
+ * TIMING RULES:
+ * ✅ delay: Dịch chuyển NGUYÊN action (cả start và end), GIỮ NGUYÊN độ dài
+ * ✅ ChangeStartFrame: CHỈ thay đổi startFrame, ẢNH HƯỞNG độ dài
+ * ✅ ChangeEndFrame: CHỈ thay đổi endFrame, ẢNH HƯỞNG độ dài
  *
- * TIMING PRIORITY:
- * 1. actionDuration (highest) - actionEndFrame = item.startFrame + actionDuration
+ * PRIORITY:
+ * 1. actionDuration (highest) - endFrame = startFrame + actionDuration
  * 2. ToEndFrame - Kéo dài đến cuối video
  * 3. group - Sync với group
- * 4. item.endFrame (default) - Fallback
+ * 4. item.endFrame (fallback)
  */
+
 function ActionOrchestrator({ codeFrame = [], textEnd }) {
   const frame = useCurrentFrame();
 
@@ -27,7 +31,6 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
   // ⭐ Tính toán group endFrames
   const groupEndFrames = React.useMemo(() => {
     const groupMap = new Map();
-
     codeFrame.forEach((item) => {
       const actions = Array.isArray(item.actions)
         ? item.actions
@@ -37,18 +40,15 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
 
       actions.forEach((action) => {
         if (!action || !action.cmd) return;
-
         const group = action.group;
         if (group === undefined || group === null) return;
 
         const currentGroupEndFrame = groupMap.get(group) || 0;
-
         if (item.endFrame > currentGroupEndFrame) {
           groupMap.set(group, item.endFrame);
         }
       });
     });
-
     return groupMap;
   }, [codeFrame]);
 
@@ -73,68 +73,59 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
       actions.forEach((action, actionIndex) => {
         if (!action || !action.cmd) return;
 
-        // ⭐ Tính toán frame range
+        // ⭐ BƯỚC 1: Khởi tạo frame range từ item
         let actionStartFrame = item.startFrame;
         let actionEndFrame = item.endFrame;
 
-        // ⭐ 1. Apply delay trước (nếu có)
+        // ⭐ BƯỚC 2: Apply DELAY trước (shift cả start và end)
         if (typeof action.delay === "number") {
-          actionStartFrame = actionStartFrame + action.delay;
+          actionStartFrame += action.delay;
+          // ⚠️ Chỉ shift endFrame nếu KHÔNG có override sau này
+          // (sẽ kiểm tra ở bước tiếp theo)
         }
 
-        // ⭐ 2. ƯU TIÊN CAO NHẤT: actionDuration
+        // ⭐ BƯỚC 3: Xử lý endFrame theo PRIORITY
         if (typeof action.actionDuration === "number") {
-          // ✅ FIX: Tính từ actionStartFrame, đã tính delay!
+          // 🔥 Priority 1: actionDuration (tính từ actionStartFrame đã có delay)
           actionEndFrame = actionStartFrame + action.actionDuration;
-
-          // Debug log
-          if (process.env.NODE_ENV === "development") {
-            console.log(`📊 Action ${actionIndex + 1} [${action.cmd}]:`, {
-              delay: action.delay || 0,
-              actionDuration: action.actionDuration,
-              itemStartFrame: item.startFrame,
-              actionStartFrame,
-              actionEndFrame,
-              visibleDuration: actionEndFrame - actionStartFrame,
-            });
-          }
-
-          // Vẫn cho phép ChangeStartFrame nếu cần
-          if (typeof action.ChangeStartFrame === "number") {
-            actionStartFrame = actionStartFrame + action.ChangeStartFrame;
-          }
-        }
-        // ⭐ 3. Xử lý ToEndFrame (nếu không có actionDuration)
-        else if (action.ToEndFrame === true) {
+        } else if (action.ToEndFrame === true) {
+          // 🔥 Priority 2: ToEndFrame (absolute, không bị delay ảnh hưởng)
           actionEndFrame = toEndFrame;
-          if (typeof action.ChangeStartFrame === "number") {
-            actionStartFrame = actionStartFrame + action.ChangeStartFrame;
-          }
-        }
-        // ⭐ 4. Xử lý group (nếu không có actionDuration và ToEndFrame)
-        else if (action.group !== undefined && action.group !== null) {
+        } else if (action.group !== undefined && action.group !== null) {
+          // 🔥 Priority 3: group (absolute, không bị delay ảnh hưởng)
           const groupEndFrame = groupEndFrames.get(action.group);
           if (groupEndFrame !== undefined) {
             actionEndFrame = groupEndFrame;
           }
-          if (typeof action.ChangeStartFrame === "number") {
-            actionStartFrame = actionStartFrame + action.ChangeStartFrame;
-          }
-          if (typeof action.ChangeEndFrame === "number") {
-            actionEndFrame = actionEndFrame + action.ChangeEndFrame;
-          }
-        }
-        // ⭐ 5. Fallback
-        else {
-          if (typeof action.ChangeStartFrame === "number") {
-            actionStartFrame = actionStartFrame + action.ChangeStartFrame;
-          }
-          if (typeof action.ChangeEndFrame === "number") {
-            actionEndFrame = item.endFrame + action.ChangeEndFrame;
+        } else {
+          // 🔥 Fallback: Giữ nguyên độ dài → delay cũng shift endFrame
+          if (typeof action.delay === "number") {
+            actionEndFrame += action.delay;
           }
         }
 
-        // ⭐ 6. Check active
+        // ⭐ BƯỚC 4: Apply ChangeStartFrame và ChangeEndFrame (sau cùng)
+        if (typeof action.ChangeStartFrame === "number") {
+          actionStartFrame += action.ChangeStartFrame;
+        }
+        if (typeof action.ChangeEndFrame === "number") {
+          actionEndFrame += action.ChangeEndFrame;
+        }
+
+        // 📊 Debug log (development only)
+        if (process.env.NODE_ENV === "development" && action.delay) {
+          console.log(`📊 Action ${actionIndex + 1} [${action.cmd}]:`, {
+            itemRange: `${item.startFrame}-${item.endFrame}`,
+            delay: action.delay || 0,
+            actionDuration: action.actionDuration,
+            ChangeStartFrame: action.ChangeStartFrame,
+            ChangeEndFrame: action.ChangeEndFrame,
+            finalRange: `${actionStartFrame}-${actionEndFrame}`,
+            duration: actionEndFrame - actionStartFrame,
+          });
+        }
+
+        // ⭐ BƯỚC 5: Check active
         if (frame >= actionStartFrame && frame <= actionEndFrame) {
           allActiveActions.push({
             action,
@@ -171,7 +162,6 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
     } = activeActionData;
 
     const ActionComponent = ACTION_REGISTRY[action.cmd];
-
     if (!ActionComponent) {
       console.warn(
         `[ActionOrchestrator] ⚠️ Unknown action cmd: "${action.cmd}"`,
@@ -202,14 +192,12 @@ function ActionOrchestrator({ codeFrame = [], textEnd }) {
   // ⭐ Function render action với parent-child wrapping
   const renderActionWithWrapper = (activeActionData, index) => {
     const { action } = activeActionData;
-
     const parentID = action.parentID || action.parentId;
     const childID = action.childID || action.childId;
     const parentClass = action.parentClass || "";
     const childClass = action.childClass || "";
 
     const key = `${action.cmd}-${activeActionData.itemIndex}-${activeActionData.actionIndex}`;
-
     const component = renderActionComponent(activeActionData);
 
     if (parentID && childID) {

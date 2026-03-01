@@ -1,5 +1,5 @@
 // src/Components/ActionOrchestrator/actions/TypingTextAction.jsx
-import React from "react";
+import React, { act } from "react";
 import { createPortal } from "react-dom";
 import TypingText from "../smallComponents/text/TypingText.jsx";
 import { mergeStyles } from "../utils/cssOverrideManager.js";
@@ -28,10 +28,10 @@ function TypingTextAction({ data }) {
 
   // ✅ Chuẩn bị text format
   const textData = action.text
-    ? [{ text: action.text, type: "normal" }]
+    ? [{ text: action.text }]
     : hasText
-      ? [{ text: item.text, type: "normal" }]
-      : [{ text: "", type: "normal" }];
+      ? [{ text: item.text }]
+      : [{ text: "" }];
 
   // ✅ Chuẩn bị style
   const mergedStyle = mergeStyles(
@@ -47,6 +47,9 @@ function TypingTextAction({ data }) {
   const typingTextComponent = (
     <TypingText
       text={textData}
+      type={action.type}
+      textEffect={action.textEffect}
+      slideDirection={action.slideDirection}
       frame={frame}
       styCss={mergedStyle}
       startFrame={actionStartFrame}
