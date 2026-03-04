@@ -1,6 +1,7 @@
 // src/Components/ActionOrchestrator/utils/transitions/transitionResolver.js
 import { useMemo } from "react";
 import { interpolate } from "remotion";
+
 /**
  * 🎨 TRANSITION RESOLVER
  * Centralized transition logic cho tất cả components
@@ -38,12 +39,8 @@ import { interpolate } from "remotion";
  * - shimmer: Smooth shimmer với brightness
  * - drift: Figure-8 pattern (naturally smooth)
  * - orbit: Circular motion (naturally smooth)
- *
- * === NEW: transitionDelay ===
- * - Delay (in frames) trước khi transition bắt đầu chạy
- * - Trong khoảng delay: element ẩn (opacity: 0) cho one-time transitions
- *   hoặc hiện bình thường cho loop transitions
  */
+
 // ⭐ Define loop transition types
 const LOOP_TRANSITIONS = [
   "kenBurns",
@@ -57,58 +54,17 @@ const LOOP_TRANSITIONS = [
   "drift",
   "orbit",
 ];
+
 // ⭐ FadeIn intro duration for loop transitions (frames)
 const LOOP_FADEIN_DURATION = 15;
+
 /**
  * Check if transition type is a loop transition
  */
 const isLoopTransition = (transitionType) => {
   return LOOP_TRANSITIONS.includes(transitionType);
 };
-/**
- * ⭐ Get the "waiting" state for a transition type during delay period
- * One-time transitions: element should be invisible (pre-transition state)
- * This returns the initial state BEFORE the transition starts
- */
-const getDelayWaitingState = (transitionType) => {
-  switch (transitionType) {
-    case "fadeIn":
-      return { opacity: 0, transform: "", filter: "" };
-    case "scaleIn":
-      return { opacity: 1, transform: "scale(0.5)", filter: "" };
-    case "zoomIn":
-      return { opacity: 0, transform: "scale(0.8)", filter: "" };
-    case "slideInFromBottom":
-      return { opacity: 0, transform: "translateY(100%)", filter: "" };
-    case "slideInFromTop":
-      return { opacity: 0, transform: "translateY(-100%)", filter: "" };
-    case "slideInFromLeft":
-      return { opacity: 0, transform: "translateX(-100%)", filter: "" };
-    case "slideInFromRight":
-      return { opacity: 0, transform: "translateX(100%)", filter: "" };
-    case "slideInFromBottomFade":
-      return { opacity: 0, transform: "translateY(50px)", filter: "" };
-    case "scaleRotate":
-      return { opacity: 0, transform: "scale(0.5) rotate(-10deg)", filter: "" };
-    case "bounceIn":
-      return { opacity: 0, transform: "scale(0)", filter: "" };
-    case "flipIn":
-      return {
-        opacity: 0,
-        transform: "perspective(1000px) rotateY(90deg)",
-        filter: "",
-      };
-    case "rotateIn":
-      return { opacity: 0, transform: "rotate(-180deg)", filter: "" };
-    case "expandIn":
-      return { opacity: 0, transform: "scaleX(0) scaleY(0)", filter: "" };
-    case "blurIn":
-      return { opacity: 0, transform: "", filter: "blur(10px)" };
-    default:
-      // Loop transitions or unknown → hidden during delay
-      return { opacity: 0, transform: "", filter: "" };
-  }
-};
+
 /**
  * Calculate transition values based on frame
  * @param {number} relativeFrame - Frame tương đối (0 = bắt đầu action)
@@ -116,7 +72,6 @@ const getDelayWaitingState = (transitionType) => {
  * @param {number} transitionDuration - Độ dài transition (frames)
  * @param {boolean} transitionLoop - Có lặp lại không (infinite)
  * @param {number} durationInFrames - Tổng số frame của action
- * @param {number} transitionDelay - ⭐ NEW: Delay (frames) trước khi bắt đầu transition
  */
 export const calculateTransition = (
   relativeFrame,
@@ -124,7 +79,6 @@ export const calculateTransition = (
   transitionDuration,
   transitionLoop = false,
   durationInFrames = Infinity,
-  transitionDelay = 0,
 ) => {
   // ⭐ NO TRANSITION - Return immediately
   if (
@@ -141,34 +95,19 @@ export const calculateTransition = (
     };
   }
 
-  // ⭐ NEW: TRANSITION DELAY HANDLING
-  // Nếu có delay và frame hiện tại vẫn trong khoảng delay → trả về trạng thái chờ
-  const effectiveDelay = transitionDelay > 0 ? transitionDelay : 0;
-  if (effectiveDelay > 0 && relativeFrame < effectiveDelay) {
-    const waitingState = getDelayWaitingState(transitionType);
-    return {
-      ...waitingState,
-      isNone: false,
-      isComplete: false,
-      isDelaying: true, // ⭐ Flag: đang trong giai đoạn delay
-    };
-  }
-
-  // ⭐ Trừ delay ra khỏi relativeFrame → transition bắt đầu từ frame 0 sau delay
-  const delayAdjustedFrame = relativeFrame - effectiveDelay;
-
-  let effectiveFrame = delayAdjustedFrame;
+  let effectiveFrame = relativeFrame;
   let fadeInProgress = 1; // Default: full opacity
 
   // ⭐ LOOP LOGIC with FadeIn Intro
   if (transitionLoop && durationInFrames > 0) {
     const isLoop = isLoopTransition(transitionType);
+
     if (isLoop) {
       // 🎬 Loop transitions có fadeIn intro 15 frames
-      if (delayAdjustedFrame < LOOP_FADEIN_DURATION) {
+      if (relativeFrame < LOOP_FADEIN_DURATION) {
         // Phase 1: FadeIn intro (0-15 frames)
         fadeInProgress = interpolate(
-          delayAdjustedFrame,
+          relativeFrame,
           [0, LOOP_FADEIN_DURATION],
           [0, 1],
           {
@@ -183,15 +122,15 @@ export const calculateTransition = (
         fadeInProgress = 1; // Full opacity
         // Loop animation bắt đầu từ frame 15
         effectiveFrame =
-          (delayAdjustedFrame - LOOP_FADEIN_DURATION) % transitionDuration;
+          (relativeFrame - LOOP_FADEIN_DURATION) % transitionDuration;
       }
     } else {
       // Non-loop transitions: loop toàn bộ animation
-      effectiveFrame = delayAdjustedFrame % transitionDuration;
+      effectiveFrame = relativeFrame % transitionDuration;
     }
   } else {
     // One-time transition: chỉ chạy 1 lần ở đầu
-    if (delayAdjustedFrame < 0 || delayAdjustedFrame > transitionDuration) {
+    if (relativeFrame < 0 || relativeFrame > transitionDuration) {
       return {
         opacity: 1,
         transform: "",
@@ -200,6 +139,7 @@ export const calculateTransition = (
       };
     }
   }
+
   // Calculate progress (0 → 1)
   const progress = interpolate(
     effectiveFrame,
@@ -210,8 +150,10 @@ export const calculateTransition = (
       extrapolateRight: "clamp",
     },
   );
+
   // Get base transition style
   const transitionStyle = getTransitionStyle(transitionType, progress);
+
   // ⭐ Apply fadeIn to loop transitions
   if (transitionLoop && isLoopTransition(transitionType)) {
     return {
@@ -219,17 +161,17 @@ export const calculateTransition = (
       opacity: transitionStyle.opacity * fadeInProgress, // Blend opacity
       isNone: false,
       isComplete: false,
-      isDelaying: false,
       isFadingIn: fadeInProgress < 1, // Flag cho debugging
     };
   }
+
   return {
     ...transitionStyle,
     isNone: false,
     isComplete: false,
-    isDelaying: false,
   };
 };
+
 /**
  * Get transition style based on type and progress
  */
@@ -237,6 +179,7 @@ const getTransitionStyle = (transitionType, progress) => {
   let opacity = 1;
   let transform = "";
   let filter = "";
+
   switch (transitionType) {
     // ========================================
     // ⭐ SPECIAL: NO TRANSITION
@@ -248,52 +191,62 @@ const getTransitionStyle = (transitionType, progress) => {
       transform = "";
       filter = "";
       break;
+
     // ========================================
     // ONE-TIME TRANSITIONS
     // ========================================
     case "fadeIn":
       opacity = progress;
       break;
+
     case "scaleIn":
       const scale = interpolate(progress, [0, 1], [0.5, 1]);
       transform = `scale(${scale})`;
       break;
+
     case "zoomIn":
       opacity = progress;
       const zoomScale = interpolate(progress, [0, 1], [0.8, 1]);
       transform = `scale(${zoomScale})`;
       break;
+
     case "slideInFromBottom":
       const translateYBottom = interpolate(progress, [0, 1], [100, 0]);
       transform = `translateY(${translateYBottom}%)`;
       opacity = progress;
       break;
+
     case "slideInFromTop":
       const translateYTop = interpolate(progress, [0, 1], [-100, 0]);
       transform = `translateY(${translateYTop}%)`;
       opacity = progress;
       break;
+
     case "slideInFromLeft":
       const translateXLeft = interpolate(progress, [0, 1], [-100, 0]);
       transform = `translateX(${translateXLeft}%)`;
       opacity = progress;
       break;
+
     case "slideInFromRight":
       const translateXRight = interpolate(progress, [0, 1], [100, 0]);
       transform = `translateX(${translateXRight}%)`;
       opacity = progress;
       break;
+
     case "slideInFromBottomFade":
       opacity = progress;
       const slideY = interpolate(progress, [0, 1], [50, 0]);
       transform = `translateY(${slideY}px)`;
       break;
+
     case "scaleRotate":
       const scaleRotate = interpolate(progress, [0, 1], [0.5, 1]);
       const rotate = interpolate(progress, [0, 1], [-10, 0]);
       transform = `scale(${scaleRotate}) rotate(${rotate}deg)`;
       opacity = progress;
       break;
+
     case "bounceIn":
       const bounceScale = interpolate(
         progress,
@@ -305,27 +258,32 @@ const getTransitionStyle = (transitionType, progress) => {
         extrapolateRight: "clamp",
       });
       break;
+
     case "flipIn":
       const rotateY = interpolate(progress, [0, 1], [90, 0]);
       transform = `perspective(1000px) rotateY(${rotateY}deg)`;
       opacity = progress;
       break;
+
     case "rotateIn":
       const rotateZ = interpolate(progress, [0, 1], [-180, 0]);
       transform = `rotate(${rotateZ}deg)`;
       opacity = progress;
       break;
+
     case "expandIn":
       const scaleX = interpolate(progress, [0, 1], [0, 1]);
       const scaleY = interpolate(progress, [0, 1], [0, 1]);
       transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
       opacity = progress;
       break;
+
     case "blurIn":
       opacity = progress;
       const blur = interpolate(progress, [0, 1], [10, 0]);
       filter = `blur(${blur}px)`;
       break;
+
     // ========================================
     // 🎬 INFINITE LOOP TRANSITIONS (SMOOTH LOOP)
     // ⭐ Note: FadeIn intro is handled in calculateTransition
@@ -343,6 +301,7 @@ const getTransitionStyle = (transitionType, progress) => {
       );
       transform = `scale(${kenBurnsScale}) translateX(${kenBurnsPan}%)`;
       break;
+
     case "pulse":
       const pulseScale = interpolate(
         progress,
@@ -351,6 +310,7 @@ const getTransitionStyle = (transitionType, progress) => {
       );
       transform = `scale(${pulseScale})`;
       break;
+
     case "sway":
       const swayAngle = interpolate(
         progress,
@@ -359,19 +319,23 @@ const getTransitionStyle = (transitionType, progress) => {
       );
       transform = `rotate(${swayAngle}deg)`;
       break;
+
     case "float":
       const floatY = Math.sin(progress * Math.PI * 2) * 15;
       transform = `translateY(${floatY}px)`;
       break;
+
     case "rotate360":
       const rotate360 = progress * 360;
       transform = `rotate(${rotate360}deg)`;
       break;
+
     case "wave":
       const waveY = Math.sin(progress * Math.PI * 2) * 20;
       const waveScale = 1 + Math.sin(progress * Math.PI * 2) * 0.04;
       transform = `translateY(${waveY}px) scale(${waveScale})`;
       break;
+
     case "breathe":
       const breatheScale = interpolate(
         progress,
@@ -386,6 +350,7 @@ const getTransitionStyle = (transitionType, progress) => {
       opacity = breatheOpacity;
       transform = `scale(${breatheScale})`;
       break;
+
     case "shimmer":
       const shimmerOpacity = interpolate(
         progress,
@@ -400,12 +365,14 @@ const getTransitionStyle = (transitionType, progress) => {
       opacity = shimmerOpacity;
       filter = `brightness(${shimmerBrightness})`;
       break;
+
     case "drift":
       const driftAngle = progress * Math.PI * 2;
       const driftX = Math.sin(driftAngle) * 20;
       const driftY = Math.sin(driftAngle * 2) * 15;
       transform = `translate(${driftX}px, ${driftY}px)`;
       break;
+
     case "orbit":
       const orbitAngle = progress * Math.PI * 2;
       const orbitRadius = 10 + Math.sin(progress * Math.PI * 2) * 5;
@@ -414,6 +381,7 @@ const getTransitionStyle = (transitionType, progress) => {
       const orbitScale = 1 + Math.sin(progress * Math.PI * 4) * 0.03;
       transform = `translate(${orbitX}px, ${orbitY}px) scale(${orbitScale})`;
       break;
+
     default:
       console.warn(
         `⚠️  Unknown transition type: "${transitionType}". Using "none".`,
@@ -422,8 +390,10 @@ const getTransitionStyle = (transitionType, progress) => {
       transform = "";
       filter = "";
   }
+
   return { opacity, transform, filter };
 };
+
 /**
  * 🎯 HOOK: useTransition
  * Hook chính để sử dụng trong các component
@@ -452,6 +422,7 @@ export const useTransition = (
           : defaultTransition.type !== undefined
             ? defaultTransition.type
             : "none";
+
     const transitionDuration =
       dataAction.transitionFrame !== undefined
         ? dataAction.transitionFrame
@@ -460,6 +431,7 @@ export const useTransition = (
           : defaultTransition.duration !== undefined
             ? defaultTransition.duration
             : 0;
+
     const transitionLoop =
       dataAction.transitionLoop !== undefined
         ? dataAction.transitionLoop
@@ -469,17 +441,6 @@ export const useTransition = (
             ? defaultTransition.loop
             : false;
 
-    // ⭐ NEW: transitionDelay — delay bao nhiêu frame trước khi bắt đầu transition
-    // Priority: dataAction > data > defaultTransition > 0
-    const transitionDelay =
-      dataAction.transitionDelay !== undefined
-        ? Number(dataAction.transitionDelay)
-        : data.transitionDelay !== undefined
-          ? Number(data.transitionDelay)
-          : defaultTransition.delay !== undefined
-            ? Number(defaultTransition.delay)
-            : 0;
-
     // Calculate transition
     const values = calculateTransition(
       relativeFrame,
@@ -487,21 +448,22 @@ export const useTransition = (
       transitionDuration,
       transitionLoop,
       durationInFrames,
-      transitionDelay,
     );
+
     return {
       ...values,
       config: {
         type: transitionType,
         duration: transitionDuration,
         loop: transitionLoop,
-        delay: transitionDelay,
         fadeInDuration: LOOP_FADEIN_DURATION,
       },
     };
   }, [relativeFrame, data, dataAction, durationInFrames, defaultTransition]);
+
   return transitionValues;
 };
+
 /**
  * Helper: Merge transition transform with existing transform
  */
@@ -513,6 +475,7 @@ export const mergeTransforms = (
   if (!existingTransform) return transitionTransform;
   return `${existingTransform} ${transitionTransform}`.trim();
 };
+
 /**
  * Helper: Merge filters
  */
@@ -521,6 +484,7 @@ export const mergeFilters = (existingFilter = "", transitionFilter = "") => {
   if (!existingFilter) return transitionFilter;
   return `${existingFilter} ${transitionFilter}`.trim();
 };
+
 /**
  * Helper: Apply transition to style object
  */
@@ -529,13 +493,16 @@ export const applyTransitionToStyle = (baseStyle, transitionValues) => {
   if (transitionValues.isNone) {
     return baseStyle;
   }
+
   const existingTransform = baseStyle.transform || "";
   const existingFilter = baseStyle.filter || "";
+
   const combinedTransform = mergeTransforms(
     existingTransform,
     transitionValues.transform,
   );
   const combinedFilter = mergeFilters(existingFilter, transitionValues.filter);
+
   return {
     ...baseStyle,
     opacity: transitionValues.opacity,
@@ -543,5 +510,6 @@ export const applyTransitionToStyle = (baseStyle, transitionValues) => {
     ...(combinedFilter && { filter: combinedFilter }),
   };
 };
+
 // ⭐ Export constants for reference
 export { LOOP_TRANSITIONS, LOOP_FADEIN_DURATION };

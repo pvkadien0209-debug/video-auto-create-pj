@@ -5,9 +5,7 @@
         {
           "cmd": "divAction",
           "text": "Đây là",
-          "transition": "fadeIn",
-          "transitionLoop": true,
-          "transitionFrame": 30,
+          "id": "abc",
           "group": "A001",
           "code": "Ngochoang_001",
           "styleCss": {
@@ -19,7 +17,7 @@
             "left": "50%",
             "transform": "translateX(-50%)",
             "zIndex": 2,
-            "color": "black",
+            "color": "purple",
             "textShadow": "0 0 14px #ff6600",
             "fontWeight": 900,
             "borderRadius": "20px"
@@ -33,7 +31,7 @@
           "styleCss": {
             "position": "absolute",
             "top": "700px",
-            "zIndex": 6,
+            "zIndex": 1,
             "overflow": "hidden",
             "height": "700px",
             "left": "50%",
@@ -68,13 +66,13 @@
           "styleCss": {
             "position": "absolute",
             "top": "200px",
-            "fontSize": "200px",
+            "fontSize": "100px",
             "width": "80%",
             "height": "200px",
             "left": "50%",
             "transform": "translateX(-50%)",
             "zIndex": 2,
-            "color": "black",
+            "color": "blue",
             "textShadow": "0 0 14px #ff6600",
             "fontWeight": 900
           }
@@ -105,7 +103,7 @@
             "left": "50%",
             "transform": "translateX(-50%)",
             "zIndex": 2,
-            "color": "black",
+            "color": "yellow",
             "textShadow": "0 0 14px #ff6600",
             "fontWeight": 900,
             "borderRadius": "20px"
@@ -138,7 +136,7 @@
             "left": "50%",
             "transform": "translateX(-50%)",
             "zIndex": 2,
-            "color": "black",
+            "color": "green",
             "textShadow": "0 0 14px #ff6600",
             "fontWeight": 900,
             "borderRadius": "20px"
@@ -171,7 +169,325 @@
             "left": "50%",
             "transform": "translateX(-50%)",
             "zIndex": 2,
-            "color": "black",
+            "color": "red",
+            "textShadow": "0 0 14px #ff6600",
+            "fontWeight": 900,
+            "borderRadius": "20px"
+          }
+        },
+        {
+          "cmd": "soundPlayerAction",
+          "soundSource": "SFX_swoosh",
+          "volume": 1
+        },
+        {
+          "cmd": "transitionToID",
+          "toID": "abc",
+          "transition": "scaleIn",
+          "transitionLoop": true,
+          "transitionFrame": 30
+        }
+      ],
+      "code": "Ngochoang_004",
+      "mode": "ADD_MODE001",
+      "modeOBJ": "ADD_MODEOBJ001",
+      "content-01": "Div-chua-textOUTOFmode",
+      "stt": 0.004
+    }
+  ],
+  [
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "text": "Đây là",
+          "transition": "scaleIn",
+          "transitionLoop": false,
+          "transitionFrame": 20,
+          "group": "A001",
+          "code": "Ngochoang_001",
+          "styleCss": {
+            "position": "absolute",
+            "top": "1300px",
+            "fontSize": "166px",
+            "width": "80%",
+            "height": "200px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 2,
+            "color": "purple",
+            "textShadow": "0 0 14px #ff6600",
+            "fontWeight": 900,
+            "borderRadius": "20px"
+          }
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "SFX_s1", "volume": 1 },
+        {
+          "cmd": "divAction",
+          "id": "hinhanh-001A-id",
+          "group": "A001",
+          "styleCss": {
+            "position": "absolute",
+            "top": "700px",
+            "zIndex": 1,
+            "overflow": "hidden",
+            "height": "700px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "width": "90%",
+            "borderRadius": "20px",
+            "padding": "20px",
+            "alignItems": "center",
+            "justifyContent": "center"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "hinhanh-001A-id",
+          "img": "Ngochoang_001.png",
+          "transition": "kenBurns",
+          "transitionLoop": true,
+          "transitionFrame": 60,
+          "group": "A001",
+          "styleCss": {
+            "filter": "drop-shadow(0 0 10px #ff00ff) drop-shadow(0 0 25px #ff00ff) drop-shadow(0 0 50px #ff00ff)",
+            "zIndex": 1,
+            "height": "900px",
+            "width": "1080px",
+            "transform": "translate(-1%, -1%)"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "text": "MODESo001",
+          "ToEndFrame": true,
+          "styleCss": {
+            "position": "absolute",
+            "top": "200px",
+            "fontSize": "100px",
+            "width": "80%",
+            "height": "200px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 2,
+            "color": "blue",
+            "textShadow": "0 0 14px #ff6600",
+            "fontWeight": 900
+          }
+        }
+      ],
+      "code": "Ngochoang_001",
+      "mode": "ADD_MODE001",
+      "modeOBJ": "ADD_MODEOBJ001",
+      "content-01": "Div-chua-textOUTOFmode",
+      "stt": 0.001
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "text": "Chùa Ngọc hoàng",
+          "transition": "slideInFromBottom",
+          "transitionLoop": false,
+          "transitionFrame": 20,
+          "group": "A001",
+          "code": "Ngochoang_002",
+          "styleCss": {
+            "position": "absolute",
+            "top": "1000px",
+            "fontSize": "166px",
+            "width": "80%",
+            "height": "200px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 2,
+            "color": "yellow",
+            "textShadow": "0 0 14px #ff6600",
+            "fontWeight": 900,
+            "borderRadius": "20px"
+          }
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "SFX_s2", "volume": 1 }
+      ],
+      "code": "Ngochoang_002",
+      "mode": "ADD_MODE001",
+      "modeOBJ": "ADD_MODEOBJ001",
+      "content-01": "Div-chua-textOUTOFmode",
+      "stt": 0.002
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "text": "Danh Lam",
+          "transition": "zoomIn",
+          "transitionLoop": false,
+          "transitionFrame": 20,
+          "group": "A001",
+          "code": "Ngochoang_003",
+          "styleCss": {
+            "position": "absolute",
+            "top": "700px",
+            "fontSize": "166px",
+            "width": "80%",
+            "height": "200px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 2,
+            "color": "green",
+            "textShadow": "0 0 14px #ff6600",
+            "fontWeight": 900,
+            "borderRadius": "20px"
+          }
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "SFX_s3", "volume": 1 }
+      ],
+      "code": "Ngochoang_003",
+      "mode": "ADD_MODE001",
+      "modeOBJ": "ADD_MODEOBJ001",
+      "content-01": "Div-chua-textOUTOFmode",
+      "stt": 0.003
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "text": "Tại tp HCM",
+          "transition": "fadeIn",
+          "transitionLoop": false,
+          "transitionFrame": 30,
+          "group": "A001",
+          "code": "Ngochoang_004",
+          "styleCss": {
+            "position": "absolute",
+            "top": "400px",
+            "fontSize": "166px",
+            "width": "80%",
+            "height": "200px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 2,
+            "color": "red",
+            "textShadow": "0 0 14px #ff6600",
+            "fontWeight": 900,
+            "borderRadius": "20px"
+          }
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "SFX_swoosh", "volume": 1 }
+      ],
+      "code": "Ngochoang_004",
+      "mode": "ADD_MODE001",
+      "modeOBJ": "ADD_MODEOBJ001",
+      "content-01": "Div-chua-textOUTOFmode",
+      "stt": 0.004
+    }
+  ],
+  [
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "text": "Đây là",
+          "transition": "scaleIn",
+          "transitionLoop": false,
+          "transitionFrame": 20,
+          "group": "A001",
+          "code": "Ngochoang_001"
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "SFX_s1", "volume": 1 },
+        { "cmd": "divAction", "id": "hinhanh-001B-id", "group": "A001" },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "hinhanh-001B-id",
+          "img": "Ngochoang_001.png",
+          "transition": "kenBurns",
+          "transitionLoop": true,
+          "transitionFrame": 60,
+          "group": "A001"
+        },
+        {
+          "cmd": "divAction",
+          "text": "MODESo001",
+          "ToEndFrame": true,
+          "styleCss": {
+            "position": "absolute",
+            "top": "200px",
+            "fontSize": "100px",
+            "width": "80%",
+            "height": "200px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 2,
+            "color": "blue",
+            "textShadow": "0 0 14px #ff6600",
+            "fontWeight": 900
+          }
+        }
+      ],
+      "code": "Ngochoang_001",
+      "mode": "ADD_MODE001",
+      "modeOBJ": "ADD_MODEOBJ001",
+      "content-01": "Div-chua-textOUTOFmode",
+      "stt": 0.001
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "text": "Chùa Ngọc hoàng",
+          "transition": "slideInFromBottom",
+          "transitionLoop": false,
+          "transitionFrame": 20,
+          "group": "A001",
+          "code": "Ngochoang_002"
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "SFX_s2", "volume": 1 }
+      ],
+      "code": "Ngochoang_002",
+      "mode": "ADD_MODE001",
+      "modeOBJ": "ADD_MODEOBJ001",
+      "content-01": "Div-chua-textOUTOFmode",
+      "stt": 0.002
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "text": "Danh Lam",
+          "transition": "zoomIn",
+          "transitionLoop": false,
+          "transitionFrame": 20,
+          "group": "A001",
+          "code": "Ngochoang_003"
+        },
+        { "cmd": "soundPlayerAction", "soundSource": "SFX_s3", "volume": 1 }
+      ],
+      "code": "Ngochoang_003",
+      "mode": "ADD_MODE001",
+      "modeOBJ": "ADD_MODEOBJ001",
+      "content-01": "Div-chua-textOUTOFmode",
+      "stt": 0.003
+    },
+    {
+      "actions": [
+        {
+          "cmd": "divAction",
+          "text": "Tại tp HCM",
+          "transition": "fadeIn",
+          "transitionLoop": false,
+          "transitionFrame": 30,
+          "group": "A001",
+          "code": "Ngochoang_004",
+          "styleCss": {
+            "position": "absolute",
+            "top": "400px",
+            "fontSize": "166px",
+            "width": "80%",
+            "height": "200px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 2,
+            "color": "red",
             "textShadow": "0 0 14px #ff6600",
             "fontWeight": 900,
             "borderRadius": "20px"

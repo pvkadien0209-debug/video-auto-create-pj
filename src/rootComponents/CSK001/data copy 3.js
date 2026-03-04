@@ -432,6 +432,7 @@ function buildModeActions(resolvedMode, dataRow, modeObjData) {
   }
   return actions;
 }
+
 // ================================
 // ⭐⭐⭐ INMODE SPLITTING (NEW)
 // ================================
@@ -445,25 +446,28 @@ function buildModeActions(resolvedMode, dataRow, modeObjData) {
  * 3. Sắp xếp nhóm theo _modeGroup tăng dần
  * 4. Trong mỗi nhóm, sắp xếp actions theo _sttMode tăng dần
  * 5. Mỗi nhóm → 1 segment mới:
- *    - ⭐ CHANGED: code = .code của obj BẤT KỲ có .code (lấy cái cuối cùng)
- *    - ⭐ CHANGED: timeFixed = .timeFixed của obj BẤT KỲ có .timeFixed (lấy cái cuối cùng)
+ *    - code = .code của action đầu tiên trong nhóm
+ *    - timeFixed = giữ nguyên từ segment gốc
  *    - actions = mảng actions của nhóm (đã sắp xếp)
  *    - Các props khác giữ nguyên từ segment gốc
  * 6. Xóa _sttMode, _modeGroup khỏi actions (metadata tạm)
  */
 function splitInmodeSegments(segments) {
   const result = [];
+
   for (const segment of segments) {
     // ── Không phải INMODE → giữ nguyên, push thẳng ──
     if (segment.code !== "INMODE") {
       result.push(segment);
       continue;
     }
+
     const actions = segment.actions || [];
     if (actions.length === 0) {
       // INMODE nhưng không có actions → bỏ qua
       continue;
     }
+
     // ── Bước 1: Thu thập tất cả modeGroup index có trong actions ──
     const allGroupIndices = new Set();
     for (const action of actions) {
@@ -471,39 +475,48 @@ function splitInmodeSegments(segments) {
         allGroupIndices.add(action._modeGroup);
       }
     }
+
     // Nếu không action nào có _modeGroup → tất cả vào 1 nhóm duy nhất (nhóm 0)
     if (allGroupIndices.size === 0) {
       allGroupIndices.add(0);
     }
+
     // Sắp xếp các group index tăng dần
     const sortedGroupIndices = [...allGroupIndices].sort((a, b) => a - b);
     const firstGroupIndex = sortedGroupIndices[0];
+
     // ── Bước 2: Gom actions vào các nhóm ──
     const groupMap = new Map();
     for (const idx of sortedGroupIndices) {
       groupMap.set(idx, []);
     }
+
     for (const action of actions) {
       const groupIdx =
         action._modeGroup != null && !isNaN(action._modeGroup)
           ? action._modeGroup
           : firstGroupIndex; // Không có _modeGroup → nhóm đầu tiên
+
       if (!groupMap.has(groupIdx)) {
         groupMap.set(groupIdx, []);
       }
       groupMap.get(groupIdx).push(action);
     }
+
     // ── Bước 3: Sắp xếp nhóm theo index, actions trong nhóm theo _sttMode ──
     const sortedGroups = [...groupMap.entries()].sort((a, b) => a[0] - b[0]);
+
     for (let gi = 0; gi < sortedGroups.length; gi++) {
       const [groupIdx, groupActions] = sortedGroups[gi];
       if (groupActions.length === 0) continue;
+
       // Sắp xếp actions trong nhóm theo _sttMode
       groupActions.sort((a, b) => {
         const sttA = a._sttMode != null ? a._sttMode : 999;
         const sttB = b._sttMode != null ? b._sttMode : 999;
         return sttA - sttB;
       });
+
       // ── Bước 4: Xóa metadata tạm (_sttMode, _modeGroup) khỏi actions ──
       const cleanedActions = groupActions.map((action) => {
         const cleaned = { ...action };
@@ -513,27 +526,10 @@ function splitInmodeSegments(segments) {
       });
 
       // ── Bước 5: Tạo segment mới từ segment gốc ──
-      // ⭐ CHANGED: Duyệt TẤT CẢ actions trong nhóm, lấy .code và .timeFixed
-      //    từ obj BẤT KỲ nào có tồn tại; nếu nhiều → lấy cái CUỐI CÙNG
-      let newCode = segment.code; // fallback = segment gốc ("INMODE")
-      let newTimeFixed = undefined;
-      let hasTimeFixed = false;
+      const firstAction = cleanedActions[0];
 
-      for (const action of cleanedActions) {
-        // Lấy .code từ action bất kỳ có tồn tại, ưu tiên cái cuối cùng
-        if (
-          action.code !== null &&
-          action.code !== undefined &&
-          action.code !== ""
-        ) {
-          newCode = action.code;
-        }
-        // Lấy .timeFixed từ action bất kỳ có tồn tại, ưu tiên cái cuối cùng
-        if (action.timeFixed !== null && action.timeFixed !== undefined) {
-          newTimeFixed = action.timeFixed;
-          hasTimeFixed = true;
-        }
-      }
+      // code = .code của action đầu tiên trong nhóm
+      const newCode = firstAction.code || segment.code;
 
       const newSegment = {
         ...segment,
@@ -542,9 +538,13 @@ function splitInmodeSegments(segments) {
         stt: segment.stt + (gi + 1) * 0.001,
       };
 
-      // ⭐ CHANGED: timeFixed chỉ thêm khi BẤT KỲ action nào có giá trị
-      if (hasTimeFixed) {
-        newSegment.timeFixed = newTimeFixed;
+      // timeFixed = .timeFixed của action đầu tiên trong nhóm
+      // Chỉ thêm khi có giá trị, xóa nếu null/undefined
+      if (
+        firstAction.timeFixed !== null &&
+        firstAction.timeFixed !== undefined
+      ) {
+        newSegment.timeFixed = firstAction.timeFixed;
       } else {
         delete newSegment.timeFixed;
       }
@@ -552,8 +552,10 @@ function splitInmodeSegments(segments) {
       result.push(newSegment);
     }
   }
+
   return result;
 }
+
 /**
  * ⭐ Xóa metadata tạm (_sttMode, _modeGroup) khỏi tất cả actions
  * trong các segment KHÔNG phải INMODE (để output sạch)
@@ -569,6 +571,7 @@ function cleanMetadataFromActions(segments) {
     return { ...segment, actions: cleanedActions };
   });
 }
+
 // ================================
 // 🎬 MAIN PROCESSING
 // ================================
@@ -646,17 +649,9 @@ arr4_data.forEach((dataRow, rowIndex) => {
   });
 
   // ================================
-  // ⭐⭐ KQ001: Tách INMODE segments TRƯỚC (trước khi filter NULLA)
-  // ⭐ CHANGED: splitInmodeSegments chạy TRƯỚC, trên toàn bộ videoSegments
+  // ⭐ KQ001: Kết quả sau validation & filtering (logic cũ giữ nguyên)
   // ================================
-  const splitSegments = splitInmodeSegments(videoSegments);
-
-  // ================================
-  // ⭐ KQ002: Filter NULLA SAU KHI đã split INMODE
-  // ⭐ CHANGED: NULLA filtering giờ chạy SAU splitInmodeSegments
-  //    → Các segment con từ INMODE có code mới sẽ được kiểm tra NULLA
-  // ================================
-  const validatedSegments = splitSegments
+  const validatedSegments = videoSegments
     .filter((segment) => {
       if (
         segment.code === "NULLA" ||
@@ -674,8 +669,14 @@ arr4_data.forEach((dataRow, rowIndex) => {
       return { ...segment, actions: validActions };
     });
 
+  // ================================
+  // ⭐⭐ KQ002: Tách INMODE segments thành nhiều segments theo modeGroup
+  // ================================
+  const splitSegments = splitInmodeSegments(validatedSegments);
+
   // ⭐ Xóa metadata tạm (_sttMode, _modeGroup) khỏi tất cả actions
-  const finalSegments = cleanMetadataFromActions(validatedSegments);
+  const finalSegments = cleanMetadataFromActions(splitSegments);
+
   if (finalSegments.length > 0) {
     videoData01.push(finalSegments);
   }

@@ -8,6 +8,7 @@ import TypingTextActionToID from "../actions/TypingTextActionToID.jsx";
 import SoundPlayerAction from "../actions/SoundPlayerAction.jsx";
 import DivAVATARAction from "../actions/DivAVATARAction.jsx";
 import StyledCardAction from "../actions/StyledCardAction.jsx";
+import TransitionToID from "../actions/Transitiontoid.jsx";
 // import FadeInAction from "../actions/FadeInAction";
 // import FadeOutAction from "../actions/FadeOutAction";
 // import ZoomAction from "../actions/ZoomAction";
@@ -32,6 +33,7 @@ export const ACTION_REGISTRY = {
   soundPlayerAction: SoundPlayerAction,
   divAVATARAction: DivAVATARAction,
   styledCardActionToID: StyledCardAction,
+  transitionToID: TransitionToID,
   //   fadeIn: FadeInAction,
   //   fadeOut: FadeOutAction,
   //   zoom: ZoomAction,
@@ -68,6 +70,7 @@ export const CMD = {
   soundPlayerAction: "soundPlayerAction",
   divAVATARAction: "divAVATARAction",
   styledCardActionToID: "styledCardActionToID",
+  transitionToID: "transitionToID",
 };
 
 // Export default để dùng dễ hơn
