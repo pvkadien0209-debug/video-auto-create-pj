@@ -320,6 +320,28 @@
       "css-016": null,
       "css-017": null,
       "css-018": null
+    },
+    {
+      "Mô tả": null,
+      "styleCssName": "Trans-css",
+      "css-001": "{position:\"absolute\"}",
+      "css-002": "{top:\"1300px\"}",
+      "css-003": "{fontSize: \"166px\"}",
+      "css-004": "{width: \"80%\"}",
+      "css-005": "{height: \"200px\"}",
+      "css-006": "{position: \"absolute\", left: \"50%\", transform: \"translateX(-50%)\"}",
+      "css-007": "{zIndex: \"2\"}",
+      "css-008": "{ \"color\":\"purple\",\"textShadow\":\"0 0 14px #ff6600\",\"fontWeight\":\"900\" }",
+      "css-009": null,
+      "css-010": null,
+      "css-011": null,
+      "css-012": null,
+      "css-013": null,
+      "css-014": null,
+      "css-015": null,
+      "css-016": null,
+      "css-017": null,
+      "css-018": null
     }
   ],
   [

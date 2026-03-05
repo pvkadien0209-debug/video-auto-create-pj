@@ -1,7 +1,6 @@
 // src/Components/ActionOrchestrator/utils/transitions/transitionResolver.js
 import { useMemo } from "react";
-import { interpolate, spring, useVideoConfig } from "remotion";
-
+import { interpolate } from "remotion";
 /**
  * 🎨 TRANSITION RESOLVER
  * Centralized transition logic cho tất cả components
@@ -110,18 +109,6 @@ const getDelayWaitingState = (transitionType) => {
       return { opacity: 0, transform: "", filter: "" };
   }
 };
-
-function springProgress(frame, fps, startFrame, durationFrames) {
-  return spring({
-    frame: frame - startFrame,
-    fps,
-    config: { damping: 28, stiffness: 120, mass: 0.8 },
-    durationInFrames: durationFrames,
-    from: 0,
-    to: 1,
-  });
-}
-
 /**
  * Calculate transition values based on frame
  * @param {number} relativeFrame - Frame tương đối (0 = bắt đầu action)
@@ -135,7 +122,6 @@ export const calculateTransition = (
   relativeFrame,
   transitionType,
   transitionDuration,
-  fps,
   transitionLoop = false,
   durationInFrames = Infinity,
   transitionDelay = 0,
@@ -215,7 +201,15 @@ export const calculateTransition = (
     }
   }
   // Calculate progress (0 → 1)
-  const progress = springProgress(effectiveFrame, fps, 0, transitionDuration);
+  const progress = interpolate(
+    effectiveFrame,
+    [0, transitionDuration],
+    [0, 1],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
   // Get base transition style
   const transitionStyle = getTransitionStyle(transitionType, progress);
   // ⭐ Apply fadeIn to loop transitions
@@ -447,8 +441,6 @@ export const useTransition = (
   durationInFrames = Infinity,
   defaultTransition = {},
 ) => {
-  const { fps } = useVideoConfig();
-
   const transitionValues = useMemo(() => {
     // ⭐ Lấy transition config từ dataAction hoặc data
     // Priority: dataAction > data > defaultTransition > "none"
@@ -493,7 +485,6 @@ export const useTransition = (
       relativeFrame,
       transitionType,
       transitionDuration,
-      fps,
       transitionLoop,
       durationInFrames,
       transitionDelay,
@@ -508,14 +499,7 @@ export const useTransition = (
         fadeInDuration: LOOP_FADEIN_DURATION,
       },
     };
-  }, [
-    relativeFrame,
-    data,
-    dataAction,
-    durationInFrames,
-    defaultTransition,
-    fps,
-  ]);
+  }, [relativeFrame, data, dataAction, durationInFrames, defaultTransition]);
   return transitionValues;
 };
 /**

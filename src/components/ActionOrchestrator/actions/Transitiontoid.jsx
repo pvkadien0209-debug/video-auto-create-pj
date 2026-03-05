@@ -23,13 +23,15 @@
  * 3. Apply trực tiếp lên element.style
  * 4. Khi unmount → cleanup styles
  *
- * ⭐ Props có thể được truyền theo 2 cách:
+ * ⭐ Props có thể được truyền theo 3 cách (ưu tiên từ cao → thấp):
  *    - Spread trực tiếp: <TransitionToID toID="abc" transition="fadeIn" ... />
- *    - Nested trong dataAction/data: <TransitionToID dataAction={{toID: "abc"}} ... />
+ *    - Nested trong dataAction: <TransitionToID dataAction={{toID: "abc"}} ... />
+ *    - Nested trong data.action: <TransitionToID data={{action: {toID: "abc"}}} ... />
+ *    - Nested trong data: <TransitionToID data={{toID: "abc"}} ... />
  */
 
 import { useEffect, useRef } from "react";
-import { useCurrentFrame } from "remotion";
+import { useCurrentFrame, useVideoConfig } from "remotion";
 import {
   calculateTransition,
   mergeTransforms,
@@ -46,43 +48,58 @@ const TransitionToID = (props) => {
   } = props;
 
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const elementRef = useRef(null);
   const originalStylesRef = useRef(null);
 
-  // ⭐ Lấy config: ưu tiên props trực tiếp > dataAction > data
-  // (ActionOrchestrator có thể spread action properties thành props)
-  const toID = props.toID || dataAction.toID || data.toID;
+  // ⭐ Lookup helper: data có thể chứa action object bên trong (giống DivAction)
+  const action = data.action || {};
+
+  // ⭐ Lấy config: ưu tiên props trực tiếp > dataAction > data.action > data
+  const toID = props.toID || dataAction.toID || action.toID || data.toID;
 
   const transitionType =
-    props.transition ?? dataAction.transition ?? data.transition ?? "none";
+    props.transition ??
+    dataAction.transition ??
+    action.transition ??
+    data.transition ??
+    "none";
 
   const transitionDuration =
     props.transitionFrame ??
     dataAction.transitionFrame ??
+    action.transitionFrame ??
     data.transitionFrame ??
     0;
 
   const transitionDelay =
     props.transitionDelay ??
     dataAction.transitionDelay ??
+    action.transitionDelay ??
     data.transitionDelay ??
     0;
 
   const transitionLoop =
     props.transitionLoop ??
     dataAction.transitionLoop ??
+    action.transitionLoop ??
     data.transitionLoop ??
     false;
 
   const styleCss =
-    props.styleCss || dataAction.styleCss || data.styleCss || null;
+    props.styleCss ||
+    dataAction.styleCss ||
+    action.styleCss ||
+    data.styleCss ||
+    null;
 
   // ⭐ Tìm element và lưu original styles khi mount
   useEffect(() => {
     if (!toID) {
-      console.warn("⚠️ TransitionToID: toID is required. Received props:", {
+      console.warn("⚠️ TransitionToID: toID is required. Received:", {
         "props.toID": props.toID,
         "dataAction.toID": dataAction?.toID,
+        "action.toID": action?.toID,
         "data.toID": data?.toID,
       });
       return;
@@ -144,11 +161,13 @@ const TransitionToID = (props) => {
 
     const relativeFrame = frame - startFrame;
 
-    // Tính transition values
+    // ⭐ FIX: Truyền đúng thứ tự tham số, bao gồm fps
+    // Signature: calculateTransition(relativeFrame, transitionType, transitionDuration, fps, transitionLoop, durationInFrames, transitionDelay)
     const transitionValues = calculateTransition(
       relativeFrame,
       transitionType,
       transitionDuration,
+      fps,
       transitionLoop,
       durationInFrames,
       transitionDelay,
@@ -176,6 +195,7 @@ const TransitionToID = (props) => {
     el.style.filter = mergedFilter || "";
   }, [
     frame,
+    fps,
     startFrame,
     endFrame,
     transitionType,
