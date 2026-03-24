@@ -2,33 +2,7 @@
 // 📦 IMPORT
 // ================================
 import DataFront from "./data_Front_001.json" with { type: "json" };
-import { initTransitions } from "../../components/ActionOrchestrator/utils/transitions/transitionResolver.js";
-
-// ─── DataFront arrays ────────────────────────────────────────────────────────
-// arr05 (index 4): tuỳ chọn — mảng flat-row transitions cùng format transitions.json
-// Nếu DataFront chỉ có 4 mảng thì arr5_transitions = undefined → an toàn
-const [arr1_configs, arr2_styles, arr3_contents, arr4_data, arr5_transitions] =
-  DataFront;
-
-// ─── Runtime load custom transitions từ arr05 ────────────────────────────────
-// Gọi TRƯỚC khi bất kỳ component nào render → transitions sẵn sàng ngay
-// Hỗ trợ 2 format:
-//   - Flat array: [{ transitionName, isLoop, delayState, at-01, keyframes-01, ... }]
-//   - Wrapped array (Excel export): [[{ ... }]] → unwrap tự động
-if (arr5_transitions) {
-  const rows = Array.isArray(arr5_transitions)
-    ? Array.isArray(arr5_transitions[0])
-      ? arr5_transitions[0]
-      : arr5_transitions
-    : [];
-  if (rows.length > 0) {
-    initTransitions(rows);
-    console.log(
-      `✅ data.js: Loaded ${rows.length} custom transition(s) from arr05`,
-    );
-  }
-}
-
+const [arr1_configs, arr2_styles, arr3_contents, arr4_data] = DataFront;
 let videoData01 = [];
 
 // ================================
@@ -149,9 +123,9 @@ function parseCssString(cssStr) {
 function parseBoolean(value) {
   if (typeof value === "boolean") return value;
   if (typeof value === "string") {
-    const upper = value.toUpperCase().trim();
-    if (upper === "TRUE") return true;
-    if (upper === "FALSE") return false;
+    const upperValue = value.toUpperCase().trim();
+    if (upperValue === "TRUE") return true;
+    if (upperValue === "FALSE") return false;
   }
   return value;
 }
@@ -159,7 +133,9 @@ function parseBoolean(value) {
 function parseActionKey(key) {
   if (!key || typeof key !== "string") return null;
   const match = key.match(/^content-(\d{2})$/);
-  if (match) return { actionNum: parseInt(match[1], 10), originalKey: key };
+  if (match) {
+    return { actionNum: parseInt(match[1], 10), originalKey: key };
+  }
   return null;
 }
 
@@ -191,8 +167,7 @@ function searchInContentsArray(key) {
 }
 
 function resolveAddKey(addKey, dataRow) {
-  if (dataRow && Object.prototype.hasOwnProperty.call(dataRow, addKey))
-    return dataRow[addKey];
+  if (dataRow && dataRow.hasOwnProperty(addKey)) return dataRow[addKey];
   const fromConfigs = searchInConfigsArray(addKey);
   if (fromConfigs !== null) return fromConfigs;
   const fromStyles = searchInStylesArray(addKey);
@@ -205,57 +180,116 @@ function resolveAddKey(addKey, dataRow) {
 // ================================
 // ⭐ MODEOBJ RESOLVER
 // ================================
+
+/**
+ * Resolve một expression dạng "MODEOBJ.key+literal+MODEOBJ.key2+..."
+ *
+ * Luật kết hợp (left-to-right):
+ *  - Nếu cả 2 phần kề đều là số (number) → cộng số học
+ *  - Ngược lại → nối chuỗi (String concat)
+ *
+ * Ví dụ:
+ *  MODEOBJ.id+div001          → "abcdiv001"   (id="abc")
+ *  MODEOBJ.price+10           → 110            (price=100, cả 2 là số)
+ *  MODEOBJ.price+px           → "100px"        (100 + "px" → string)
+ *  MODEOBJ.id+abc+MODEOBJ.name → "xabcy"       (id="x", name="y")
+ *  MODEOBJ.x+1+2              → 8              (x=5, 5+1=6, 6+2=8)
+ *  MODEOBJ.x+1+abc            → "6abc"         (5+1=6 số, 6+"abc"→string)
+ */
 function resolveMODEOBJConcat(value, modeObjData) {
   const parts = value.split("+").map((p) => p.trim());
+
+  // Resolve từng phần thành giá trị thực
   const resolved = parts.map((part) => {
+    // Là MODEOBJ.xxx?
     const mobjMatch = part.match(/^MODEOBJ\.(\w+)$/);
     if (mobjMatch) {
       const key = mobjMatch[1];
       const val = modeObjData[key];
       return val !== undefined && val !== null ? val : "";
     }
+    // Literal number?
     if (part !== "" && !isNaN(part)) return Number(part);
+    // Literal string
     return part;
   });
+
+  // Kết hợp left-to-right
   let result = resolved[0];
   for (let i = 1; i < resolved.length; i++) {
     const next = resolved[i];
-    if (typeof result === "number" && typeof next === "number")
-      result = result + next;
-    else result = String(result) + String(next);
+    if (typeof result === "number" && typeof next === "number") {
+      result = result + next; // cộng số học
+    } else {
+      result = String(result) + String(next); // nối chuỗi
+    }
   }
   return result;
 }
 
+/**
+ * Resolve MODEOBJ.xxx pattern trong một value string.
+ * ⭐ Nếu modeObjData null/undefined → trả value nguyên gốc, KHÔNG xét.
+ * ⭐ NEW: Hỗ trợ dạng MODEOBJ.xxx+literal+MODEOBJ.yyy (nhiều '+').
+ *
+ * Ưu tiên xử lý:
+ *  1. Có dấu '+' trong value → resolveMODEOBJConcat (toàn bộ expression)
+ *  2. Exact match "MODEOBJ.xxx" → trả giá trị trực tiếp (giữ kiểu dữ liệu)
+ *  3. Inline replacement trong chuỗi → String.replace
+ */
 function resolveMODEOBJ(value, modeObjData) {
   if (!modeObjData || !value || typeof value !== "string") return value;
   if (!value.includes("MODEOBJ.")) return value;
-  if (value.includes("+")) return resolveMODEOBJConcat(value, modeObjData);
-  const exactMatch = value.match(/^MODEOBJ\.(\w+)$/);
+
+  // ⭐ NEW: Phát hiện concat — có dấu '+' trong chuỗi
+  // Guard: chỉ kích hoạt khi value thực sự chứa "MODEOBJ." kèm "+"
+  if (value.includes("+")) {
+    return resolveMODEOBJConcat(value, modeObjData);
+  }
+
+  // Exact match "MODEOBJ.xxx"
+  const exactPattern = /^MODEOBJ\.(\w+)$/;
+  const exactMatch = value.match(exactPattern);
   if (exactMatch) {
-    const resolved = modeObjData[exactMatch[1]];
+    const key = exactMatch[1];
+    const resolved = modeObjData[key];
     return resolved !== undefined ? resolved : null;
   }
-  return value.replace(/MODEOBJ\.(\w+)/g, (_, key) => {
+
+  // Inline replacement "...MODEOBJ.xxx..."
+  return value.replace(/MODEOBJ\.(\w+)/g, (fullMatch, key) => {
     const resolved = modeObjData[key];
     return resolved !== undefined && resolved !== null ? resolved : "";
   });
 }
 
+/**
+ * Parse special values (JSON_, ADD_, TRUE/FALSE, MODEOBJ.xxx)
+ */
 function parseSpecialValue(value, dataRow, modeObjData) {
   if (isNullOrEmpty(value)) return null;
+
+  // 0. Resolve MODEOBJ.xxx — CHỈ khi modeObjData tồn tại
   if (modeObjData && typeof value === "string" && value.includes("MODEOBJ.")) {
     value = resolveMODEOBJ(value, modeObjData);
     if (value === null || value === undefined) return null;
     if (typeof value !== "string") return value;
   }
+
+  // 1. JSON_ prefix
   if (typeof value === "string" && value.startsWith("JSON_")) {
     return parseCssString(value.replace("JSON_", ""));
   }
+
+  // 2. Boolean
   if (typeof value === "string") {
-    const upper = value.toUpperCase().trim();
-    if (upper === "TRUE" || upper === "FALSE") return parseBoolean(value);
+    const upperValue = value.toUpperCase().trim();
+    if (upperValue === "TRUE" || upperValue === "FALSE") {
+      return parseBoolean(value);
+    }
   }
+
+  // 3. ADD_
   if (typeof value === "string" && value.startsWith("ADD_")) {
     const resolvedValue = resolveAddKey(value, dataRow);
     if (
@@ -266,9 +300,12 @@ function parseSpecialValue(value, dataRow, modeObjData) {
     }
     return value.replace("ADD_", "");
   }
+
+  // 4. Number
   if (typeof value === "string" && !isNaN(value) && value.trim() !== "") {
     return Number(value);
   }
+
   return value;
 }
 
@@ -280,7 +317,9 @@ function resolveAllProperties(obj, dataRow, excludeKeys = [], modeObjData) {
       continue;
     }
     const resolvedValue = parseSpecialValue(value, dataRow, modeObjData);
-    if (resolvedValue !== null) resolved[key] = resolvedValue;
+    if (resolvedValue !== null) {
+      resolved[key] = resolvedValue;
+    }
   }
   return resolved;
 }
@@ -292,13 +331,16 @@ function groupConfigsByAction(configItem, dataRow) {
     if (!parsed) continue;
     if (isNullOrEmpty(value)) continue;
     const resolvedValue = parseSpecialValue(value, dataRow);
-    if (!actionsMap.has(parsed.actionNum)) actionsMap.set(parsed.actionNum, {});
+    if (!actionsMap.has(parsed.actionNum)) {
+      actionsMap.set(parsed.actionNum, {});
+    }
     actionsMap.get(parsed.actionNum).content = resolvedValue;
   }
   const validActions = new Map();
-  for (const [num, data] of actionsMap) {
-    if (data.content && !isNullOrEmpty(data.content))
-      validActions.set(num, data);
+  for (const [actionNum, actionData] of actionsMap) {
+    if (actionData.content && !isNullOrEmpty(actionData.content)) {
+      validActions.set(actionNum, actionData);
+    }
   }
   return new Map([...validActions.entries()].sort((a, b) => a[0] - b[0]));
 }
@@ -314,6 +356,7 @@ function buildStyleCss(styleCssName, dataRow, modeObjData) {
     const key = `css-${String(i).padStart(3, "0")}`;
     let cssValue = styleItem[key];
     if (isNullOrEmpty(cssValue)) continue;
+    // Resolve MODEOBJ. — CHỈ khi modeObjData tồn tại
     if (
       modeObjData &&
       typeof cssValue === "string" &&
@@ -322,6 +365,7 @@ function buildStyleCss(styleCssName, dataRow, modeObjData) {
       cssValue = resolveMODEOBJ(cssValue, modeObjData);
       if (cssValue === null) continue;
     }
+    // Resolve ADD_
     if (typeof cssValue === "string" && cssValue.includes("ADD_")) {
       const matches = cssValue.match(/ADD_[\w]+/g);
       if (matches) {
@@ -358,7 +402,9 @@ function buildContentObject(contentName, dataRow, modeObjData) {
     if (isNullOrEmpty(keyName) || isNullOrEmpty(contentValue)) continue;
     if (keyName === "contentName" || keyName === "Mô tả") continue;
     const parsedValue = parseSpecialValue(contentValue, dataRow, modeObjData);
-    if (parsedValue !== null) contentObj[keyName] = parsedValue;
+    if (parsedValue !== null) {
+      contentObj[keyName] = parsedValue;
+    }
   }
   return contentObj;
 }
@@ -366,6 +412,11 @@ function buildContentObject(contentName, dataRow, modeObjData) {
 // ================================
 // ⭐⭐⭐ MODE PROCESSING
 // ================================
+
+/**
+ * Parse modeOBJ string → object
+ * ⭐ rawModeOBJ null/undefined → trả về {} rỗng + auto-id
+ */
 function parseModeOBJ(rawModeOBJ, configIndex, rowIndex) {
   let modeObjData = {};
   if (!isNullOrEmpty(rawModeOBJ)) {
@@ -374,22 +425,33 @@ function parseModeOBJ(rawModeOBJ, configIndex, rowIndex) {
         modeObjData = JSON.parse(rawModeOBJ);
       } catch (e) {
         console.warn("   ⚠️ Failed to parse modeOBJ:", e.message);
+        modeObjData = {};
       }
     } else if (typeof rawModeOBJ === "object") {
       modeObjData = { ...rawModeOBJ };
     }
   }
+  // Auto-generate id nếu thiếu
   if (isNullOrEmpty(modeObjData.id)) {
     modeObjData.id = `mode-auto-id-r${rowIndex}-c${configIndex}`;
   }
   return modeObjData;
 }
 
+/**
+ * ⭐ group === null / "null" / undefined → xóa khỏi action
+ */
 function cleanNullGroup(action) {
-  if ("group" in action && isNullOrEmpty(action.group)) delete action.group;
+  if ("group" in action && isNullOrEmpty(action.group)) {
+    delete action.group;
+  }
   return action;
 }
 
+/**
+ * Build actions from MODE
+ * ⭐ Gắn _sttMode và _modeGroup để phục vụ splitInmodeSegments
+ */
 function buildModeActions(resolvedMode, dataRow, modeObjData) {
   if (isNullOrEmpty(resolvedMode)) return [];
   const modeContents = arr3_contents
@@ -409,11 +471,15 @@ function buildModeActions(resolvedMode, dataRow, modeObjData) {
     cleanNullGroup(action);
     const styleCssName = `${contentName}-css`;
     const builtStyle = buildStyleCss(styleCssName, dataRow, modeObjData);
-    if (Object.keys(builtStyle).length > 0) action.styleCss = builtStyle;
-    if (modeContentItem.sttMode != null)
+    if (Object.keys(builtStyle).length > 0) {
+      action.styleCss = builtStyle;
+    }
+    if (modeContentItem.sttMode != null) {
       action._sttMode = Number(modeContentItem.sttMode);
-    if (!isNullOrEmpty(modeContentItem.modeGroup))
+    }
+    if (!isNullOrEmpty(modeContentItem.modeGroup)) {
       action._modeGroup = Number(modeContentItem.modeGroup);
+    }
     actions.push(action);
   }
   return actions;
@@ -422,6 +488,10 @@ function buildModeActions(resolvedMode, dataRow, modeObjData) {
 // ================================
 // ⭐⭐⭐ INMODE SPLITTING
 // ================================
+
+/**
+ * Tách segment có code === "INMODE" thành nhiều segment con theo _modeGroup.
+ */
 function splitInmodeSegments(segments) {
   const result = [];
   for (const segment of segments) {
@@ -432,6 +502,7 @@ function splitInmodeSegments(segments) {
     const actions = segment.actions || [];
     if (actions.length === 0) continue;
 
+    // Thu thập tất cả modeGroup index
     const allGroupIndices = new Set();
     for (const action of actions) {
       if (action._modeGroup != null && !isNaN(action._modeGroup)) {
@@ -443,6 +514,7 @@ function splitInmodeSegments(segments) {
     const sortedGroupIndices = [...allGroupIndices].sort((a, b) => a - b);
     const firstGroupIndex = sortedGroupIndices[0];
 
+    // Gom actions vào nhóm
     const groupMap = new Map();
     for (const idx of sortedGroupIndices) groupMap.set(idx, []);
     for (const action of actions) {
@@ -472,12 +544,19 @@ function splitInmodeSegments(segments) {
         return cleaned;
       });
 
-      let newCode = segment.code,
-        newTimeFixed,
-        hasTimeFixed = false;
+      // Lấy code và timeFixed từ action cuối cùng có giá trị
+      let newCode = segment.code;
+      let newTimeFixed = undefined;
+      let hasTimeFixed = false;
       for (const action of cleanedActions) {
-        if (action.code != null && action.code !== "") newCode = action.code;
-        if (action.timeFixed != null) {
+        if (
+          action.code !== null &&
+          action.code !== undefined &&
+          action.code !== ""
+        ) {
+          newCode = action.code;
+        }
+        if (action.timeFixed !== null && action.timeFixed !== undefined) {
           newTimeFixed = action.timeFixed;
           hasTimeFixed = true;
         }
@@ -489,15 +568,20 @@ function splitInmodeSegments(segments) {
         actions: cleanedActions,
         stt: segment.stt + (gi + 1) * 0.001,
       };
-      if (hasTimeFixed) newSegment.timeFixed = newTimeFixed;
-      else delete newSegment.timeFixed;
-
+      if (hasTimeFixed) {
+        newSegment.timeFixed = newTimeFixed;
+      } else {
+        delete newSegment.timeFixed;
+      }
       result.push(newSegment);
     }
   }
   return result;
 }
 
+/**
+ * Xóa metadata tạm (_sttMode, _modeGroup) khỏi tất cả actions
+ */
 function cleanMetadataFromActions(segments) {
   return segments.map((segment) => {
     const cleanedActions = segment.actions.map((action) => {
@@ -519,7 +603,7 @@ arr4_data.forEach((dataRow, rowIndex) => {
   arr1_configs.forEach((configItem, configIndex) => {
     let actions = [];
 
-    // STEP 0: Resolve modeOBJ → mode
+    // STEP 0: Resolve modeOBJ trước, rồi mới resolve mode
     let resolvedMode = null;
     let modeObjData = null;
 
@@ -527,11 +611,15 @@ arr4_data.forEach((dataRow, rowIndex) => {
       const rawModeOBJ = parseSpecialValue(configItem.modeOBJ, dataRow);
       modeObjData = parseModeOBJ(rawModeOBJ, configIndex, rowIndex);
     }
+
     if (configItem.mode && typeof configItem.mode === "string") {
       const rawMode = parseSpecialValue(configItem.mode, dataRow);
-      if (!isNullOrEmpty(rawMode) && rawMode !== "NULLA")
+      if (!isNullOrEmpty(rawMode) && rawMode !== "NULLA") {
         resolvedMode = rawMode;
+      }
     }
+
+    // Fallback: nếu modeObjData có .mode → dùng nó
     if (!resolvedMode && modeObjData && !isNullOrEmpty(modeObjData.mode)) {
       resolvedMode = modeObjData.mode;
     }
@@ -546,22 +634,27 @@ arr4_data.forEach((dataRow, rowIndex) => {
       cleanNullGroup(action);
       const styleCssName = `${contentName}-css`;
       const builtStyle = buildStyleCss(styleCssName, dataRow, modeObjData);
-      if (Object.keys(builtStyle).length > 0) action.styleCss = builtStyle;
+      if (Object.keys(builtStyle).length > 0) {
+        action.styleCss = builtStyle;
+      }
       actions.push(action);
     }
 
     // STEP 2: MODE actions
     if (resolvedMode) {
       const modeActions = buildModeActions(resolvedMode, dataRow, modeObjData);
-      if (modeActions.length > 0) actions.push(...modeActions);
+      if (modeActions.length > 0) {
+        actions.push(...modeActions);
+      }
     }
 
+    // STEP 3: Build segment
     if (actions.length === 0) return;
 
-    // STEP 3: Build segment
-    const excludeKeys = Object.keys(configItem)
-      .filter((key) => parseActionKey(key) !== null)
-      .concat(["stt", "mode", "modeOBJ"]);
+    const excludeKeys = Object.keys(configItem).filter(
+      (key) => parseActionKey(key) !== null,
+    );
+    excludeKeys.push("stt", "mode", "modeOBJ");
 
     const resolvedConfigProps = resolveAllProperties(
       configItem,
@@ -570,33 +663,53 @@ arr4_data.forEach((dataRow, rowIndex) => {
       modeObjData,
     );
 
-    let segment = { actions, ...resolvedConfigProps, stt: configIndex };
+    let segment = {
+      actions: actions,
+      ...resolvedConfigProps,
+      stt: configIndex,
+    };
+
     Object.keys(segment).forEach((key) => {
-      if (segment[key] === null || segment[key] === undefined)
+      if (segment[key] === null || segment[key] === undefined) {
         delete segment[key];
+      }
     });
 
     videoSegments.push(segment);
   });
 
-  // ── KQ001: Tách INMODE trước ─────────────────────────────────────────────
+  // ================================
+  // KQ001: Tách INMODE segments TRƯỚC (trước khi filter NULLA)
+  // ================================
   const splitSegments = splitInmodeSegments(videoSegments);
 
-  // ── KQ002: Filter NULLA sau khi split ────────────────────────────────────
+  // ================================
+  // KQ002: Filter NULLA SAU KHI đã split INMODE
+  // ================================
   const validatedSegments = splitSegments
     .filter((segment) => {
-      if (segment.code === "NULLA" || segment.code == null) return false;
+      if (
+        segment.code === "NULLA" ||
+        segment.code === null ||
+        segment.code === undefined
+      ) {
+        return false;
+      }
       return true;
     })
     .map((segment) => {
-      const validActions = segment.actions.filter(
-        (action) => !JSON.stringify(action).includes("NULLA"),
-      );
+      const validActions = segment.actions.filter((action) => {
+        return !JSON.stringify(action).includes("NULLA");
+      });
       return { ...segment, actions: validActions };
     });
 
+  // Xóa metadata tạm (_sttMode, _modeGroup)
   const finalSegments = cleanMetadataFromActions(validatedSegments);
-  if (finalSegments.length > 0) videoData01.push(finalSegments);
+
+  if (finalSegments.length > 0) {
+    videoData01.push(finalSegments);
+  }
 });
 
 console.log(JSON.stringify(videoData01));

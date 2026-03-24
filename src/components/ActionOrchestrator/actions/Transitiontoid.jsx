@@ -1,42 +1,64 @@
 // src/Components/ActionOrchestrator/actions/TransitionToID.jsx
 /**
  * 🎯 TransitionToID
- * Gán transition vào một DOM element có sẵn thông qua ID
+ * Gán transition vào một DOM element có sẵn thông qua ID — không render gì.
  *
- * Tương tự actionCSSId nhưng thay vì gán CSS tĩnh,
- * component này gán transition animation theo frame.
- *
- * USAGE trong data config:
+ * ─── USAGE ────────────────────────────────────────────────────────────────────
  * {
- *   cmd: "transitionToID",
- *   toID: "abc",                    // ID của element cần gán transition
- *   transition: "fadeIn",           // Loại transition
- *   transitionFrame: 30,            // Số frame cho transition
- *   transitionDelay: 0,             // (Optional) Delay trước khi bắt đầu
- *   transitionLoop: false,          // (Optional) Lặp lại không
- *   styleCss: { color: "red" },     // (Optional) CSS bổ sung
+ *   cmd:             "transitionToID",
+ *   toID:            "elementId",      // (required) element nguồn
+ *   targetID:        "otherId",        // (moveToID only) element đích
+ *   transition:      "fadeIn",         // tên transition trong transitions.json
+ *   transitionFrame: 30,               // số frame
+ *   transitionDelay: 0,                // delay frames (optional)
+ *   transitionLoop:  false,            // loop/ping-pong (optional)
+ *   noDelayState:    true,             // default TRUE — giữ CSS trong delay
+ *   // + bất kỳ key nào khác → tự động thành extraProps cho "props.xxx"
+ *   // Ví dụ: deltaX: 150 → dùng cho transition moveToID
  * }
  *
- * HOW IT WORKS:
- * 1. Tìm DOM element bằng document.getElementById(toID)
- * 2. Mỗi frame, tính transition values (opacity, transform, filter)
- * 3. Apply trực tiếp lên element.style
- * 4. Khi unmount → cleanup styles
+ * ─── CÁC TRƯỜNG HỢP XỬ LÝ ────────────────────────────────────────────────────
  *
- * ⭐ Props có thể được truyền theo 3 cách (ưu tiên từ cao → thấp):
- *    - Spread trực tiếp: <TransitionToID toID="abc" transition="fadeIn" ... />
- *    - Nested trong dataAction: <TransitionToID dataAction={{toID: "abc"}} ... />
- *    - Nested trong data.action: <TransitionToID data={{action: {toID: "abc"}}} ... />
- *    - Nested trong data: <TransitionToID data={{toID: "abc"}} ... />
+ * TH1 — Merge nhiều TransitionToID trên cùng element:
+ *   → domTransitionRegistry merge opacity, transform, filter
+ *   → Mỗi instance contribute riêng, không xung đột
+ *
+ * TH2 — transition="none" → reset tất cả:
+ *   → Xóa mọi transition đang chạy (kể cả loop=true)
+ *   → Element về base style gốc
+ *   → Khi ra khỏi frame range → các transition khác tự resume
+ *
+ * TH3 — transitionLoop=true với oneTime (đặc biệt moveToID):
+ *   → Ping-pong: tiến về đích → quay về origin → lặp lại
+ *   → calculateTransition xử lý, registry nhận output
+ *
+ * ─── EDGE CASES ───────────────────────────────────────────────────────────────
+ *   - toID chưa tồn tại khi mount: retry bằng requestAnimationFrame (≤60 lần)
+ *   - targetID không tồn tại: warn + deltaX=0, deltaY=0
+ *   - transitionDuration=0: treated as none
+ *   - relativeFrame < 0: clamp về 0 trong calculateTransition
+ *   - Nhiều TransitionToID trên cùng element: dùng registry (TH1)
+ *   - Element re-mount: re-register + đọc lại originalStyle
+ *   - noDelayState=true (default): KHÔNG ẩn element trong giai đoạn delay
  */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import {
   calculateTransition,
-  mergeTransforms,
-  mergeFilters,
+  extractExtraProps,
 } from "../utils/transitions/transitionResolver";
+import {
+  registerInstance,
+  applyTransitionValues,
+  removeInstance,
+  releaseDominantNone,
+} from "../utils/transitions/domTransitionRegistry";
+
+// ─── Unique instance ID ───────────────────────────────────────────────────────
+let _counter = 0;
+const genId = () =>
+  `tid-${++_counter}-${Math.random().toString(36).slice(2, 6)}`;
 
 const TransitionToID = (props) => {
   const {
@@ -49,14 +71,22 @@ const TransitionToID = (props) => {
 
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const elementRef = useRef(null);
-  const originalStylesRef = useRef(null);
 
-  // ⭐ Lookup helper: data có thể chứa action object bên trong (giống DivAction)
+  // Stable instance ID
+  const instanceId = useRef(genId());
+
+  // DOM state
+  const elementRef = useRef(null);
+  const registeredRef = useRef(false);
+  const deltaRef = useRef({ x: 0, y: 0 });
+
+  // ── Config: priority props > dataAction > data.action > data ──────────────
   const action = data.action || {};
 
-  // ⭐ Lấy config: ưu tiên props trực tiếp > dataAction > data.action > data
-  const toID = props.toID || dataAction.toID || action.toID || data.toID;
+  const toID = props.toID ?? dataAction.toID ?? action.toID ?? data.toID;
+
+  const targetID =
+    props.targetID ?? dataAction.targetID ?? action.targetID ?? data.targetID;
 
   const transitionType =
     props.transition ??
@@ -65,105 +95,137 @@ const TransitionToID = (props) => {
     data.transition ??
     "none";
 
-  const transitionDuration =
+  const transitionDuration = Number(
     props.transitionFrame ??
-    dataAction.transitionFrame ??
-    action.transitionFrame ??
-    data.transitionFrame ??
-    0;
+      dataAction.transitionFrame ??
+      action.transitionFrame ??
+      data.transitionFrame ??
+      0,
+  );
 
-  const transitionDelay =
+  const transitionDelay = Number(
     props.transitionDelay ??
-    dataAction.transitionDelay ??
-    action.transitionDelay ??
-    data.transitionDelay ??
-    0;
+      dataAction.transitionDelay ??
+      action.transitionDelay ??
+      data.transitionDelay ??
+      0,
+  );
 
-  const transitionLoop =
+  const transitionLoop = Boolean(
     props.transitionLoop ??
-    dataAction.transitionLoop ??
-    action.transitionLoop ??
-    data.transitionLoop ??
-    false;
+      dataAction.transitionLoop ??
+      action.transitionLoop ??
+      data.transitionLoop ??
+      false,
+  );
 
-  const styleCss =
-    props.styleCss ||
-    dataAction.styleCss ||
-    action.styleCss ||
-    data.styleCss ||
-    null;
+  // noDelayState DEFAULT = TRUE cho TransitionToID
+  const noDelayState = Boolean(
+    props.noDelayState !== undefined
+      ? props.noDelayState
+      : dataAction.noDelayState !== undefined
+        ? dataAction.noDelayState
+        : action.noDelayState !== undefined
+          ? action.noDelayState
+          : data.noDelayState !== undefined
+            ? data.noDelayState
+            : true,
+  );
 
-  // ⭐ Tìm element và lưu original styles khi mount
-  useEffect(() => {
+  // Static extra props từ dataAction (strip standard keys) + direct props
+  // deltaX/deltaY được tính lúc mount → merge vào mỗi frame
+  const staticExtraRef = useRef(extractExtraProps({ ...dataAction, ...props }));
+
+  // ── Mount: tìm element, register, tính delta cho moveToID ─────────────────
+  const tryRegister = useCallback(() => {
     if (!toID) {
-      console.warn("⚠️ TransitionToID: toID is required. Received:", {
-        "props.toID": props.toID,
-        "dataAction.toID": dataAction?.toID,
-        "action.toID": action?.toID,
-        "data.toID": data?.toID,
-      });
-      return;
+      console.warn("⚠️ TransitionToID: toID is required");
+      return false;
     }
 
     const el = document.getElementById(toID);
-    if (!el) {
-      console.warn(`⚠️ TransitionToID: Element with id="${toID}" not found`);
-      return;
-    }
+    if (!el) return false;
 
     elementRef.current = el;
+    registeredRef.current = registerInstance(toID, instanceId.current, el);
 
-    // Lưu original styles để cleanup khi unmount
-    originalStylesRef.current = {
-      opacity: el.style.opacity,
-      transform: el.style.transform,
-      filter: el.style.filter,
-      transition: el.style.transition,
-    };
-
-    // Tắt CSS transition để tránh conflict với frame-based animation
-    el.style.transition = "none";
-
-    // ⭐ Apply styleCss bổ sung (nếu có) — chỉ CSS KHÔNG liên quan transition
-    if (styleCss && typeof styleCss === "object") {
-      for (const [prop, value] of Object.entries(styleCss)) {
-        if (
-          prop !== "opacity" &&
-          prop !== "transform" &&
-          prop !== "filter" &&
-          prop !== "transition"
-        ) {
-          el.style[prop] = typeof value === "number" ? `${value}px` : value;
-        }
+    // moveToID: tính delta góc trên trái source → target
+    if (transitionType === "moveToID" && targetID) {
+      const targetEl = document.getElementById(targetID);
+      if (targetEl) {
+        const srcRect = el.getBoundingClientRect();
+        const tgtRect = targetEl.getBoundingClientRect();
+        deltaRef.current = {
+          x: tgtRect.left - srcRect.left,
+          y: tgtRect.top - srcRect.top,
+        };
+      } else {
+        console.warn(
+          `⚠️ TransitionToID (moveToID): targetID "${targetID}" not found. delta=0`,
+        );
+        deltaRef.current = { x: 0, y: 0 };
       }
     }
 
-    // Cleanup khi unmount
+    return registeredRef.current;
+  }, [toID, targetID, transitionType]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Mount effect
+  useEffect(() => {
+    if (tryRegister()) return; // ngay lập tức
+
+    // Retry nếu element chưa tồn tại
+    let retryCount = 0;
+    const MAX_RETRY = 60;
+    const retry = () => {
+      if (retryCount++ >= MAX_RETRY) {
+        console.warn(
+          `⚠️ TransitionToID: Element "${toID}" not found after ${MAX_RETRY} retries`,
+        );
+        return;
+      }
+      if (!tryRegister()) requestAnimationFrame(retry);
+    };
+    requestAnimationFrame(retry);
+
     return () => {
-      if (elementRef.current && originalStylesRef.current) {
-        const el = elementRef.current;
-        const orig = originalStylesRef.current;
-        el.style.opacity = orig.opacity;
-        el.style.transform = orig.transform;
-        el.style.filter = orig.filter;
-        el.style.transition = orig.transition;
+      if (toID) {
+        releaseDominantNone(toID, instanceId.current);
+        removeInstance(toID, instanceId.current);
       }
     };
   }, [toID]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ⭐ Apply transition mỗi frame
+  // ── Per-frame: tính và apply transition ───────────────────────────────────
   useEffect(() => {
-    const el = elementRef.current;
-    if (!el) return;
+    if (!registeredRef.current || !elementRef.current) return;
 
-    // Chỉ apply trong khoảng startFrame → endFrame
-    if (frame < startFrame || frame > endFrame) return;
+    const isNoneTransition = !transitionType || transitionType === "none";
+
+    // Ngoài frame range
+    if (frame < startFrame || frame > endFrame) {
+      // TH2: giải phóng cờ dominantNone nếu đang giữ
+      if (isNoneTransition) releaseDominantNone(toID, instanceId.current);
+      return;
+    }
 
     const relativeFrame = frame - startFrame;
 
-    // ⭐ FIX: Truyền đúng thứ tự tham số, bao gồm fps
-    // Signature: calculateTransition(relativeFrame, transitionType, transitionDuration, fps, transitionLoop, durationInFrames, transitionDelay)
-    const transitionValues = calculateTransition(
+    // Extra props: static + delta (moveToID)
+    const extraProps = {
+      ...staticExtraRef.current,
+      deltaX: deltaRef.current.x,
+      deltaY: deltaRef.current.y,
+    };
+
+    // TH2: transition='none' → reset qua registry
+    if (isNoneTransition) {
+      applyTransitionValues(toID, instanceId.current, {}, { isNone: true });
+      return;
+    }
+
+    // Tính transition
+    const values = calculateTransition(
       relativeFrame,
       transitionType,
       transitionDuration,
@@ -171,28 +233,16 @@ const TransitionToID = (props) => {
       transitionLoop,
       durationInFrames,
       transitionDelay,
+      extraProps,
+      noDelayState,
     );
 
-    // ⭐ Apply lên element
-    if (transitionValues.isNone) {
-      el.style.opacity = "1";
-      el.style.transform = "";
-      el.style.filter = "";
-      return;
-    }
-
-    // Merge with any existing transform/filter from styleCss
-    const baseTransform =
-      styleCss && styleCss.transform ? styleCss.transform : "";
-    const baseFilter = styleCss && styleCss.filter ? styleCss.filter : "";
-
-    el.style.opacity = String(transitionValues.opacity);
-    el.style.transform = mergeTransforms(
-      baseTransform,
-      transitionValues.transform,
-    );
-    const mergedFilter = mergeFilters(baseFilter, transitionValues.filter);
-    el.style.filter = mergedFilter || "";
+    // Apply qua registry (TH1: merge với instances khác)
+    applyTransitionValues(toID, instanceId.current, values, {
+      isNone: values.isNone ?? false,
+      isDelaying: values.isDelaying ?? false,
+      noDelayState: noDelayState && (values.isDelaying ?? false),
+    });
   }, [
     frame,
     fps,
@@ -203,10 +253,11 @@ const TransitionToID = (props) => {
     transitionDelay,
     transitionLoop,
     durationInFrames,
-    styleCss,
+    noDelayState,
+    toID,
   ]);
 
-  // Component không render gì — chỉ điều khiển element có sẵn qua DOM
+  // Không render gì — chỉ điều khiển DOM
   return null;
 };
 
