@@ -5,1887 +5,487 @@
         {
           "cmd": "divAction",
           "id": "hook_DivBG",
-          "timeFixed": 0.2,
+          "code": "SOUNDCHUNG_SpaceSound",
+          "timeFixed": 5,
+          "transition": "PhongtoChaySangPhai",
+          "transitionFrame": 360,
+          "transitionLoop": false,
+          "Aaa": 4,
           "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "background": "radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "hook_DivBG",
-          "img": "test_tenlue.jpg",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 150,
-            "top": 100,
-            "width": 470,
-            "height": 470,
-            "transform": "rotate(-20deg)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "hook_DivBG",
-          "img": "test_eobien.jpg",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 510,
-            "top": 160,
-            "width": 460,
-            "height": 460,
-            "transform": "rotate(7deg)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "hook_DivBG",
-          "img": "test_gold.jpg",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 125,
-            "top": 310,
-            "width": 480,
-            "height": 470,
-            "transform": "rotate(-12deg)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "hook_DivBG",
-          "img": "test_spam.jfif",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 470,
-            "top": 360,
-            "width": 460,
-            "height": 470,
-            "transform": "rotate(26deg)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "hook_DivBG",
-          "img": "test_trump.webp",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 165,
-            "top": 500,
-            "width": 440,
-            "height": 440,
-            "transform": "rotate(-30deg)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "hook_DivBG",
-          "img": "test_bitcoinDrop.webp",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 395,
-            "top": 605,
-            "width": 470,
-            "height": 470,
-            "transform": "rotate(8deg)"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "hook_Div1",
-          "toID": "hook_DivBG",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 450,
-            "left": 0,
-            "right": 0,
-            "display": "flex",
-            "flexDirection": "column",
+            "width": "2200px",
+            "height": "2200px",
+            "display": "grid",
+            "gridTemplateColumns": "repeat(5,1fr)",
+            "gridTemplateRows": "repeat(5,1fr)",
+            "gap": "10px",
+            "border": "1px solid black",
+            "justifyItems": "center",
             "alignItems": "center",
-            "gap": 16,
-            "zIndex": 10,
-            "paddingLeft": 40,
-            "paddingRight": 40
+            "transform": "perspective(800px) rotateY(15deg)",
+            "transformStyle": "preserve-3d"
           }
         },
         {
           "cmd": "divAction",
-          "id": "hook_Div2",
-          "toID": "hook_Div1",
+          "toID": "hook_DivBG",
+          "text": "DIV001",
+          "id": "idDIV001",
           "styleCss": {
-            "position": "absolute",
-            "width": 800,
-            "height": 200,
-            "background": "radial-gradient(ellipse at center, rgba(255,180,0,0.35) 0%, transparent 70%)",
-            "top": "50%",
-            "left": "50%",
-            "transform": "translate(-50%, -50%)",
-            "borderRadius": "50%",
-            "pointerEvents": "none"
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#ff6b6b,#c0392b)",
+            "fontSize": "100px"
           }
         },
         {
           "cmd": "divAction",
-          "text": "HOT NEWS UPDATES",
-          "toID": "hook_Div1",
+          "toID": "hook_DivBG",
+          "text": "DIV002",
+          "id": "idDIV002",
           "styleCss": {
-            "fontSize": 80,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "textAlign": "center",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.1,
-            "padding": "0 40px"
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#feca57,#e67e22)",
+            "fontSize": "100px"
           }
         },
         {
           "cmd": "divAction",
-          "text": "08:30 / 18-03-2026",
-          "toID": "hook_Div1",
+          "toID": "hook_DivBG",
+          "text": "DIV003",
+          "id": "idDIV003",
           "styleCss": {
-            "fontSize": 60,
-            "fontWeight": 700,
-            "color": "#FFFFFF",
-            "textAlign": "center",
-            "letterSpacing": 2,
-            "textShadow": "0 0 20px rgba(255,255,255,0.5), 2px 3px 0px rgba(0,0,0,0.9)",
-            "padding": "0 60px",
-            "lineHeight": 1.2
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#48dbfb,#2980b9)",
+            "fontSize": "100px"
           }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV004",
+          "id": "idDIV004",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#1dd1a1,#16a085)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV005",
+          "id": "idDIV005",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#5f27cd,#341f97)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV006",
+          "id": "idDIV006",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#ff9ff3,#e84393)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "id": "idDIV007",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#54a0ff,#2e86de)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV008",
+          "id": "idDIV008",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#00d2d3,#01a3a4)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV009",
+          "id": "idDIV009",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#ff9f43,#d35400)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV010",
+          "id": "idDIV010",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#10ac84,#0e6655)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV011",
+          "id": "idDIV011",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#ee5253,#b33939)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV012",
+          "id": "idDIV012",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#f368e0,#8e44ad)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV013",
+          "id": "idDIV013",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#576574,#2f3640)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV014",
+          "id": "idDIV014",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#1e90ff,#3742fa)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV015",
+          "id": "idDIV015",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#2ed573,#27ae60)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV016",
+          "id": "idDIV016",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#ffa502,#eccc68)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV017",
+          "id": "idDIV017",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#ff4757,#c44569)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV018",
+          "id": "idDIV018",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#3742fa,#2f3542)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV019",
+          "id": "idDIV019",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#70a1ff,#1e3799)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV020",
+          "id": "idDIV020",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#2f3542,#57606f)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV021",
+          "id": "idDIV021",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#7bed9f,#2ecc71)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV022",
+          "id": "idDIV022",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#ff6b81,#ff4757)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV023",
+          "id": "idDIV023",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#a4b0be,#747d8c)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV024",
+          "id": "idDIV024",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#5352ed,#3742fa)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "divAction",
+          "toID": "hook_DivBG",
+          "text": "DIV025",
+          "id": "idDIV025",
+          "styleCss": {
+            "width": "400px",
+            "height": "400px",
+            "display": "flex",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "border": "1px solid #000",
+            "transform": "translateZ(20px)",
+            "boxShadow": "0 10px 20px rgba(0,0,0,0.3)",
+            "background": "linear-gradient(135deg,#ff7f50,#ff6348)",
+            "fontSize": "100px"
+          }
+        },
+        {
+          "cmd": "imageViewActionToID",
+          "toID": "idDIV007",
+          "img": "Ngochoang_001.png",
+          "styleCss": { "width": "400px", "height": "400px" }
         }
       ],
-      "code": "INMODE",
-      "mode": "ADD_MODE001",
-      "modeOBJ": "ADD_MODEOBJ001",
+      "code": "SOUNDCHUNG_SpaceSound",
+      "mode": "modehook",
+      "modeOBJ": "{}",
       "stt": 0.001,
-      "timeFixed": 0.2
-    },
-    {
-      "actions": [
-        {
-          "cmd": "divAction",
-          "id": "2_DivBG",
-          "timeFixed": 6,
-          "code": "test_001",
-          "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "background": "radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%)"
-          }
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "test_new",
-          "volume": 0.4,
-          "ToEndFrame": true
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "2_DivBG",
-          "img": "test_tenlue.jpg",
-          "transition": "zoomIn",
-          "delay": 35,
-          "transitionFrame": 10,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 150,
-            "top": 100,
-            "width": 470,
-            "height": 470,
-            "transform": "rotate(-20deg)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "2_DivBG",
-          "img": "test_eobien.jpg",
-          "transition": "zoomIn",
-          "delay": 41,
-          "transitionFrame": 10,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 510,
-            "top": 160,
-            "width": 460,
-            "height": 460,
-            "transform": "rotate(7deg)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "2_DivBG",
-          "img": "test_gold.jpg",
-          "transition": "zoomIn",
-          "delay": 47,
-          "transitionFrame": 10,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 125,
-            "top": 310,
-            "width": 480,
-            "height": 470,
-            "transform": "rotate(-12deg)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "2_DivBG",
-          "img": "test_spam.jfif",
-          "transition": "zoomIn",
-          "delay": 53,
-          "transitionFrame": 10,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 470,
-            "top": 360,
-            "width": 460,
-            "height": 470,
-            "transform": "rotate(26deg)",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "2_DivBG",
-          "img": "test_trump.webp",
-          "transition": "zoomIn",
-          "delay": 59,
-          "transitionFrame": 10,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 165,
-            "top": 500,
-            "width": 440,
-            "height": 440,
-            "transform": "rotate(-30deg)",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "2_DivBG",
-          "img": "test_bitcoinDrop.webp",
-          "transition": "zoomIn",
-          "delay": 65,
-          "transitionFrame": 10,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 12,
-            "overflow": "hidden",
-            "boxShadow": "0 8px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(255,255,255,0.25)",
-            "objectFit": "cover",
-            "left": 395,
-            "top": 605,
-            "width": 470,
-            "height": 470,
-            "transform": "rotate(8deg)",
-            "paddingTop": 30,
-            "paddingBottom": 30
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "2_Div1",
-          "toID": "2_DivBG",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 450,
-            "left": 0,
-            "right": 0,
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "center",
-            "gap": 16,
-            "zIndex": 10,
-            "paddingLeft": 40,
-            "paddingRight": 40,
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "2_Div2",
-          "toID": "2_Div1",
-          "transition": "zoomIn",
-          "styleCss": {
-            "position": "absolute",
-            "width": 800,
-            "height": 200,
-            "background": "radial-gradient(ellipse at center, rgba(255,180,0,0.35) 0%, transparent 70%)",
-            "top": "50%",
-            "left": "50%",
-            "transform": "translate(-50%, -50%)",
-            "borderRadius": "50%",
-            "pointerEvents": "none",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "HOT NEWS UPDATES",
-          "toID": "2_Div1",
-          "transition": "zoomIn",
-          "transitionFrame": 20,
-          "styleCss": {
-            "fontSize": 80,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "textAlign": "center",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.1,
-            "padding": "0 40px",
-            "paddingTop": 30,
-            "paddingBottom": 30
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "08:30 / 18-03-2026",
-          "toID": "2_Div1",
-          "transition": "slideInFromLeft",
-          "delay": 25,
-          "transitionFrame": 20,
-          "styleCss": {
-            "fontSize": 60,
-            "fontWeight": 700,
-            "color": "#FFFFFF",
-            "textAlign": "center",
-            "letterSpacing": 2,
-            "textShadow": "0 0 20px rgba(255,255,255,0.5), 2px 3px 0px rgba(0,0,0,0.9)",
-            "padding": "0 60px",
-            "lineHeight": 1.2,
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "delay": 35
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "delay": 41
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "delay": 47
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "delay": 53
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "delay": 59
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "delay": 65
-        },
-        { "cmd": "soundPlayerAction", "soundSource": "SFX_slide", "volume": 1 },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_1",
-          "volume": 1,
-          "delay": 25
-        }
-      ],
-      "code": "test_001",
-      "mode": "ADD_MODE002",
-      "modeOBJ": "ADD_MODEOBJ002",
-      "stt": 1.001,
-      "timeFixed": 6
-    },
-    {
-      "actions": [
-        {
-          "cmd": "divAction",
-          "id": "DivBG",
-          "code": "test_002",
-          "group": "mode-auto-id-r0-c21A",
-          "ToEndFrame": true,
-          "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "background": "radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%)",
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "img": "test_tenlue.jpg",
-          "transition": "zoomIn",
-          "delay": 36,
-          "transitionFrame": 10,
-          "group": "mode-auto-id-r0-c21A",
-          "ToEndFrame": true,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 25,
-            "overflow": "hidden",
-            "border": "6px solid white",
-            "// viền ngoài dày\n\n boxShadow": "`\n 0 10px 40px rgba(0,0,0,0.6)",
-            "objectFit": "cover",
-            "left": 180,
-            "top": 100,
-            "width": 470,
-            "height": 470
-          }
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "group": "mode-auto-id-r0-c21A"
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div1",
-          "toID": "DivBG",
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 650,
-            "left": 20,
-            "right": 20,
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "left",
-            "zIndex": 10,
-            "padding": 30,
-            "height": 600,
-            "justifyContent": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadowC17": "C24:\n \"0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000\"",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Iran launches MASSIVE RETALIATION against Israel after top official's death",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "fontSize": 40,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Tehran has officially confirmed a large-scale missile strike on Israel, citing revenge for the killing of its security chief, Ali Larijani",
-          "toID": "Div1",
-          "transition": "breathe",
-          "transitionLoop": true,
-          "transitionFrame": 60,
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 400,
-            "color": "black",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingLeft": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Tehran đã chính thức xác nhận một cuộc tấn công tên lửa quy mô lớn vào Israel, nhằm trả đũa cho cái chết của người đứng đầu cơ quan an ninh, Ali Larijani",
-          "toID": "Div1",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "fontSize": 25,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "fontSize": 47,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "RETALIATION (sự trả đũa) • LARGE-SCALE (quy mô lớn) • SECURITY CHIEF (người đứng đầu an ninh",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "fontSize": 30,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c21A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        }
-      ],
-      "code": "test_002",
-      "mode": "ADD_MODE003",
-      "modeOBJ": "ADD_MODEOBJ003",
-      "stt": 2.001
-    },
-    {
-      "actions": [
-        {
-          "cmd": "imageViewActionToID",
-          "img": "test_eobien.jpg",
-          "transition": "zoomIn",
-          "delay": 20,
-          "transitionFrame": 10,
-          "group": "mode-auto-id-r0-c22A",
-          "code": "test_003",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 25,
-            "overflow": "hidden",
-            "border": "6px solid white",
-            "// viền ngoài dày\n\n boxShadow": "`\n 0 8px 40px rgba(0,0,0,0.7)",
-            "objectFit": "cover",
-            "right": 180,
-            "bottom": 100,
-            "width": 430,
-            "height": 430,
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "group": "mode-auto-id-r0-c22A"
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div2",
-          "toID": "DivBG",
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 650,
-            "left": 20,
-            "right": 20,
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "left",
-            "zIndex": 10,
-            "padding": 30,
-            "height": 600,
-            "justifyContent": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadowC17": "C24:\n \"0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000\"",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Iran effectively BLOCKS STRAIT of Hormuz to non-friendly nations",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "fontSize": 40,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Shipping security reaches a crisis point as Iran restricts passage through the strategic Strait of Hormuz, only allowing \"friendly\" vessels to pass",
-          "toID": "Div2",
-          "transition": "breathe",
-          "transitionLoop": true,
-          "transitionFrame": 60,
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "fontSize": 45,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "An ninh hàng hải chạm ngưỡng khủng hoảng khi Iran hạn chế tàu bè qua eo biển chiến lược Hormuz, chỉ cho phép các tàu \"thân thiện\" đi qua",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "fontSize": 45,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 14,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "fontSize": 47,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "BLOCKS (chặn/phong tỏa) • STRATEGIC (chiến lược) • VESSELS (tàu lớn)",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 16,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "fontSize": 30,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 18,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c22A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        }
-      ],
-      "code": "test_003",
-      "mode": "ADD_MODE003",
-      "modeOBJ": "ADD_MODEOBJ003",
-      "stt": 2.002
-    },
-    {
-      "actions": [
-        {
-          "cmd": "divAction",
-          "id": "DivBG",
-          "code": "test_004",
-          "group": "mode-auto-id-r0-c31A",
-          "ToEndFrame": true,
-          "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "background": "radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%)",
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "img": "test_gold.jpg",
-          "transition": "zoomIn",
-          "delay": 36,
-          "transitionFrame": 10,
-          "group": "mode-auto-id-r0-c31A",
-          "ToEndFrame": true,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 25,
-            "overflow": "hidden",
-            "border": "6px solid white",
-            "// viền ngoài dày\n\n boxShadow": "`\n 0 10px 40px rgba(0,0,0,0.6)",
-            "objectFit": "cover",
-            "left": 180,
-            "top": 100,
-            "width": 470,
-            "height": 470
-          }
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "group": "mode-auto-id-r0-c31A"
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div1",
-          "toID": "DivBG",
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 650,
-            "left": 20,
-            "right": 20,
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "left",
-            "zIndex": 10,
-            "padding": 30,
-            "height": 600,
-            "justifyContent": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadowC17": "C24:\n \"0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000\"",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Gold prices SLUMP BELOW $5,000 as investors pivot to USD",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "fontSize": 40,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "In a surprising market move, gold has lost its safe-haven appeal, falling below the $5,000 mark as the US Dollar gains dominance",
-          "toID": "Div1",
-          "transition": "breathe",
-          "transitionLoop": true,
-          "transitionFrame": 60,
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 400,
-            "color": "black",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingLeft": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Trong một diễn biến bất ngờ, vàng đã mất đi sức hút trú ẩn an toàn, rơi xuống dưới mốc 5.000 USD khi đồng đô la Mỹ chiếm ưu thế",
-          "toID": "Div1",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "fontSize": 25,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "fontSize": 47,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "SLUMP (giảm mạnh) • PIVOT (xoay trục/chuyển hướng) • DOMINANCE (sự thống trị/ưu thế)",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "fontSize": 30,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c31A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        }
-      ],
-      "code": "test_004",
-      "mode": "ADD_MODE004",
-      "modeOBJ": "ADD_MODEOBJ004",
-      "stt": 3.001
-    },
-    {
-      "actions": [
-        {
-          "cmd": "imageViewActionToID",
-          "img": "test_spam.jfif",
-          "transition": "zoomIn",
-          "delay": 20,
-          "transitionFrame": 10,
-          "group": "mode-auto-id-r0-c32A",
-          "code": "test_005",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 25,
-            "overflow": "hidden",
-            "border": "6px solid white",
-            "// viền ngoài dày\n\n boxShadow": "`\n 0 8px 40px rgba(0,0,0,0.7)",
-            "objectFit": "cover",
-            "right": 180,
-            "bottom": 100,
-            "width": 430,
-            "height": 430,
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "group": "mode-auto-id-r0-c32A"
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div2",
-          "toID": "DivBG",
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 650,
-            "left": 20,
-            "right": 20,
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "left",
-            "zIndex": 10,
-            "padding": 30,
-            "height": 600,
-            "justifyContent": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadowC17": "C24:\n \"0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000\"",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Ukraine swarms Moscow with DRONE ATTACKS targeting infrastructure",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "fontSize": 40,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Ukrainian forces have pushed the war deeper into Russia, launching over 250 drones aimed at military and microchip facilities near Moscow",
-          "toID": "Div2",
-          "transition": "breathe",
-          "transitionLoop": true,
-          "transitionFrame": 60,
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "fontSize": 45,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Các lực lượng Ukraine đã đẩy cuộc chiến vào sâu trong lòng nước Nga, triển khai hơn 250 flycam tấn công vào các cơ sở quân sự và sản xuất vi mạch gần Moscow",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "fontSize": 45,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 14,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "fontSize": 47,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "SWARMS (tấn công dồn dập/áp đảo) • TARGETING (nhắm mục tiêu) • INFRASTRUCTURE (cơ sở hạ tầng)",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 16,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "fontSize": 30,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 18,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c32A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        }
-      ],
-      "code": "test_005",
-      "mode": "ADD_MODE004",
-      "modeOBJ": "ADD_MODEOBJ004",
-      "stt": 3.002
-    },
-    {
-      "actions": [
-        {
-          "cmd": "divAction",
-          "id": "DivBG",
-          "code": "test_006",
-          "group": "mode-auto-id-r0-c41A",
-          "ToEndFrame": true,
-          "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "background": "radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%)",
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "img": "test_trump.webp",
-          "transition": "zoomIn",
-          "delay": 36,
-          "transitionFrame": 10,
-          "group": "mode-auto-id-r0-c41A",
-          "ToEndFrame": true,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 25,
-            "overflow": "hidden",
-            "border": "6px solid white",
-            "// viền ngoài dày\n\n boxShadow": "`\n 0 10px 40px rgba(0,0,0,0.6)",
-            "objectFit": "cover",
-            "left": 180,
-            "top": 100,
-            "width": 470,
-            "height": 470
-          }
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "group": "mode-auto-id-r0-c41A"
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div1",
-          "toID": "DivBG",
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 650,
-            "left": 20,
-            "right": 20,
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "left",
-            "zIndex": 10,
-            "padding": 30,
-            "height": 600,
-            "justifyContent": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadowC17": "C24:\n \"0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000\"",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Trump slams NATO ALLIES for refusing to join Iran coalition",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "fontSize": 40,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "President Donald Trump has publicly criticized European allies, demanding more support for the ongoing US-led military operations in the Middle East",
-          "toID": "Div1",
-          "transition": "breathe",
-          "transitionLoop": true,
-          "transitionFrame": 60,
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 400,
-            "color": "black",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingLeft": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Tổng thống Donald Trump đã công khai chỉ trích các đồng minh châu Âu, yêu cầu hỗ trợ nhiều hơn cho các chiến dịch quân sự do Mỹ dẫn đầu tại Trung Đông",
-          "toID": "Div1",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "fontSize": 25,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "fontSize": 47,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "SLAMS (chỉ trích gay gắt) • COALITION (liên minh) • ONGOING (đang diễn ra)",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "fontSize": 30,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div1",
-          "transition": "slideInFromLeft",
-          "delay": 20,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c41A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        }
-      ],
-      "code": "test_006",
-      "mode": "ADD_MODE005",
-      "modeOBJ": "ADD_MODEOBJ005",
-      "stt": 4.001
-    },
-    {
-      "actions": [
-        {
-          "cmd": "imageViewActionToID",
-          "img": "test_bitcoinDrop.webp",
-          "transition": "zoomIn",
-          "delay": 20,
-          "transitionFrame": 10,
-          "group": "mode-auto-id-r0-c42A",
-          "code": "test_007",
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 25,
-            "overflow": "hidden",
-            "border": "6px solid white",
-            "// viền ngoài dày\n\n boxShadow": "`\n 0 8px 40px rgba(0,0,0,0.7)",
-            "objectFit": "cover",
-            "right": 180,
-            "bottom": 100,
-            "width": 430,
-            "height": 430,
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SFX_cameraShutter",
-          "volume": 1,
-          "group": "mode-auto-id-r0-c42A"
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div2",
-          "toID": "DivBG",
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 650,
-            "left": 20,
-            "right": 20,
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "left",
-            "zIndex": 10,
-            "padding": 30,
-            "height": 600,
-            "justifyContent": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "fontSize": 35,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadowC17": "C24:\n \"0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000\"",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Bitcoin faces SHARP DROP amid geopolitical uncertainty",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "fontSize": 40,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "The crypto market is seeing significant volatility as Bitcoin prices undergo a technical correction following the escalation of the Middle East conflict",
-          "toID": "Div2",
-          "transition": "breathe",
-          "transitionLoop": true,
-          "transitionFrame": 60,
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "fontSize": 45,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Thị trường tiền điện tử đang biến động mạnh khi giá Bitcoin trải qua một đợt điều chỉnh kỹ thuật sau khi xung đột tại Trung Đông leo thang",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "fontSize": 45,
-            "fontWeight": 600,
-            "color": "#cdf7f1",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 14,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "fontSize": 47,
-            "fontWeight": 900,
-            "color": "#FFE000",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 20,
-            "paddingBottom": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "SHARP DROP (sụt giảm nhanh/mạnh) • UNCERTAINTY (sự bất định) • VOLATILITY (sự biến động)",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 16,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "fontSize": 30,
-            "fontWeight": 500,
-            "color": "white",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "Div2",
-          "transition": "slideInFromRight",
-          "delay": 18,
-          "transitionFrame": 20,
-          "group": "mode-auto-id-r0-c42A",
-          "styleCss": {
-            "fontSize": 27,
-            "fontWeight": 400,
-            "color": "white",
-            "fontStyle": "italic",
-            "letterSpacing": 3,
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3,
-            "position": "relative",
-            "textAlign": "center",
-            "paddingTop": 10,
-            "paddingBottom": 10
-          }
-        }
-      ],
-      "code": "test_007",
-      "mode": "ADD_MODE005",
-      "modeOBJ": "ADD_MODEOBJ005",
-      "stt": 4.002
-    },
-    {
-      "actions": [
-        {
-          "cmd": "divAction",
-          "id": "3_DivBG",
-          "timeFixed": 3.5,
-          "code": "test_008",
-          "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "background": "radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "3_DivBG",
-          "img": "test_end.jpg",
-          "transition": "zoomIn",
-          "transitionFrame": 10,
-          "styleCss": {
-            "position": "absolute",
-            "borderRadius": 25,
-            "overflow": "hidden",
-            "border": "6px solid white",
-            "// viền ngoài dày\n\n boxShadow": "`\n 0 10px 40px rgba(0,0,0,0.6)",
-            "objectFit": "cover",
-            "right": 330,
-            "top": 300,
-            "width": 430,
-            "height": 430
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "3_Div1",
-          "toID": "3_DivBG",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 450,
-            "left": 20,
-            "right": 20,
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "center",
-            "zIndex": 10,
-            "padding": 30,
-            "height": 600,
-            "justifyContent": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Follow us for more updates!",
-          "toID": "3_Div1",
-          "transition": "slideInFromBottom",
-          "delay": 10,
-          "transitionFrame": 20,
-          "styleCss": {
-            "fontSize": 50,
-            "fontWeight": 500,
-            "color": "white",
-            "textAlign": "center",
-            "letterSpacing": 3,
-            "textTransform": "uppercase",
-            "textShadow": "0 0 30px rgba(255,200,0,0.8), 2px 4px 0px rgba(0,0,0,0.9), -1px -1px 0 #000",
-            "lineHeight": 1.3
-          }
-        }
-      ],
-      "code": "test_008",
-      "mode": "ADD_MODE006",
-      "modeOBJ": "ADD_MODEOBJ006",
-      "stt": 5.001,
-      "timeFixed": 3.5
+      "timeFixed": 5
     }
   ]
 ]

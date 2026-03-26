@@ -9,15 +9,15 @@
  * ─── transitions.json format ─────────────────────────────────────────────────
  * File được wrap [[...]] (mảng của mảng). Engine tự unwrap.
  * Mỗi row có:
- *   transitionName           string  — tên (required)
- *   description              string  — mô tả
- *   isLoopDefault            boolean — transition này THIẾT KẾ để loop
+ *   transitionName          string   — tên (required)
+ *   description             string   — mô tả
+ *   isLoopDefault           boolean  — transition này THIẾT KẾ để loop
  *                                      (có fadeIn 15f, linear progress khi loop)
- *   useLinearProgressDefault boolean — dùng linear progress thay spring
+ *   useLinearProgressDefault boolean  — dùng linear progress thay spring
  *                                      kể cả khi KHÔNG loop (ví dụ bounceIn)
- *   delayState               string  — JSON trạng thái trong giai đoạn delay
- *   at-01 … at-50            number  — vị trí keyframe 0–1 (null = bỏ qua)
- *   keyframes-01 … -50       string  — JSON props tại keyframe đó
+ *   delayState              string   — JSON trạng thái trong giai đoạn delay
+ *   at-01 … at-50           number   — vị trí keyframe 0–1 (null = bỏ qua)
+ *   keyframes-01 … -50      string   — JSON props tại keyframe đó
  *
  * ─── PHÂN BIỆT isLoopDefault vs transitionLoop (props) ──────────────────────
  *
@@ -59,42 +59,20 @@
  *   true            → trong delay: KHÔNG thay đổi style (giữ CSS hiện tại)
  *   TransitionToID mặc định noDelayState=true
  *
- * ─── MERGE vs REPLACE (applyTransitionToStyle) ────────────────────────────────
- *   Mặc định (isNoMerge = false/undefined):
- *     transform = baseStyle.transform + " " + transition.transform  (MERGE)
- *     filter    = baseStyle.filter    + " " + transition.filter     (MERGE)
- *     opacity   = baseStyle.opacity   ×      transition.opacity     (MULTIPLY)
- *   Khi isNoMerge = true (set trong dataAction):
- *     transform = transition.transform   (REPLACE)
- *     filter    = transition.filter      (REPLACE)
- *     opacity   = transition.opacity     (REPLACE)
- *
- * ─── Supported keyframe properties ──────────────────────────────────────────
- *   Transform : translateX, translateY, translateZ
- *               translateXPct, translateYPct   (% thay vì px)
- *               rotate, rotateX, rotateY, rotateZ
- *               scale, scaleX, scaleY, scaleZ
- *               skewX, skewY
- *               perspective
- *   Filter    : blur, brightness, saturate, contrast,
- *               hueRotate, invert, grayscale, sepia
- *   Other     : opacity
- *   Note: value có thể là số (15) hoặc string có đơn vị ("15deg", "100px")
- *         → toNumeric() tự động strip unit trước khi interpolate
- *
  * ─── TRƯỜNG HỢP DỄ GÂY LỖI ──────────────────────────────────────────────────
  *   1. transitionDuration=0               → treated as none (không crash)
  *   2. relativeFrame < 0                  → clamp về 0
  *   3. transitionDuration=0 + loop        → guard tránh mod 0 = NaN
- *   4. delayState JSON không hợp lệ       → fallback {}
+ *   4. delayState JSON không hợp lệ       → fallback {opacity:0}
  *   5. keyframes JSON không hợp lệ        → row bị bỏ qua, warn
  *   6. props.xxx chưa có trong extraProps → default 0 (không crash)
  *   7. flipIn: perspective PHẢI đứng đầu transform string
- *   8. keyframe value "15deg","100px"      → toNumeric strip unit tự động
+ *   8. bounceIn useLinearProgressDefault=false → dùng spring (đúng ý JSON)
  *   9. translateX và translateXPct không dùng cùng lúc (px ưu tiên)
- *  10. opacity > 1 (breathe)              → clamp tại registry
- *  11. slideInFromRight delayState lỗi    → engine fallback an toàn
+ *  10. opacity > 1 (breathe) → clamp tại registry
+ *  11. slideInFromRight delayState JSON lỗi trong file → engine fallback an toàn
  */
+
 import { useMemo } from "react";
 import { spring, useVideoConfig } from "remotion";
 import RAW_TRANSITIONS from "./transitions.json";
@@ -111,10 +89,10 @@ const _rawRows = Array.isArray(RAW_TRANSITIONS[0])
 // ─── Internal registry: Map<transitionName, InternalDef> ─────────────────────
 /**
  * InternalDef = {
- *   isLoopDefault:            boolean
+ *   isLoopDefault:           boolean
  *   useLinearProgressDefault: boolean
- *   delayState:               object  — parsed, fallback {}
- *   keyframes:                Array<{at, ...props}>
+ *   delayState:              object   — parsed, fallback {}
+ *   keyframes:               Array<{at, ...props}>
  * }
  */
 let _REGISTRY = new Map();
@@ -125,6 +103,8 @@ function _parseDelayState(raw, transitionName) {
     const parsed = JSON.parse(raw);
     if (typeof parsed === "object" && parsed !== null) return parsed;
   } catch (_) {
+    // Một số delayState trong JSON bị lỗi cú pháp (vd slideInFromRight)
+    // → fallback: parse từng key thủ công nếu có thể, không thì {}
     console.warn(
       `⚠️ transitionResolver: delayState JSON lỗi ở "${transitionName}", dùng fallback`,
     );
@@ -139,6 +119,7 @@ function _buildRegistry(rows) {
 
     const delayState = _parseDelayState(row.delayState, name);
 
+    // Parse keyframes at-01/keyframes-01 … at-50/keyframes-50
     const keyframes = [];
     for (let i = 1; i <= 50; i++) {
       const pad = String(i).padStart(2, "0");
@@ -165,6 +146,7 @@ function _buildRegistry(rows) {
     });
   }
 }
+
 _buildRegistry(_rawRows);
 
 // ─── PUBLIC: Runtime loader từ arr05 trong data.js ────────────────────────────
@@ -181,6 +163,7 @@ export function initTransitions(flatRows) {
 }
 
 // ─── PUBLIC utils ─────────────────────────────────────────────────────────────
+
 /** Tên tất cả transitions (debug / autocomplete) */
 export const getTransitionNames = () => [..._REGISTRY.keys()];
 
@@ -201,7 +184,6 @@ const STANDARD_KEYS = new Set([
   "transitionLoop",
   "transitionDelay",
   "noDelayState",
-  "isNoMerge",
   "toID",
   "targetID",
   "cmd",
@@ -233,18 +215,6 @@ function resolveValue(value, extraProps) {
   return value;
 }
 
-// ─── Strip unit suffix để lấy số thuần ───────────────────────────────────────
-// "15deg" → 15  |  "100px" → 100  |  "50%" → 50  |  15 → 15
-// Tránh NaN khi người dùng nhập "0deg" thay vì 0 trong keyframe JSON
-function toNumeric(v) {
-  if (typeof v === "number") return v;
-  if (typeof v === "string") {
-    const n = parseFloat(v);
-    return isNaN(n) ? 0 : n;
-  }
-  return 0;
-}
-
 // ─── Nội suy tuyến tính giữa các keyframes tại progress 0→1 ──────────────────
 function interpolateKeyframes(keyframes, progress, extraProps = {}) {
   const sorted = [...keyframes].sort((a, b) => a.at - b.at);
@@ -263,21 +233,22 @@ function interpolateKeyframes(keyframes, progress, extraProps = {}) {
     if (defined.length === 0) continue;
 
     if (progress <= defined[0].at) {
-      result[prop] = toNumeric(resolveValue(defined[0][prop], extraProps));
+      result[prop] = resolveValue(defined[0][prop], extraProps);
       continue;
     }
     if (progress >= defined[defined.length - 1].at) {
-      result[prop] = toNumeric(
-        resolveValue(defined[defined.length - 1][prop], extraProps),
+      result[prop] = resolveValue(
+        defined[defined.length - 1][prop],
+        extraProps,
       );
       continue;
     }
     for (let i = 0; i < defined.length - 1; i++) {
-      const k1 = defined[i];
-      const k2 = defined[i + 1];
+      const k1 = defined[i],
+        k2 = defined[i + 1];
       if (progress >= k1.at && progress <= k2.at) {
-        const v1 = toNumeric(resolveValue(k1[prop], extraProps));
-        const v2 = toNumeric(resolveValue(k2[prop], extraProps));
+        const v1 = resolveValue(k1[prop], extraProps);
+        const v2 = resolveValue(k2[prop], extraProps);
         const t = k2.at - k1.at > 0 ? (progress - k1.at) / (k2.at - k1.at) : 0;
         result[prop] = v1 + (v2 - v1) * t;
         break;
@@ -288,21 +259,15 @@ function interpolateKeyframes(keyframes, progress, extraProps = {}) {
 }
 
 // ─── Chuyển property map → { opacity, transform, filter } ────────────────────
-// Supported transform : translateX/Y/Z, translateXPct/YPct,
-//                       rotate, rotateX, rotateY, rotateZ,
-//                       scale, scaleX, scaleY, scaleZ,
-//                       skewX, skewY, perspective
-// Supported filter    : blur, brightness, saturate, contrast,
-//                       hueRotate, invert, grayscale, sepia
 function buildStyleFromValues(values) {
   const transforms = [];
   const filters = [];
 
-  // ── perspective PHẢI đứng đầu (flipIn) ──────────────────────────────────
+  // perspective PHẢI đứng đầu (flipIn)
   if (values.perspective != null)
     transforms.push(`perspective(${values.perspective}px)`);
 
-  // ── translate — px ưu tiên hơn % ────────────────────────────────────────
+  // translate — px ưu tiên hơn %
   const hasTx = values.translateX != null || values.translateXPct != null;
   const hasTy = values.translateY != null || values.translateYPct != null;
   if (hasTx || hasTy) {
@@ -320,37 +285,16 @@ function buildStyleFromValues(values) {
           : "0";
     transforms.push(`translate(${tx}, ${ty})`);
   }
-  if (values.translateZ != null)
-    transforms.push(`translateZ(${values.translateZ}px)`);
-
-  // ── rotate ───────────────────────────────────────────────────────────────
   if (values.rotate != null) transforms.push(`rotate(${values.rotate}deg)`);
-  if (values.rotateX != null) transforms.push(`rotateX(${values.rotateX}deg)`);
   if (values.rotateY != null) transforms.push(`rotateY(${values.rotateY}deg)`);
-  if (values.rotateZ != null) transforms.push(`rotateZ(${values.rotateZ}deg)`);
-
-  // ── scale ────────────────────────────────────────────────────────────────
   if (values.scale != null) transforms.push(`scale(${values.scale})`);
   if (values.scaleX != null) transforms.push(`scaleX(${values.scaleX})`);
   if (values.scaleY != null) transforms.push(`scaleY(${values.scaleY})`);
-  if (values.scaleZ != null) transforms.push(`scaleZ(${values.scaleZ})`);
 
-  // ── skew ─────────────────────────────────────────────────────────────────
-  if (values.skewX != null) transforms.push(`skewX(${values.skewX}deg)`);
-  if (values.skewY != null) transforms.push(`skewY(${values.skewY}deg)`);
-
-  // ── filter ───────────────────────────────────────────────────────────────
   if (values.blur != null && values.blur > 0)
     filters.push(`blur(${values.blur}px)`);
   if (values.brightness != null)
     filters.push(`brightness(${values.brightness})`);
-  if (values.saturate != null) filters.push(`saturate(${values.saturate})`);
-  if (values.contrast != null) filters.push(`contrast(${values.contrast})`);
-  if (values.hueRotate != null)
-    filters.push(`hue-rotate(${values.hueRotate}deg)`);
-  if (values.invert != null) filters.push(`invert(${values.invert})`);
-  if (values.grayscale != null) filters.push(`grayscale(${values.grayscale})`);
-  if (values.sepia != null) filters.push(`sepia(${values.sepia})`);
 
   return {
     opacity: values.opacity ?? 1,
@@ -386,15 +330,15 @@ function springProgress(frame, fps, durationFrames) {
  * calculateTransition
  * Hàm chính — tính { opacity, transform, filter } tại một frame.
  *
- * @param {number}  relativeFrame      Frame tương đối (0 = bắt đầu action)
- * @param {string}  transitionType     Tên transition trong transitions.json
- * @param {number}  transitionDuration Số frame cho 1 lần chạy
- * @param {number}  fps                FPS từ useVideoConfig
- * @param {boolean} transitionLoop     Props runtime — loop hay không
- * @param {number}  durationInFrames   Tổng frame của action
- * @param {number}  transitionDelay    Delay frames trước khi bắt đầu
- * @param {object}  extraProps         Runtime props cho "props.xxx"
- * @param {boolean} noDelayState       true → giữ CSS trong delay (không ẩn)
+ * @param {number}  relativeFrame        Frame tương đối (0 = bắt đầu action)
+ * @param {string}  transitionType       Tên transition trong transitions.json
+ * @param {number}  transitionDuration   Số frame cho 1 lần chạy
+ * @param {number}  fps                  FPS từ useVideoConfig
+ * @param {boolean} transitionLoop       Props runtime — loop hay không
+ * @param {number}  durationInFrames     Tổng frame của action
+ * @param {number}  transitionDelay      Delay frames trước khi bắt đầu
+ * @param {object}  extraProps           Runtime props cho "props.xxx"
+ * @param {boolean} noDelayState         true → giữ CSS trong delay (không ẩn)
  */
 export const calculateTransition = (
   relativeFrame,
@@ -424,6 +368,7 @@ export const calculateTransition = (
     return { opacity: 1, transform: "", filter: "", isNone: true };
   }
 
+  // Đọc từ JSON
   const { isLoopDefault, useLinearProgressDefault, keyframes } = def;
 
   // ── DELAY ───────────────────────────────────────────────────────────────────
@@ -452,18 +397,21 @@ export const calculateTransition = (
   const adjustedFrame = safeFrame - effectiveDelay;
 
   // ── XÁC ĐỊNH CHẾ ĐỘ CHẠY ────────────────────────────────────────────────────
+  // 4 tổ hợp của (isLoopDefault × transitionLoop):
+  //
   //  [A] isLoopDefault=true  + transitionLoop=true  → LOOP CHÍNH THỨC
-  //  [B] isLoopDefault=true  + transitionLoop=false → ONE-TIME (hold)
+  //  [B] isLoopDefault=true  + transitionLoop=false → ONE-TIME (1 lần, hold)
   //  [C] isLoopDefault=false + transitionLoop=true  → PING-PONG
   //  [D] isLoopDefault=false + transitionLoop=false → ONE-TIME CHUẨN
 
   let effectiveFrame = adjustedFrame;
   let fadeInProgress = 1;
-  let useLinear = useLinearProgressDefault;
+  let useLinear = useLinearProgressDefault; // default từ JSON
 
   if (isLoopDefault && transitionLoop) {
     // ── [A] LOOP CHÍNH THỨC ───────────────────────────────────────────────────
-    useLinear = true;
+    // fadeIn 15f intro → loop vô hạn với linear progress
+    useLinear = true; // loop luôn dùng linear
     if (adjustedFrame < LOOP_FADEIN_DURATION) {
       fadeInProgress = adjustedFrame / LOOP_FADEIN_DURATION;
       effectiveFrame = 0;
@@ -473,34 +421,44 @@ export const calculateTransition = (
         transitionDuration > 0 ? loopFrame % transitionDuration : 0;
     }
   } else if (isLoopDefault && !transitionLoop) {
-    // ── [B] isLoopDefault=true nhưng user chọn không loop ────────────────────
+    // ── [B] isLoopDefault=true nhưng user chọn KHÔNG loop ────────────────────
+    // Chạy 1 lần rồi hold frame cuối
+    // Dùng spring hoặc linear theo useLinearProgressDefault từ JSON
     if (adjustedFrame > transitionDuration) {
       const finalValues = interpolateKeyframes(keyframes, 1, extraProps);
+      const finalStyle = buildStyleFromValues(finalValues);
       return {
-        ...buildStyleFromValues(finalValues),
+        ...finalStyle,
         isNone: false,
         isComplete: true,
         isDelaying: false,
       };
     }
+    // useLinear giữ nguyên = useLinearProgressDefault
   } else if (!isLoopDefault && transitionLoop) {
     // ── [C] PING-PONG ─────────────────────────────────────────────────────────
-    useLinear = true;
+    // One-time transition + user muốn loop → ping-pong forward/reverse
+    // TH3: moveToID: tiến về đích → quay về gốc → lặp lại
+    useLinear = true; // ping-pong dùng linear để smooth
     const cycle = transitionDuration * 2;
     const cycleFrame = cycle > 0 ? adjustedFrame % cycle : 0;
     effectiveFrame =
       cycleFrame <= transitionDuration ? cycleFrame : cycle - cycleFrame;
   } else {
     // ── [D] ONE-TIME CHUẨN ────────────────────────────────────────────────────
+    // Chạy 1 lần, hold frame cuối
+    // Dùng spring hoặc linear theo useLinearProgressDefault từ JSON
     if (adjustedFrame > transitionDuration) {
       const finalValues = interpolateKeyframes(keyframes, 1, extraProps);
+      const finalStyle = buildStyleFromValues(finalValues);
       return {
-        ...buildStyleFromValues(finalValues),
+        ...finalStyle,
         isNone: false,
         isComplete: true,
         isDelaying: false,
       };
     }
+    // useLinear giữ nguyên = useLinearProgressDefault
   }
 
   // ── PROGRESS ────────────────────────────────────────────────────────────────
@@ -620,6 +578,7 @@ export const useTransition = (
         delay: transitionDelay,
         fadeInDuration: LOOP_FADEIN_DURATION,
         noDelayState,
+        // thông tin từ JSON (debug)
         isLoopDefault: _REGISTRY.get(transitionType)?.isLoopDefault,
         useLinearProgressDefault:
           _REGISTRY.get(transitionType)?.useLinearProgressDefault,
@@ -652,44 +611,12 @@ export const mergeFilters = (existing = "", transition = "") => {
   return `${existing} ${transition}`.trim();
 };
 
-/**
- * Apply transition values lên React style object.
- *
- * Mặc định — MERGE:
- *   transform = base + " " + transition   (nối chuỗi)
- *   filter    = base + " " + transition   (nối chuỗi)
- *   opacity   = base × transition         (nhân — giữ opacity gốc)
- *
- * Khi isNoMerge=true — REPLACE:
- *   transform, filter, opacity đều bị ghi đè hoàn toàn
- *
- * @param {object}  baseStyle        — React style object hiện tại của element
- * @param {object}  transitionValues — output từ calculateTransition / useTransition
- * @param {boolean} isNoMerge        — true → replace thay vì merge
- */
-export const applyTransitionToStyle = (
-  baseStyle,
-  transitionValues,
-  isNoMerge = false,
-) => {
-  // Không có transition → giữ nguyên base
+/** Apply transition values lên React style object */
+export const applyTransitionToStyle = (baseStyle, transitionValues) => {
   if (transitionValues.isNone) return baseStyle;
-
-  // Trong delay + noDelayState → giữ nguyên base
   if (transitionValues.isDelaying && transitionValues.noDelayState)
     return baseStyle;
 
-  if (isNoMerge) {
-    // ── REPLACE: ghi đè hoàn toàn ─────────────────────────────────────────
-    return {
-      ...baseStyle,
-      opacity: transitionValues.opacity,
-      transform: transitionValues.transform || "",
-      ...(transitionValues.filter ? { filter: transitionValues.filter } : {}),
-    };
-  }
-
-  // ── MERGE (default) ───────────────────────────────────────────────────────
   const combinedTransform = mergeTransforms(
     baseStyle.transform || "",
     transitionValues.transform || "",
@@ -698,13 +625,10 @@ export const applyTransitionToStyle = (
     baseStyle.filter || "",
     transitionValues.filter || "",
   );
-  // opacity: nhân để giữ nguyên base opacity, transition chỉ nhân thêm
-  const combinedOpacity =
-    (baseStyle.opacity ?? 1) * (transitionValues.opacity ?? 1);
 
   return {
     ...baseStyle,
-    opacity: combinedOpacity,
+    opacity: transitionValues.opacity,
     transform: combinedTransform,
     ...(combinedFilter ? { filter: combinedFilter } : {}),
   };
