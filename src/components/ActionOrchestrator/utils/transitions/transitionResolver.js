@@ -100,7 +100,7 @@ import { spring, useVideoConfig } from "remotion";
 import RAW_TRANSITIONS from "./transitions.json";
 
 // ─── Constant ─────────────────────────────────────────────────────────────────
-export const LOOP_FADEIN_DURATION = 15; // frames fadeIn intro cho loop transitions
+export const LOOP_FADEIN_DURATION = 5; // frames fadeIn intro cho loop transitions
 
 // ─── Unwrap [[...]] → [...] ───────────────────────────────────────────────────
 // transitions.json được lưu dạng [[row1, row2, ...]] (wrap 1 lớp)

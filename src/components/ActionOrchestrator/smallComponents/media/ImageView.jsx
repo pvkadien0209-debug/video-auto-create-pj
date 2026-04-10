@@ -34,7 +34,7 @@ import {
  */
 
 // ⭐ Default fade duration (frames)
-const DEFAULT_FADE_FRAMES = 15;
+const DEFAULT_FADE_FRAMES = 5;
 
 const ImageView = ({
   img,

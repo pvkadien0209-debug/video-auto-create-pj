@@ -6,33 +6,51 @@ import VideoView from "../smallComponents/media/VideoView.jsx";
 import { mergeStyles } from "../utils/cssOverrideManager.js";
 
 /**
- * 🎬 VIDEO VIEW ACTION
+ * 🎬 VIDEO VIEW ACTION - COMPLETE VERSION
  *
  * FEATURES:
  * ✅ Video seek (videoStartFrom, videoDuration)
  * ✅ Smart sizing (auto width/height)
- * ✅ Audio đồng bộ tuyệt đối — OffthreadVideo + Audio cùng Sequence
+ * ✅ Simplified audio (volume only, default = 0)
+ * ✅ Transform support
  * ✅ Portal rendering (toID)
- * ✅ delay/ChangeStartFrame không làm lệch audio/visual
+ * ✅ Relative frame (video bắt đầu từ frame 0 nội bộ)
  *
  * AUDIO:
- * - volume: 0-1 (default: 0 = muted, không load audio)
+ * - volume: 0-1 (default: 0 = muted)
  *
  * EXAMPLES:
  *
- * 1. Background muted:
- * { cmd: "videoView", video: "bg.mp4", ToEndFrame: true }
+ * 1. Background muted (default):
+ * {
+ *   cmd: "videoView",
+ *   video: "bg.mp4",
+ *   ToEndFrame: true,
+ * }
  *
- * 2. Video có âm thanh:
- * { cmd: "videoView", video: "clip.mp4", volume: 0.8, videoStartFrom: 30, videoDuration: 15 }
+ * 2. Video với âm thanh:
+ * {
+ *   cmd: "videoView",
+ *   video: "clip.mp4",
+ *   volume: 0.8,
+ *   videoStartFrom: 30,
+ *   videoDuration: 15
+ * }
  *
- * 3. Delayed video — audio và visual cùng bắt đầu:
- * { cmd: "videoView", video: "video.mp4", delay: 40, actionDuration: 120 }
+ * 3. Delayed video:
+ * {
+ *   cmd: "videoView",
+ *   video: "video.mp4",
+ *   delay: 40,
+ *   actionDuration: 120,
+ *   // Video bắt đầu tại frame tổng 40, chạy từ frame nội bộ 0→120
+ * }
  */
 function VideoViewAction({ data }) {
   const {
     action,
     item,
+    frame,
     actionStartFrame,
     actionEndFrame,
     cssOverrides,
@@ -41,9 +59,11 @@ function VideoViewAction({ data }) {
     id,
   } = data;
 
+  // ✅ Lấy video
   const video = action.video || item.video || data.video;
   if (!video) return null;
 
+  // ✅ Merge styles
   const mergedStyle = mergeStyles(
     action,
     item,
@@ -53,14 +73,29 @@ function VideoViewAction({ data }) {
     cssOverrides,
   );
 
+  // ⭐ Tính duration cho Sequence
   const durationInFrames = actionEndFrame - actionStartFrame;
+
+  // ⭐ FIXED: Tính relative frame (frame nội bộ từ 0)
+  const relativeFrame = frame - actionStartFrame;
+
+  // ⭐ Extract props
   const videoStartFrom = action.videoStartFrom ?? 0;
   const videoDuration = action.videoDuration ?? null;
-  const volume = action.volume ?? 1;
+  const volume = action.volume ?? 0; // ⭐ DEFAULT = 0 (MUTED)
 
-  // ✅ Sequence bắt đầu tại actionStartFrame (đã bao gồm delay/ChangeStartFrame)
-  // VideoView dùng useCurrentFrame() bên trong → tự động 0-based
-  // OffthreadVideo và Audio đều bắt đầu tại frame 0 nội bộ → không bao giờ lệch
+  // Debug log (optional)
+  if (process.env.NODE_ENV === "development") {
+    console.log(`🎬 VideoViewAction: ${video}`, {
+      frameTổng: frame,
+      actionStartFrame,
+      actionEndFrame,
+      relativeFrame,
+      durationInFrames,
+    });
+  }
+
+  // ⭐ Video content với Sequence
   const videoContent = (
     <Sequence
       from={actionStartFrame}
@@ -69,8 +104,9 @@ function VideoViewAction({ data }) {
     >
       <VideoView
         video={video}
+        relativeFrame={relativeFrame} // ⭐ Pass relative frame
         styCss={mergedStyle}
-        durationInFrames={durationInFrames}
+        durationInFrames={durationInFrames} // ⭐ Pass duration
         volume={volume}
         loop={action.loop ?? false}
         playbackRate={action.playbackRate ?? 1}
@@ -83,6 +119,7 @@ function VideoViewAction({ data }) {
     </Sequence>
   );
 
+  // ⭐ Nếu có toID, dùng Portal
   if (action.toID) {
     const targetElement = document.getElementById(action.toID);
     if (!targetElement) {
@@ -92,6 +129,7 @@ function VideoViewAction({ data }) {
     return createPortal(videoContent, targetElement);
   }
 
+  // ⭐ Render bình thường
   return videoContent;
 }
 

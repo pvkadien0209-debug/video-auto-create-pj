@@ -93,7 +93,7 @@ const RENDER_SETTINGS = {
 // ✂️ FFMPEG CUT CONFIGURATION
 // ============================================
 const CUT_SETTINGS = {
-  enabled: true,
+  enabled: false,
   trimStart: 0,
   prefix: "CUT_",
   deleteOriginal: false,

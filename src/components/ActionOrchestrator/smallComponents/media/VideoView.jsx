@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react";
+// src/Components/ActionOrchestrator/smallComponents/media/VideoView.jsx
+import React, { useMemo } from "react";
 import {
-  Html5Video,
+  OffthreadVideo,
+  Audio,
   staticFile,
-  continueRender,
-  delayRender,
+  useCurrentFrame,
   interpolate,
 } from "remotion";
 import {
@@ -12,22 +13,24 @@ import {
 } from "../../utils/transitions/transitionResolver.js";
 
 /**
- * 🎬 VIDEO VIEW - WITH INTELLIGENT SIZING & SMOOTH TRANSITIONS
- * ⭐ Sử dụng centralized transition system
- * ⭐ Hỗ trợ transition loop (infinite)
- * ⭐ Auto fadeOut 15f khi transition !== "none"
- *    Override qua dataAction.fadeOutFrames / data.fadeOutFrames / fadeFrames
+ * 🎬 VIDEO VIEW - OffthreadVideo (muted) + Audio riêng biệt
+ *
+ * ✅ Tách hình ảnh và âm thanh để kiểm soát độc lập
+ * ✅ useCurrentFrame() — 0-based trong Sequence, không nhận relativeFrame prop
+ * ✅ OffthreadVideo: chất lượng render cao hơn Html5Video
+ * ✅ Audio: đồng bộ tuyệt đối với visual vì cùng Sequence
+ * ✅ volume = 0 → không render Audio component (không load audio)
+ * ✅ Smart sizing giữ nguyên qua styCss
+ * ✅ Transition + fadeOut system giữ nguyên
  */
-
-const DEFAULT_FADEOUT_FRAMES = 15;
+const DEFAULT_FADEOUT_FRAMES = 5;
 
 const VideoView = React.memo(
   ({
     video,
-    relativeFrame,
     styCss = {},
     durationInFrames,
-    volume = 0,
+    volume = 1,
     loop = false,
     playbackRate = 1,
     objectFit = "contain",
@@ -35,31 +38,24 @@ const VideoView = React.memo(
     videoDuration = null,
     data = {},
     dataAction = {},
-    ...props
   }) => {
-    const [videoLoaded, setVideoLoaded] = useState(false);
-    const [loadedVideoSrc, setLoadedVideoSrc] = useState(null);
-    const [videoMetadata, setVideoMetadata] = useState(null);
-    const [handle] = useState(() => delayRender("Loading video"));
+    // ✅ 0-based vì VideoView luôn nằm trong <Sequence from={actionStartFrame}>
+    const relativeFrame = useCurrentFrame();
 
-    // Get video path
-    const getVideoPath = (videoName) => {
-      if (!videoName) return null;
-      if (videoName.includes("_")) {
-        const prefix = videoName.split("_")[0];
-        return `video/${prefix}/${videoName}`;
+    // ✅ Video path resolver
+    const videoPath = useMemo(() => {
+      if (!video) return null;
+      if (video.includes("_")) {
+        const prefix = video.split("_")[0];
+        return `video/${prefix}/${video}`;
       }
-      return `video/${videoName}`;
-    };
+      return `video/${video}`;
+    }, [video]);
 
-    const videoPath = getVideoPath(video);
+    // ✅ startFrom (giây) — dùng chung cho cả OffthreadVideo và Audio
+    const startFrom = videoStartFrom;
 
-    // Calculate STATIC startFrom
-    const staticStartFrom = useMemo(() => {
-      return videoStartFrom;
-    }, [videoStartFrom]);
-
-    // Calculate endAt
+    // ✅ endAt (giây) — dùng chung cho cả OffthreadVideo và Audio
     const endAt = useMemo(() => {
       if (videoDuration !== null && videoDuration > 0) {
         return videoStartFrom + videoDuration;
@@ -67,26 +63,21 @@ const VideoView = React.memo(
       return undefined;
     }, [videoStartFrom, videoDuration]);
 
-    // ⭐ Resolve transition type
-    const resolvedTransitionType = useMemo(() => {
-      if (dataAction.transition !== undefined) return dataAction.transition;
-      if (data.transition !== undefined) return data.transition;
-      return "fadeIn"; // default cho VideoView
+    // ✅ Transition type
+    const isTransitionNone = useMemo(() => {
+      const t = dataAction.transition ?? data.transition ?? "fadeIn";
+      return String(t).toLowerCase() === "none";
     }, [dataAction.transition, data.transition]);
 
-    const isTransitionNone = useMemo(() => {
-      const t = String(resolvedTransitionType || "none").toLowerCase();
-      return t === "none";
-    }, [resolvedTransitionType]);
-
-    // ⭐ FadeOut frames (override qua dataAction/data)
+    // ✅ FadeOut frames
     const fadeOutFrames = useMemo(() => {
-      if (dataAction.fadeOutFrames !== undefined)
-        return dataAction.fadeOutFrames;
-      if (data.fadeOutFrames !== undefined) return data.fadeOutFrames;
-      if (dataAction.fadeFrames !== undefined) return dataAction.fadeFrames;
-      if (data.fadeFrames !== undefined) return data.fadeFrames;
-      return DEFAULT_FADEOUT_FRAMES;
+      return (
+        dataAction.fadeOutFrames ??
+        data.fadeOutFrames ??
+        dataAction.fadeFrames ??
+        data.fadeFrames ??
+        DEFAULT_FADEOUT_FRAMES
+      );
     }, [
       dataAction.fadeOutFrames,
       data.fadeOutFrames,
@@ -94,14 +85,13 @@ const VideoView = React.memo(
       data.fadeFrames,
     ]);
 
-    // ⭐ Auto fadeOut opacity khi transition !== "none"
+    // ✅ FadeOut opacity
     const fadeOutOpacity = useMemo(() => {
       if (isTransitionNone || fadeOutFrames <= 0) return 1;
-      const totalFrames = durationInFrames;
-      if (relativeFrame > totalFrames - fadeOutFrames) {
+      if (relativeFrame > durationInFrames - fadeOutFrames) {
         return interpolate(
           relativeFrame,
-          [totalFrames - fadeOutFrames, totalFrames],
+          [durationInFrames - fadeOutFrames, durationInFrames],
           [1, 0],
           { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
         );
@@ -109,115 +99,22 @@ const VideoView = React.memo(
       return 1;
     }, [isTransitionNone, fadeOutFrames, relativeFrame, durationInFrames]);
 
-    // ⭐ USE TRANSITION HOOK
+    // ✅ Transition hook
     const transitionValues = useTransition(
       relativeFrame,
       data,
       dataAction,
       durationInFrames,
-      { type: "fadeIn", duration: 30, loop: false }, // default
+      { type: "fadeIn", duration: 30, loop: false },
     );
 
-    // Pre-load video và lấy metadata
-    useEffect(() => {
-      if (!videoPath) {
-        setVideoLoaded(true);
-        continueRender(handle);
-        return;
-      }
-
-      const videoElement = document.createElement("video");
-      videoElement.src = staticFile(videoPath);
-
-      videoElement.onloadedmetadata = () => {
-        const aspectRatio = videoElement.videoWidth / videoElement.videoHeight;
-        setVideoMetadata({
-          width: videoElement.videoWidth,
-          height: videoElement.videoHeight,
-          aspectRatio: aspectRatio,
-        });
-
-        console.log(`✅ Video loaded: ${videoPath}`);
-        console.log(
-          ` 📐 Dimensions: ${videoElement.videoWidth}x${videoElement.videoHeight}`,
-        );
-        console.log(` 📊 Aspect Ratio: ${aspectRatio.toFixed(3)}`);
-        console.log(
-          ` 🎭 Transition: ${transitionValues.config.type} (${transitionValues.config.duration} frames, loop: ${transitionValues.config.loop}) | Auto fadeOut: ${!isTransitionNone ? fadeOutFrames + "f" : "off"}`,
-        );
-
-        if (videoStartFrom > 0) {
-          console.log(` ⏩ Seek to: ${videoStartFrom}s`);
-        }
-        if (typeof endAt === "number") {
-          console.log(` ⏸️ End at: ${endAt}s (duration: ${videoDuration}s)`);
-        }
-
-        setLoadedVideoSrc(videoElement.src);
-        setVideoLoaded(true);
-        continueRender(handle);
-      };
-
-      videoElement.onerror = () => {
-        console.warn(`⚠️ Failed to load video: ${videoPath}`);
-        setVideoLoaded(true);
-        continueRender(handle);
-      };
-
-      return () => {
-        videoElement.onloadedmetadata = null;
-        videoElement.onerror = null;
-      };
-    }, [videoPath, handle, videoStartFrom, endAt, videoDuration]);
-
-    // Tính toán kích thước thông minh
-    const calculatedDimensions = useMemo(() => {
-      if (!videoMetadata) return { width: "100%", height: "auto" };
-
-      const { aspectRatio } = videoMetadata;
-      const hasHeight = styCss.height && styCss.height !== "auto";
-      const hasWidth = styCss.width && styCss.width !== "100%";
-
-      if (hasHeight && hasWidth) {
-        const heightValue = parseFloat(styCss.height);
-        const calculatedWidth = heightValue * aspectRatio;
-        return {
-          width: `${calculatedWidth}px`,
-          height: styCss.height,
-        };
-      }
-
-      if (hasHeight && !hasWidth) {
-        const heightValue = parseFloat(styCss.height);
-        const calculatedWidth = heightValue * aspectRatio;
-        return {
-          width: `${calculatedWidth}px`,
-          height: styCss.height,
-        };
-      }
-
-      if (hasWidth && !hasHeight) {
-        const widthValue = parseFloat(styCss.width);
-        const calculatedHeight = widthValue / aspectRatio;
-        return {
-          width: styCss.width,
-          height: `${calculatedHeight}px`,
-        };
-      }
-
-      return { width: "100%", height: "auto" };
-    }, [videoMetadata, styCss.height, styCss.width]);
-
-    // Visibility checks
+    if (!videoPath) return null;
     if (relativeFrame < 0 || relativeFrame > durationInFrames) return null;
-    if (!videoLoaded || !videoPath || !loadedVideoSrc) return null;
 
-    // ⭐ Container style - Combine với calculated dimensions và transition
+    // ✅ Container style với transition
     const transitionedStyle = applyTransitionToStyle(
       {
         ...styCss,
-        width: calculatedDimensions.width,
-        height: calculatedDimensions.height,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -226,7 +123,6 @@ const VideoView = React.memo(
       transitionValues,
     );
 
-    // ⭐ Apply fadeOut opacity × transition opacity
     const containerStyle = {
       ...transitionedStyle,
       opacity:
@@ -235,7 +131,6 @@ const VideoView = React.memo(
           : 1) * fadeOutOpacity,
     };
 
-    // Video style
     const videoStyle = {
       width: "100%",
       height: "100%",
@@ -245,22 +140,33 @@ const VideoView = React.memo(
 
     return (
       <div style={containerStyle}>
-        <Html5Video
-          src={loadedVideoSrc}
+        {/* 🖼 Hình ảnh — muted hoàn toàn, chất lượng render cao */}
+        <OffthreadVideo
+          src={staticFile(videoPath)}
           style={videoStyle}
-          volume={volume}
-          muted={volume === 0}
-          startFrom={staticStartFrom}
+          muted
+          startFrom={startFrom}
           endAt={endAt}
           loop={loop}
           playbackRate={playbackRate}
           onError={(err) => {
             if (process.env.NODE_ENV === "development") {
-              console.warn(`Video playback error [${video}]:`, err.message);
+              console.warn(`Video error [${video}]:`, err);
             }
           }}
-          {...props}
         />
+
+        {/* 🔊 Audio — chỉ render khi volume > 0, dùng cùng src và startFrom */}
+        {volume > 0 && (
+          <Audio
+            src={staticFile(videoPath)}
+            volume={volume}
+            startFrom={startFrom}
+            endAt={endAt}
+            loop={loop}
+            playbackRate={playbackRate}
+          />
+        )}
       </div>
     );
   },

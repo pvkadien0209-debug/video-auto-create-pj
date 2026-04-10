@@ -13,20 +13,8 @@ if (!videoData01[0].id) {
   videoData = temVideoData;
 }
 
-const isVideoCode = (code) => code && code.endsWith(".mp4");
-
 const getAudioPath = (code) => {
   if (!code) return null;
-  if (isVideoCode(code)) {
-    // ✨ MP4: lấy từ /video/... (code đã có .mp4)
-    if (code.includes("_")) {
-      const prefix = code.split("_")[0];
-      return `video/${prefix}/${code}`;
-    } else {
-      return `video/khac/${code}`;
-    }
-  }
-  // MP3 bình thường
   if (code.includes("_")) {
     const prefix = code.split("_")[0];
     return `audio/${prefix}/${code}.mp3`;
@@ -51,23 +39,6 @@ const loadAudioDurationWithFetch = async (audioSrc) => {
     console.error("Error loading audio:", error);
     throw error;
   }
-};
-
-// ✨ Load duration từ video element (dùng cho .mp4)
-const loadVideoDuration = (videoSrc) => {
-  return new Promise((resolve, reject) => {
-    const video = document.createElement("video");
-    video.src = videoSrc;
-    video.preload = "metadata";
-    video.onloadedmetadata = () => {
-      resolve(video.duration);
-      video.remove();
-    };
-    video.onerror = () => {
-      video.remove();
-      reject(new Error(`Failed to load video: ${videoSrc}`));
-    };
-  });
 };
 
 export const RemotionVideo = () => {
@@ -96,55 +67,43 @@ export const RemotionVideo = () => {
             let totalDurationInSeconds = 0;
             let successCount = 0;
             let failCount = 0;
+
             for (let index = 0; index < props.item.data.length; index++) {
               const dataItem = props.item.data[index];
 
-              // ✨ Kiểm tra timeFixed trước tiên
-              // Fix: cộng thêm timePlus nếu có cả hai
+              // ✨ THÊM: Kiểm tra timeFixed trước tiên
               if (dataItem.timeFixed && dataItem.timeFixed > 0) {
-                const finalDuration =
-                  dataItem.timeFixed + (dataItem.timePlus || 0);
-                totalDurationInSeconds += finalDuration;
+                totalDurationInSeconds += dataItem.timeFixed;
                 console.log(
-                  `[${index + 1}/${props.item.data.length}] Using timeFixed: ${dataItem.timeFixed}s` +
-                    (dataItem.timePlus
-                      ? ` + timePlus: ${dataItem.timePlus}s`
-                      : ""),
+                  `[${index + 1}/${props.item.data.length}] Using timeFixed: ${dataItem.timeFixed}s`,
                 );
                 console.log(
                   `  → Total so far: ${totalDurationInSeconds.toFixed(2)}s`,
                 );
-                continue;
+                continue; // Bỏ qua phần xử lý audio duration
               }
 
+              // Logic cũ: chỉ chạy khi KHÔNG có timeFixed
               if (dataItem.code) {
                 const audioPath = getAudioPath(dataItem.code);
-                const isVid = isVideoCode(dataItem.code);
                 console.log(
-                  `[${index + 1}/${props.item.data.length}] Processing: ${dataItem.code}` +
-                    (isVid ? " [VIDEO]" : ""),
+                  `[${index + 1}/${props.item.data.length}] Processing: ${dataItem.code}`,
                 );
+
                 if (audioPath) {
                   try {
-                    const src = staticFile(audioPath);
-                    console.log(`  → Source URL: ${src}`);
+                    const audioSrc = staticFile(audioPath);
+                    console.log(`  → Audio URL: ${audioSrc}`);
+                    const duration = await loadAudioDurationWithFetch(audioSrc);
 
-                    // ✨ Dùng video element cho .mp4, fetch+AudioContext cho audio
-                    const duration = isVid
-                      ? await loadVideoDuration(src)
-                      : await loadAudioDurationWithFetch(src);
-
+                    // Cộng duration + timePlus (nếu có)
                     const finalDuration = duration + (dataItem.timePlus || 0);
                     totalDurationInSeconds += finalDuration;
                     successCount++;
-                    console.log(`  ✓ Duration: ${duration.toFixed(2)}s`);
+
+                    console.log(`  ✓ Audio Duration: ${duration.toFixed(2)}s`);
                     if (dataItem.timePlus) {
                       console.log(`  → timePlus: ${dataItem.timePlus}s`);
-                    }
-                    if (isVid) {
-                      console.log(
-                        `  → SoundPlay sẽ dùng: SOUNDCHUNG_SpaceSound.mp3`,
-                      );
                     }
                     console.log(
                       `  → Final Duration: ${finalDuration.toFixed(2)}s (Total so far: ${totalDurationInSeconds.toFixed(2)}s)`,
@@ -160,11 +119,13 @@ export const RemotionVideo = () => {
                     console.log(`  → Using fallback ${fallbackDuration}s`);
                   }
                 } else {
-                  console.warn(`  ⚠️  No path for ${dataItem.code}`);
+                  console.warn(`  ⚠️  No audio path for ${dataItem.code}`);
                 }
               }
             }
+
             const totalFrames = Math.ceil(totalDurationInSeconds * 30);
+
             console.log("========================================");
             console.log(`✅ CALCULATION COMPLETE for video ${props.id}`);
             console.log(`   Success: ${successCount}, Failed: ${failCount}`);
@@ -173,6 +134,7 @@ export const RemotionVideo = () => {
             );
             console.log(`   Total Frames: ${totalFrames} (at ${30} fps)`);
             console.log("========================================\n");
+
             const finalFrames = totalFrames > 0 ? totalFrames : 420;
             return {
               durationInFrames: finalFrames,

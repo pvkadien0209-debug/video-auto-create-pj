@@ -18,23 +18,23 @@ const SoundPlayer = ({
   loop = false, // ⭐ Thêm loop parameter (default: false)
   showInTimeline = false,
 }) => {
-  // Lấy đường dẫn audio
-  const getAudioPath = () => {
-    if (!soundSource) return null;
+    // Lấy đường dẫn audio
+    const getAudioPath = () => {
+      if (!soundSource) return null;
 
-    // Nếu soundSource là object có code
-    if (typeof soundSource === "object" && soundSource.code) {
-      return getAudioPathUtil(soundSource);
-    }
+      // Nếu soundSource là object có code
+      if (typeof soundSource === "object" && soundSource.code) {
+        return getAudioPathUtil(soundSource);
+      }
 
-    // Nếu soundSource là string
-    if (soundSource.includes("_")) {
-      const prefix = soundSource.split("_")[0];
-      return `audio/${prefix}/${soundSource}.mp3`;
-    } else {
-      return `audio/Khac/${soundSource}.mp3`;
-    }
-  };
+      // Nếu soundSource là string
+      if (soundSource.includes("_")) {
+        const prefix = soundSource.split("_")[0];
+        return `audio/${prefix}/${soundSource}.mp3`;
+      } else {
+        return `audio/Khac/${soundSource}.mp3`;
+      }
+    };
 
   const audioPath = getAudioPath();
 
