@@ -1,6 +1,6 @@
 export const root_JSX = "CSK001";
-export const folder_render = "CSK_001";
-export const name_video = "VIDEOKD_";
+export const folder_render = "thumb";
+export const name_video = "thumb_";
 
 // 🎬 VIDEO METADATA CONFIGURATION
 export const VIDEO_METADATA = {

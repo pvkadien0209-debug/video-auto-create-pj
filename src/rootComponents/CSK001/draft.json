@@ -1,305 +1,191 @@
 [
-  [
-    {
-      "actions": [
-        {
-          "cmd": "videoView",
-          "videoStartFrom": 0,
-          "video": "hello_1hook.mp4",
-          "timeFixed": 4,
-          "styleCss": { "position": "absolute", "height": 1920 }
-        },
-        {
-          "cmd": "divAction",
-          "id": "h_full",
-          "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "overflow": "hidden"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "h_full",
-          "img": "BG_1.jpg",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 0,
-            "height": "42%",
-            "width": "100%",
-            "maskImage": "linear-gradient(to bottom, transparent 0%, black 26%)",
-            "WebkitMaskImage": "linear-gradient(to bottom, transparent 0%, black 25%)",
-            "zIndex": 2
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div1",
-          "styleCss": {
-            "position": "absolute",
-            "top": 1200,
-            "height": 140,
-            "paddingRight": 20,
-            "backgroundColor": "rgba(255, 255, 255, 0.7)",
-            "zIndex": 3,
-            "borderTopRightRadius": 100,
-            "borderBottomRightRadius": 100
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div1_in",
-          "toID": "Div1",
-          "styleCss": {
-            "position": "relative",
-            "top": 15,
-            "height": 110,
-            "paddingLeft": 20,
-            "paddingRight": 20,
-            "gap": 20,
-            "backgroundColor": "#6906cc",
-            "zIndex": 4,
-            "borderTopRightRadius": 100,
-            "borderBottomRightRadius": 100,
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center",
-            "boxShadow": "0 10px 20px rgba(0, 0, 0, 0.5)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "img": "test_logo.png",
-          "toID": "Div1_in",
-          "styleCss": {
-            "position": "absolute",
-            "height": 100,
-            "width": 100,
-            "objectFit": "cover",
-            "left": 50,
-            "zIndex": 3,
-            "backgroundColor": "white",
-            "borderRadius": 50
-          }
-        },
-        {
-          "cmd": "divAction",
-          "text": "Tiếng anh bình dân",
-          "toID": "Div1_in",
-          "styleCss": {
-            "position": "relative",
-            "fontSize": 42,
-            "fontWeight": 700,
-            "color": "white",
-            "letterSpacing": 2,
-            "lineHeight": 1.3,
-            "textTransform": "uppercase",
-            "paddingLeft": 165
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "Div3",
-          "styleCss": {
-            "position": "absolute",
-            "top": 1380,
-            "left": 115,
-            "right": 115,
-            "zIndex": 3
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "text",
-          "toID": "Div3",
-          "styleCss": {
-            "position": "relative",
-            "fontSize": 57,
-            "fontWeight": 700,
-            "color": "white",
-            "letterSpacing": 2,
-            "lineHeight": 1.3,
-            "textShadow": "0 4px 10px rgba(0,0,0,0.6)"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "h_full",
-          "img": "test_gau.png",
-          "styleCss": {
-            "position": "absolute",
-            "top": 0,
-            "right": 0,
-            "height": 650,
-            "width": 650,
-            "objectFit": "cover",
-            "borderRadius": "50%"
-          }
-        },
-        {
-          "cmd": "typingText",
-          "toID": "text",
-          "text": "Giúp em ghép âm câu \"The bear on the road\" với ạ!"
-        },
-        {
-          "cmd": "soundPlayerAction",
-          "soundSource": "SOUNDCHUNG_tiktokTypingSoundCapcut",
-          "loop": true,
-          "volume": 1,
-          "actionDuration": 60
-        }
-      ],
-      "code": "INMODE",
-      "mode": "ADD_MODE001",
-      "modeOBJ": "ADD_MODEOBJ001",
-      "stt": 0.001,
-      "timeFixed": 4
-    },
-    {
-      "actions": [
-        {
-          "cmd": "videoView",
-          "videoStartFrom": 0,
-          "video": "hello_1content.mp4",
-          "code": "hello_1content.mp4",
-          "ChangeStartFrame": -15,
-          "styleCss": { "position": "absolute", "height": 1920 }
-        },
-        {
-          "cmd": "divAction",
-          "id": "c1_full",
-          "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "overflow": "hidden"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "c1_div1",
-          "styleCss": {
-            "position": "absolute",
-            "bottom": 300,
-            "left": 0,
-            "right": 0,
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "c1_div1",
-          "text": "Bí kíp ghép âm với UE OAI Ơ",
-          "styleCss": {
-            "position": "relative",
-            "fontSize": 60,
-            "fontWeight": 700,
-            "color": "white",
-            "lineHeight": 1.3,
-            "textShadow": "0 4px 10px rgba(0,0,0,0.6)",
-            "backgroundColor": "#7d6fe8",
-            "padding": 25,
-            "borderRadius": 30
-          }
-        }
-      ],
-      "code": "hello_1content.mp4",
-      "mode": "ADD_MODE002",
-      "modeOBJ": "ADD_MODEOBJ002",
-      "stt": 1.001
-    },
-    {
-      "actions": [
-        {
-          "cmd": "divAction",
-          "id": "e_full",
-          "timeFixed": 4,
-          "styleCss": {
-            "position": "absolute",
-            "inset": 0,
-            "background": "radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%)",
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center"
-          }
-        },
-        {
-          "cmd": "imageViewActionToID",
-          "toID": "e_full",
-          "img": "test_logo.png",
-          "transition": "bounce",
-          "transitionFrame": 30,
-          "styleCss": {
-            "position": "absolute",
-            "top": 670,
-            "height": 250,
-            "width": 250,
-            "objectFit": "cover",
-            "zIndex": 3,
-            "backgroundColor": "white",
-            "borderRadius": "50%"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "e_div1",
-          "styleCss": {
-            "position": "absolute",
-            "top": 500,
-            "left": 0,
-            "right": 0,
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "e_div1",
-          "text": "Tiếng anh bình dân",
-          "styleCss": {
-            "position": "relative",
-            "fontSize": 60,
-            "fontWeight": 600,
-            "color": "yellow",
-            "lineHeight": 1.3,
-            "backgroundColor": "#4B0082",
-            "borderRadius": 20,
-            "padding": 20
-          }
-        },
-        {
-          "cmd": "divAction",
-          "id": "e_div2",
-          "styleCss": {
-            "position": "absolute",
-            "top": 1000,
-            "left": 0,
-            "right": 0,
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center"
-          }
-        },
-        {
-          "cmd": "divAction",
-          "toID": "e_div2",
-          "text": "Follow me!!",
-          "styleCss": {
-            "position": "relative",
-            "fontSize": 90,
-            "fontWeight": 700,
-            "color": "white",
-            "lineHeight": 1.3
-          }
-        }
-      ],
-      "code": "INMODE",
-      "mode": "ADD_MODE003",
-      "modeOBJ": "ADD_MODEOBJ003",
-      "stt": 2.001,
-      "timeFixed": 4
-    }
-  ]
+  {
+    "id": "A001",
+    "channelName": "HỌC ĐỂ GIAO TIẾP ĐƯỢC",
+    "avatarImage": "thumb_1-3.png",
+    "mainContentDescription": "",
+    "contentFormatDescription": "…..........",
+    "channelData": [
+      {
+        "thumbnail": "thumb_1-3.png",
+        "media": "thumb_1-3.png",
+        "caption": "Bạn học tiếng Anh sai ngay từ bước đầu?\nHầu hết mọi người bắt đầu bằng ngữ pháp… nhưng người bản xứ thì không.\n👉 Điều gì xảy ra nếu bạn học giống trẻ em thay vì học như học sinh?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_2-3.png",
+        "media": "thumb_2-3.png",
+        "caption": "Não bạn không được thiết kế để “học từ vựng”\nBạn cố nhớ danh sách từ, rồi quên sạch sau vài ngày.\n👉 Có phải bạn nên học “ngữ cảnh” thay vì “từ đơn lẻ”?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_3-3.png",
+        "media": "thumb_3-3.png",
+        "caption": "Nghe không hiểu không phải vì bạn kém\nBạn nghe không hiểu không phải vì thiếu từ, mà vì não chưa quen âm thanh thật.\n👉 Bạn đã từng nghe “connected speech” chưa?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_4-3.png",
+        "media": "thumb_4-3.png",
+        "caption": "90% người học không bao giờ nói trôi chảy vì lý do này\nHọ học rất nhiều… nhưng không nói.\n👉 Nếu bạn nói sai ngay từ đầu, điều gì sẽ xảy ra?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_5-3.png",
+        "media": "thumb_5-3.png",
+        "caption": "Bạn học 5 năm nhưng không giao tiếp được?\nVấn đề không phải thời gian… mà là cách học.\n👉 Có phải bạn đang học để thi, không phải để dùng?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_6-3.png",
+        "media": "thumb_6-3.png",
+        "caption": "Bí mật: Người giỏi tiếng Anh không học nhiều hơn bạn\nHọ chỉ lặp lại đúng cách.\n👉 Bạn có biết “spaced repetition” là gì không?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_7-3.png",
+        "media": "thumb_7-3.png",
+        "caption": "Bạn đang học quá khó\nBạn chọn tài liệu vượt trình độ → nhanh chán → bỏ cuộc.\n👉 Điều gì xảy ra nếu bạn học “dễ hơn 1 chút”?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_8-3.png",
+        "media": "thumb_8-3.png",
+        "caption": "Phụ đề đang giết khả năng nghe của bạn\nBạn nghĩ mình đang học… nhưng thực ra đang đọc.\n👉 Bạn có dám tắt phụ đề không?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_9-3.png",
+        "media": "thumb_9-3.png",
+        "caption": "Phát âm sai = nghe không hiểu\nBạn không phát âm được → bạn cũng không nghe ra.\n👉 Điều này có liên quan gì đến “muscle memory”?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_10-3.png",
+        "media": "thumb_10-3.png",
+        "caption": "Học tiếng Anh không cần năng khiếu\nBạn chỉ cần đúng phương pháp + đủ thời gian.\n👉 Nhưng “đủ” là bao nhiêu?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_11-3.png",
+        "media": "thumb_11-3.png",
+        "caption": "Bạn không thiếu thời gian, bạn thiếu hệ thống\n15 phút mỗi ngày có thể đủ… nếu bạn học đúng.\n👉 Bạn có lịch học rõ ràng chưa?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_12-3.png",
+        "media": "thumb_12-3.png",
+        "caption": "Não bạn cần “lặp lại thông minh”\nKhông phải học nhiều hơn, mà là học đúng lúc.\n👉 Tại sao bạn quên nhanh như vậy?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_13-3.png",
+        "media": "thumb_13-3.png",
+        "caption": "Bạn đang học thụ động\nXem video, nghe podcast… nhưng không phản xạ.\n👉 Bạn đã từng “shadowing” chưa?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_14-3.png",
+        "media": "thumb_14-3.png",
+        "caption": "Người giỏi không dịch trong đầu\nHọ nghĩ trực tiếp bằng tiếng Anh.\n👉 Làm sao để bỏ thói quen dịch?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_15-3.png",
+        "media": "thumb_15-3.png",
+        "caption": "Bạn đang sợ sai quá mức\nSợ sai = không nói = không tiến bộ.\n👉 Nếu bạn sai 100 lần, bạn sẽ học được gì?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_16-3.png",
+        "media": "thumb_16-3.png",
+        "caption": "Bạn học quá nhiều thứ cùng lúc\nNgữ pháp, từ vựng, nghe, nói… tất cả một lúc.\n👉 Điều gì xảy ra nếu bạn tập trung 1 kỹ năng?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_17-3.png",
+        "media": "thumb_17-3.png",
+        "caption": "Bạn không cần từ vựng “khó”\n80% giao tiếp dùng từ rất đơn giản.\n👉 Tại sao bạn vẫn học từ “cao siêu”?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_18-3.png",
+        "media": "thumb_18-3.png",
+        "caption": "Học tiếng Anh không cần môi trường nước ngoài\nBạn có thể tạo môi trường ngay tại nhà.\n👉 Bạn đã “tắm ngôn ngữ” chưa?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_19-3.png",
+        "media": "thumb_19-3.png",
+        "caption": "Não bạn ghét học thuộc\nNó thích câu chuyện và hình ảnh.\n👉 Bạn có đang học qua storytelling?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_20-3.png",
+        "media": "thumb_20-3.png",
+        "caption": "Bạn không cần học mỗi ngày… nếu bạn học đúng\nChất lượng > số lượng.\n👉 Nhưng “đúng” là như thế nào?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_21-3.png",
+        "media": "thumb_21-3.png",
+        "caption": "Bạn đang học mà không đo được tiến bộ\nKhông đo → không biết mình đang ở đâu.\n👉 Bạn có cách nào kiểm tra bản thân không?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_22-3.png",
+        "media": "thumb_22-3.png",
+        "caption": "Người giỏi tiếng Anh không học một mình\nHọ tương tác, nói chuyện, sửa lỗi.\n👉 Bạn có partner học chưa?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_23-3.png",
+        "media": "thumb_23-3.png",
+        "caption": "Bạn đang “nghe để hiểu” thay vì “nghe để quen”\nHiểu không quan trọng bằng quen âm.\n👉 Bạn đã nghe lặp lại một đoạn 10 lần chưa?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_24-3.png",
+        "media": "thumb_24-3.png",
+        "caption": "Học tiếng Anh giống tập gym\nBạn không thể “bulk” trong 1 ngày.\n👉 Bạn có kiên trì đủ lâu không?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_25-3.png",
+        "media": "thumb_25-3.png",
+        "caption": "Bạn đang bỏ qua cảm xúc khi học\nChán = bỏ cuộc.\n👉 Làm sao để học mà vẫn thấy vui?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_26-3.png",
+        "media": "thumb_26-3.png",
+        "caption": "Bạn học mà không dùng → bạn sẽ quên\nNão chỉ giữ thứ bạn dùng thường xuyên.\n👉 Bạn đã dùng tiếng Anh hôm nay chưa?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_27-3.png",
+        "media": "thumb_27-3.png",
+        "caption": "Bạn không cần hoàn hảo để bắt đầu\nBạn chỉ cần bắt đầu.\n👉 Điều gì đang giữ bạn lại?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_28-3.png",
+        "media": "thumb_28-3.png",
+        "caption": "Bạn đang học theo người khác, không phải theo mình\nMỗi người có cách học khác nhau.\n👉 Bạn đã tìm ra cách hợp với mình chưa?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_29-3.png",
+        "media": "thumb_29-3.png",
+        "caption": "Bạn nghĩ mình “không có năng khiếu”\nThực ra bạn chỉ chưa tìm đúng cách.\n👉 Điều gì sẽ xảy ra nếu bạn thử lại?",
+        "hashtags": "#hocdegiaotiepduoc"
+      },
+      {
+        "thumbnail": "thumb_30-3.png",
+        "media": "thumb_30-3.png",
+        "caption": "Học tiếng Anh không khó như bạn nghĩ\nChỉ là bạn chưa được hướng dẫn đúng.\n👉 Nếu có lộ trình rõ ràng, bạn sẽ đi nhanh hơn bao nhiêu?",
+        "hashtags": "#hocdegiaotiepduoc"
+      }
+    ]
+  }
 ]

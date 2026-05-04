@@ -29,7 +29,7 @@
     "start": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "renderimg": "node render-all6image.js",
+    "renderimg": "tsx render-all6image.js",
     "rendervideo": "tsx render-all_video_tiktok.js",
     "renderc1": "tsx render-all_video_tiktok_C1x.js",
     "rendervideoSLOW": "node render-all_video_tiktok.js",
