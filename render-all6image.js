@@ -24,7 +24,7 @@ const VIDEO_CONFIG = {
 
 const RENDER_SETTINGS = {
   // 🎞️ Danh sách frame muốn chụp — sửa tại đây
-  // VD: [15] hoặc [0, 15, 30, 60]
+  // VD: [15] hoặc [0, 15, 30, 60] phia dưới là lấy frame 2 5 8 11 14 làm ảnh; lưu ý ko lấy số lẻ như 2.5; 5.5 ...
   stillFrames: [2, 5, 8, 11, 14],
 
   stillFormat: "png", // "png" | "jpeg"
