@@ -1,17 +1,17 @@
 export const root_JSX = "CSK001";
-export const folder_render = "thumb";
-export const name_video = "thumb_";
+export const folder_render = "JMC-A";
+export const name_video = "JMC-A_";
 
 // 🎬 VIDEO METADATA CONFIGURATION
 export const VIDEO_METADATA = {
   // Title template (có thể dùng {id}, {hook})
-  titleTemplate: "Review Vụ Án - ID{id}",
+  titleTemplate: "PVD - ID{id}",
 
   // Artist/Creator name
-  artist: "Review Vụ Án",
+  artist: "PVD",
 
   // Hashtags
-  hashtags: ["#ReviewVuAn", "#TinNongPhapLuat", "#PhapLuatVietNam"],
+  hashtags: ["#PVD", "#PVD", "#PVD"],
 
   // Description template (có thể dùng {hook}, {hashtags}, {id})
   descriptionTemplate: "Hook: {hook} | Hashtags: {hashtags}",
