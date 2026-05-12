@@ -20,9 +20,10 @@ const VIDEO_CONFIG = {
 };
 const RENDER_SETTINGS = {
   // 🎞️ Danh sách frame muốn chụp — sửa tại đây
-  // VD: [15] hoặc [0, 15, 30, 60] phia dưới là lấy frame 2 5 8 11 14 làm ảnh; lưu ý ko lấy số lẻ như 2.5; 5.5 ...
+  // VD: [15] hoặc [0, 15, 30, 60] phía dưới là lấy frame 2 5 8 11 14 làm ảnh
   // Frame nằm ngoài phạm vi video sẽ tự động bỏ qua (không gây lỗi)
-  stillFrames: [2, 5, 8, 11, 14],
+  // lưu ý ko lấy số lẻ như 2.5; 5.5 ...
+  stillFrames: [2, 5, 8, 11, 14, 20],
   stillFormat: "png", // "png" | "jpeg"
   stillQuality: 95, // chỉ dùng khi format = "jpeg"
   overwriteExisting: false,
@@ -104,37 +105,47 @@ function createDirectories() {
   });
 }
 // ============================================
-// 🔍 LẤY TỔNG SỐ FRAMES CỦA COMPOSITION
-// Dùng "npx remotion compositions --json" để biết durationInFrames
-// Trả về null nếu không query được (sẽ dùng toàn bộ stillFrames)
+// 🔍 ĐỌC FRAME COUNT TỪ VIDEO ĐÃ RENDER
+// Dùng `ffmpeg -i` để parse "Duration: HH:MM:SS.ss" → tính số frames
+// Không cần ffprobe, không cần query Remotion
+// ffmpeg luôn in Duration ra stderr kể cả khi không có output file
 // ============================================
-function getCompositionDuration(compositionId) {
+function getVideoFrameCount(videoPath) {
   try {
-    const raw = execSync(`npx remotion compositions out --json`, {
-      stdio: "pipe",
-      maxBuffer: 10 * 1024 * 1024,
-    }).toString();
-
-    // Output có thể lẫn log text trước JSON → tìm dòng bắt đầu bằng "["
-    const jsonStart = raw.indexOf("[");
-    if (jsonStart === -1) return null;
-    const comps = JSON.parse(raw.slice(jsonStart));
-    const comp = comps.find((c) => String(c.id) === String(compositionId));
-    return comp?.durationInFrames ?? null;
+    let stderr = "";
+    try {
+      execSync(`"${ffmpegPath}" -i "${videoPath}"`, {
+        stdio: "pipe",
+        maxBuffer: 2 * 1024 * 1024,
+      });
+    } catch (e) {
+      // execSync throw vì không có output file chỉ định — đây là bình thường
+      stderr = e.stderr?.toString() ?? "";
+    }
+    // Parse "Duration: 00:00:00.50"
+    const m = stderr.match(/Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)/);
+    if (!m) return null;
+    const totalSec =
+      parseInt(m[1]) * 3600 + parseInt(m[2]) * 60 + parseFloat(m[3]);
+    // Math.round để tránh floating point; +1 vì frame đánh số từ 0
+    return Math.round(totalSec * VIDEO_CONFIG.fps) + 1;
   } catch {
     return null;
   }
 }
 // ============================================
-// 🎬 BƯỚC 1: Render video ngắn bằng Remotion
-// maxFrame đã được tính từ effectiveFrames (đã lọc ngoài phạm vi)
+// 🎬 BƯỚC 1: Render video bằng Remotion
+// Thử render giới hạn đến maxFrame trước (nhanh hơn).
+// Nếu lỗi (frame vượt duration) → fallback render toàn bộ video.
+// Sau đó dùng getVideoFrameCount() để lọc frame thực tế.
 // ============================================
-function renderTmpVideo(item, maxFrame) {
+function renderTmpVideo(item) {
   const tmpPath = getTmpVideoPath(item.id);
-  const cmd =
+  const maxFrame = Math.max(...RENDER_SETTINGS.stillFrames);
+
+  const baseCmd =
     `npx remotion render ` +
     `--serve-url=out ` +
-    `--frames=0-${maxFrame} ` +
     `--width=${VIDEO_CONFIG.width} ` +
     `--height=${VIDEO_CONFIG.height} ` +
     `--fps=${VIDEO_CONFIG.fps} ` +
@@ -142,33 +153,51 @@ function renderTmpVideo(item, maxFrame) {
     `--crf=${VIDEO_CONFIG.crf} ` +
     `--pixel-format=${VIDEO_CONFIG.pixelFormat} ` +
     `${item.id} "${tmpPath}"`;
+
+  // Thử render chỉ đến maxFrame (nhanh hơn, đủ dùng khi frames trong phạm vi)
+  const cmdLimited = `${baseCmd} --frames=0-${maxFrame}`;
   if (RENDER_SETTINGS.showDetailedProgress) {
-    console.log(`   📝 Render CMD: ${cmd}`);
+    console.log(`   📝 Render CMD: ${cmdLimited}`);
   }
-  execSync(cmd, {
-    stdio: RENDER_SETTINGS.showDetailedProgress ? "inherit" : "pipe",
-    maxBuffer: 100 * 1024 * 1024,
-  });
+  try {
+    execSync(cmdLimited, {
+      stdio: RENDER_SETTINGS.showDetailedProgress ? "inherit" : "pipe",
+      maxBuffer: 100 * 1024 * 1024,
+    });
+  } catch {
+    // Có thể lỗi vì maxFrame vượt durationInFrames → render toàn bộ video
+    // getVideoFrameCount() sẽ lọc ra đúng frames sau
+    console.log(
+      `   ⚠️  --frames=0-${maxFrame} thất bại (có thể vượt duration), render toàn bộ video...`,
+    );
+    if (RENDER_SETTINGS.showDetailedProgress) {
+      console.log(`   📝 Render CMD (full): ${baseCmd}`);
+    }
+    execSync(baseCmd, {
+      stdio: RENDER_SETTINGS.showDetailedProgress ? "inherit" : "pipe",
+      maxBuffer: 100 * 1024 * 1024,
+    });
+  }
+
   return tmpPath;
 }
 // ============================================
 // 🖼️ BƯỚC 2: Extract frame từ video bằng FFmpeg
 // ============================================
 function extractFrame(tmpVideoPath, frame, stillPath) {
-  // Tính timestamp chính xác theo fps
   const timeSec = (frame / VIDEO_CONFIG.fps).toFixed(6);
   const qualityFlag =
     RENDER_SETTINGS.stillFormat === "jpeg"
       ? `-q:v ${Math.round(((100 - RENDER_SETTINGS.stillQuality) / 100) * 31)}`
-      : `-compression_level 3`; // PNG compression nhẹ để nhanh hơn
+      : `-compression_level 3`;
   const cmd = [
     `"${ffmpegPath}"`,
-    `-ss ${timeSec}`, // seek đến đúng thời điểm
-    `-i "${tmpVideoPath}"`, // input video
-    `-frames:v 1`, // chỉ lấy 1 frame
+    `-ss ${timeSec}`,
+    `-i "${tmpVideoPath}"`,
+    `-frames:v 1`,
     qualityFlag,
     `"${stillPath}"`,
-    `-y`, // overwrite nếu tồn tại
+    `-y`,
   ].join(" ");
   if (RENDER_SETTINGS.showDetailedProgress) {
     console.log(`      📝 FFmpeg CMD: ${cmd}`);
@@ -179,40 +208,15 @@ function extractFrame(tmpVideoPath, frame, stillPath) {
   });
 }
 // ============================================
-// 🖼️ RENDER ITEM: render video → extract tất cả frames
+// 🖼️ RENDER ITEM: render video → filter frames → extract
 // ============================================
 function renderItem(item, index) {
   console.log(`🎬 [${index + 1}/${videoData.length}] ID: ${item.id}`);
   const t0 = Date.now();
 
-  // ── Lọc frames hợp lệ theo durationInFrames của composition ──
-  const duration = getCompositionDuration(item.id);
-  let effectiveFrames = RENDER_SETTINGS.stillFrames;
-
-  if (duration !== null) {
-    effectiveFrames = RENDER_SETTINGS.stillFrames.filter((f) => f < duration);
-    const skippedFrames = RENDER_SETTINGS.stillFrames.filter(
-      (f) => f >= duration,
-    );
-    if (skippedFrames.length > 0) {
-      console.log(
-        `   ⚠️  Bỏ qua frame ngoài phạm vi (duration=${duration} frames): [${skippedFrames.join(", ")}]`,
-      );
-    }
-  } else {
-    console.log(`   ℹ️  Không query được duration, dùng toàn bộ stillFrames.`);
-  }
-
-  if (effectiveFrames.length === 0) {
-    console.log(
-      `   ⏭️  Không có frame hợp lệ trong stillFrames cho item này, skipping...\n`,
-    );
-    return true;
-  }
-
-  // Kiểm tra nếu tất cả frame đã tồn tại → skip
+  // Skip sớm nếu tất cả frames đã tồn tại
   if (!RENDER_SETTINGS.overwriteExisting) {
-    const allExist = effectiveFrames.every((f) =>
+    const allExist = RENDER_SETTINGS.stillFrames.every((f) =>
       fs.existsSync(getStillPath(item.id, f)),
     );
     if (allExist) {
@@ -222,18 +226,50 @@ function renderItem(item, index) {
   }
 
   const tmpPath = getTmpVideoPath(item.id);
-  const maxFrame = Math.max(...effectiveFrames);
-
   try {
-    // ── Bước 1: Render video ngắn ──
-    console.log(`   🎬 Rendering video (frames 0–${maxFrame})...`);
-    renderTmpVideo(item, maxFrame);
+    // ── Bước 1: Render video ──
+    const maxFrame = Math.max(...RENDER_SETTINGS.stillFrames);
+    console.log(`   🎬 Rendering video (target frames 0–${maxFrame})...`);
+    renderTmpVideo(item);
+
     if (!fs.existsSync(tmpPath)) {
       console.log(`   ❌ Tmp video không được tạo`);
       return false;
     }
     const videoSizeMB = (fs.statSync(tmpPath).size / 1024 / 1024).toFixed(1);
     console.log(`   ✅ Tmp video: ${videoSizeMB}MB`);
+
+    // ── Bước 1b: Đọc frame count thực tế → lọc frames hợp lệ ──
+    const actualFrameCount = getVideoFrameCount(tmpPath);
+    let effectiveFrames = RENDER_SETTINGS.stillFrames;
+
+    if (actualFrameCount !== null) {
+      effectiveFrames = RENDER_SETTINGS.stillFrames.filter(
+        (f) => f < actualFrameCount,
+      );
+      const skipped = RENDER_SETTINGS.stillFrames.filter(
+        (f) => f >= actualFrameCount,
+      );
+      if (skipped.length > 0) {
+        console.log(
+          `   ⚠️  Bỏ qua frame ngoài phạm vi (video có ${actualFrameCount} frames): [${skipped.join(", ")}]`,
+        );
+      } else {
+        console.log(
+          `   📊 Video: ${actualFrameCount} frames — tất cả frames hợp lệ`,
+        );
+      }
+    } else {
+      console.log(
+        `   ℹ️  Không đọc được frame count, thử extract toàn bộ stillFrames`,
+      );
+    }
+
+    if (effectiveFrames.length === 0) {
+      console.log(`   ⚠️  Không có frame hợp lệ nào để extract\n`);
+      fs.unlinkSync(tmpPath);
+      return false;
+    }
 
     // ── Bước 2: Extract từng frame hợp lệ ──
     let successCount = 0;
@@ -270,7 +306,6 @@ function renderItem(item, index) {
     return ok;
   } catch (error) {
     console.error(`❌ Error: ${item.id} — ${error.message}`);
-    // Dọn tmp nếu lỗi
     if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
     return false;
   }
