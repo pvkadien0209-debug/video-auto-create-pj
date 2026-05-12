@@ -4,9 +4,12 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { root_JSX, folder_render, name_video } from "./root-config.js";
 import ffmpegPath from "ffmpeg-static";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 console.log(`📂 Loading data from project: ${root_JSX}`);
+
 // ============================================
 // 🔧 CONFIGURATION
 // ============================================
@@ -18,16 +21,19 @@ const VIDEO_CONFIG = {
   crf: 23,
   pixelFormat: "yuv420p",
 };
+
 const RENDER_SETTINGS = {
   // 🎞️ Danh sách frame muốn chụp — sửa tại đây
   // VD: [15] hoặc [0, 15, 30, 60] phia dưới là lấy frame 2 5 8 11 14 làm ảnh; lưu ý ko lấy số lẻ như 2.5; 5.5 ...
-  // Frame nằm ngoài phạm vi video sẽ tự động bỏ qua (không gây lỗi)
-  stillFrames: [2, 5, 8, 11, 14],
+  stillFrames: [2, 5, 8, 11, 14, 15, 25],
+
   stillFormat: "png", // "png" | "jpeg"
   stillQuality: 95, // chỉ dùng khi format = "jpeg"
+
   overwriteExisting: false,
   showDetailedProgress: true,
 };
+
 // ============================================
 // 📁 FOLDER & NAMING
 // name_video = "thumb_" → stillDir = ./renders/img/thumb/
@@ -36,30 +42,37 @@ const RENDER_SETTINGS = {
 const nameBase = name_video.endsWith("_")
   ? name_video.slice(0, -1)
   : name_video;
+
 const stillDir = `./renders/img/${nameBase}`;
 const tmpDir = `./renders/img/_tmp`;
+
 function getStillPath(itemId, frame) {
   const ext = RENDER_SETTINGS.stillFormat;
   return path.join(stillDir, `${name_video}${itemId}-${frame}.${ext}`);
 }
+
 function getTmpVideoPath(itemId) {
   return path.join(tmpDir, `tmp_${itemId}.mp4`);
 }
+
 // ============================================
 // 📂 LOAD DATA
 // ============================================
 let videoData;
+
 async function loadDataAndRender() {
   if (!fs.existsSync("out")) {
     console.error("❌ Folder 'out/' không tồn tại! Chạy: npx remotion bundle");
     process.exit(1);
   }
+
   if (!ffmpegPath || !fs.existsSync(ffmpegPath)) {
     console.error(
       "❌ ffmpeg-static không tìm thấy! Chạy: npm install ffmpeg-static",
     );
     process.exit(1);
   }
+
   try {
     const dataPath = path.join(
       __dirname,
@@ -69,13 +82,18 @@ async function loadDataAndRender() {
       "data.js",
     );
     const dataUrl = new URL(`file:///${dataPath.replace(/\\/g, "/")}`).href;
+
     console.log(`📂 Loading from: ${dataPath}`);
+
     if (!fs.existsSync(dataPath)) {
       throw new Error(`❌ Data file not found: ${dataPath}`);
     }
+
     const dataModule = await import(dataUrl);
     const { videoData01 } = dataModule;
+
     if (!videoData01) throw new Error(`❌ videoData01 not found in data.js`);
+
     videoData = videoData01[0]?.id
       ? videoData01
       : videoData01.map((e, i) => ({
@@ -84,6 +102,7 @@ async function loadDataAndRender() {
           nameUseFN: `ID${i + 1}-${name_video}`,
           folderUSe: folder_render,
         }));
+
     console.log(`✅ Loaded ${videoData.length} items\n`);
     runRenderProcess();
   } catch (error) {
@@ -92,6 +111,7 @@ async function loadDataAndRender() {
     process.exit(1);
   }
 }
+
 // ============================================
 // 📁 CREATE DIRECTORIES
 // ============================================
@@ -103,34 +123,16 @@ function createDirectories() {
     }
   });
 }
-// ============================================
-// 🔍 LẤY TỔNG SỐ FRAMES CỦA COMPOSITION
-// Dùng "npx remotion compositions --json" để biết durationInFrames
-// Trả về null nếu không query được (sẽ dùng toàn bộ stillFrames)
-// ============================================
-function getCompositionDuration(compositionId) {
-  try {
-    const raw = execSync(`npx remotion compositions out --json`, {
-      stdio: "pipe",
-      maxBuffer: 10 * 1024 * 1024,
-    }).toString();
 
-    // Output có thể lẫn log text trước JSON → tìm dòng bắt đầu bằng "["
-    const jsonStart = raw.indexOf("[");
-    if (jsonStart === -1) return null;
-    const comps = JSON.parse(raw.slice(jsonStart));
-    const comp = comps.find((c) => String(c.id) === String(compositionId));
-    return comp?.durationInFrames ?? null;
-  } catch {
-    return null;
-  }
-}
 // ============================================
 // 🎬 BƯỚC 1: Render video ngắn bằng Remotion
-// maxFrame đã được tính từ effectiveFrames (đã lọc ngoài phạm vi)
+// Chỉ render đủ frame cần thiết (đến frame cao nhất trong stillFrames)
 // ============================================
-function renderTmpVideo(item, maxFrame) {
+function renderTmpVideo(item) {
   const tmpPath = getTmpVideoPath(item.id);
+  const maxFrame = Math.max(...RENDER_SETTINGS.stillFrames);
+
+  // Render từ frame 0 đến maxFrame để đảm bảo animation đã chạy đủ
   const cmd =
     `npx remotion render ` +
     `--serve-url=out ` +
@@ -142,25 +144,31 @@ function renderTmpVideo(item, maxFrame) {
     `--crf=${VIDEO_CONFIG.crf} ` +
     `--pixel-format=${VIDEO_CONFIG.pixelFormat} ` +
     `${item.id} "${tmpPath}"`;
+
   if (RENDER_SETTINGS.showDetailedProgress) {
     console.log(`   📝 Render CMD: ${cmd}`);
   }
+
   execSync(cmd, {
     stdio: RENDER_SETTINGS.showDetailedProgress ? "inherit" : "pipe",
     maxBuffer: 100 * 1024 * 1024,
   });
+
   return tmpPath;
 }
+
 // ============================================
 // 🖼️ BƯỚC 2: Extract frame từ video bằng FFmpeg
 // ============================================
 function extractFrame(tmpVideoPath, frame, stillPath) {
   // Tính timestamp chính xác theo fps
   const timeSec = (frame / VIDEO_CONFIG.fps).toFixed(6);
+
   const qualityFlag =
     RENDER_SETTINGS.stillFormat === "jpeg"
       ? `-q:v ${Math.round(((100 - RENDER_SETTINGS.stillQuality) / 100) * 31)}`
       : `-compression_level 3`; // PNG compression nhẹ để nhanh hơn
+
   const cmd = [
     `"${ffmpegPath}"`,
     `-ss ${timeSec}`, // seek đến đúng thời điểm
@@ -170,14 +178,17 @@ function extractFrame(tmpVideoPath, frame, stillPath) {
     `"${stillPath}"`,
     `-y`, // overwrite nếu tồn tại
   ].join(" ");
+
   if (RENDER_SETTINGS.showDetailedProgress) {
     console.log(`      📝 FFmpeg CMD: ${cmd}`);
   }
+
   execSync(cmd, {
     stdio: "pipe",
     maxBuffer: 50 * 1024 * 1024,
   });
 }
+
 // ============================================
 // 🖼️ RENDER ITEM: render video → extract tất cả frames
 // ============================================
@@ -185,34 +196,9 @@ function renderItem(item, index) {
   console.log(`🎬 [${index + 1}/${videoData.length}] ID: ${item.id}`);
   const t0 = Date.now();
 
-  // ── Lọc frames hợp lệ theo durationInFrames của composition ──
-  const duration = getCompositionDuration(item.id);
-  let effectiveFrames = RENDER_SETTINGS.stillFrames;
-
-  if (duration !== null) {
-    effectiveFrames = RENDER_SETTINGS.stillFrames.filter((f) => f < duration);
-    const skippedFrames = RENDER_SETTINGS.stillFrames.filter(
-      (f) => f >= duration,
-    );
-    if (skippedFrames.length > 0) {
-      console.log(
-        `   ⚠️  Bỏ qua frame ngoài phạm vi (duration=${duration} frames): [${skippedFrames.join(", ")}]`,
-      );
-    }
-  } else {
-    console.log(`   ℹ️  Không query được duration, dùng toàn bộ stillFrames.`);
-  }
-
-  if (effectiveFrames.length === 0) {
-    console.log(
-      `   ⏭️  Không có frame hợp lệ trong stillFrames cho item này, skipping...\n`,
-    );
-    return true;
-  }
-
   // Kiểm tra nếu tất cả frame đã tồn tại → skip
   if (!RENDER_SETTINGS.overwriteExisting) {
-    const allExist = effectiveFrames.every((f) =>
+    const allExist = RENDER_SETTINGS.stillFrames.every((f) =>
       fs.existsSync(getStillPath(item.id, f)),
     );
     if (allExist) {
@@ -222,26 +208,31 @@ function renderItem(item, index) {
   }
 
   const tmpPath = getTmpVideoPath(item.id);
-  const maxFrame = Math.max(...effectiveFrames);
 
   try {
     // ── Bước 1: Render video ngắn ──
-    console.log(`   🎬 Rendering video (frames 0–${maxFrame})...`);
-    renderTmpVideo(item, maxFrame);
+    console.log(
+      `   🎬 Rendering video (frames 0–${Math.max(...RENDER_SETTINGS.stillFrames)})...`,
+    );
+    renderTmpVideo(item);
+
     if (!fs.existsSync(tmpPath)) {
       console.log(`   ❌ Tmp video không được tạo`);
       return false;
     }
+
     const videoSizeMB = (fs.statSync(tmpPath).size / 1024 / 1024).toFixed(1);
     console.log(`   ✅ Tmp video: ${videoSizeMB}MB`);
 
-    // ── Bước 2: Extract từng frame hợp lệ ──
+    // ── Bước 2: Extract từng frame ──
     let successCount = 0;
-    for (const frame of effectiveFrames) {
+    for (const frame of RENDER_SETTINGS.stillFrames) {
       const stillPath = getStillPath(item.id, frame);
       console.log(`      🎯 Extracting frame ${frame} → ${stillPath}`);
+
       try {
         extractFrame(tmpPath, frame, stillPath);
+
         if (fs.existsSync(stillPath)) {
           const sizeMB = (fs.statSync(stillPath).size / 1024 / 1024).toFixed(2);
           console.log(`      ✅ Frame ${frame}: ${sizeMB}MB`);
@@ -262,7 +253,7 @@ function renderItem(item, index) {
     const ok = successCount > 0;
     if (ok) {
       console.log(
-        `✅ Done: ${item.id} (${elapsed}s) — ${successCount}/${effectiveFrames.length} frames\n`,
+        `✅ Done: ${item.id} (${elapsed}s) — ${successCount}/${RENDER_SETTINGS.stillFrames.length} frames\n`,
       );
     } else {
       console.log(`❌ Failed: ${item.id}\n`);
@@ -275,11 +266,13 @@ function renderItem(item, index) {
     return false;
   }
 }
+
 // ============================================
 // 🚀 MAIN
 // ============================================
 function runRenderProcess() {
   createDirectories();
+
   console.log("=".repeat(60));
   console.log("🚀 REMOTION → FFMPEG BATCH STILL RENDER");
   console.log("=".repeat(60));
@@ -295,18 +288,23 @@ function runRenderProcess() {
   );
   console.log(`⚡ FFmpeg      : ${ffmpegPath}`);
   console.log("=".repeat(60) + "\n");
+
   let successCount = 0;
   const startTime = Date.now();
+
   for (const [index, item] of videoData.entries()) {
     const ok = renderItem(item, index);
     if (ok) successCount++;
   }
+
   const totalTime = ((Date.now() - startTime) / 1000 / 60).toFixed(1);
+
   console.log("=".repeat(60));
   console.log("🎯 COMPLETE");
   console.log(`✅ Success : ${successCount}/${videoData.length}`);
   console.log(`❌ Errors  : ${videoData.length - successCount}`);
   console.log(`⏱️  Time    : ${totalTime} min`);
+
   if (fs.existsSync(stillDir)) {
     const files = fs
       .readdirSync(stillDir)
@@ -319,7 +317,9 @@ function runRenderProcess() {
       `🖼️  Stills  : ${(totalBytes / 1024 / 1024).toFixed(1)}MB (${files.length} files) — ${stillDir}`,
     );
   }
+
   console.log(`\n🎉 Done!`);
 }
+
 // ✅ Start
 loadDataAndRender();
