@@ -1,0 +1,10 @@
+Thư mục chứa giọng đọc video DetPro (tạo bởi POST /ttslistTV, router/ttsListtoMp3_TV.js).
+
+  <bài>/<cảnh>-<câu>.mp3   mp3 từng câu (đã cắt lặng đầu/cuối)
+  durations.dat            độ dài từng mp3 (ms) — Remotion dùng để khớp thời gian
+  manifest.dat             câu đã đọc (đổi lời thì tự tạo lại)
+
+Tạo xong: chép NGUYÊN thư mục "dp" này sang
+  C:\Dienpham\App\my-sta-video\public\audio\dp
+rồi render: npm run renderw -- --only=<bài>--w01 --scale=2/3
+Hướng dẫn đầy đủ: SEO-PT-projectjs\DetPro\video\HUONG-DAN-TAO-GIONG.md
