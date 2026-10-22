@@ -1,0 +1,262 @@
+// Kịch bản video W lần 3 (#110) — "Câu tường thuật: kể lại lời người khác" · chuỗi "Ngữ pháp tiếng Anh cần biết"
+const L = (id, who, say, sub, x = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...x });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "reported-speech-explained--w01",
+  hook: "HOOK-06",
+  loop: { open: "s01", close: "s25" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "grammar-relearners", slug: "reported-speech-explained", door: "kien-thuc", level: "B1",
+    title: "Câu tường thuật: kể lại lời người khác", series: "Ngữ pháp tiếng Anh cần biết" },
+  format: "W", mode: "text", audio: {},
+  notes: "Lần 3 (#110). Đổi tên: “bạn” chuyển lời khách, lời sếp, lời giám đốc → Thảo; sếp nghe chuyển lời (p10) → Cô Hoa (chỉ hỏi lại câu có trong bài); thành viên nhóm (p21), đồng nghiệp → Dũng; khách gọi hỏi lịch thứ Bảy (p7) → Bà Tư (vai mới, khách lớn tuổi); đối tác nhận tin nhắn (p14) → Sam (vai mới). Câu đố questions[19] và p14 theo bản đã sửa (#107: thứ Năm nói, sáng thứ Sáu chuyển lời). Cảnh 1 (DLG-01) dựng từ ✍️ p10. Phủ ý: 24/24.",
+  scenes: [
+    { id: "s01", module: "DLG-01", ref: "p9,p10,p11",
+      data: { set: "office", label: "Chuyển lời khách",
+        actors: [{ id: "thao", side: "left" }, { id: "hoa", side: "right" }],
+        verdict: { ok: false, label: "Giữ nguyên chữ I của khách", why: "Người nghe tưởng chính bạn đang cần báo cáo và phải hỏi lại.",
+          rule: "Kể lời ai, đổi I thành he hay she" } },
+      lines: [
+        L("l2", "thao", "The client said I need the report by Monday.", "The client said I need the report by Monday.", { pose: "explain" }),
+        L("l3", "hoa", "You need it? For what?", "Em cần à? Để làm gì?", { face: "thinking", stop: true }),
+        L("l4", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l5", "det", "I is the client's word. Say she, and needed.", "Chữ I là của khách: đổi thành she, need thành needed."),
+        L("l6", "det", "Let's rewind and try again.", "Tua lại, thử lần nữa nhé.", { phase: "redo" }),
+        L("l7", "thao", "The client said she needed the report by Monday.", "The client said she needed the report by Monday.", { phase: "redo", pose: "explain", face: "happy", react: { hoa: "happy" } }),
+      ] },
+    { id: "s02", module: "HOST-01", ref: "intro,p1",
+      data: { title: "Kể lại lời người khác thế nào cho rõ?", pose: "present",
+        items: ["Lùi thì", "Đổi đại từ", "Đổi từ chỉ thời gian", "Giữ đúng sức nặng câu gốc"] },
+      lines: [
+        L("l1", "det", "How do you pass on someone's words clearly? Three changes, and one thing to keep.", "Kể lại lời người khác sao cho rõ? Ba thay đổi, và một điều phải giữ."),
+        L("l2", "det", "Move the tense back.", "Lùi thì."),
+        L("l3", "det", "Change the pronouns.", "Đổi đại từ."),
+        L("l4", "det", "Change the time words.", "Đổi từ chỉ thời gian."),
+        L("l5", "det", "And keep the weight of the original words.", "Và giữ đúng sức nặng của câu gốc."),
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Năm chặng của video",
+        chapters: [
+          { label: "Ba thay đổi, say hay tell", illus: "speech-balloon" },
+          { label: "Lùi thì, và khi nào không lùi", illus: "fast-reverse-button" },
+          { label: "Đại từ và tomorrow", illus: "spiral-calendar" },
+          { label: "Tường thuật câu hỏi", illus: "red-question-mark" },
+          { label: "Yêu cầu, lời khuyên, gợi ý", illus: "balance-scale" } ] },
+      lines: [L("l1", null, "Five parts, each with lines you can use at work.", "Năm chặng, chặng nào cũng có câu dùng ngay ở chỗ làm.")] },
+
+    // Chương 1
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 5, title: "Ba thay đổi, say hay tell" },
+      lines: [L("l1", "det", "Part one: three changes, and say or tell.", "Phần một: ba thay đổi, và say hay tell.")] },
+    { id: "s05", module: "CMP-02", ref: "p1",
+      data: { title: "Ba thay đổi trong một câu", before: "“I need the report today.”",
+        after: "She said she needed the report that day.", illusBefore: "speaking-head", illusAfter: "memo" },
+      lines: [
+        L("l1", null, "Move the tense back one step, change the pronoun, and change time or place words.", "Lùi thì một bậc, đổi đại từ cho hợp người kể, đổi từ chỉ thời gian, nơi chốn."),
+        L("l2", null, "I need the report today becomes: she said she needed the report that day.", "I need the report today thành She said she needed the report that day."),
+      ] },
+    { id: "s06", module: "CMP-07", ref: "p2,p3",
+      data: { wrong: "She said me that she was busy.", right: "She told me that she was busy.", diff: ["said me"],
+        note: "Say + điều được nói; tell + người nghe ngay sau" },
+      lines: [
+        L("l1", null, "Say takes what was said: She said that she was busy. Tell needs a listener right after: She told me.", "Say cộng điều được nói: She said that she was busy. Tell phải có người nghe ngay sau: She told me…"),
+      ] },
+
+    { id: "s06b", module: "LIST-01", ref: "p3",
+      data: { title: "Ba câu kể lại", items: ["He said (that) the price was final.", "He told us (that) the price was final.", "She said to me that… ít gặp hơn She told me that…"], illus: "speech-balloon" },
+      lines: [
+        L("l2", null, "He said the price was final. He told us the price was final. That is often dropped when we speak.", "He said the price was final; He told us the price was final. Chữ that thường được lược khi nói."),
+        L("l3", null, "She said to me that is possible, but She told me that is more common.", "She said to me that… dùng được, nhưng ít gặp hơn She told me that…"),
+      ] },
+    // Chương 2
+    { id: "s07", module: "HOST-03", data: { n: 2, of: 5, title: "Lùi thì, và khi nào không lùi" },
+      lines: [L("l1", "det", "Part two: moving the tense back, and when not to.", "Phần hai: lùi thì, và khi nào không lùi.")] },
+    { id: "s08", module: "CMP-05", ref: "p4",
+      data: { title: "Lùi một bậc",
+        columns: [{ label: "Câu gốc", illus: "speaking-head" }, { label: "Khi kể lại", illus: "memo" }],
+        rows: [
+          { label: "Hiện tại đơn", cells: ["I work", "he worked"] },
+          { label: "Hiện tại tiếp diễn", cells: ["I'm working", "he was working"] },
+          { label: "Hiện tại hoàn thành", cells: ["I've finished", "she had finished"] },
+          { label: "Quá khứ đơn", cells: ["I sent it", "she had sent it"] } ] },
+      lines: [
+        L("l1", null, "Move back one step. Present simple becomes past simple: I work, he worked.", "Lùi một bậc: hiện tại đơn thành quá khứ đơn: I work thành he worked."),
+        L("l2", null, "Present continuous becomes past continuous. I've finished becomes she had finished.", "Hiện tại tiếp diễn thành quá khứ tiếp diễn; I've finished thành she had finished."),
+        L("l3", null, "And the past simple usually becomes the past perfect too.", "Quá khứ đơn thường cũng thành quá khứ hoàn thành."),
+      ] },
+    { id: "s09", module: "SCENE-01", ref: "p5",
+      data: { set: "office", label: "Lùi cả will, can",
+        actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", null, "A partner told Thao: I'll call you. Later, she passes it on.", "Đối tác nói với Thảo: “I'll call you.” Sau đó Thảo kể lại."),
+        L("l2", "thao", "He said he would call me.", "He said he would call me.", { pose: "explain", to: "dung" }),
+        L("l3", null, "Will becomes would. Can becomes could. May becomes might. Must usually becomes had to.", "Will thành would, can thành could, may thành might, must thường thành had to."),
+        L("l4", null, "Could, would, should and might stay the same.", "Could, would, should, might giữ nguyên."),
+      ] },
+    { id: "s10", module: "LIST-13", ref: "p6",
+      data: { title: "Không cần lùi thì khi",
+        items: [
+          { title: "Động từ tường thuật ở hiện tại", detail: "He says he's running late.", illus: "running-shoe" },
+          { title: "Điều được kể vẫn đúng bây giờ", detail: "She told me the office opens at eight.", illus: "eight-oclock" } ] },
+      lines: [
+        L("l1", null, "No need to move back when the reporting verb is present. He says he's running late.", "Không cần lùi khi động từ tường thuật ở hiện tại: He says he's running late."),
+        L("l2", null, "Or when it's still true now. She told me the office opens at eight. Keeping it shows it's still the case.", "Hoặc khi điều đó vẫn đúng: She told me the office opens at eight. Giữ nguyên giúp người nghe hiểu là vẫn đang như vậy."),
+      ] },
+    { id: "s11", module: "SCENE-03", ref: "p7,p8",
+      data: { set: "office", actors: [{ id: "thao", side: "left" }, { id: "tu", side: "right", pose: "hold" }],
+        left: { label: "was closed", ok: false }, right: { label: "is closed", ok: true } },
+      lines: [
+        L("l1", null, "Ba Tu, a customer, asks if the office works on Saturdays. Thao passes on her boss's words.", "Bà Tư, một khách hàng, hỏi văn phòng có làm thứ Bảy không. Thảo chuyển lời sếp."),
+        L("a1", "thao", "My manager said the office was closed on Saturdays.", "My manager said the office was closed on Saturdays.", { phase: "a", pose: "explain" }),
+        L("a2", "tu", "So it's open on Saturdays now?", "Vậy giờ thứ Bảy mở cửa rồi à cháu?", { phase: "a", face: "thinking" }),
+        L("b1", "thao", "My manager said the office is closed on Saturdays.", "My manager said the office is closed on Saturdays.", { phase: "b", pose: "explain", face: "happy", react: { tu: "happy" } }),
+        L("l2", null, "Was sounds like an old rule that has changed. Still true now? Keep the tense, so it's clear.", "Was nghe như quy định cũ đã đổi. Điều vẫn đúng bây giờ, giữ nguyên thì cho rõ."),
+      ] },
+
+    // Chương 3
+    { id: "s12", module: "HOST-03", data: { n: 3, of: 5, title: "Đại từ và tomorrow" },
+      lines: [L("l1", "det", "Part three: pronouns, and what tomorrow means.", "Phần ba: đại từ, và tomorrow là ngày nào.")] },
+    { id: "s13", module: "LIST-01", ref: "p9",
+      data: { title: "Đại từ đổi theo người kể",
+        items: ["I → he, she", "we → they", "my → his, her", "“I need the report” → She said she needed the report."],
+        illus: "bust-in-silhouette" },
+      lines: [
+        L("l1", null, "Pronouns follow the new speaker. I becomes he or she. We becomes they. My becomes his or her.", "Đại từ đổi theo người kể: I thành he, she; we thành they; my thành his, her."),
+        L("l2", null, "Remember the opening: I need the report becomes she said she needed the report. Report someone's words? Change I to he or she.", "Như cảnh đầu: I need the report thành She said she needed the report. Kể lời ai, đổi I thành he hay she."),
+      ] },
+    { id: "s14", module: "LIST-09", ref: "p12",
+      data: { title: "Bối cảnh khác, từ chỉ thời gian cũng đổi", illus: "spiral-calendar",
+        keywords: [
+          { text: "today → that day", illus: "sun" }, { text: "tomorrow → the next day", illus: "sunrise" },
+          { text: "yesterday → the day before", illus: "crescent-moon" }, { text: "next week → the following week", illus: "tear-off-calendar" },
+          { text: "here → there", illus: "round-pushpin" } ] },
+      lines: [
+        L("l1", null, "When the context changes: today becomes that day, tomorrow the next day, yesterday the day before.", "Bối cảnh khác thì today thành that day, tomorrow thành the next day, yesterday thành the day before."),
+        L("l2", null, "Next week becomes the following week. Here becomes there.", "Next week thành the following week, here thành there."),
+      ] },
+    { id: "s15", module: "TEXT-04", ref: "p13",
+      data: { text: "He said he would call you on Thursday.", marks: ["on Thursday"], illus: "spiral-calendar" },
+      lines: [
+        L("l1", null, "At work, the safest way is a real date. He said he would call you on Thursday.", "Trong công việc, an toàn nhất là ghi ngày cụ thể: He said he would call you on Thursday."),
+        L("l2", null, "Then nobody has to guess which day tomorrow means.", "Người nghe không phải đoán tomorrow là tính từ hôm nào."),
+      ] },
+    { id: "s16", module: "LIST-06", ref: "p14",
+      data: { title: "Thứ Năm sếp nói: “I'll call the partner tomorrow.” Sáng thứ Sáu bạn nhắn",
+        steps: [
+          { text: "Tính tomorrow từ ngày sếp nói: thứ Năm → thứ Sáu", illus: "spiral-calendar" },
+          { text: "Lùi thì: will → would", illus: "fast-reverse-button" },
+          { text: "Đổi đại từ: I → he", illus: "bust-in-silhouette" },
+          { text: "Thay tomorrow bằng ngày cụ thể: today, Friday", illus: "check-mark-button" } ] },
+      lines: [
+        L("l1", null, "On Thursday your boss says: I'll call the partner tomorrow. You write to Sam on Friday morning.", "Thứ Năm sếp nói: “I'll call the partner tomorrow.” Sáng thứ Sáu bạn mới nhắn cho Sam."),
+        L("l2", null, "Count tomorrow from Thursday: that's Friday. Will becomes would. I becomes he.", "Tính tomorrow từ thứ Năm: là thứ Sáu. Will thành would, I thành he."),
+        L("l3", null, "Then use the real day: My manager said he would call you today, Friday.", "Rồi ghi ngày cụ thể: My manager said he would call you today, Friday."),
+      ] },
+    { id: "s17", module: "SCENE-02", ref: "p14,p15",
+      data: { set: "office", label: "Nhắn đối tác sáng thứ Sáu", actor: { id: "thao", side: "left" },
+        contact: { name: "Sam (đối tác)", illus: "man-office-worker" },
+        messages: [
+          { from: "me", text: "My manager said he will call you tomorrow.", at: "l1" },
+          { from: "them", text: "Okay, I'll wait for his call on Saturday.", at: "l2" },
+          { from: "me", text: "Sorry! My manager said he would call you today, Friday.", at: "l4" } ] },
+      lines: [
+        L("l1", "thao", "My manager said he will call you tomorrow.", "My manager said he will call you tomorrow.", { face: "neutral" }),
+        L("l2", "them", "Okay, I'll wait for his call on Saturday.", "Được, tôi chờ anh ấy gọi vào thứ Bảy."),
+        L("l3", null, "Sam reads it on Friday, so tomorrow means Saturday. He may wait on the wrong day.", "Sam đọc tin vào thứ Sáu nên hiểu là thứ Bảy, và có thể ngồi chờ sai ngày."),
+        L("l4", "thao", "Sorry! My manager said he would call you today, Friday.", "Sorry! My manager said he would call you today, Friday.", { face: "happy" }),
+        L("l5", null, "Report someone's words? Change tomorrow to a real date.", "Kể lại lời ai, đổi tomorrow thành ngày cụ thể."),
+      ] },
+
+    // Chương 4
+    { id: "s18", module: "HOST-03", data: { n: 4, of: 5, title: "Tường thuật câu hỏi" },
+      lines: [L("l1", "det", "Part four: reporting questions.", "Phần bốn: tường thuật câu hỏi.")] },
+    { id: "s19", module: "CMP-01", ref: "p16",
+      data: { labels: ["if", "whether"], left: "“Are you free on Friday?” → She asked if I was free on Friday.",
+        right: "Trang trọng hơn, hai lựa chọn: He asked whether we wanted tea or coffee.", illus: ["red-question-mark", "teacup-without-handle"] },
+      lines: [
+        L("l1", null, "Yes or no questions use if or whether. Are you free on Friday? becomes she asked if I was free on Friday.", "Câu hỏi có hoặc không dùng if, whether: Are you free on Friday? thành She asked if I was free on Friday."),
+        L("l2", null, "Whether is more formal, and common with two choices. He asked whether we wanted tea or coffee.", "Whether trang trọng hơn, hay dùng khi có hai lựa chọn: He asked whether we wanted tea or coffee."),
+      ] },
+    { id: "s20", module: "CMP-07", ref: "p17",
+      data: { wrong: "He asked when would we deliver?", right: "He asked when we would deliver.", diff: ["would we", "?"],
+        note: "Giữ từ để hỏi, trật tự như câu thường, không dấu hỏi" },
+      lines: [
+        L("l1", null, "Wh- questions keep the question word, but the word order goes back to normal. No question mark.", "Câu hỏi có từ để hỏi giữ nguyên từ đó, trật tự trở về như câu thường, không dấu hỏi."),
+        L("l2", null, "When will you deliver? becomes he asked when we would deliver. Not when would we deliver.", "When will you deliver? thành He asked when we would deliver, không viết when would we deliver."),
+      ] },
+    { id: "s21", module: "HOST-01", ref: "p18",
+      data: { title: "Ba câu tóm tắt cuộc gọi cho sếp", pose: "present",
+        items: ["The client asked if we could lower the price.", "She asked when the meeting would start.", "He wanted to know where the files were."] },
+      lines: [
+        L("l1", "det", "The client asked if we could lower the price.", "Khách hỏi mình có giảm giá được không."),
+        L("l2", "det", "She asked when the meeting would start.", "Chị ấy hỏi khi nào cuộc họp bắt đầu."),
+        L("l3", "det", "He wanted to know where the files were.", "Anh ấy muốn biết tài liệu ở đâu."),
+      ] },
+
+    // Chương 5
+    { id: "s22", module: "HOST-03", data: { n: 5, of: 5, title: "Yêu cầu, lời khuyên, gợi ý" },
+      lines: [L("l1", "det", "Part five: requests, advice, and suggestions.", "Phần năm: yêu cầu, lời khuyên và gợi ý.")] },
+    { id: "s23", module: "LIST-13", ref: "p19",
+      data: { title: "Ask, tell + người nghe + to",
+        items: [
+          { title: "“Please send me the file.”", detail: "She asked me to send her the file.", illus: "page-facing-up" },
+          { title: "“Don't share the price.”", detail: "He told us not to share the price.", illus: "no-entry" } ] },
+      lines: [
+        L("l1", null, "Requests and orders use ask or tell, plus the listener, plus to. Please send me the file becomes she asked me to send her the file.", "Yêu cầu, mệnh lệnh: ask, tell + người nghe + to: She asked me to send her the file."),
+        L("l2", null, "For the negative, put not before to. He told us not to share the price.", "Phủ định đặt not trước to: He told us not to share the price."),
+      ] },
+    { id: "s24", module: "CMP-07", ref: "p20",
+      data: { wrong: "She suggested us to meet on Monday.", right: "She suggested meeting on Monday.", diff: ["us to meet"],
+        note: "Lời khuyên: advised me to; gợi ý let's: suggest + V-ing hoặc suggest that" },
+      lines: [
+        L("l1", null, "Advice uses advise, plus the listener, plus to. He advised me to check the contract.", "Lời khuyên: advise + người nghe + to: He advised me to check the contract."),
+        L("l2", null, "Let's ideas use suggest plus -ing, or suggest that. She suggested meeting on Monday. Not suggested us to meet.", "Gợi ý với let's: suggest + V-ing hoặc suggest that: She suggested meeting on Monday, không viết suggested us to meet."),
+      ] },
+    { id: "s25", module: "SCENE-03", ref: "p21,p22",
+      data: { set: "meeting", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }],
+        left: { label: "told us to", ok: false }, right: { label: "said it would be great", ok: true } },
+      lines: [
+        L("l1", null, "The director said: it would be great if we could finish by Friday. Thao tells the team.", "Giám đốc nói: “It would be great if we could finish by Friday.” Thảo báo nhóm."),
+        L("a1", "thao", "The director told us to finish by Friday.", "The director told us to finish by Friday.", { phase: "a", react: { dung: "worried" } }),
+        L("b1", "thao", "The director said it would be great if we could finish by Friday.", "The director said it would be great if we could finish by Friday.", { phase: "b", face: "happy", react: { dung: "happy" } }),
+        L("l2", null, "In A, a wish became an order. The team may panic and stay late.", "Ở cách A, một mong muốn đã thành lệnh, cả nhóm có thể hoảng và ở lại làm muộn."),
+        L("l3", null, "Told is an order. Asked is a request. Suggested is an idea. Keep the original weight.", "Told là lệnh, asked là lời nhờ, suggested là gợi ý. Giữ đúng sức nặng của câu gốc."),
+      ] },
+
+    // Tổng kết
+    { id: "s26", module: "HOST-01", ref: "p23",
+      data: { title: "Năm câu mẫu nên lưu", pose: "present",
+        items: ["She said she would send the contract on Thursday.", "He told me the price was final.", "The client asked if we could deliver earlier.", "My manager asked me to update the report.", "She suggested meeting next week."] },
+      lines: [
+        L("l1", "det", "She said she would send the contract on Thursday.", "Chị ấy nói sẽ gửi hợp đồng vào thứ Năm."),
+        L("l2", "det", "He told me the price was final.", "Anh ấy bảo tôi giá đã chốt."),
+        L("l3", "det", "The client asked if we could deliver earlier.", "Khách hỏi mình giao sớm hơn được không."),
+        L("l4", "det", "My manager asked me to update the report.", "Sếp nhờ tôi cập nhật báo cáo."),
+        L("l5", "det", "She suggested meeting next week.", "Chị ấy gợi ý gặp vào tuần sau."),
+      ] },
+    { id: "s27", module: "END-03", ref: "p24,outro",
+      data: { title: "Trước khi gửi tin chuyển lời", illus: "clipboard",
+        items: ["Say không có người nghe ngay sau, tell thì có", "Đại từ đã đổi theo người kể", "Tomorrow, today đã thành ngày cụ thể", "Câu hỏi tường thuật không đảo trật tự", "Told, asked hay suggested: đúng sức nặng"] },
+      lines: [
+        L("l1", null, "Check: say or tell. Pronouns. Real dates instead of tomorrow.", "Soát: say hay tell; đại từ; ngày cụ thể thay cho tomorrow."),
+        L("l2", null, "Normal word order in questions. And the right reporting verb: told, asked, or suggested.", "Câu hỏi không đảo trật tự; và động từ đúng sức nặng: told, asked hay suggested."),
+      ] },
+    { id: "s28", module: "QUIZ-01", ref: "questions[19]",
+      data: {
+        q: "On Friday you pass on what your manager said on Thursday about calling tomorrow, what do you write?",
+        options: [
+          "The manager told he calls you on the next tomorrow, I think",
+          "My manager said that he would call you today, Friday, as planned",
+          "Our boss said he will call you tomorrow, so please wait for it",
+        ],
+        correct: 1, countdown: 5, illus: "spiral-calendar",
+        why: "Ghi ngày cụ thể để người nhận không phải đoán tomorrow là ngày nào.",
+      },
+      lines: [
+        L("l1", null, "On Friday you pass on what your manager said on Thursday about calling tomorrow, what do you write?", "Thứ Sáu bạn chuyển lời sếp nói hôm thứ Năm về việc gọi ngày mai, nên viết gì?"),
+        L("l2", null, "My manager said that he would call you today, Friday, as planned.", "Sếp tôi nói sẽ gọi anh hôm nay, thứ Sáu, như đã hẹn."),
+        L("l3", null, "Write the exact day. Then nobody has to guess which day tomorrow is.", "Ghi ngày cụ thể, người nhận khỏi phải đoán tomorrow là ngày nào."),
+      ] },
+    { id: "s29", module: "END-05", data: { text: "Đét bảo: còn bốn mươi câu hỏi", sub: "Nghe câu hỏi tiếng Anh, chọn đáp án đúng" },
+      lines: [L("l1", "det", "Rewrite three things your boss said this week, with real dates. Then tell your friends Det said: forty questions are waiting!", "Viết lại ba câu sếp nói tuần này, thay tomorrow bằng ngày cụ thể. Rồi kể lại giúp Đét: bốn mươi câu hỏi đang chờ!", { face: "wink" })] },
+  ],
+};

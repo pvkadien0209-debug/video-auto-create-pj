@@ -1,0 +1,30 @@
+node_modules
+dist
+.DS_Store
+.env
+
+
+
+build
+
+A_saveOld
+
+renders/
+*.mp4
+*.mov
+*.wav
+*.zip
+
+# DetPro: tep sinh ra, khong dua vao git
+public/audio/dp/
+public/illus/
+
+# #155: tệp lớn / tệp sinh ra — không đưa vào git (GitHub chặn tệp > 100 MB)
+tools/kokoro/model/
+*.onnx
+public/audio/kokoro/
+out/
+*.log
+# giữ lại vài tệp nhỏ cần để render trên máy khác (các dòng trên đang chặn *.zip, *.wav)
+!public/illus.zip
+!public/sfx/*.wav

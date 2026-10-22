@@ -1,0 +1,325 @@
+// Kịch bản video W lần 3 (#110) — "Từ phổ thông lên đại học: thay đổi cách học và quản lý thời gian" · chuỗi "Chuẩn bị vào đại học xa nhà"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub); hoạt hình + thẻ. Đủ ý để làm 40 câu.
+const L = (id, who, say, sub, x = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...x });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "from-high-school-to-university-study--w01",
+  hook: "HOOK-15",
+  loop: { open: "s01", close: "s31" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "first-year-students-living-away", slug: "from-high-school-to-university-study", door: "ky-nang", level: "B1",
+    title: "Từ phổ thông lên đại học: thay đổi cách học và quản lý thời gian", series: "Chuẩn bị vào đại học xa nhà" },
+  format: "W", mode: "text", audio: {},
+  notes: "Đổi tên: Long → Dũng; giảng viên → Cô Hoa (không thoại, chỉ phản ứng); Lan là bạn cùng lớp (vai thêm, chỉ nói câu của bài: câu hỏi đăng ký môn, câu mẫu hỏi giảng viên p17, tin nhắn nhóm p19); phụ huynh (p29) → Bác Bình (bố Dũng). Khung Làm mẫu của Bảo (p13) kể không tên. Tên năm bạn trong tin nhắn chia việc (Vy, Nam, Hà, Tú, Quỳnh, p19) giữ nguyên chữ của bài, không lên hình. Vai mới: không dùng. Phủ ý: 29/29. DLG thứ nhất s16 dựng từ p12 (cách sai: bật thông báo, trả lời từng tin — theo questions[16]); DLG thứ hai s30 dựng từ p27 (sai) và p25, p28 (đúng). Câu đố: questions[13], questions[28].",
+  scenes: [
+    // ── Mở đầu: cái giá của một bước bị bỏ qua
+    { id: "s01", module: "SCENE-01", ref: "p27",
+      data: { set: "room", label: "Cái giá của Dũng", actors: [{ id: "dung", side: "center", pose: "phone" }], props: ["open-book"] },
+      lines: [
+        L("l1", "dung", "Not allowed to take the final? I have to retake the whole course?", "Không đủ điều kiện dự thi? Phải học lại cả môn sao?", { face: "surprised", pose: "shrug" }),
+        L("l2", null, "Dũng failed one math test, felt ashamed, and stopped going to class.", "Dũng trượt một bài giữa kỳ, xấu hổ, rồi nghỉ học luôn."),
+        L("l3", null, "Now it costs him more money and more time.", "Giờ thì tốn thêm cả tiền lẫn thời gian."),
+      ], beats: { after: 500 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Không ai nhắc bài, học thế nào?", pose: "present",
+        items: ["Đọc đề cương từng môn", "Tự lập lịch tuần", "Học một ít mỗi ngày", "Đuối thì hỏi sớm"] },
+      lines: [
+        L("l1", "det", "At university, nobody reminds you. So how do you study? Not more, but with a plan.", "Lên đại học, không ai nhắc. Học thế nào? Không cần nhiều hơn, mà cần kế hoạch."),
+        L("l2", "det", "Read every course outline.", "Đọc đề cương từng môn."),
+        L("l3", "det", "Make your own weekly plan.", "Tự lập lịch tuần."),
+        L("l4", "det", "Study a little every day.", "Học một ít mỗi ngày."),
+        L("l5", "det", "And ask for help early.", "Đuối thì hỏi sớm."),
+      ] },
+    { id: "s03", module: "TOC-01",
+      data: { title: "Sáu chặng của năm nhất", chapters: [
+        { label: "Khác phổ thông ở đâu", illus: "school" },
+        { label: "Tuần đầu không bị lạc", illus: "world-map" },
+        { label: "Tự lập lịch học", illus: "spiral-calendar" },
+        { label: "Lên lớp và tự học", illus: "open-book" },
+        { label: "Mùa thi đỡ hoảng", illus: "memo" },
+        { label: "Đuối thì nhờ ai", illus: "raising-hands" } ] },
+      lines: [
+        L("l1", null, "Six parts: what's different, your first week, your weekly plan,", "Sáu phần: khác gì phổ thông, tuần đầu, lịch học,"),
+        L("l2", null, "classes and self-study, exam season, and who can help.", "lên lớp và tự học, mùa thi, và nhờ ai khi đuối."),
+      ] },
+
+    // ── Chương 1
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 6, title: "Khác phổ thông ở đâu?" },
+      lines: [L("l1", "det", "Part one: how is university different?", "Phần một: đại học khác phổ thông ở chỗ nào?")] },
+    { id: "s05", module: "CMP-01", ref: "p1",
+      data: { labels: ["Trên lớp", "Ngoài giờ lên lớp"], left: "Giảng viên giảng ý chính", right: "Bạn tự đọc, tự làm bài ở nhà, thư viện, tự đào sâu", illus: ["teacher", "books"] },
+      lines: [
+        L("l1", null, "At university, class time is only part of learning.", "Ở đại học, giờ lên lớp chỉ là một phần việc học."),
+        L("l2", null, "Lecturers give the main ideas, and wait for you to go deeper.", "Giảng viên giảng ý chính, và chờ bạn tự đào sâu."),
+        L("l3", null, "The rest happens when you read and do tasks on your own.", "Phần còn lại là bạn tự đọc, tự làm bài ở nhà hay thư viện."),
+      ] },
+    { id: "s06", module: "SCENE-01", ref: "p2",
+      data: { set: "campus", label: "Đăng ký tín chỉ", actors: [{ id: "lan", side: "left" }] },
+      lines: [
+        L("l1", null, "Many schools use credits. You register for courses yourself.", "Nhiều trường học theo tín chỉ: bạn tự đăng ký môn."),
+        L("l2", "lan", "Maybe I'll take lots of courses, to look hardworking?", "Hay đăng ký thật nhiều môn cho chăm nhỉ?", { face: "thinking", pose: "think" }),
+        L("l3", "det", "Careful! Too many courses are hard to fix mid-term.", "Cẩn thận! Ôm quá nhiều môn, giữa kỳ khó gỡ.", { pose: "stop", react: { lan: "surprised" } }),
+        L("l4", "det", "Ask your academic adviser or older students before you register.", "Hỏi cố vấn học tập hoặc anh chị khoá trên trước khi đăng ký."),
+      ] },
+    { id: "s07", module: "LIST-02", ref: "p3",
+      data: { title: "Điểm một môn thường gồm", items: [
+        { icon: "user-check", illus: "person-raising-hand", text: "Chuyên cần" },
+        { icon: "notebook-pen", illus: "memo", text: "Bài tập" },
+        { icon: "calendar", illus: "spiral-calendar", text: "Giữa kỳ" },
+        { icon: "graduation-cap", illus: "graduation-cap", text: "Cuối kỳ" } ], illus: "ledger" },
+      lines: [
+        L("l1", null, "A course grade usually has parts: attendance, assignments, a midterm, and a final.", "Điểm môn thường gồm chuyên cần, bài tập, giữa kỳ, cuối kỳ."),
+        L("l2", null, "The share of each part depends on the course and the school.", "Tỷ lệ mỗi phần tuỳ môn, tuỳ trường."),
+        L("l3", null, "At many schools, missing too many classes means no final exam.", "Nhiều trường: nghỉ quá số buổi cho phép có thể bị cấm thi."),
+      ] },
+    { id: "s08", module: "CMP-09", ref: "p4",
+      data: { myth: "Lên đại học, chỉ cần ôn thật kỹ trước kỳ thi cuối",
+        fact: "Thi cuối kỳ chỉ là một phần; còn chuyên cần, bài tập hằng tuần, giữa kỳ",
+        illusMyth: "books", illusFact: "ledger" },
+      lines: [
+        L("l1", null, "Many think one big review before the final is enough.", "Nhiều người nghĩ chỉ cần ôn thật kỹ trước kỳ thi cuối."),
+        L("l2", null, "Skip the small tasks, and you can do well on the final but still get a low grade.", "Bỏ bài tập nhỏ: thi cuối khá mà tổng điểm môn vẫn thấp."),
+      ] },
+    { id: "s08b", module: "HOST-01", ref: "p5",
+      data: { pose: "point", text: "Đề cương ghi rõ tỷ lệ. Điểm cuối kỳ được cộng từ những ngày đầu kỳ." },
+      lines: [
+        L("l3", "det", "The outline shows each share. Read it in the first class.", "Đề cương ghi rõ tỷ lệ. Đọc nó ngay buổi đầu."),
+        L("l4", "det", "Your final grade is built from the very first days.", "Điểm cuối kỳ được cộng từ những ngày đầu kỳ."),
+      ] },
+
+    // ── Chương 2
+    { id: "s09", module: "HOST-03", data: { n: 2, of: 6, title: "Tuần đầu không bị lạc" },
+      lines: [L("l1", "det", "Part two: your first week.", "Phần hai: tuần đầu nên làm gì?")] },
+    { id: "s10", module: "LIST-05", ref: "p6",
+      data: { title: "Tuần đầu, làm ngay", items: ["Tải đề cương từng môn", "Ghi cách tính điểm, buổi được nghỉ, hạn nộp, ngày thi", "Lưu liên lạc giảng viên, lớp trưởng", "Vào nhóm lớp từng môn", "Biết đường tới thư viện, phòng đào tạo"], illus: "clipboard" },
+      lines: [
+        L("l1", null, "Download every course outline.", "Tải đề cương từng môn."),
+        L("l2", null, "Note the grading, allowed absences, deadlines and exam dates.", "Ghi cách tính điểm, số buổi được nghỉ, hạn nộp, ngày thi."),
+        L("l3", null, "Save the lecturer's and class monitor's contacts. Join each class group.", "Lưu liên lạc giảng viên, lớp trưởng. Vào nhóm lớp từng môn."),
+        L("l4", null, "And find the library and the training office.", "Và biết đường đến thư viện, phòng đào tạo."),
+      ] },
+    { id: "s11", module: "REL-12", ref: "p7",
+      data: { center: { label: "Đề cương: bản đồ môn học", illus: "world-map" }, spokes: [
+        { label: "Học gì", illus: "light-bulb" },
+        { label: "Đọc tài liệu nào", illus: "books" },
+        { label: "Nộp bài khi nào", illus: "calendar" } ] },
+      lines: [
+        L("l1", null, "The outline is the map of a course.", "Đề cương là bản đồ của môn học."),
+        L("l2", null, "What you learn, what you read, and when work is due.", "Học gì, đọc tài liệu nào, nộp bài khi nào."),
+        L("l3", null, "Read it in week one, and three deadlines in one week won't surprise you.", "Đọc tuần đầu, khỏi bất ngờ khi ba bài nộp cùng tuần."),
+      ] },
+    { id: "s12", module: "SCENE-01", ref: "p8",
+      data: { set: "room", label: "Mỗi ngày một lần", actors: [{ id: "lan", side: "left", pose: "phone" }] },
+      lines: [
+        L("l1", "lan", "Student email… a room change and an exam date!", "Email sinh viên… đổi phòng học, lịch thi!", { face: "surprised", pose: "phone" }),
+        L("l2", "det", "Check the student portal or email once a day.", "Kiểm tra cổng thông tin, email sinh viên mỗi ngày một lần.", { pose: "point" }),
+        L("l3", "det", "Room changes, exam dates, fee deadlines. Nobody tells you twice.", "Đổi phòng, lịch thi, hạn học phí: không ai nhắc lại.", { react: { lan: "happy" } }),
+      ] },
+
+    // ── Chương 3
+    { id: "s13", module: "HOST-03", data: { n: 3, of: 6, title: "Tự lập lịch học" },
+      lines: [L("l1", "det", "Part three: no one reminds you, so make a plan.", "Phần ba: không ai nhắc, tự lập lịch học.")] },
+    { id: "s14", module: "LIST-01", ref: "p9,p10",
+      data: { title: "Lịch tuần trên một trang", items: ["Giờ lên lớp", "Giờ tự học từng môn", "Giờ làm thêm, nếu có", "Giờ ngủ và giờ nghỉ"], illus: "spiral-calendar", icons: ["school", "open-book", "briefcase", "bed"] },
+      lines: [
+        L("l1", null, "Make a weekly plan, on paper or on your phone.", "Lập lịch tuần trên giấy hoặc điện thoại."),
+        L("l2", null, "Classes, study time for each course, part-time work, sleep and rest.", "Giờ học, giờ tự học từng môn, giờ làm thêm, ngủ, nghỉ."),
+        L("l3", null, "One page shows how much free time you really have.", "Nhìn cả tuần một trang, thấy chỗ trống thật còn bao nhiêu."),
+        L("l4", null, "On class days, review briefly and write down what you didn't understand.", "Ngày có buổi học: xem lại bài, ghi câu chưa hiểu."),
+        L("l5", null, "A little every day stays longer than one night before the exam.", "Học một ít mỗi ngày nhớ lâu hơn học dồn một đêm."),
+      ] },
+    { id: "s15", module: "LIST-06", ref: "p11",
+      data: { title: "Tiểu luận nộp sau ba tuần", steps: [
+        { text: "Tuần một: tìm tài liệu", illus: "magnifying-glass-tilted-left" },
+        { text: "Tuần hai: viết nháp", illus: "writing-hand" },
+        { text: "Tuần ba: sửa và nộp sớm một ngày", illus: "check-mark-button" } ] },
+      lines: [
+        L("l1", null, "Split big work into small steps, each with its own deadline.", "Chia việc lớn thành việc nhỏ, mỗi việc một hạn."),
+        L("l2", null, "Week one, find sources. Week two, write a draft.", "Tuần một tìm tài liệu. Tuần hai viết nháp."),
+        L("l3", null, "Week three, revise, and submit one day early.", "Tuần ba sửa, và nộp sớm một ngày."),
+      ] },
+    { id: "s16", module: "DLG-01", ref: "p12",
+      data: { set: "room", label: "Giờ tự học",
+        actors: [{ id: "dung", side: "center" }],
+        verdict: { ok: false, label: "Bật thông báo, trả lời từng tin",
+          why: "Tin nhắn liên tục cắt ngang sự tập trung, giờ tự học chẳng được bao nhiêu." } },
+      lines: [
+        L("l1", null, "Two hours of self-study. Dũng opens his book.", "Hai tiếng tự học. Dũng mở sách."),
+        L("l2", "dung", "Ping! One quick reply…", "Ting! Trả lời nhanh một tin…", { pose: "phone" }),
+        L("l3", "dung", "Another one! Just one more…", "Lại một tin! Thêm tin nữa thôi…", { pose: "phone", face: "happy", stop: true }),
+        L("l4", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l5", "det", "Your phone takes more study time than anything else.", "Điện thoại là thứ lấy mất giờ tự học nhiều nhất."),
+        L("l6", "det", "Let's rewind and try again.", "Tua lại, thử lại nhé.", { phase: "redo" }),
+        L("l7", "dung", "Notifications off. Phone out of reach.", "Tắt thông báo. Điện thoại để xa tầm tay.", { phase: "redo", pose: "give" }),
+        L("l8", "dung", "I'll study the whole block, then check messages on my break.", "Học trọn một khoảng, nghỉ rồi mới xem tin nhắn.", { phase: "redo", face: "happy", pose: "thumb" }),
+      ] },
+    { id: "s17", module: "STORY-06", ref: "p13,p14",
+      data: { label: "Làm mẫu", title: "Giữ các buổi chiều không trôi mất", entries: [
+        { time: "Tối CN", text: "Ghi vào mỗi chiều một khung hai tiếng tự học", illus: "spiral-calendar" },
+        { time: "Ba tuần", text: "Chia mốc: tìm tài liệu, viết nháp, sửa", illus: "hourglass-not-done" },
+        { time: "Giờ học", text: "Điện thoại để xa, học xong mới xem", illus: "mobile-phone-off" },
+        { time: "Tuần nộp", text: "Cả hai bài đã gần xong", illus: "check-mark-button" } ] },
+      lines: [
+        L("l1", null, "A student with only morning classes keeps his afternoons safe.", "Một bạn chỉ học buổi sáng giữ các buổi chiều thế này."),
+        L("l2", null, "Sunday night: a two-hour study block every afternoon, one course a day, like a real class.", "Tối chủ nhật: mỗi chiều hai tiếng tự học, mỗi ngày một môn, như buổi học thật."),
+        L("l3", null, "Two projects due in three weeks: sources, draft, revision.", "Hai bài nộp sau ba tuần: tìm tài liệu, viết nháp, sửa."),
+        L("l4", null, "Phone away while studying. By the deadline, both are almost done.", "Học thì điện thoại để xa. Đến tuần nộp, hai bài gần xong."),
+        L("l5", "det", "Free time that's not in your plan just disappears.", "Giờ trống không ghi vào lịch sẽ tự biến mất."),
+      ] },
+
+    // ── Chương 4
+    { id: "s18", module: "HOST-03", data: { n: 4, of: 6, title: "Lên lớp và tự học" },
+      lines: [L("l1", "det", "Part four: getting more from class and self-study.", "Phần bốn: lên lớp và tự học hiệu quả.")] },
+    { id: "s19", module: "LIST-13", ref: "p15,p16",
+      data: { title: "Trước và trong buổi học", items: [
+        { title: "Đọc trước bài trong đề cương", detail: "Dù chỉ lướt, để biết cái gì mới, cái gì cần hỏi.", illus: "open-book" },
+        { title: "Ngồi gần phía trên", detail: "Ít bị điện thoại kéo đi.", illus: "chair" },
+        { title: "Ghi bằng lời của mình", detail: "Không chép nguyên văn từng trang trình chiếu.", illus: "writing-hand" },
+        { title: "Cuối buổi: ba ý chính, một thắc mắc", detail: "Phần ôn tập quý nhất về sau.", illus: "memo" } ] },
+      lines: [
+        L("l1", null, "Before class, skim the next lesson. You'll know what's new and what to ask.", "Đọc lướt bài trước: biết cái gì mới, cái gì cần hỏi."),
+        L("l2", null, "Sit near the front. Your phone pulls you away less.", "Ngồi gần phía trên, ít bị điện thoại kéo đi."),
+        L("l3", null, "Take notes in your own words, not every slide word for word.", "Ghi bằng lời của mình, không chép nguyên văn slide."),
+        L("l4", null, "After class, write three main ideas and one question.", "Cuối buổi, viết ba ý chính và một câu thắc mắc."),
+      ] },
+    { id: "s20", module: "SCENE-01", ref: "p17",
+      data: { set: "campus", label: "Không hiểu thì hỏi", actors: [{ id: "lan", side: "left" }, { id: "hoa", side: "right", pose: "hold" }] },
+      lines: [
+        L("l1", null, "Don't understand? Ask after class, by email, or in office hours.", "Không hiểu thì hỏi: cuối buổi, qua email, giờ tiếp sinh viên."),
+        L("l2", "lan", "I didn't understand this part today. Could you suggest some extra reading?", "Em chưa hiểu phần này hôm nay, cô gợi ý em đọc thêm tài liệu nào ạ?", { pose: "explain", to: "hoa", react: { hoa: "happy" } }),
+        L("l3", null, "Ask early, not in exam week. Later lessons build on this one.", "Hỏi sớm, đừng đợi tuần thi: bài sau xây trên bài này."),
+      ] },
+    { id: "s21", module: "CMP-01", ref: "p18",
+      data: { labels: ["Học nhóm hiệu quả", "Học nhóm không ai chuẩn bị"], left: "Mỗi người tự đọc trước, gặp nhau để hỏi, giảng lại", right: "Dễ thành buổi ngồi nói chuyện", illus: ["busts-in-silhouette", "speech-balloon"] },
+      lines: [
+        L("l1", null, "A study group works when everyone reads first.", "Học nhóm hiệu quả khi mỗi người tự đọc trước."),
+        L("l2", null, "Then you meet to ask, and explain to each other.", "Rồi gặp để hỏi nhau, giảng lại cho nhau."),
+        L("l3", null, "If no one prepares, it's just a chat.", "Không ai chuẩn bị thì thành buổi ngồi nói chuyện."),
+      ] },
+    { id: "s22", module: "SCENE-03", ref: "p19,p20",
+      data: { set: "campus", actors: [{ id: "lan" }],
+        left: { label: "Ai rảnh thì nhận", ok: false }, right: { label: "Ghi rõ ai, hạn nào", ok: true } },
+      lines: [
+        L("a1", null, "Lan's first message in a five-person project group.", "Tin nhắn đầu tiên của Lan trong nhóm năm người.", { phase: "a" }),
+        L("a2", "lan", "Let's just work on it bit by bit. Take whatever part you're free for.", "Mọi người cứ làm dần, ai rảnh phần nào nhận phần đó.", { phase: "a", face: "happy" }),
+        L("a3", null, "Sounds nice, but work piles up on a few people at the last minute.", "Nghe dễ chịu, nhưng việc dồn cho vài người vào phút cuối.", { phase: "a" }),
+        L("b1", "lan", "Vy finds sources. Nam and Hà write. Tú does slides. Quỳnh puts it together.", "Vy tìm tài liệu, Nam và Hà viết, Tú làm slide, Quỳnh ghép bài.", { phase: "b", pose: "explain" }),
+        L("b2", "lan", "Send your part by Thursday night. On Friday, we all read it.", "Gửi phần mình trước tối thứ Năm, thứ Sáu cả nhóm đọc lại.", { phase: "b", face: "happy" }),
+        L("b3", "det", "Share tasks clearly at the start, so no one carries it all at the end.", "Chia việc rõ từ đầu, khỏi gánh việc ở cuối.", { phase: "b" }),
+      ] },
+
+    // ── Chương 5
+    { id: "s23", module: "HOST-03", data: { n: 5, of: 6, title: "Mùa thi đỡ hoảng" },
+      lines: [L("l1", "det", "Part five: exam season without panic.", "Phần năm: mùa thi chuẩn bị cho đỡ hoảng.")] },
+    { id: "s24", module: "LIST-05", ref: "p21",
+      data: { title: "Lịch thi vừa công bố", items: ["Ghi mọi ngày thi vào lịch", "Đếm ngược, ôn từ vài tuần trước", "Kiểm tra phòng thi, giờ thi, giấy tờ"], illus: "calendar" },
+      lines: [
+        L("l1", null, "As soon as dates are out, put every exam in your calendar.", "Trường công bố lịch là ghi ngay mọi ngày thi vào lịch."),
+        L("l2", null, "Count back, and start reviewing a few weeks before.", "Đếm ngược, bắt đầu ôn từ vài tuần trước."),
+        L("l3", null, "Check the room, the time and the papers to bring. A wrong exam date is hard to fix.", "Kiểm tra phòng, giờ thi, giấy tờ. Nhầm lịch thi rất khó gỡ."),
+      ] },
+    { id: "s25", module: "CMP-01", ref: "p22",
+      data: { labels: ["Đọc đi đọc lại", "Tự kiểm tra"], left: "Thấy quen mắt, chưa chắc đã nhớ", right: "Gấp vở tự nhắc ý chính, làm đề cũ nếu được phép, giảng lại cho bạn", illus: ["books", "brain"] },
+      lines: [
+        L("l1", null, "Review by testing yourself. Close your notes and recall the main ideas.", "Ôn bằng tự kiểm tra: gấp vở lại, tự nhắc ý chính."),
+        L("l2", null, "Do past papers if allowed. Explain it to a friend.", "Làm đề cũ nếu được phép. Giảng lại cho bạn."),
+        L("l3", null, "Rereading feels familiar. Remembering means recalling without looking.", "Đọc lại thấy quen mắt. Nhớ là nhắc lại được khi không nhìn."),
+      ] },
+    { id: "s26", module: "HOST-02", ref: "p23",
+      data: { statement: "Thức trắng đêm trước ngày thi mới là cố gắng thật sự", truth: false,
+        why: "Ngủ đủ quan trọng hơn; đầu óc mệt dễ sai cả câu đã biết." },
+      lines: [
+        L("l1", "det", "Staying up all night before an exam shows real effort. True or false?", "Thức trắng đêm trước thi mới là cố gắng thật sự. Đúng hay sai?"),
+        L("l2", "det", "False. Enough sleep matters more. A tired brain gets even known answers wrong.", "Sai. Ngủ đủ quan trọng hơn. Đầu óc mệt dễ sai cả câu đã biết.", { face: "stern" }),
+      ] },
+    { id: "s27", module: "OPEN-19", ref: "p24",
+      data: { label: "Vi phạm quy chế", warning: "Quay bài, chép bài, nhờ thi hộ", detail: "Chưa sẵn sàng vì lý do chính đáng: hỏi phòng đào tạo." },
+      lines: [
+        L("l1", null, "Copying, cheating, or a stand-in at the exam break the rules. Penalties can be serious.", "Quay bài, chép bài, thi hộ đều vi phạm quy chế, có thể bị xử lý nặng."),
+        L("l2", null, "Not ready for a good reason? Ask the training office.", "Chưa sẵn sàng vì lý do chính đáng? Hỏi phòng đào tạo."),
+      ] },
+
+    // ── Chương 6
+    { id: "s28", module: "HOST-03", data: { n: 6, of: 6, title: "Đuối thì nhờ ai?" },
+      lines: [L("l1", "det", "Part six: falling behind? Who can help?", "Phần sáu: thấy mình bị đuối thì nhờ ai?")] },
+    { id: "s29", module: "LIST-02", ref: "p26",
+      data: { title: "Hỏi sớm, còn nhiều cách hơn", items: [
+        { icon: "user-round", illus: "teacher", text: "Cố vấn học tập" },
+        { icon: "building", illus: "office-building", text: "Phòng đào tạo" },
+        { icon: "users", illus: "busts-in-silhouette", text: "Phòng công tác sinh viên" },
+        { icon: "graduation-cap", illus: "student", text: "Anh chị khoá trên" } ], illus: "raising-hands" },
+      lines: [
+        L("l1", null, "Can't keep up? Want to change a course? Worried about an academic warning?", "Không theo kịp, muốn đổi môn, lo bị cảnh báo học vụ?"),
+        L("l2", null, "Your adviser, the training office, student affairs, and older students can help.", "Cố vấn học tập, phòng đào tạo, công tác sinh viên, anh chị khoá trên."),
+        L("l3", null, "Ask early. Waiting until the end of term removes options.", "Hỏi sớm: đợi tới cuối kỳ thì mất bớt lựa chọn."),
+      ] },
+    { id: "s30", module: "DLG-01", ref: "p25,p27,p28",
+      data: { set: "campus", label: "Sau bài giữa kỳ",
+        actors: [{ id: "lan", side: "left" }, { id: "dung", side: "center" }, { id: "hoa", side: "right", enter: "walk", at: "l6", pose: "hold" }],
+        verdict: { ok: false, label: "Trượt giữa kỳ rồi bỏ học luôn",
+          why: "Nghỉ quá số buổi cho phép thì không đủ điều kiện dự thi, phải học lại." } },
+      lines: [
+        L("l1", "lan", "Are you coming to math class, Dũng?", "Dũng ơi, vào học toán không?", { to: "dung" }),
+        L("l2", "dung", "No. I failed the midterm. I've lost the course anyway.", "Thôi. Trượt giữa kỳ rồi, đằng nào cũng mất môn.", { face: "sad", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "One bad test isn't the whole course. But too many missed classes means no final exam.", "Một bài kém chưa mất cả môn. Nhưng nghỉ quá buổi là không được thi."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử lại nhé.", { phase: "redo" }),
+        L("l6", "dung", "I failed the midterm. Where did I go wrong, and which points can I still earn?", "Em trượt giữa kỳ. Em sai ở đâu, còn phần điểm nào để gỡ ạ?", { phase: "redo", pose: "explain", face: "thinking", to: "hoa", react: { hoa: "happy" } }),
+        L("l7", "det", "Falling behind? Ask early. Don't hide.", "Đuối thì hỏi sớm, đừng trốn lâu.", { phase: "redo", face: "happy", pose: "thumb" }),
+      ] },
+    { id: "s31", module: "SCENE-01", ref: "p29",
+      data: { set: "home", label: "Nếu bạn là phụ huynh", actors: [{ id: "dung", side: "center" }, { id: "binh", side: "right" }] },
+      lines: [
+        L("l1", "binh", "How's your timetable? Which subject is hard? Found the library yet?", "Lịch học thế nào? Môn nào khó? Quen thư viện chưa con?", { face: "happy", pose: "explain", to: "dung" }),
+        L("l2", null, "Parents: ask about these, not only grades.", "Phụ huynh: hỏi những điều này, đừng chỉ hỏi điểm."),
+        L("l3", null, "First-term results often don't show everything. Your child is learning a new way to learn.", "Kết quả kỳ đầu chưa phản ánh hết sức con: con đang học cả cách học mới."),
+      ] },
+
+    // ── Tổng kết, câu đố, kết
+    { id: "s32", module: "HOST-01", ref: "p5,p14,p20,p28",
+      data: { title: "Mang về bốn câu", pose: "present", items: ["Điểm cuối kỳ cộng từ những ngày đầu", "Giờ trống không ghi lịch sẽ biến mất", "Chia việc rõ từ đầu", "Đuối thì hỏi sớm"] },
+      lines: [
+        L("l1", "det", "Your grade starts on day one.", "Điểm cuối kỳ được cộng từ những ngày đầu."),
+        L("l2", "det", "Put your free time into your plan.", "Giờ trống phải ghi vào lịch."),
+        L("l3", "det", "Share group tasks clearly at the start.", "Việc nhóm chia rõ từ đầu."),
+        L("l4", "det", "And when you fall behind, ask early.", "Và đuối thì hỏi sớm."),
+      ] },
+    { id: "s33", module: "QUIZ-01", ref: "questions[13]",
+      data: {
+        q: "Which works better, a little study every day or one long night before the exam?",
+        options: [
+          "Both work equally well, as long as you drink enough coffee during the exam",
+          "A little every day, because regular review helps you remember for longer",
+          "One long night, because everything stays fresh in your head the next morning",
+        ],
+        correct: 1, countdown: 5, illus: "spiral-calendar",
+        why: "Học đều, kiến thức được nhắc lại nhiều lần nên nhớ lâu.",
+      },
+      lines: [
+        L("l1", null, "Which works better, a little study every day or one long night before the exam?", "Học một ít mỗi ngày hay học dồn một đêm trước thi thì hiệu quả hơn?"),
+        L("l2", null, "A little every day, because regular review helps you remember for longer.", "Mỗi ngày một ít, vì ôn đều giúp nhớ lâu hơn."),
+        L("l3", null, "One long night may help the next morning, but you tire and forget fast.", "Học dồn một đêm chỉ nhớ tạm, lại mệt và quên rất nhanh."),
+      ] },
+    { id: "s34", module: "QUIZ-01", ref: "questions[28]",
+      data: {
+        q: "What is a more effective way to review than reading your notes again and again?",
+        options: [
+          "Highlight every line in bright colours, because colourful pages are easier to remember",
+          "Read the notes even more times, since repetition alone puts everything in memory",
+          "Close your notes and test yourself, do practice questions, or explain ideas to a friend",
+        ],
+        correct: 2, countdown: 5, illus: "brain",
+        why: "Tự kiểm tra buộc não nhớ lại; đọc lại chỉ thấy quen mắt.",
+      },
+      lines: [
+        L("l1", null, "What is a more effective way to review than reading your notes again and again?", "Cách ôn nào hiệu quả hơn đọc đi đọc lại vở ghi?"),
+        L("l2", null, "Close your notes and test yourself, do practice questions, or explain ideas to a friend.", "Gấp vở tự kiểm tra, làm đề, hoặc giảng lại cho bạn."),
+        L("l3", null, "Testing makes your brain recall. Rereading only feels familiar.", "Tự kiểm tra buộc não nhớ lại. Đọc lại chỉ thấy quen mắt."),
+      ] },
+    { id: "s35", module: "END-05", data: { text: "Bốn mươi câu hỏi đang chờ bạn", sub: "Nghe tiếng Anh, chọn đáp án đúng" },
+      lines: [
+        L("l1", "det", "Tonight, open your first course outline. Copy every deadline and exam date into your phone.", "Tối nay mở đề cương môn đầu tiên, chép mọi hạn nộp, ngày thi vào lịch."),
+        L("l2", "det", "Then try the forty questions below.", "Rồi thử bốn mươi câu hỏi bên dưới nhé."),
+      ] },
+  ],
+};

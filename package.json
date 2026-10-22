@@ -1,0 +1,49 @@
+{
+  "name": "my-sta-video",
+  "version": "1.0.0",
+  "description": "My Remotion video",
+  "repository": {},
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@remotion/animation-utils": "^4.0.405",
+    "@remotion/bundler": "^4.0.405",
+    "@remotion/cli": "^4.0.405",
+    "@remotion/media-utils": "^4.0.372",
+    "@remotion/renderer": "^4.0.405",
+    "bootstrap": "^5.3.8",
+    "ffmpeg-static": "^5.3.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "^4.0.405",
+    "zod": "3.22.3"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.286",
+    "eslint": "9.19.0",
+    "prettier": "3.3.3",
+    "tsx": "^4.21.0"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "start": "remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "renderimg": "tsx render-all6image.js",
+    "renderimg3": "tsx render-CSK003-img.js",
+    "renderw": "tsx render-CSK004.js",
+    "kichban": "node tools/export-script.mjs --out=../SEO-PT-projectjs/DetPro/video/kich-ban --loidoc=../SEO-PT-projectjs/server/router/DetPro/loi_doc.json",
+    "loidoc": "node tools/export-script.mjs --out=../SEO-PT-projectjs/DetPro/video/kich-ban --loidoc=../SEO-PT-projectjs/server/router/DetPro/loi_doc.json",
+    "kiemkb": "node tools/check-script.mjs src/rootComponents/CSK004/data/scripts --units=../SEO-PT-projectjs/DetPro/noi-dung/soan/units",
+    "modref": "node tools/module-ref.mjs > src/rootComponents/CSK004/MODULE-REF.md",
+    "rendervideo": "tsx render-all_video_tiktok.js",
+    "renderc1": "tsx render-all_video_tiktok_C1x.js",
+    "renderc2": "tsx render-all_video_tiktok_C2x.js",
+    "rendervideoSLOW": "node render-all_video_tiktok.js",
+    "lint": "eslint src"
+  },
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  }
+}

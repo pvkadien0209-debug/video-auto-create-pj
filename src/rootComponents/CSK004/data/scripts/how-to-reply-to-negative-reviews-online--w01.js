@@ -1,0 +1,303 @@
+// Kịch bản video W lần 3 (#110) — "Cách trả lời đánh giá xấu của khách trên mạng" · chuỗi "Phục vụ khách hàng và xử lý khiếu nại"
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "how-to-reply-to-negative-reviews-online--w01",
+  hook: "HOOK-13",
+  loop: { open: "s01", close: "s27" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (C)
+  unit: { audience: "frontline-staff", slug: "how-to-reply-to-negative-reviews-online", door: "ky-nang", level: "B1",
+    title: "Cách trả lời đánh giá xấu của khách trên mạng", series: "Phục vụ khách hàng và xử lý khiếu nại" },
+  format: "W", mode: "text", audio: {},
+  notes: "Lần 3 (#110). Đổi tên: người trực trang quán ăn (✍️ p8) → Lan, khách viết đánh giá → “them”; người trực trang cửa hàng giày (🔀 p12) → Lan (chỉ trên thẻ và lời kể); Vinh → Dũng; quản lý → Cô Hoa. Không dùng vai mới. Phủ ý: 22/22. Tin “khách” ở s01 dựng từ nội dung đánh giá p8 (sợi tóc trong bát, kèm ảnh); s13 là bản trả lời “Sau” của p8. Câu Cô Hoa ở s20 chỉ nhắc đúng việc p14 (người phụ trách trả lời từ trang chính thức). Câu đố: questions[13] (p12), questions[15] (p14). #112 nhịp hình (§9): tách hoặc đổi module các cảnh s10, s17, giữ lời đọc và ref.",
+  scenes: [
+    { id: "s01", module: "SCENE-02", ref: "p8",
+      data: { set: "cafe", label: "Trang của quán",
+        actor: { id: "lan", side: "left" },
+        contact: { name: "Đánh giá 1 sao", illus: "star" },
+        messages: [
+          { from: "them", text: "Có sợi tóc trong bát. Ảnh đây.", at: "l1" },
+          { from: "me", text: "Cảm ơn bạn đã ủng hộ quán, hẹn gặp lại!", at: "l2" } ] },
+      lines: [
+        { id: "l1", lang: "en", who: "them", say: "One star. There was a hair in my bowl. Here is the photo.", sub: "Một sao. Có sợi tóc trong bát. Ảnh đây." },
+        { id: "l2", lang: "en", who: "lan", say: "Thank you for supporting us, see you again!", sub: "Cảm ơn bạn đã ủng hộ quán, hẹn gặp lại!", face: "happy" },
+        { id: "l3", lang: "en", say: "Look closely. In a hurry, Lan pasted the reply meant for good reviews.", sub: "Nhìn kỹ: đang vội, Lan dán nhầm câu mẫu dành cho đánh giá tốt." },
+        { id: "l4", lang: "en", say: "It was shared with the comment: they do not even read. What should she write?", sub: "Bị chụp lại kèm lời chê “quán còn không thèm đọc”. Nên viết gì?" },
+      ],
+      beats: { after: 700 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Trả lời đánh giá xấu thế nào?", pose: "present", illus: "speech-balloon",
+        items: ["Cảm ơn", "Xin lỗi về trải nghiệm", "Bước sẽ làm", "Mời nhắn riêng"] },
+      lines: [
+        { id: "l1", lang: "en", who: "det", say: "How do you answer a bad review? Hundreds of future customers will read it. Keep it short and calm, in four parts.", sub: "Trả lời đánh giá xấu thế nào? Hàng trăm khách sau sẽ đọc. Viết ngắn, bình tĩnh, bốn phần." },
+        { id: "l2", lang: "en", who: "det", say: "Thank them.", sub: "Cảm ơn." },
+        { id: "l3", lang: "en", who: "det", say: "Apologise for what they went through.", sub: "Xin lỗi về trải nghiệm." },
+        { id: "l4", lang: "en", who: "det", say: "Say your next step.", sub: "Nói bước sẽ làm." },
+        { id: "l5", lang: "en", who: "det", say: "Invite them to message you. Details go there.", sub: "Mời nhắn riêng, chi tiết xử lý ở tin nhắn." },
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Sáu chặng của bài này",
+        chapters: [
+          { label: "Làm gì trước", illus: "camera-with-flash" },
+          { label: "Bốn phần của câu trả lời", illus: "speech-balloon" },
+          { label: "Đọc kỹ từng đánh giá", illus: "eyes" },
+          { label: "Công khai hay nhắn riêng", illus: "envelope" },
+          { label: "Bị nêu đích danh", illus: "name-badge" },
+          { label: "Đánh giá có vẻ giả", illus: "detective" },
+        ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Six stops: what to do first, four parts of a reply, reading each review,", sub: "Sáu chặng: làm gì trước, bốn phần của câu trả lời, đọc kỹ từng đánh giá," },
+        { id: "l2", lang: "en", say: "public or private, when you are named, and reviews that look fake.", sub: "công khai hay nhắn riêng, khi bị nêu tên, và đánh giá có vẻ giả." },
+      ] },
+
+    // ===== Chương 1 =====
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 6, title: "Vừa thấy đánh giá xấu" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part one: a bad review appears. What do you do first?", sub: "Phần một: đánh giá xấu vừa hiện lên, làm gì trước?" }] },
+    { id: "s05", module: "LIST-06", ref: "p1",
+      data: { title: "Bốn bước đầu tiên",
+        steps: [
+          { text: "Đọc hết đánh giá", illus: "eyes" },
+          { text: "Chụp lại để lưu", illus: "camera-with-flash" },
+          { text: "Mình có được giao quyền trả lời?", illus: "key" },
+          { text: "Không phải mình: chuyển người phụ trách", illus: "woman-office-worker" },
+        ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Read the whole review, and take a screenshot to keep.", sub: "Đọc hết đánh giá, chụp lại để lưu." },
+        { id: "l2", lang: "en", say: "Check if you are allowed to reply. Many shops let only one or two people answer in public.", sub: "Kiểm tra mình có được giao quyền trả lời không. Nhiều nơi chỉ để một hai người trả lời công khai." },
+        { id: "l3", lang: "en", say: "Not you? Pass it to the person in charge right away.", sub: "Không phải bạn? Chuyển ngay cho người phụ trách." },
+      ] },
+    { id: "s06", module: "LIST-07", ref: "p2",
+      data: { title: "Kiểm tra sự việc trước khi viết",
+        items: [
+          { text: "Tìm đơn hàng", illus: "receipt" },
+          { text: "Hỏi người làm ca hôm đó", illus: "busts-in-silhouette" },
+          { text: "Xem lại tin nhắn cũ", illus: "mobile-phone" },
+        ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Check the facts before you write: find the order,", sub: "Kiểm tra sự việc trước khi viết: tìm đơn hàng," },
+        { id: "l2", lang: "en", say: "ask who worked that shift, and read the old messages.", sub: "hỏi người làm ca hôm đó, xem lại tin nhắn cũ." },
+        { id: "l3", lang: "en", say: "Reply without knowing, and you may promise wrongly, or deny wrongly.", sub: "Trả lời khi chưa biết chuyện gì thì dễ hứa sai hoặc phủ nhận sai." },
+      ] },
+    { id: "s07", module: "CMP-01", ref: "p3",
+      data: { labels: ["Đánh giá trên trang", "Bài trong hội nhóm đang lan"],
+        left: "Trả lời trong vòng một ngày", right: "Báo quản lý ngay, trả lời trong vài giờ", illus: ["star", "fire"] },
+      lines: [
+        { id: "l1", lang: "en", say: "Do not reply while angry. Write a draft, drink some water, then read it again.", sub: "Đừng trả lời lúc đang nóng. Viết nháp, đi uống cốc nước, rồi đọc lại." },
+        { id: "l2", lang: "en", say: "Aim to reply within a day. Wait too long, and readers think the shop does not care.", sub: "Cố trả lời trong vòng một ngày; để lâu người đọc nghĩ cửa hàng không quan tâm." },
+        { id: "l3", lang: "en", say: "A post spreading fast in a group? Tell the manager now, to reply within hours.", sub: "Bài trong hội nhóm đang lan nhanh? Báo quản lý ngay để trả lời trong vài giờ." },
+      ] },
+
+    // ===== Chương 2 =====
+    { id: "s08", module: "HOST-03", data: { n: 2, of: 6, title: "Bốn phần của câu trả lời" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part two: what goes in a public reply?", sub: "Phần hai: câu trả lời công khai nên có những gì?" }] },
+    { id: "s09", module: "LIST-08", ref: "p4,p5",
+      data: { title: "Bốn phần, mỗi phần một câu", items: [
+        { title: "Cảm ơn", detail: "“Cảm ơn anh đã dành thời gian chia sẻ.”", illus: "folded-hands" },
+        { title: "Xin lỗi cụ thể", detail: "“Bên em xin lỗi vì anh phải chờ lâu ở quầy tối thứ Bảy.”", illus: "pensive-face" },
+        { title: "Bước tiếp theo", detail: "“Bên em đang sắp xếp thêm người vào giờ cao điểm cuối tuần.”", illus: "busts-in-silhouette" },
+        { title: "Mời liên hệ riêng", detail: "“Anh nhắn trang thời gian ghé để em hỗ trợ trực tiếp nhé.”", illus: "envelope" } ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Thank them: thank you for taking the time to share.", sub: "Cảm ơn: “Cảm ơn anh đã dành thời gian chia sẻ.”" },
+        { id: "l2", lang: "en", say: "Apologise for the exact experience: we are sorry you waited so long at the counter on Saturday evening.", sub: "Xin lỗi cụ thể: “Bên em xin lỗi vì anh phải chờ lâu ở quầy tối thứ Bảy.”" },
+        { id: "l3", lang: "en", say: "Next step: we are arranging more staff for busy weekend evenings.", sub: "Bước tiếp theo: “Bên em đang sắp xếp thêm người vào giờ cao điểm cuối tuần.”" },
+        { id: "l4", lang: "en", say: "Invite contact: please message us the time you came, so we can help you directly.", sub: "Mời liên hệ riêng: “Anh nhắn trang giúp em thời gian ghé để em hỗ trợ trực tiếp nhé.”" },
+      ] },
+    { id: "s10", module: "TEXT-04", ref: "p6",
+      data: { text: "Ba đến năm câu, giọng người thật, ký chức danh như “Bộ phận chăm sóc khách hàng”.", marks: ["Ba đến năm câu"], illus: "name-badge" },
+      lines: [
+        { id: "l1", lang: "en", say: "Keep it to three to five sentences, in a real person's voice. Sign with a title, like Customer Care Team.", sub: "Giữ trong ba đến năm câu, giọng người thật, ký chức danh như “Bộ phận chăm sóc khách hàng”." },
+      ] },
+    { id: "s10b", module: "TEXT-01", ref: "p6",
+      data: { text: "Người đọc chỉ nhìn cửa hàng có bình tĩnh, có trách nhiệm không", illus: "eyes" },
+      lines: [
+        { id: "l2", lang: "en", say: "Readers cannot tell who is right. They only see if the shop reacts calmly and responsibly.", sub: "Người đọc sau không biết ai đúng ai sai; họ chỉ nhìn cửa hàng phản ứng có bình tĩnh, có trách nhiệm không." },
+      ] },
+
+    // ===== Chương 3 =====
+    { id: "s11", module: "HOST-03", data: { n: 3, of: 6, title: "Đọc kỹ từng đánh giá" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part three: why read every review carefully first?", sub: "Phần ba: vì sao phải đọc kỹ từng đánh giá trước khi trả lời?" }] },
+    { id: "s12", module: "TEXT-01", ref: "p7",
+      data: { text: "Nhắc đúng chuyện khách nêu, dù chỉ một cụm từ.", illus: "eyes" },
+      lines: [
+        { id: "l1", lang: "en", say: "Every review is about something different.", sub: "Mỗi đánh giá nói về một chuyện khác nhau." },
+        { id: "l2", lang: "en", say: "Mention the exact problem, even in a few words. It shows a real person read it.", sub: "Nhắc đúng chuyện khách nêu, dù chỉ một cụm từ, cho người đọc thấy có người thật đã đọc." },
+      ] },
+    { id: "s13", module: "SCENE-02", ref: "p8,p9",
+      data: { set: "cafe", label: "Lan trả lời lại",
+        actor: { id: "lan", side: "left" },
+        contact: { name: "Đánh giá 1 sao", illus: "star" },
+        messages: [
+          { from: "them", text: "Có sợi tóc trong bát. Ảnh đây.", at: "l1" },
+          { from: "me", text: "Quán xin lỗi bạn vì sợi tóc trong bát, quán đã nhắc lại bếp chuyện đội mũ trùm tóc.", at: "l2" },
+          { from: "me", text: "Bạn nhắn riêng cho quán để quán được bù cho bạn nhé.", at: "l3" } ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Back to Lan's review. This time, she reads it all.", sub: "Quay lại đánh giá của Lan. Lần này Lan đọc hết." },
+        { id: "l2", lang: "en", who: "lan", say: "We are sorry about the hair in your bowl. We have reminded the kitchen to wear hair covers.", sub: "Quán xin lỗi bạn vì sợi tóc trong bát, quán đã nhắc lại bếp chuyện đội mũ trùm tóc." },
+        { id: "l3", lang: "en", who: "lan", say: "Please message us privately so we can make it up to you.", sub: "Bạn nhắn riêng cho quán để quán được bù cho bạn nhé." },
+        { id: "l4", lang: "en", say: "It shows the shop read it, and is sorry for the right thing. Read the whole review before you reply.", sub: "Cho thấy quán đã đọc và xin lỗi đúng chuyện. Đọc hết đánh giá rồi mới trả lời." },
+      ] },
+
+    // ===== Chương 4 =====
+    { id: "s14", module: "HOST-03", data: { n: 4, of: 6, title: "Công khai hay nhắn riêng?" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part four: what is said in public, and what goes in a private message?", sub: "Phần bốn: điều gì nói công khai, điều gì để tin nhắn riêng?" }] },
+    { id: "s15", module: "CMP-01", ref: "p10",
+      data: { labels: ["Công khai", "Nhắn riêng"],
+        left: "Thái độ, hướng xử lý: cảm ơn, xin lỗi, sẽ làm gì", right: "Chi tiết: mã đơn, số điện thoại, hoàn bao nhiêu, đổi gì, bao giờ",
+        illus: ["loudspeaker", "envelope"] },
+      lines: [
+        { id: "l1", lang: "en", say: "In public: attitude and direction. Thanks, sorry, and what you will do.", sub: "Công khai thì nói thái độ và hướng xử lý: cảm ơn, xin lỗi, sẽ làm gì." },
+        { id: "l2", lang: "en", say: "In private: details. Order code, phone number, how much refund, what to exchange, and when.", sub: "Riêng thì bàn chi tiết: mã đơn, số điện thoại, hoàn tiền bao nhiêu, đổi gì, bao giờ." },
+      ] },
+    { id: "s16", module: "HOST-02", ref: "p11",
+      data: { statement: "Đưa số điện thoại, nội dung đơn lên công khai để chứng minh khách sai là được", truth: false,
+        why: "Không bao giờ. Người đọc chỉ nhớ cửa hàng làm lộ thông tin khách." },
+      lines: [
+        { id: "l1", lang: "en", who: "det", say: "Posting the customer's phone number or order to prove them wrong is fine. True or false?", sub: "Đưa số điện thoại, nội dung đơn lên công khai để chứng minh khách sai là được. Đúng hay sai?" },
+        { id: "l2", lang: "en", who: "det", say: "False. Never post personal details: phone, address, order. Readers only remember that the shop exposed a customer.", sub: "Sai. Không bao giờ đưa thông tin cá nhân lên. Người đọc chỉ nhớ cửa hàng làm lộ thông tin khách.", face: "stern" },
+      ] },
+    { id: "s17a", module: "REL-02", ref: "p12",
+      data: { chain: ["Giày đã quá hạn đổi, khách đánh giá xấu", "Hứa công khai hoàn tiền toàn bộ, chưa hỏi quản lý", "Khách khác viện dẫn câu đó để đòi giống vậy"],
+        illus: ["running-shoe", "loudspeaker", "busts-in-silhouette"] },
+      lines: [
+        { id: "l1", lang: "en", say: "A bad review for a shoe shop, though the shoes were past the exchange date.", sub: "Một đánh giá xấu cho cửa hàng giày, dù đôi giày đã quá hạn đổi." },
+        { id: "l2", lang: "en", say: "Way A: Lan wants the customer calm, and promises a full refund in public, without asking her manager.", sub: "Cách A: muốn khách nguôi ngay, Lan hứa công khai hoàn tiền toàn bộ khi chưa hỏi quản lý." },
+        { id: "l3", lang: "en", say: "Days later, other customers quote it, asking for the same.", sub: "Mấy ngày sau, vài khách khác viện dẫn câu đó để đòi giống vậy." },
+      ] },
+    { id: "s17", module: "LIST-05", ref: "p12,p13",
+      data: { title: "Cách B", items: ["Công khai: “Bên em đã nhắn riêng để hỗ trợ bạn”", "Hỏi quản lý", "Bàn bồi thường trong tin nhắn"], illus: "envelope" },
+      lines: [
+        { id: "l4", lang: "en", say: "Way B: we have messaged you privately to help. Then she asks the manager, and agrees compensation in messages.", sub: "Cách B: “Bên em đã nhắn riêng để hỗ trợ bạn”, rồi hỏi quản lý, bàn bồi thường trong tin nhắn." },
+      ] },
+    { id: "s17b", module: "TEXT-01", ref: "p12,p13",
+      data: { text: "Công khai thì hứa việc, bồi thường bàn riêng", illus: "loudspeaker" },
+      lines: [
+        { id: "l5", lang: "en", say: "Promise action in public. Discuss compensation in private.", sub: "Công khai thì hứa việc, bồi thường bàn riêng." },
+      ] },
+
+    // ===== Chương 5 =====
+    { id: "s18", module: "HOST-03", data: { n: 5, of: 6, title: "Bị nêu đích danh" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part five: the review names you.", sub: "Phần năm: đánh giá nêu đích danh mình thì sao?" }] },
+    { id: "s19", module: "LIST-06", ref: "p14",
+      data: { title: "Bị nêu tên: ba bước",
+        steps: [
+          { text: "Báo quản lý ngay", illus: "woman-office-worker" },
+          { text: "Kể phiên bản của mình vài dòng", illus: "memo" },
+          { text: "Người phụ trách trả lời từ trang chính thức", illus: "convenience-store" },
+        ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Being named feels terrible, especially when you think you did nothing wrong. Tell your manager right away.", sub: "Bị nêu tên rất khó chịu, nhất là khi thấy mình không sai. Báo quản lý ngay." },
+        { id: "l2", lang: "en", say: "Write your side of the story in a few lines.", sub: "Kể lại phiên bản của bạn bằng vài dòng." },
+        { id: "l3", lang: "en", say: "And let the person in charge reply from the official page.", sub: "Và để người phụ trách trả lời từ trang chính thức." },
+      ] },
+    { id: "s20", module: "DLG-01", ref: "p15,p16,p17",
+      data: { set: "shop", label: "Quầy sửa điện thoại",
+        actors: [{ id: "dung", side: "left", pose: "phone" }, { id: "hoa", side: "right", enter: "walk", at: "l6" }],
+        verdict: { ok: false, label: "Tự cãi bằng tài khoản riêng",
+          why: "Dù đúng, người đọc chỉ thấy một nhân viên đang cãi với khách.",
+          rule: "Bị nêu tên thì báo lên, đừng tự cãi bằng tài khoản riêng" } },
+      lines: [
+        { id: "l1", lang: "en", say: "A review says: staff member Dung was rude and kept delaying. That evening, Dung opens his own account.", sub: "Đánh giá viết: “Nhân viên tên Dũng thái độ, hẹn mãi không xong.” Tối đó Dũng mở tài khoản riêng." },
+        { id: "l2", lang: "en", who: "dung", say: "You brought the phone in late, and you still want it early!", sub: "Anh mang máy đến muộn mà còn đòi lấy sớm!", face: "stern", pose: "phone", stop: true },
+        { id: "l3", lang: "en", who: "det", say: "Wait a second!", sub: "Khoan đã!", face: "stern" },
+        { id: "l4", lang: "en", who: "det", say: "Dozens of people replied, and the manager had to apologise one more time. Do not message the customer privately to explain, either.", sub: "Hàng chục người vào trả lời, quản lý phải xin lỗi thêm lần nữa. Nhắn riêng cho khách để giải thích cũng đừng." },
+        { id: "l5", lang: "en", who: "det", say: "Let's rewind and try again.", sub: "Tua lại, thử lần nữa nhé.", phase: "redo" },
+        { id: "l6", lang: "en", who: "dung", say: "A review names me. Here is what happened, in a few lines.", sub: "Có đánh giá nêu tên em. Em kể lại sự việc vài dòng đây ạ.", phase: "redo", pose: "give", to: "hoa" },
+        { id: "l7", lang: "en", who: "hoa", say: "Thank you. I will reply from the shop page.", sub: "Cảm ơn cháu. Cô sẽ trả lời từ trang của cửa hàng.", phase: "redo", face: "neutral" },
+        { id: "l8", lang: "en", who: "det", say: "If you are named, report it. Do not argue from your own account.", sub: "Bị nêu tên thì báo lên, đừng tự cãi bằng tài khoản riêng.", phase: "redo", face: "happy" },
+      ] },
+
+    // ===== Chương 6 =====
+    { id: "s21", module: "HOST-03", data: { n: 6, of: 6, title: "Đánh giá có vẻ giả" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part six: the review looks fake. Now what?", sub: "Phần sáu: đánh giá có vẻ giả thì xử lý thế nào?" }] },
+    { id: "s22", module: "LIST-02", ref: "p18",
+      data: { title: "Dấu hiệu đánh giá giả", illus: "detective", items: [
+        { icon: "receipt", illus: "receipt", text: "Không có đơn hàng nào khớp" },
+        { icon: "file-text", illus: "page-facing-up", text: "Nội dung chung chung" },
+        { icon: "user-plus", illus: "bust-in-silhouette", text: "Tài khoản mới tạo" } ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Signs: no matching order, very general words, a brand-new account.", sub: "Dấu hiệu: không có đơn nào khớp, nội dung chung chung, tài khoản mới tạo." },
+        { id: "l2", lang: "en", say: "Still reply, briefly and politely. Then tell the manager, and use the platform's report tool.", sub: "Vẫn trả lời ngắn, lịch sự. Rồi báo quản lý và dùng chức năng báo cáo của nền tảng." },
+      ] },
+    { id: "s23", module: "TEXT-07", ref: "p18",
+      data: { en: "We could not find this order. Please message us the details so we can check.",
+        vi: "Bên em chưa tìm thấy đơn hàng này, anh chị nhắn giúp em thông tin để em kiểm tra nhé.",
+        chunks: [{ en: "We could not find this order.", vi: "bên em chưa tìm thấy đơn" }, { en: "Please message us the details", vi: "anh chị nhắn giúp thông tin" }, { en: "so we can check.", vi: "để em kiểm tra" }],
+        illus: "magnifying-glass-tilted-left" },
+      lines: [
+        { id: "l1", lang: "en", say: "We could not find this order. Please message us the details so we can check.", sub: "“Bên em chưa tìm thấy đơn hàng với tên này, anh chị nhắn giúp em thông tin để em kiểm tra nhé.”" },
+      ] },
+    { id: "s24", module: "HOST-02", ref: "p19,p20",
+      data: { statement: "Tài khoản lạ, không có đơn: bình luận “Rõ là đối thủ chơi xấu”", truth: false,
+        why: "Người đọc chỉ thấy tiệm buộc tội người khác không bằng chứng. Báo cáo, đừng buộc tội công khai." },
+      lines: [
+        { id: "l1", lang: "en", who: "det", say: "A bakery gets one star from a stranger, with no matching order. Comment: clearly a rival playing dirty. True or false?", sub: "Tiệm bánh nhận một sao từ tài khoản lạ, không có đơn khớp. Bình luận “Rõ là đối thủ chơi xấu”. Đúng hay sai?" },
+        { id: "l2", lang: "en", who: "det", say: "False. Readers cannot tell if it is fake. They see a shop accusing others without proof. Reply politely, then report it.", sub: "Sai. Người đọc không biết thật hay giả, chỉ thấy tiệm buộc tội người khác không bằng chứng. Trả lời lịch sự, rồi báo cáo.", face: "stern" },
+      ] },
+    { id: "s25", module: "CMP-06", ref: "p21",
+      data: { do: ["Giải quyết vấn đề thật"], dont: ["Nhờ người quen viết khen để đẩy đánh giá xấu xuống"],
+        doIcons: ["wrench"], dontIcons: ["star"] },
+      lines: [
+        { id: "l1", lang: "en", say: "Do not ask friends to write praise to push the bad review down.", sub: "Không nhờ người quen vào viết khen để đẩy đánh giá xấu xuống." },
+        { id: "l2", lang: "en", say: "It often breaks platform rules, and costs you trust when people find out.", sub: "Việc này thường trái quy định của nền tảng và làm mất uy tín khi bị phát hiện." },
+      ] },
+    { id: "s26", module: "LIST-09", ref: "p22",
+      data: { title: "Trước khi bấm gửi", illus: "clipboard",
+        keywords: [
+          { text: "Mình được giao quyền?", illus: "key" },
+          { text: "Đã kiểm tra sự việc", illus: "magnifying-glass-tilted-left" },
+          { text: "Nhắc đúng chuyện khách nêu", illus: "eyes" },
+          { text: "Không lộ thông tin cá nhân", illus: "locked" },
+          { text: "Không hứa điều chưa duyệt", illus: "cross-mark" },
+          { text: "Đọc lại khi bình tĩnh", illus: "relieved-face" },
+        ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Before you press send: am I allowed to reply? Have I checked the facts? Did I mention their exact problem?", sub: "Trước khi bấm gửi: mình có được giao quyền? Đã kiểm tra sự việc? Có nhắc đúng chuyện khách nêu?" },
+        { id: "l2", lang: "en", say: "Are any personal details showing? Did I promise anything not approved? Have I read it again, calmly?", sub: "Có thông tin cá nhân nào lộ ra? Có hứa điều chưa được duyệt? Đã đọc lại khi bình tĩnh?" },
+      ] },
+
+    // ===== Tổng kết =====
+    { id: "s27", module: "END-02", ref: "outro",
+      data: { kicker: "Mang về ca trực trang", illus: "speech-balloon",
+        points: ["Cảm ơn, xin lỗi đúng chuyện, bước sẽ làm, mời nhắn riêng", "Công khai hứa việc, bồi thường bàn riêng", "Bị nêu tên thì báo lên; nghi giả thì báo cáo"],
+        icons: ["folded-hands", "envelope", "woman-office-worker"] },
+      lines: [
+        { id: "l1", lang: "en", say: "A bad review answered calmly and responsibly can reassure future customers more than ten good ones.", sub: "Một đánh giá xấu được trả lời bình tĩnh, có trách nhiệm có thể làm khách sau yên tâm hơn cả chục lời khen." },
+        { id: "l2", lang: "en", say: "Four parts. Actions in public, compensation in private. Named? Report it. Looks fake? Report it.", sub: "Bốn phần. Công khai hứa việc, bồi thường bàn riêng. Bị nêu tên hay nghi giả: báo lên." },
+      ] },
+    { id: "s28", module: "QUIZ-01", ref: "questions[13]",
+      data: {
+        q: "In the shoe shop page comparison, what goes wrong with the first way?",
+        options: [
+          "She asked the customer to message privately, which readers thought was rude",
+          "She refused any refund in public, which made the customer even angrier",
+          "She promised a full refund in public without asking her manager first",
+        ],
+        correct: 2, countdown: 5, illus: "running-shoe",
+        why: "Hứa hoàn tiền công khai khi chưa hỏi quản lý, khách khác viện dẫn để đòi giống vậy.",
+      },
+      lines: [
+        { id: "l1", lang: "en", say: "In the shoe shop page comparison, what goes wrong with the first way?", sub: "Trong so sánh ở trang cửa hàng giày, cách thứ nhất sai ở đâu?" },
+        { id: "l2", lang: "en", say: "She promised a full refund in public without asking her manager first.", sub: "Hứa hoàn tiền toàn bộ công khai khi chưa hỏi quản lý." },
+        { id: "l3", lang: "en", say: "And others used it to ask for the same.", sub: "Và khách khác dùng câu đó để đòi giống vậy." },
+      ] },
+    { id: "s29", module: "QUIZ-01", ref: "questions[15]",
+      data: {
+        q: "A review names you personally as rude, what should you do first?",
+        options: [
+          "Tell your manager, write down your side briefly, and let the official page reply",
+          "Find the customer's profile and send them a private message to complain",
+          "Reply at once from your own account to explain that the customer is lying",
+        ],
+        correct: 0, countdown: 5, illus: "name-badge",
+        why: "Báo quản lý, ghi lại phiên bản của bạn; tự trả lời bằng tài khoản riêng biến chuyện thành nhân viên cãi khách.",
+      },
+      lines: [
+        { id: "l1", lang: "en", say: "A review names you personally as rude, what should you do first?", sub: "Một đánh giá nêu đích danh bạn có thái độ không tốt, bạn nên làm gì trước?" },
+        { id: "l2", lang: "en", say: "Tell your manager, write down your side briefly, and let the official page reply.", sub: "Báo quản lý, ghi ngắn phiên bản của bạn, để trang chính thức trả lời." },
+        { id: "l3", lang: "en", say: "Replying yourself turns it into staff arguing with a customer.", sub: "Tự trả lời biến chuyện thành nhân viên cãi khách." },
+      ] },
+    { id: "s30", module: "END-05", data: { text: "Bốn mươi câu hỏi đang chờ bạn", sub: "Nghe câu hỏi tiếng Anh, chọn đáp án đúng" },
+      lines: [
+        { id: "l1", lang: "en", who: "det", say: "Ask your manager who may reply in public, and what you may promise. Save the six checks in your phone.", sub: "Hỏi quản lý ai được trả lời công khai, bạn được tự hứa đến đâu, và lưu sáu ô kiểm vào điện thoại." },
+        { id: "l2", lang: "en", who: "det", say: "Then, forty questions are waiting below.", sub: "Rồi, bốn mươi câu hỏi đang chờ bên dưới." },
+      ] },
+  ],
+};

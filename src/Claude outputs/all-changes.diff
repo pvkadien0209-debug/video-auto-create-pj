@@ -1,0 +1,624 @@
+--- /mnt/user-data/uploads/src/rootComponents/CSK001/R_A001.jsx	2026-09-12 02:01:02.402131635 +0000
++++ fix/R_A001.jsx	2026-09-12 02:14:44.982180532 +0000
+@@ -71,6 +71,10 @@
+   });
+ };
+ 
++// ⚡ Bật log chi tiết bằng cách set env REMOTION_DEBUG_METADATA=1 trước khi render.
++// Mặc định TẮT để tránh spam console (đặc biệt khi render với nhiều worker/tab song song).
++const DEBUG_METADATA = process.env.REMOTION_DEBUG_METADATA === "1";
++
+ export const RemotionVideo = () => {
+   return (
+     <>
+@@ -88,98 +92,143 @@
+             item: item,
+           }}
+           calculateMetadata={async ({ props, fps }) => {
+-            console.log("========================================");
+-            console.log("🚀 calculateMetadata STARTED for video:", props.id);
+-            console.log("Number of audio items:", props.item.data.length);
+-            console.log("========================================");
++            if (DEBUG_METADATA) {
++              console.log("========================================");
++              console.log("🚀 calculateMetadata STARTED for video:", props.id);
++              console.log("Number of audio items:", props.item.data.length);
++              console.log("========================================");
++            }
+             // ✅ LOAD FONT TRƯỚC TIÊN
+             await ensureFontsLoaded();
+-            let totalDurationInSeconds = 0;
+-            let successCount = 0;
+-            let failCount = 0;
+-            for (let index = 0; index < props.item.data.length; index++) {
+-              const dataItem = props.item.data[index];
+ 
+-              // ✨ Kiểm tra timeFixed trước tiên
+-              // Fix: cộng thêm timePlus nếu có cả hai
+-              if (dataItem.timeFixed && dataItem.timeFixed > 0) {
+-                const finalDuration =
+-                  dataItem.timeFixed + (dataItem.timePlus || 0);
+-                totalDurationInSeconds += finalDuration;
+-                console.log(
+-                  `[${index + 1}/${props.item.data.length}] Using timeFixed: ${dataItem.timeFixed}s` +
+-                    (dataItem.timePlus
+-                      ? ` + timePlus: ${dataItem.timePlus}s`
+-                      : ""),
+-                );
+-                console.log(
+-                  `  → Total so far: ${totalDurationInSeconds.toFixed(2)}s`,
+-                );
+-                continue;
+-              }
+-
+-              if (dataItem.code) {
+-                const audioPath = getAudioPath(dataItem.code);
+-                const isVid = isVideoCode(dataItem.code);
+-                console.log(
+-                  `[${index + 1}/${props.item.data.length}] Processing: ${dataItem.code}` +
+-                    (isVid ? " [VIDEO]" : ""),
+-                );
+-                if (audioPath) {
++            // ⚡ mediaDurationsFrames: lưu lại duration (frame) của từng item có media,
++            // để truyền xuống VideoTemplate/FrameCalculator dùng lại — tránh phải
++            // mount lại <audio>/<video> để đo LẦN THỨ HAI lúc render thật (xem R_A001V.jsx).
++            const mediaDurationsFrames = {};
++
++            // ⚡ TỐI ƯU: trước đây vòng lặp này dùng `for...await` nên load TUẦN TỰ
++            // từng audio/video một — mỗi item phải chờ xong item trước mới bắt đầu.
++            // Giờ dùng Promise.all để load SONG SONG, tổng thời gian chỉ còn ~bằng
++            // item chậm nhất thay vì tổng tất cả. Thứ tự xử lý / công thức tính
++            // duration của từng item giữ NGUYÊN 100% so với bản cũ.
++            const itemResults = await Promise.all(
++              props.item.data.map(async (dataItem, index) => {
++                // ✨ Kiểm tra timeFixed trước tiên (không cần load media — tính ngay)
++                // Fix: cộng thêm timePlus nếu có cả hai
++                if (dataItem.timeFixed && dataItem.timeFixed > 0) {
++                  const finalDuration =
++                    dataItem.timeFixed + (dataItem.timePlus || 0);
++                  if (DEBUG_METADATA) {
++                    console.log(
++                      `[${index + 1}/${props.item.data.length}] Using timeFixed: ${dataItem.timeFixed}s` +
++                        (dataItem.timePlus
++                          ? ` + timePlus: ${dataItem.timePlus}s`
++                          : ""),
++                    );
++                  }
++                  return { index, seconds: finalDuration, success: null };
++                }
++
++                if (dataItem.code) {
++                  const audioPath = getAudioPath(dataItem.code);
++                  const isVid = isVideoCode(dataItem.code);
++
++                  if (!audioPath) {
++                    if (DEBUG_METADATA) {
++                      console.warn(`  ⚠️  No path for ${dataItem.code}`);
++                    }
++                    return { index, seconds: 0, success: null };
++                  }
++
++                  if (DEBUG_METADATA) {
++                    console.log(
++                      `[${index + 1}/${props.item.data.length}] Processing: ${dataItem.code}` +
++                        (isVid ? " [VIDEO]" : ""),
++                    );
++                  }
++
+                   try {
+                     const src = staticFile(audioPath);
+-                    console.log(`  → Source URL: ${src}`);
++                    if (DEBUG_METADATA) console.log(`  → Source URL: ${src}`);
+ 
+                     // ✨ Dùng video element cho .mp4, fetch+AudioContext cho audio
+                     const duration = isVid
+                       ? await loadVideoDuration(src)
+                       : await loadAudioDurationWithFetch(src);
+ 
++                    // ⚡ Lưu lại duration gốc (frame) để FrameCalculator dùng lại,
++                    // không đo lần 2. Không cộng timePlus ở đây vì FrameCalculator
++                    // tự cộng timePlus khi build codeFrame (giống hệt logic cũ).
++                    mediaDurationsFrames[index] = Math.ceil(duration * fps);
++
+                     const finalDuration = duration + (dataItem.timePlus || 0);
+-                    totalDurationInSeconds += finalDuration;
+-                    successCount++;
+-                    console.log(`  ✓ Duration: ${duration.toFixed(2)}s`);
+-                    if (dataItem.timePlus) {
+-                      console.log(`  → timePlus: ${dataItem.timePlus}s`);
++                    if (DEBUG_METADATA) {
++                      console.log(`  ✓ Duration: ${duration.toFixed(2)}s`);
++                      if (dataItem.timePlus) {
++                        console.log(`  → timePlus: ${dataItem.timePlus}s`);
++                      }
++                      if (isVid) {
++                        console.log(
++                          `  → SoundPlay sẽ dùng: SOUNDCHUNG_SpaceSound.mp3`,
++                        );
++                      }
++                      console.log(`  → Final Duration: ${finalDuration.toFixed(2)}s`);
+                     }
+-                    if (isVid) {
+-                      console.log(
+-                        `  → SoundPlay sẽ dùng: SOUNDCHUNG_SpaceSound.mp3`,
++                    return { index, seconds: finalDuration, success: true };
++                  } catch (error) {
++                    if (DEBUG_METADATA) {
++                      console.error(
++                        `  ✗ Error loading ${dataItem.code}:`,
++                        error.message,
+                       );
+                     }
+-                    console.log(
+-                      `  → Final Duration: ${finalDuration.toFixed(2)}s (Total so far: ${totalDurationInSeconds.toFixed(2)}s)`,
+-                    );
+-                  } catch (error) {
+-                    failCount++;
+-                    console.error(
+-                      `  ✗ Error loading ${dataItem.code}:`,
+-                      error.message,
+-                    );
+                     const fallbackDuration = 6 + (dataItem.timePlus || 0);
+-                    totalDurationInSeconds += fallbackDuration;
+-                    console.log(`  → Using fallback ${fallbackDuration}s`);
++                    // ⚡ fallback cũng lưu lại để FrameCalculator không đo lại (khớp
++                    // với fallback 6s / 180 frame @30fps mà buildFrames đã dùng sẵn).
++                    mediaDurationsFrames[index] = Math.ceil(6 * fps);
++                    if (DEBUG_METADATA) {
++                      console.log(`  → Using fallback ${fallbackDuration}s`);
++                    }
++                    return { index, seconds: fallbackDuration, success: false };
+                   }
+-                } else {
+-                  console.warn(`  ⚠️  No path for ${dataItem.code}`);
+                 }
+-              }
++
++                return { index, seconds: 0, success: null };
++              }),
++            );
++
++            // Cộng dồn kết quả — thứ tự cộng không ảnh hưởng tổng (phép cộng có tính giao hoán),
++            // nên chạy song song ở trên không làm sai tổng so với bản tuần tự cũ.
++            let totalDurationInSeconds = 0;
++            let successCount = 0;
++            let failCount = 0;
++            for (const r of itemResults) {
++              totalDurationInSeconds += r.seconds;
++              if (r.success === true) successCount++;
++              else if (r.success === false) failCount++;
+             }
++
++            // ⚠️ Giữ nguyên `* 30` (không đổi thành `* fps`) để không đổi hành vi cũ —
++            // đây là chỗ có vẻ là bug tồn tại từ trước (composition luôn 30fps nên
++            // chưa lộ ra), báo riêng cho bạn, KHÔNG tự sửa ở đây.
+             const totalFrames = Math.ceil(totalDurationInSeconds * 30);
+-            console.log("========================================");
+-            console.log(`✅ CALCULATION COMPLETE for video ${props.id}`);
+-            console.log(`   Success: ${successCount}, Failed: ${failCount}`);
+-            console.log(
+-              `   Total Duration: ${totalDurationInSeconds.toFixed(2)}s`,
+-            );
+-            console.log(`   Total Frames: ${totalFrames} (at ${30} fps)`);
+-            console.log("========================================\n");
++            if (DEBUG_METADATA) {
++              console.log("========================================");
++              console.log(`✅ CALCULATION COMPLETE for video ${props.id}`);
++              console.log(`   Success: ${successCount}, Failed: ${failCount}`);
++              console.log(
++                `   Total Duration: ${totalDurationInSeconds.toFixed(2)}s`,
++              );
++              console.log(`   Total Frames: ${totalFrames} (at ${30} fps)`);
++              console.log("========================================\n");
++            }
+             const finalFrames = totalFrames > 0 ? totalFrames : 420;
+             return {
+               durationInFrames: finalFrames,
+               props: {
+                 ...props,
+                 duration: finalFrames,
++                mediaDurationsFrames, // ⚡ NEW — optional, FrameCalculator tự fallback nếu thiếu
+               },
+             };
+           }}
+--- /mnt/user-data/uploads/src/rootComponents/CSK001/R_A001V.jsx	2026-09-12 02:02:00.010135060 +0000
++++ fix/R_A001V.jsx	2026-09-12 02:15:19.226182567 +0000
+@@ -194,7 +194,12 @@
+ 
+ // ─── FrameCalculator ───────────────────────────────────────────────────────────
+ 
+-const FrameCalculator = ({ items, volume = 2, onDataReady }) => {
++const FrameCalculator = ({
++  items,
++  volume = 2,
++  onDataReady,
++  precomputedDurations, // ⚡ NEW — optional: { [index]: durationInFrames } đã đo sẵn từ calculateMetadata
++}) => {
+   const { fps } = useVideoConfig();
+   const [codeFrame, setCodeFrame] = useState([]);
+   const [imgFrame, setImgFrame] = useState([]);
+@@ -212,7 +217,39 @@
+   const mediaItems = items.filter((e) => getMediaPath(e.code) !== null);
+   const validItemsCount = mediaItems.length;
+ 
+-  // Trường hợp không có item nào cần load media
++  // ⚡ NEW: kiểm tra xem calculateMetadata đã đo sẵn ĐỦ duration cho mọi item
++  // cần media chưa. Tính đồng bộ (không cần effect) và CHỈ tính 1 lần lúc mount
++  // — items/precomputedDurations không đổi trong vòng đời component này.
++  // Nếu KHÔNG đủ (undefined, thiếu index nào đó, v.v.) → rơi về đúng cách cũ
++  // (mount <audio>/<video> để tự đo), không đổi hành vi.
++  const [usedPrecomputed] = useState(() => {
++    if (validItemsCount === 0) return false; // nhánh "không cần media" xử lý riêng, đã nhanh sẵn
++    if (!precomputedDurations) return false;
++    return items.every(
++      (e, i) => getMediaPath(e.code) === null || precomputedDurations[i] !== undefined,
++    );
++  });
++
++  // ⚡ NEW: fast path — dùng luôn duration đã đo sẵn, KHÔNG mount lại <audio>/<video>
++  // để đo lần 2 (calculateMetadata trong R_A001.jsx đã đo bằng fetch+decode song song rồi).
++  useEffect(() => {
++    if (!usedPrecomputed) return;
++    const { tempCodeFrame, mergedImgFrame } = buildFrames(
++      items,
++      precomputedDurations,
++      fps,
++    );
++    setCodeFrame(tempCodeFrame);
++    setImgFrame(mergedImgFrame);
++    setIsLoading(false);
++    continueRender(handle);
++    if (onDataReady) onDataReady(tempCodeFrame, mergedImgFrame);
++    // Chỉ chạy 1 lần khi mount (giống hệt cách "load 1 lần" của nhánh cũ) —
++    // usedPrecomputed không đổi trong vòng đời component nên an toàn.
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, []);
++
++  // Trường hợp không có item nào cần load media (GIỮ NGUYÊN — không đổi)
+   useEffect(() => {
+     if (validItemsCount !== 0) return;
+     const { tempCodeFrame, mergedImgFrame } = buildFrames(items, {}, fps);
+@@ -223,7 +260,8 @@
+     if (onDataReady) onDataReady(tempCodeFrame, mergedImgFrame);
+   }, [validItemsCount, items, handle, fps, onDataReady]);
+ 
+-  // Khi đã load xong tất cả media
++  // Khi đã load xong tất cả media (GIỮ NGUYÊN — chỉ chạy khi KHÔNG dùng fast path ở trên,
++  // vì lúc đó isLoading vẫn còn true và loadingCount sẽ tự tăng dần như cũ)
+   useEffect(() => {
+     if (validItemsCount === 0) return;
+     if (loadingCount < validItemsCount) return;
+@@ -252,8 +290,8 @@
+ 
+   return (
+     <>
+-      {/* Load media metadata */}
+-      {isLoading && validItemsCount > 0 && (
++      {/* Load media metadata — bỏ qua hoàn toàn nếu đã dùng fast path (usedPrecomputed) */}
++      {isLoading && validItemsCount > 0 && !usedPrecomputed && (
+         <>
+           {items.map((e, i) => {
+             const mediaPath = getMediaPath(e.code);
+@@ -290,7 +328,7 @@
+ 
+ // ─── VideoTemplate ─────────────────────────────────────────────────────────────
+ 
+-export const VideoTemplate = ({ item, duration }) => {
++export const VideoTemplate = ({ item, duration, mediaDurationsFrames }) => {
+   const [codeFrame, setCodeFrame] = useState([]);
+   const [imgFrame, setImgFrame] = useState([]);
+   const [isDataReady, setIsDataReady] = useState(false);
+@@ -325,6 +363,7 @@
+         items={item.data}
+         volume={2}
+         onDataReady={handleDataReady}
++        precomputedDurations={mediaDurationsFrames}
+       />
+       <Sequence from={0}>
+         <div style={{}}>
+--- /mnt/user-data/uploads/src/components/ActionOrchestrator/ActionOrchestrator.jsx	2026-09-12 02:01:09.786132074 +0000
++++ fix/ActionOrchestrator.jsx	2026-09-12 02:15:58.250184887 +0000
+@@ -1,7 +1,7 @@
+ // src/Components/ActionOrchestrator/ActionOrchestrator.jsx
+ import React from "react";
+ import { useCurrentFrame } from "remotion";
+-import { calculateCssOverrides } from "./utils/cssOverrideManager";
++import { calculateCssOverrides, prepareCssActions } from "./utils/cssOverrideManager";
+ import { ACTION_REGISTRY } from "./utils/actionRegistry";
+ 
+ /**
+@@ -59,9 +59,14 @@
+     );
+   }, [codeFrame, frame]);
+ 
+-  // ✅ Tìm TẤT CẢ actions đang active
+-  const activeActions = React.useMemo(() => {
+-    const allActiveActions = [];
++  // ⚡ TỐI ƯU: BƯỚC 1-4 (priority actionDuration/ToEndFrame/group/delay/Change*)
++  // KHÔNG phụ thuộc `frame` — chỉ phụ thuộc codeFrame/toEndFrame/groupEndFrames.
++  // Trước đây toàn bộ logic này bị tính lại TỪ ĐẦU mỗi frame (dù kết quả không đổi
++  // giữa các frame còn action đó active), rất tốn với video nhiều item/action vì
++  // mỗi frame render trong Remotion là 1 lượt tính lại đầy đủ. Giờ tách ra thành
++  // 1 memo riêng, chỉ tính lại khi data đổi (thường là 1 lần cho cả video).
++  const resolvedActions = React.useMemo(() => {
++    const all = [];
+ 
+     codeFrame.forEach((item, itemIndex) => {
+       const actions = Array.isArray(item.actions)
+@@ -112,7 +117,8 @@
+           actionEndFrame += action.ChangeEndFrame;
+         }
+ 
+-        // 📊 Debug log (development only)
++        // 📊 Debug log (development only) — giờ chỉ log 1 lần lúc build lại
++        // resolvedActions (khi codeFrame đổi), KHÔNG log lặp lại mỗi frame như cũ.
+         if (process.env.NODE_ENV === "development" && action.delay) {
+           console.log(`📊 Action ${actionIndex + 1} [${action.cmd}]:`, {
+             itemRange: `${item.startFrame}-${item.endFrame}`,
+@@ -125,27 +131,41 @@
+           });
+         }
+ 
+-        // ⭐ BƯỚC 5: Check active
+-        if (frame >= actionStartFrame && frame <= actionEndFrame) {
+-          allActiveActions.push({
+-            action,
+-            item,
+-            itemIndex,
+-            actionIndex,
+-            actionStartFrame,
+-            actionEndFrame,
+-          });
+-        }
++        all.push({
++          action,
++          item,
++          itemIndex,
++          actionIndex,
++          actionStartFrame,
++          actionEndFrame,
++        });
+       });
+     });
+ 
+-    return allActiveActions;
+-  }, [codeFrame, frame, toEndFrame, groupEndFrames]);
++    return all;
++  }, [codeFrame, toEndFrame, groupEndFrames]);
++
++  // ✅ Tìm TẤT CẢ actions đang active — BƯỚC 5 cũ, phần DUY NHẤT thật sự phụ thuộc
++  // `frame`. Giờ chỉ còn 1 phép so sánh số cho mỗi action, rẻ hơn nhiều so với
++  // chạy lại toàn bộ logic priority ở trên cho mỗi frame.
++  const activeActions = React.useMemo(() => {
++    return resolvedActions.filter(
++      (a) => frame >= a.actionStartFrame && frame <= a.actionEndFrame,
++    );
++  }, [resolvedActions, frame]);
++
++  // ⚡ Tiền xử lý danh sách CSS actions (regex url()→staticFile(), sort theo thời gian)
++  // MỘT LẦN khi codeFrame đổi, thay vì làm lại mỗi frame bên trong calculateCssOverrides.
++  const preparedCssActions = React.useMemo(() => {
++    return prepareCssActions(codeFrame);
++  }, [codeFrame]);
+ 
+-  // ✅ Tính toán CSS Overrides
++  // ✅ Tính toán CSS Overrides — truyền preparedCssActions vào để dùng fast path.
++  // calculateCssOverrides vẫn hỗ trợ gọi KHÔNG có tham số thứ 4 (tự tính như cũ)
++  // nên chỗ nào khác trong code còn gọi theo cách cũ vẫn chạy đúng như trước.
+   const cssOverrides = React.useMemo(() => {
+-    return calculateCssOverrides(codeFrame, frame, toEndFrame);
+-  }, [codeFrame, frame, toEndFrame]);
++    return calculateCssOverrides(codeFrame, frame, toEndFrame, preparedCssActions);
++  }, [codeFrame, frame, toEndFrame, preparedCssActions]);
+ 
+   // ✅ Default styles
+   const defaultTextStyle = {};
+--- /mnt/user-data/uploads/src/components/ActionOrchestrator/utils/cssOverrideManager.js	2026-09-12 02:01:10.922132142 +0000
++++ fix/cssOverrideManager.js	2026-09-12 02:16:27.414186621 +0000
+@@ -77,14 +77,21 @@
+   });
+ }
+ 
+-export function calculateCssOverrides(codeFrame, currentFrame, toEndFrame) {
+-  const overrides = {
+-    byId: {},
+-    byClass: {},
+-  };
+-  const executedCssActions = [];
++/**
++ * ⚡ NEW — tách phần KHÔNG phụ thuộc `currentFrame` ra riêng:
++ * quét codeFrame tìm các actionCssClass/actionCssId, tính actionStartFrame,
++ * PROCESS SẴN css (regex url()→staticFile()) và SORT SẴN theo thời gian.
++ * Kết quả này không đổi khi frame đổi (chỉ đổi khi codeFrame đổi), nên gọi
++ * 1 lần (vd: qua useMemo([codeFrame]) ở ActionOrchestrator) rồi tái dùng
++ * cho mọi frame, thay vì làm lại toàn bộ (kể cả regex) mỗi frame như trước.
++ *
++ * Giữ nguyên 100% cách tính actionStartFrame so với bản cũ — 2 nhánh if/else
++ * cũ (ToEndFrame true/false) thực chất làm ĐÚNG MỘT VIỆC giống nhau (dead
++ * branch), nên gộp lại đây không đổi kết quả.
++ */
++export function prepareCssActions(codeFrame) {
++  const prepared = [];
+ 
+-  // Thu thập CSS actions đã chạy
+   codeFrame.forEach((item, itemIndex) => {
+     const actions = Array.isArray(item.actions)
+       ? item.actions
+@@ -102,29 +109,26 @@
+       }
+ 
+       let actionStartFrame = item.startFrame;
+-      if (action.ToEndFrame === true) {
+-        if (typeof action.ChangeStartFrame === "number") {
+-          actionStartFrame = item.startFrame + action.ChangeStartFrame;
+-        }
+-      } else {
+-        if (typeof action.ChangeStartFrame === "number") {
+-          actionStartFrame = item.startFrame + action.ChangeStartFrame;
+-        }
++      if (typeof action.ChangeStartFrame === "number") {
++        actionStartFrame = item.startFrame + action.ChangeStartFrame;
+       }
+ 
+-      if (currentFrame >= actionStartFrame) {
+-        executedCssActions.push({
+-          action,
+-          itemIndex,
+-          actionIndex,
+-          actionStartFrame,
+-        });
+-      }
++      prepared.push({
++        itemIndex,
++        actionIndex,
++        actionStartFrame,
++        cssMode: action.cssMode || "replace",
++        toID: action.toID,
++        toClass: action.toClass,
++        // ⚡ Process CSS (regex url() → staticFile()) MỘT LẦN ở đây,
++        // thay vì mỗi frame trong calculateCssOverrides.
++        processedCss: processCssForRemotion(action.css),
++      });
+     });
+   });
+ 
+-  // Sắp xếp theo thời gian
+-  executedCssActions.sort((a, b) => {
++  // Sắp xếp theo thời gian — làm 1 lần duy nhất ở đây
++  prepared.sort((a, b) => {
+     if (a.actionStartFrame !== b.actionStartFrame) {
+       return a.actionStartFrame - b.actionStartFrame;
+     }
+@@ -134,35 +138,61 @@
+     return a.actionIndex - b.actionIndex;
+   });
+ 
+-  // Apply CSS với processing
+-  executedCssActions.forEach(({ action }) => {
+-    const cssMode = action.cssMode || "replace";
++  return prepared;
++}
++
++/**
++ * @param {Array} codeFrame
++ * @param {number} currentFrame
++ * @param {number} toEndFrame
++ * @param {Array} [preparedActions] - ⚡ NEW, optional. Kết quả từ prepareCssActions(codeFrame),
++ *   dùng để bỏ qua việc quét lại/regex lại mỗi frame. KHÔNG truyền vẫn hoạt động
++ *   đúng y hệt bản cũ (tự tính lại từ codeFrame mỗi lần gọi) — 100% backward compatible.
++ */
++export function calculateCssOverrides(
++  codeFrame,
++  currentFrame,
++  toEndFrame,
++  preparedActions,
++) {
++  const overrides = {
++    byId: {},
++    byClass: {},
++  };
++
++  // ⚡ Fast path: dùng danh sách đã tiền xử lý + sort sẵn nếu được truyền vào.
++  // Nếu không, fallback y hệt hành vi cũ (tự build lại ở đây, không đổi kết quả).
++  const list = preparedActions ?? prepareCssActions(codeFrame);
++
++  // list đã được sort theo actionStartFrame/itemIndex/actionIndex, nên chỉ cần
++  // lọc theo currentFrame và apply tuần tự — giữ đúng thứ tự merge/replace như cũ.
++  for (const entry of list) {
++    if (currentFrame < entry.actionStartFrame) continue; // action chưa "chạy" tới frame này
+ 
+-    // Process CSS trước khi apply
+-    const processedCss = processCssForRemotion(action.css);
++    const { cssMode, processedCss, toID, toClass } = entry;
+ 
+-    if (action.toID && processedCss) {
++    if (toID && processedCss) {
+       if (cssMode === "replace") {
+-        overrides.byId[action.toID] = { ...processedCss };
++        overrides.byId[toID] = { ...processedCss };
+       } else {
+-        overrides.byId[action.toID] = {
+-          ...(overrides.byId[action.toID] || {}),
++        overrides.byId[toID] = {
++          ...(overrides.byId[toID] || {}),
+           ...processedCss,
+         };
+       }
+     }
+ 
+-    if (action.toClass && processedCss) {
++    if (toClass && processedCss) {
+       if (cssMode === "replace") {
+-        overrides.byClass[action.toClass] = { ...processedCss };
++        overrides.byClass[toClass] = { ...processedCss };
+       } else {
+-        overrides.byClass[action.toClass] = {
+-          ...(overrides.byClass[action.toClass] || {}),
++        overrides.byClass[toClass] = {
++          ...(overrides.byClass[toClass] || {}),
+           ...processedCss,
+         };
+       }
+     }
+-  });
++  }
+ 
+   return overrides;
+ }
+--- /mnt/user-data/uploads/src/rootComponents/CSK001/pipeline/index.js	2026-09-12 02:01:03.666131710 +0000
++++ fix/pipeline_index.js	2026-09-12 02:16:35.102187078 +0000
+@@ -68,7 +68,13 @@
+     }
+   });
+ 
+-  console.log(JSON.stringify(videoData01));
++  // ⚡ Chỉ dump toàn bộ dataset (tất cả video, không riêng video đang render) ra
++  // console khi cần debug — mặc định tắt để tránh spam console mỗi lần module
++  // này được load (kể cả trong từng browser worker khi render với concurrency > 1).
++  // Bật lại bằng cách set env DEBUG_PIPELINE=1 trước khi chạy.
++  if (process.env.DEBUG_PIPELINE === "1") {
++    console.log(JSON.stringify(videoData01));
++  }
+ 
+   return videoData01;
+ }
+--- /mnt/user-data/uploads/src/components/ActionOrchestrator/smallComponents/media/ImageView.jsx	2026-09-12 02:01:13.166132275 +0000
++++ fix/ImageView.jsx	2026-09-12 02:16:57.154188388 +0000
+@@ -36,6 +36,11 @@
+ // ⭐ Default fade duration (frames)
+ const DEFAULT_FADE_FRAMES = 5;
+ 
++// ⚡ Bật log debug (load ảnh + trạng thái fade/transition mỗi 60 frame) bằng
++// env REMOTION_DEBUG_IMAGEVIEW=1. Mặc định TẮT — với video nhiều ảnh, log này
++// chạy lặp lại rất nhiều lần trong lúc render và không cần thiết khi chạy thật.
++const DEBUG_IMAGEVIEW = process.env.REMOTION_DEBUG_IMAGEVIEW === "1";
++
+ const ImageView = ({
+   img,
+   frame,
+@@ -219,10 +224,12 @@
+     image.src = staticFile(imgPath);
+ 
+     image.onload = () => {
+-      console.log(`✅ Image loaded: ${imgPath}`);
+-      console.log(
+-        ` 🎭 Fade: fadeIn=${shouldFadeIn ? fadeInFrames + "f" : "off"} | fadeOut=${shouldFadeOut ? fadeOutFrames + "f" : "off"} | Transition: ${transitionValues.config.type} (${transitionValues.config.duration}f, loop: ${transitionValues.config.loop})`,
+-      );
++      if (DEBUG_IMAGEVIEW) {
++        console.log(`✅ Image loaded: ${imgPath}`);
++        console.log(
++          ` 🎭 Fade: fadeIn=${shouldFadeIn ? fadeInFrames + "f" : "off"} | fadeOut=${shouldFadeOut ? fadeOutFrames + "f" : "off"} | Transition: ${transitionValues.config.type} (${transitionValues.config.duration}f, loop: ${transitionValues.config.loop})`,
++        );
++      }
+       setLoadedImageSrc(image.src);
+       setImageLoaded(true);
+       continueRender(handle);
+@@ -275,7 +282,7 @@
+     : styleWithFade;
+ 
+   // Debug
+-  if (currentFrame % 60 === 0 && elementId) {
++  if (DEBUG_IMAGEVIEW && currentFrame % 60 === 0 && elementId) {
+     console.log(`🖼️ ImageView [${elementId}] - Frame ${currentFrame}`, {
+       containerSelector,
+       transition: normalizedTransition,

@@ -1,0 +1,275 @@
+// Kịch bản video W lần 3 (#110) — "So sánh hơn và so sánh nhất" · chuỗi "Ngữ pháp tiếng Anh cần biết"
+const L = (id, who, say, sub, x = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...x });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "comparatives-and-superlatives--w01",
+  hook: "HOOK-02",
+  loop: { open: "s01", close: "s27" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "grammar-relearners", slug: "comparatives-and-superlatives", door: "kien-thuc", level: "B1",
+    title: "So sánh hơn và so sánh nhất", series: "Ngữ pháp tiếng Anh cần biết" },
+  format: "W", mode: "text", audio: {},
+  notes: "Lần 3 (#110). Đổi tên: “bạn” (người góp ý, người soạn bảng so sánh, người viết email chào hàng) → Thảo; đồng nghiệp nước ngoài làm thiết kế (p20) → Sam (trước là Dũng); khách hàng đọc email (p16) → Sam. Câu treo ở s01 (Cách A hay B) được trả lời ở s27. DLG-01 dựng từ mở bài (gõ “more cheaper”) + p6. Phủ ý: 23/23.",
+  scenes: [
+    { id: "s01", module: "SCENE-03", ref: "p20",
+      data: { set: "meeting", actors: [{ id: "thao", side: "left" }, { id: "sam", side: "right", pose: "hold" }],
+        left: { label: "Cách A: worse", ok: false }, right: { label: "Cách B: not as", ok: true } },
+      lines: [
+        L("l1", null, "Sam's new design is less clear than the old one. What should Thao say?", "Thiết kế mới của Sam chưa rõ bằng bản cũ. Thảo nên nói sao?"),
+        L("a1", "thao", "Your design is worse than the old one.", "Thiết kế của anh tệ hơn bản cũ.", { phase: "a", pose: "point", react: { sam: "sad" } }),
+        L("b1", "thao", "I think this one is not as clear as the old design.", "Em thấy bản này chưa rõ bằng bản cũ.", { phase: "b", pose: "explain" }),
+        L("b2", "thao", "Maybe we can make the menu bigger?", "Hay mình làm menu to hơn nhé?", { phase: "b", face: "happy", react: { sam: "thinking" } }),
+      ] },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "So sánh sao cho đúng, cho khéo?", pose: "present", illus: "balance-scale",
+        items: ["Đúng dạng: -er hay more", "Nói rõ hơn bao nhiêu", "Nói “nhất” có căn cứ, chê thì chê nhẹ"] },
+      lines: [
+        L("l1", "det", "Both are correct. So how do you compare correctly, and kindly?", "Cả hai đều đúng ngữ pháp. Vậy so sánh sao cho đúng, cho khéo?"),
+        L("l2", "det", "First, get the form right.", "Một: đúng dạng, -er hay more."),
+        L("l3", "det", "Then, say how much more.", "Hai: nói rõ hơn bao nhiêu."),
+        L("l4", "det", "And use the best carefully, and criticise gently.", "Ba: nói “nhất” có căn cứ, chê thì chê nhẹ."),
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Sáu chặng của video",
+        chapters: [
+          { label: "Hơn hay nhất, -er hay more", illus: "balance-scale" },
+          { label: "Chính tả và từ bất quy tắc", illus: "pencil" },
+          { label: "Hơn bao nhiêu", illus: "chart-increasing" },
+          { label: "So bằng con số", illus: "input-numbers" },
+          { label: "Nói “nhất” cho khéo", illus: "trophy" },
+          { label: "So bằng và chê nhẹ", illus: "handshake" } ] },
+      lines: [
+        L("l1", null, "Six short parts. Each one helps with the forty questions below.", "Sáu chặng ngắn, chặng nào cũng giúp bạn làm bốn mươi câu bên dưới."),
+      ] },
+
+    // Chương 1
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 6, title: "Hơn hay nhất? -er hay more?" },
+      lines: [L("l1", "det", "Part one: comparative or superlative? -er or more?", "Phần một: hơn hay nhất? -er hay more?")] },
+    { id: "s05", module: "CMP-01", ref: "p1",
+      data: { labels: ["So sánh hơn", "So sánh nhất"], left: "So hai đối tượng: cheaper than",
+        right: "So một đối tượng với cả nhóm từ ba trở lên: the cheapest", illus: ["balance-scale", "trophy"] },
+      lines: [
+        L("l1", null, "Two things? Use the comparative. Option B is cheaper than option A.", "Hai đối tượng thì dùng so sánh hơn: Option B is cheaper than option A."),
+        L("l2", null, "A group of three or more? Use the superlative. This is the cheapest option of the three.", "Cả nhóm từ ba trở lên thì dùng so sánh nhất: the cheapest option of the three."),
+      ] },
+    { id: "s06", module: "REL-05", ref: "p2,p3",
+      data: { title: "Tính từ đổi dạng thế nào", root: "Tính từ", rootIllus: "straight-ruler",
+        children: [
+          { label: "Ngắn, một âm tiết", sub: "-er, -est", tone: "ok", illus: "pinching-hand", children: ["cheap → cheaper", "→ the cheapest"] },
+          { label: "Hai âm tiết, đuôi -y", sub: "y → i, -er, -est", tone: "ok", illus: "pencil", children: ["easy → easier", "busy → the busiest"] },
+          { label: "Dài, hai âm tiết trở lên", sub: "more, the most", tone: "warn", illus: "scroll", children: ["expensive → more expensive", "modern, useful → more"] } ] },
+      lines: [
+        L("l1", null, "Short adjectives, usually one syllable, add -er and -est. Cheap, cheaper, the cheapest.", "Tính từ ngắn, thường một âm tiết, thêm -er, -est: cheap, cheaper, the cheapest."),
+        L("l2", null, "Two syllables ending in y? Change y to i. Easy, easier, the easiest. Busy, busier, the busiest.", "Hai âm tiết tận cùng -y: đổi y thành i: easier, the easiest; busier, the busiest."),
+        L("l3", null, "Long adjectives use more and the most. Expensive, more expensive, the most expensive.", "Tính từ dài dùng more, the most: more expensive, the most expensive."),
+        L("l4", null, "Other two-syllable words, like modern and useful, usually take more and most too.", "Tính từ hai âm tiết khác như modern, useful cũng thường dùng more, most."),
+      ] },
+
+    // Chương 2
+    { id: "s07", module: "HOST-03", data: { n: 2, of: 6, title: "Chính tả và từ bất quy tắc" },
+      lines: [L("l1", "det", "Part two: spelling rules, and words you must learn by heart.", "Phần hai: quy tắc chính tả và những từ phải thuộc.")] },
+    { id: "s08", module: "LIST-13", ref: "p4",
+      data: { title: "Ba quy tắc chính tả",
+        items: [
+          { title: "Tận cùng bằng e: chỉ thêm r, st", detail: "nice → nicer → the nicest", illus: "pencil" },
+          { title: "Một nguyên âm + một phụ âm: gấp đôi", detail: "big → bigger, hot → hotter", illus: "hot-pepper" },
+          { title: "Phụ âm + y: đổi y thành i", detail: "busy → busier", illus: "honeybee" } ] },
+      lines: [
+        L("l1", null, "Ends in e? Just add r or st. Nice, nicer.", "Tận cùng bằng e: chỉ thêm r, st. Nice, nicer."),
+        L("l2", null, "One vowel plus one consonant? Double the consonant. Big, bigger. Hot, hotter.", "Một nguyên âm cộng một phụ âm: gấp đôi phụ âm. Big, bigger; hot, hotter."),
+        L("l3", null, "Consonant plus y? Change y to i. Busy, busier.", "Phụ âm cộng y: đổi y thành i. Busy, busier."),
+      ] },
+    { id: "s09", module: "LIST-03", ref: "p5",
+      data: { title: "Ba từ bất quy tắc phải thuộc",
+        items: [
+          { front: "good", back: "better → the best", illus: "thumbs-up", backIllus: "trophy" },
+          { front: "bad", back: "worse → the worst", illus: "thumbs-down", backIllus: "warning" },
+          { front: "far", back: "farther / further → the farthest / the furthest", illus: "world-map", backIllus: "information" } ] },
+      lines: [
+        L("l1", null, "Good, better, the best.", "Good, better, the best."),
+        L("l2", null, "Bad, worse, the worst.", "Bad, worse, the worst."),
+        L("l3", null, "Far, farther or further, the farthest or the furthest.", "Far, farther hoặc further, the farthest hoặc the furthest."),
+        L("l4", null, "Further also means more, as in further information.", "Further còn có nghĩa là thêm, như further information."),
+      ] },
+    { id: "s10", module: "DLG-01", ref: "intro,p6",
+      data: { set: "office", label: "Bảng so sánh cho sếp",
+        actors: [{ id: "thao", side: "center", pose: "think" }],
+        verdict: { ok: false, label: "Dùng cả more lẫn -er", why: "Đã có -er thì không thêm more: viết cheaper, better.",
+          rule: "Ngắn thêm -er; dài dùng more; không dùng cả hai" } },
+      lines: [
+        L("l1", "thao", "I'm making a table for my boss. Two suppliers.", "Mình đang soạn bảng so sánh hai nhà cung cấp cho sếp.", { face: "thinking" }),
+        L("l2", "thao", "Supplier B is more cheaper than supplier A.", "Nhà cung cấp B “more cheaper” hơn A.", { face: "neutral", pose: "explain", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "Cheaper already has -er. Don't add more as well. The same goes for more better.", "Cheaper đã có -er rồi, đừng thêm more. More better cũng sai như vậy."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử lần nữa nhé.", { phase: "redo" }),
+        L("l6", "thao", "Supplier B is cheaper than supplier A.", "Nhà cung cấp B rẻ hơn A.", { phase: "redo", face: "happy", pose: "explain" }),
+      ] },
+
+    // Chương 3
+    { id: "s11", module: "HOST-03", data: { n: 3, of: 6, title: "Hơn bao nhiêu?" },
+      lines: [L("l1", "det", "Part three: more, but how much more?", "Phần ba: hơn, nhưng hơn bao nhiêu?")] },
+    { id: "s12", module: "TEXT-07", ref: "p7",
+      data: { en: "The new system is faster than the old one.", vi: "Hệ thống mới nhanh hơn hệ thống cũ.",
+        chunks: [{ en: "The new system", vi: "hệ thống mới" }, { en: "is faster", vi: "nhanh hơn" }, { en: "than the old one.", vi: "so với cái cũ" }],
+        illus: "laptop" },
+      lines: [
+        L("l1", null, "The pattern is the comparative plus than. The new system is faster than the old one.", "Cấu trúc: tính từ dạng hơn cộng than. The new system is faster than the old one."),
+        L("l2", null, "In speech, than me is natural. In formal writing, you can say than I am, or than I do.", "Văn nói, than me rất tự nhiên; văn viết trang trọng có thể dùng than I am, than I do."),
+      ] },
+    { id: "s13", module: "CMP-01", ref: "p8",
+      data: { labels: ["Chênh nhiều", "Chênh ít"], left: "much, a lot, far: This route is much faster.",
+        right: "slightly, a bit, a little: The cost is slightly higher.", illus: ["rocket", "pinching-hand"] },
+      lines: [
+        L("l1", null, "A big gap? Put much, a lot, or far before the adjective. This route is much faster.", "Chênh nhiều: thêm much, a lot, far trước tính từ. This route is much faster."),
+        L("l2", null, "A small gap? Use slightly, a bit, or a little. The cost is slightly higher.", "Chênh ít: slightly, a bit, a little. The cost is slightly higher."),
+      ] },
+    { id: "s14", module: "CMP-02", ref: "p9",
+      data: { title: "Báo sếp về nhà cung cấp mới", before: "The new supplier's price is higher.",
+        after: "The price is slightly higher, about five percent, but delivery is much faster.",
+        illusBefore: "face-with-raised-eyebrow", illusAfter: "delivery-truck" },
+      lines: [
+        L("l1", null, "Before: The new supplier's price is higher. A little higher, or a lot? The boss must ask.", "Trước: The new supplier's price is higher. Cao hơn một chút hay nhiều? Sếp phải hỏi lại."),
+        L("l2", null, "After: The price is slightly higher, about five percent, but delivery is much faster.", "Sau: giá cao hơn một chút, khoảng năm phần trăm, nhưng giao hàng nhanh hơn nhiều."),
+      ] },
+    { id: "s14b", module: "TEXT-02", ref: "p9",
+      data: { text: "Slightly, much cho biết mức chênh; con số khỏi phải đoán; nêu cả ưu lẫn nhược.", keywords: ["slightly", "much", "con số"], illus: "chart-increasing" },
+      lines: [
+        L("l3", null, "Slightly and much show each gap. The number stops the guessing. Pros and cons help the boss decide.", "Slightly, much cho biết mức chênh; con số khỏi phải đoán; nêu cả ưu lẫn nhược giúp sếp quyết ngay."),
+      ] },
+    { id: "s15", module: "HOST-02", ref: "p10",
+      data: { statement: "Báo “giá cao hơn” là đủ để sếp quyết", truth: false, why: "Đã so thì nói luôn hơn bao nhiêu: slightly hay much." },
+      lines: [
+        L("l1", "det", "Saying the price is higher is enough for the boss. True or false?", "Báo “giá cao hơn” là đủ để sếp quyết. Đúng hay sai?"),
+        L("l2", "det", "False. When you compare, say how big the gap is: slightly, or much.", "Sai. Đã so thì nói luôn hơn bao nhiêu: slightly hay much.", { face: "stern" }),
+      ] },
+
+    // Chương 4
+    { id: "s16", module: "HOST-03", data: { n: 4, of: 6, title: "So bằng con số" },
+      lines: [L("l1", "det", "Part four: comparing with numbers.", "Phần bốn: so sánh bằng con số.")] },
+    { id: "s17", module: "TEXT-07", ref: "p11",
+      data: { en: "Option A is twice as expensive as option B.", vi: "Phương án A đắt gấp đôi phương án B.",
+        chunks: [{ en: "Option A is", vi: "phương án A" }, { en: "twice as expensive", vi: "đắt gấp đôi" }, { en: "as option B.", vi: "so với B" }],
+        illus: "money-bag" },
+      lines: [
+        L("l1", null, "With numbers, use as … as with times. Option A is twice as expensive as option B.", "Có con số thì dùng as … as với số lần: Option A is twice as expensive as option B."),
+        L("l2", null, "Or the other way round: Option B costs half as much as option A.", "Hoặc nói ngược lại: Option B costs half as much as option A."),
+      ] },
+    { id: "s18", module: "CMP-09", ref: "p12,p13",
+      data: { myth: "“Two times cheaper” là cách dịch chuẩn của “rẻ hơn hai lần”",
+        fact: "Người bản ngữ còn hiểu khác nhau; dùng twice as hoặc half as thì ai cũng hiểu như nhau",
+        illusMyth: "face-with-raised-eyebrow", illusFact: "check-mark-button" },
+      lines: [
+        L("l1", null, "Many people think two times cheaper is the right way to say it.", "Nhiều người nghĩ two times cheaper là cách dịch chuẩn của “rẻ hơn hai lần”."),
+        L("l2", null, "In fact, even native speakers argue about times cheaper. Half the price? Readers have to guess.", "Thực ra người bản ngữ cũng tranh cãi: bằng một nửa ư? Người đọc phải đoán."),
+      ] },
+
+    { id: "s18b", module: "TEXT-01", ref: "p13",
+      data: { text: "Có con số thì nói twice as hay half as cho chắc.", illus: "input-numbers" },
+      lines: [
+        L("l3", null, "A number readers must guess helps no one decide. With numbers, say twice as, or half as.", "Con số phải đoán thì không giúp ai quyết. Có con số thì nói twice as hay half as cho chắc."),
+      ] },
+    // Chương 5
+    { id: "s19", module: "HOST-03", data: { n: 5, of: 6, title: "Nói “nhất” cho đúng, cho khéo" },
+      lines: [L("l1", "det", "Part five: saying the best, correctly and carefully.", "Phần năm: nói “nhất” cho đúng, cho khéo.")] },
+    { id: "s20", module: "LIST-01", ref: "p14,p15",
+      data: { title: "So sánh nhất cần nhớ",
+        items: ["Luôn có the: the fastest, the most reliable", "in + nơi chốn: the biggest office in the city", "of + số lượng: the cheapest of the three options", "one of the + danh từ số nhiều: one of the most popular products"],
+        illus: "trophy", icons: ["1st-place-medal", "cityscape", "input-numbers", "package"] },
+      lines: [
+        L("l1", null, "The superlative needs the. The fastest. The most reliable.", "So sánh nhất cần the: the fastest, the most reliable."),
+        L("l2", null, "After it, use in with a place or group: the biggest office in the city.", "Phía sau thường là in cộng nơi chốn hay nhóm: the biggest office in the city."),
+        L("l3", null, "Or of with a number: the cheapest of the three options.", "Hoặc of cộng số lượng: the cheapest of the three options."),
+        L("l4", null, "One of the needs a plural noun: one of the most popular products, not product.", "One of the cần danh từ số nhiều: one of the most popular products, không viết product."),
+      ] },
+    { id: "s21", module: "BEAT-04", ref: "p16",
+      data: { seconds: 5, prompt: "Thảo viết email chào hàng: “Our software is the best in Vietnam.” Khách đọc xong dễ hỏi gì nhất?" },
+      lines: [
+        L("l1", null, "Thao writes in a sales email: Our software is the best in Vietnam. What will the client ask next?", "Thảo viết: Our software is the best in Vietnam. Khách đọc xong dễ hỏi gì nhất?"),
+      ] },
+    { id: "s22", module: "SCENE-02", ref: "p16,p17",
+      data: { set: "office", label: "Email chào hàng", actor: { id: "thao", side: "left" },
+        contact: { name: "Sam (khách hàng)", illus: "man-office-worker" },
+        messages: [
+          { from: "me", text: "Our software is the best in Vietnam.", at: "l1" },
+          { from: "them", text: "Could you share any data showing that?", at: "l2" },
+          { from: "me", text: "It's one of the most reliable options for small offices, and here is what our clients say.", at: "l4" } ] },
+      lines: [
+        L("l1", "thao", "Our software is the best in Vietnam.", "Our software is the best in Vietnam."),
+        L("l2", "them", "Could you share any data showing that?", "Anh chị có số liệu nào cho thấy điều đó không?"),
+        L("l3", null, "The best in the whole country is a big claim. Big claims need proof.", "“Nhất cả nước” là tuyên bố lớn, và tuyên bố lớn thì cần bằng chứng."),
+        L("l4", "thao", "It's one of the most reliable options for small offices, and here is what our clients say.", "It's one of the most reliable options for small offices…", { face: "happy" }),
+        L("l5", null, "The praise stays, but no one can argue. Proof? Say the best. No proof yet? Say one of the.", "Lời khen vẫn còn mà không ai bắt bẻ. Có bằng chứng mới nói the best; chưa có thì one of the."),
+      ] },
+
+    // Chương 6
+    { id: "s23", module: "HOST-03", data: { n: 6, of: 6, title: "So bằng và chê nhẹ" },
+      lines: [L("l1", "det", "Part six: as … as, and criticising gently.", "Phần sáu: so bằng, và chê sao cho nhẹ.")] },
+    { id: "s24", module: "CMP-01", ref: "p18",
+      data: { labels: ["as … as", "not as … as"], left: "Bằng nhau: The new model is as fast as the old one.",
+        right: "Kém hơn, nghe nhẹ: This version is not as clear as the last one.", illus: ["balance-scale", "feather"] },
+      lines: [
+        L("l1", null, "Equal? Use as, the base adjective, then as. The new model is as fast as the old one.", "Bằng nhau: as + tính từ nguyên dạng + as. The new model is as fast as the old one."),
+        L("l2", null, "Not as … as means less, and it sounds much softer than worse. This version is not as clear as the last one.", "Not as … as nghĩa là kém hơn, nghe nhẹ hơn worse nhiều: not as clear as the last one."),
+      ] },
+    { id: "s25", module: "CMP-07", ref: "p19",
+      data: { wrong: "This one is less cheap than that one.", right: "This one is not as cheap as that one.", diff: ["less"],
+        note: "Less hợp với tính từ dài: This plan is less risky." },
+      lines: [
+        L("l1", null, "Less plus an adjective suits long adjectives: This plan is less risky.", "Less + tính từ hợp tính từ dài: This plan is less risky."),
+        L("l2", null, "With short ones, say not as cheap as. Few people say less cheap.", "Tính từ ngắn: not as cheap as; ít ai nói less cheap."),
+      ] },
+    { id: "s26", module: "HOST-02", ref: "p20",
+      data: { statement: "“Your design is worse than the old one” là góp ý tốt", truth: false,
+        why: "Đúng ngữ pháp, nhưng worse đi với your nghe như chê người, lại không nói cần sửa gì." },
+      lines: [
+        L("l1", "det", "Your design is worse than the old one. Is that good feedback? True or false?", "“Your design is worse than the old one” là góp ý tốt. Đúng hay sai?"),
+        L("l2", "det", "False. The grammar is fine, but it sounds personal, and Sam doesn't know what to fix.", "Sai. Đúng ngữ pháp, nhưng nghe như chê người, và Sam không biết cần sửa gì.", { face: "stern" }),
+      ] },
+    { id: "s27", module: "SCENE-01", ref: "p20,p21",
+      data: { set: "meeting", label: "Quay lại với Thảo",
+        actors: [{ id: "thao", side: "left" }, { id: "sam", side: "right" }, { id: "det", enter: "pop", at: "l3" }] },
+      lines: [
+        L("l1", "thao", "I think this one is not as clear as the old design. Maybe we can make the menu bigger?", "Em thấy bản này chưa rõ bằng bản cũ. Hay mình làm menu to hơn nhé?", { pose: "explain", face: "happy", react: { sam: "thinking" } }),
+        L("l2", "sam", "Good idea. I'll make it bigger.", "Ý hay đấy. Tôi sẽ làm to hơn.", { face: "happy", pose: "thumb" }),
+        L("l3", "det", "Gentle criticism? Use not as … as, and add a suggestion.", "Chê nhẹ thì not as … as, kèm một gợi ý.", { face: "happy", pose: "thumb" }),
+      ] },
+
+    // Tổng kết
+    { id: "s28", module: "HOST-01", ref: "p22",
+      data: { title: "Năm câu mẫu nên lưu", pose: "present",
+        items: ["Option B is cheaper, but option A is more reliable.", "The cost is slightly higher, but delivery is much faster.", "It's one of the most popular products in our range.", "This version is not as clear as the last one.", "It costs half as much as the old model."] },
+      lines: [
+        L("l1", "det", "Option B is cheaper, but option A is more reliable.", "B rẻ hơn, nhưng A đáng tin cậy hơn."),
+        L("l2", "det", "The cost is slightly higher, but delivery is much faster.", "Chi phí cao hơn một chút, nhưng giao hàng nhanh hơn nhiều."),
+        L("l3", "det", "It's one of the most popular products in our range.", "Đây là một trong những sản phẩm được ưa chuộng nhất."),
+        L("l4", "det", "This version is not as clear as the last one.", "Bản này chưa rõ bằng bản trước."),
+        L("l5", "det", "It costs half as much as the old model.", "Giá chỉ bằng một nửa mẫu cũ."),
+      ] },
+    { id: "s29", module: "END-03", ref: "p23,outro",
+      data: { title: "Trước khi gửi báo cáo so sánh", illus: "clipboard",
+        items: ["Không có more đi cùng -er", "So sánh nhất đã có the", "Nói hơn bao nhiêu: slightly hay much", "Con số: twice as hoặc half as", "Nói “nhất” có bằng chứng, chưa có thì one of the"] },
+      lines: [
+        L("l1", null, "Before you send a comparison, check five things.", "Trước khi gửi báo cáo so sánh, kiểm năm điều."),
+        L("l2", null, "No more with -er. The before superlatives. Slightly or much for the gap.", "Không more cùng -er; so sánh nhất có the; nói mức chênh bằng slightly hay much."),
+        L("l3", null, "Twice as or half as for numbers. And the best only with proof.", "Con số dùng twice as, half as; nói “nhất” khi có bằng chứng."),
+      ] },
+    { id: "s30", module: "QUIZ-01", ref: "questions[21]",
+      data: {
+        q: "After reading our software is the best in Vietnam, what is a client likely to ask?",
+        options: [
+          "What colors does the interface come in, and can we change them",
+          "Could you share any data showing that, because a big claim needs proof",
+          "Can we get a discount, since the price seems rather high for us",
+        ],
+        correct: 1, countdown: 5, illus: "trophy",
+        why: "Tuyên bố “nhất cả nước” là tuyên bố lớn, và khách sẽ hỏi bằng chứng.",
+      },
+      lines: [
+        L("l1", null, "After reading our software is the best in Vietnam, what is a client likely to ask?", "Đọc câu our software is the best in Vietnam, khách dễ hỏi gì nhất?"),
+        L("l2", null, "Could you share any data showing that, because a big claim needs proof.", "Anh chị có số liệu nào cho thấy điều đó không? Tuyên bố lớn cần bằng chứng."),
+        L("l3", null, "Big claims need proof. No data yet? Say one of the most reliable options.", "Tuyên bố lớn cần bằng chứng. Chưa có số liệu thì nói one of the most…"),
+      ] },
+    { id: "s31", module: "END-05", data: { text: "Bốn mươi câu hỏi so sánh đang chờ bạn", sub: "Nghe câu hỏi tiếng Anh, chọn đáp án đúng" },
+      lines: [L("l1", "det", "Your turn. Write three comparisons at work today, then try the forty questions below.", "Đến lượt bạn: viết ba câu so sánh ở chỗ làm, rồi làm bốn mươi câu bên dưới.")] },
+  ],
+};

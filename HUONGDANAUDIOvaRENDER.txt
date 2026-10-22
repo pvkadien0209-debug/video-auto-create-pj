@@ -1,0 +1,96 @@
+HƯỚNG DẪN TẠO GIỌNG (AUDIO) VÀ RENDER VIDEO DETPRO
+====================================================
+(#148 · cập nhật 22/10/2026 · chi tiết hơn: SEO-PT-projectjs\DetPro\video\HUONG-DAN-KOKORO.md)
+
+Giọng Kokoro KHÔNG cần bật server, KHÔNG cần chép:
+  - Script đọc thẳng tệp  C:\Dienpham\App\SEO-PT-projectjs\server\router\DetPro\loi_doc.json
+  - Ghi mp3 thẳng vào     C:\Dienpham\App\my-sta-video\public\audio\kokoro\
+  - Remotion đọc được luôn. Hình (public\illus), tiếng động (public\sfx), phông chữ đã có đủ.
+
+
+BƯỚC 0 — MỞ CMD ĐÚNG THƯ MỤC
+----------------------------
+Cách 1: mở cmd rồi gõ (nhớ có chữ cd):
+    cd /d C:\Dienpham\App\my-sta-video
+
+Cách 2: mở thư mục my-sta-video trong File Explorer → bấm vào thanh địa chỉ → gõ  cmd  → Enter.
+
+Dòng nhắc phải là:  C:\Dienpham\App\my-sta-video>
+(Gõ mỗi đường dẫn mà thiếu "cd" sẽ báo "is not recognized as an internal or external command".)
+
+
+BƯỚC 1 — TẠO GIỌNG KOKORO
+-------------------------
+Một bài:
+    3-tao-giong-kokoro.bat ielts-task2-guide
+
+Tất cả bài có kịch bản (293 bài × ~3 phút ≈ 15 giờ):
+    3-tao-giong-kokoro.bat all
+
+- Tên bài = tên tệp kịch bản bỏ đuôi "--w01.js"
+  (xem trong src\rootComponents\CSK004\data\scripts\).
+- Lần đầu: tự cài thư viện + tải mô hình ~330 MB vào tools\kokoro\model\ → lâu hơn.
+- Báo "Chua co Python": cài Python 3.10+ từ python.org, tick "Add python.exe to PATH",
+  đóng cmd, mở lại, làm lại từ Bước 0.
+- Dừng giữa chừng (Ctrl+C) rồi chạy lại: chỉ đọc tiếp câu còn thiếu / câu đổi lời.
+- Thấy chữ "Xong." là xong.
+
+
+BƯỚC 2 — RENDER
+---------------
+    2-render-thu.bat ielts-task2-guide--w01          (bản 1280x720, đặt lên web)
+    2-render-thu.bat ielts-task2-guide--w01 0.5      (bản nhẹ 960x540, xem nhanh)
+
+- Video ra:  renders\dp\ielts-task2-guide--w01.mp4  (tự mở khi xong).
+- Chú ý: render dùng tên có đuôi "--w01", tạo giọng thì KHÔNG.
+
+
+RENDER TẤT CẢ (#154)
+-------------------
+    4-render-tat-ca.bat            (bản 1280x720, đặt lên web)
+    4-render-tat-ca.bat 0.5        (bản nhẹ xem nhanh)
+- Tự lập danh sách bài ĐÃ ĐỦ GIỌNG KOKORO (bài chưa có giọng bỏ qua) rồi render lần lượt.
+- Video đã có mp4 trong renders\dp được BỎ QUA → dừng giữa chừng (Ctrl+C) rồi chạy lại là làm tiếp.
+- Muốn render lại một bài: xoá mp4 của bài đó trong renders\dp rồi chạy lại.
+- Thứ tự gợi ý: 3-tao-giong-kokoro.bat all  →  4-render-tat-ca.bat
+- Mỗi video ~7 phút, render vài chục phút/bài → để máy chạy qua đêm.
+
+
+BƯỚC 3 — ĐƯA VIDEO LÊN WEB detpro.vercel.app (#153)
+-------------------------------------------------
+1. Mở thư mục Google Drive "DetProMedia" (thư mục đã khai trong client\src\components\HocKienThuc\config.js).
+2. Kéo thả tệp  renders\dp\<bài>--w01.mp4  vào đó. GIỮ NGUYÊN TÊN (vd. ielts-task2-guide--w01.mp4).
+   - Đã có tệp cũ cùng tên: xoá/đổi tên tệp cũ, hoặc dùng "Quản lý phiên bản → Tải lên phiên bản mới".
+     Drive tự thêm " (1)" vào tên tệp trùng → web KHÔNG tìm thấy.
+3. Chờ Drive xử lý video (vài phút; mở thử trên Drive phát được là xong).
+4. Mở trang bài trên detpro.vercel.app → bấm tải lại (F5) → khung "Xem tóm tắt" hiện dưới tên bài.
+   Không cần build/deploy lại web: web tự tìm tệp theo tên mỗi lần mở trang.
+
+Không hiện video? Kiểm lần lượt:
+- Thư mục DetProMedia chia sẻ "Bất kỳ ai có đường liên kết — Người xem" (tệp con tự theo thư mục).
+- Tên tệp đúng tuyệt đối:  <tên bài>--w01.mp4  (chữ thường, hai gạch ngang, không dấu cách, không "(1)").
+- Khoá API trong Google Cloud: bật "Google Drive API"; mục giới hạn trang web (HTTP referrers) phải có
+  https://detpro.vercel.app/*  (và http://localhost:3000/* khi chạy thử trên máy).
+- Bài đó đã có trên web (trang bài mở được).
+- Mở F12 → Console/Network: lỗi 403 ở googleapis.com = khoá API chưa cho phép trang detpro.vercel.app.
+
+
+TĂNG TỐC RENDER (#150)
+---------------------
+- Mặc định đã bật GPU (--gl=angle) và tự chọn số tab song song (tối đa 4) theo CPU + RAM trống.
+  Dòng đầu khi render ghi rõ:  "... · 3 tab · GPU angle".
+- Đóng bớt Chrome / VS Code / Kokoro trước khi render → còn nhiều RAM → được nhiều tab → nhanh hơn.
+- Tự đặt số tab:      npx tsx render-CSK004.js --only=<bài>--w01 --scale=2/3 --concurrency=4
+- Lỗi GPU / tab sập:  thêm  --gl=swangle  (chỉ CPU, chậm hơn nhiều) hoặc  --concurrency=1
+- Bản xem nhanh 0.5 nhanh gấp đôi bản 2/3.
+
+
+KHÔNG CẦN DÙNG
+--------------
+- 1-chep-audio.bat — chỉ cho giọng Google (server ttslistTV). Dùng Kokoro thì bỏ qua.
+- Bật server Node — không cần cho Kokoro.
+
+
+GẶP LỖI
+-------
+Chụp màn hình cửa sổ cmd gửi Claude.

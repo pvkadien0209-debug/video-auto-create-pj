@@ -1,0 +1,278 @@
+// Kịch bản video W lần 3 (#110) — "Cách nhận góp ý từ đồng đội mà không tự ái" · chuỗi "Làm thành viên tốt trong nhóm"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub), chữ trên thẻ tiếng Việt. Đủ ý để làm 40 câu bài tập.
+const L = (id, who, say, sub, x = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...x });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "how-to-receive-feedback-from-teammates--w01",
+  hook: "HOOK-09",
+  loop: { open: "s01", close: "s28" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "team-members", slug: "how-to-receive-feedback-from-teammates", door: "ky-nang", level: "B1",
+    title: "Cách nhận góp ý từ đồng đội mà không tự ái", series: "Làm thành viên tốt trong nhóm" },
+  format: "W", mode: "text", audio: {},
+  notes: "Phủ ý: 25/25. Đổi tên: Cường → Lan; Tú → Dũng; người gửi báo cáo tuần ở công ty (p16, “bạn”) → Thảo, hai đồng nghiệp góp ý đầu → Dũng, Lan (người thứ ba do người kể nói); người được góp ý ở p18–p24 (“bạn”) → Dũng, người góp ý → Lan. Chuyện Yên và Sang (p12) kể trên thẻ, không nêu tên. Vai mới (Bin, Bà Tư, Sam): không dùng, bài không có trẻ con, bà cụ hay người nước ngoài. Câu treo ở s01 (“lên thật sẽ khác”) được trả lời ở s10 (DLG-01). Phần làm lại s10 dùng câu mẫu p5–p6; câu nhắc lại ý chính là lời Dũng tóm hai ý Lan đã góp, câu đáp của Lan không có trong bài nên không viết. s22 (SCENE-03) dùng nguyên câu trước – sau p21. Danh sách ☐ p25 có sáu mục, END-03 tối đa năm nên gộp “dừng một nhịp” với “cảm ơn, hỏi ví dụ”. Câu đố: questions[6], questions[24] (không có tên nhân vật).",
+  scenes: [
+    // ---------- Mở đầu kể chuyện ----------
+    { id: "s01", module: "SCENE-01", ref: "p7",
+      data: { set: "campus", label: "Buổi tập thuyết trình",
+        actors: [{ id: "lan", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", "lan", "Dũng, you speak too fast, and you keep looking at the slides.", "Dũng nói nhanh quá, lại nhìn slide suốt.", { pose: "explain" }),
+        L("l2", "dung", "I'm just nervous. It will be different on the real day.", "Tại hồi hộp thôi, lên thật sẽ khác.", { pose: "shrug", face: "stern", react: { lan: "worried" } }),
+        L("l3", null, "Will it really be different?", "Lên thật có khác thật không?", { wait: 300 }),
+      ] },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Nghe góp ý mà không tự ái", pose: "present",
+        items: ["Dừng một nhịp, cảm ơn", "Hỏi một ví dụ cụ thể", "Lọc xem ý nào đáng sửa", "Báo lại khi đã sửa"] },
+      lines: [
+        L("l1", "det", "How do you take feedback from a teammate without feeling hurt?", "Nhận góp ý từ bạn cùng nhóm mà không tự ái, làm sao?"),
+        L("l2", "det", "Pause, and say thanks.", "Dừng một nhịp, cảm ơn."),
+        L("l3", "det", "Ask for one clear example.", "Hỏi một ví dụ cụ thể."),
+        L("l4", "det", "Filter what is worth fixing.", "Lọc xem góp ý nào đáng sửa."),
+        L("l5", "det", "And tell them what you changed.", "Rồi báo lại đã sửa gì."),
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Sáu phần của video", chapters: [
+        { label: "Vì sao khó nghe", illus: "pouting-face" },
+        { label: "Vừa nghe góp ý", illus: "ear" },
+        { label: "Góp ý bằng chữ", illus: "speech-balloon" },
+        { label: "Ý nào nên làm theo", illus: "magnifying-glass-tilted-left" },
+        { label: "Không đồng ý thì nói sao", illus: "handshake" },
+        { label: "Sửa xong rồi", illus: "check-mark-button" } ] },
+      lines: [
+        L("l1", null, "Six parts: why it's hard, the first seconds, written comments,", "Sáu phần: vì sao khó nghe, mấy giây đầu, góp ý bằng chữ,"),
+        L("l2", null, "what to follow, how to disagree, and after you fix it.", "ý nào làm theo, không đồng ý thì nói sao, và sau khi sửa."),
+      ] },
+
+    // ---------- Phần 1 ----------
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 6, title: "Vì sao góp ý ngang hàng khó nghe?" },
+      lines: [L("l1", "det", "Part one: why is feedback from a teammate so hard to hear?", "Phần một: vì sao góp ý từ bạn cùng nhóm khó nghe đến vậy?")] },
+    { id: "s05", module: "CMP-01", ref: "p1",
+      data: { labels: ["Thầy cô, sếp", "Bạn ngang hàng"], left: "Có vai trò đánh giá, dễ chấp nhận hơn", right: "“Cùng là sinh viên, sao được quyền chê mình?”", illus: ["man-teacher", "busts-in-silhouette"] },
+      lines: [
+        L("l1", null, "From a teacher or boss, it's easier. They have the role to judge.", "Thầy cô hay sếp có vai trò đánh giá, nên dễ chấp nhận hơn."),
+        L("l2", null, "From an equal, it hurts our pride. Why can they criticise me?", "Bạn ngang hàng thì chạm tự ái: sao bạn ấy được quyền chê mình?"),
+      ] },
+    { id: "s06", module: "REL-02", ref: "p2",
+      data: { chain: ["Bị chê một phần việc", "Thấy như bị chê cả con người", "Giải thích, bào chữa, tìm lỗi người góp ý"],
+        illus: ["page-facing-up", "pensive-face", "angry-face"] },
+      lines: [
+        L("l1", null, "When your work is criticised, it can feel like you are.", "Bị chê một phần việc, ta dễ thấy như bị chê cả con người mình."),
+        L("l2", null, "Especially in front of the group.", "Nhất là khi bị nói trước cả nhóm."),
+        L("l3", null, "So we explain, defend, or point out their mistakes.", "Phản ứng tự nhiên: giải thích, bào chữa, tìm lỗi người góp ý."),
+      ] },
+    { id: "s07", module: "REL-01", ref: "p3",
+      data: { cause: "Lần nào được góp ý cũng phản ứng gay gắt", effect: "Bạn cùng nhóm thôi nói, bạn mất nguồn thông tin",
+        causeIllus: "angry-face", effectIllus: "zipper-mouth-face" },
+      lines: [
+        L("l1", null, "But teammates see your work first, before the teacher or the client.", "Nhưng bạn cùng nhóm thấy bài bạn sớm nhất, trước thầy cô hay khách hàng."),
+        L("l2", null, "Many comments usually mean they read carefully.", "Nhiều bình luận thường là họ đã đọc kỹ."),
+        L("l3", null, "React angrily every time, and they stop telling you. You never notice the loss.", "Lần nào cũng gay gắt, họ sẽ thôi nói, và bạn mất nguồn tin mà không hay biết."),
+      ] },
+
+    // ---------- Phần 2 ----------
+    { id: "s08", module: "HOST-03", data: { n: 2, of: 6, title: "Vừa nghe góp ý" },
+      lines: [L("l1", "det", "Part two: the first seconds after feedback.", "Phần hai: vừa nghe góp ý, nên phản ứng thế nào?")] },
+    { id: "s09", module: "LIST-06", ref: "p4,p5,p6",
+      data: { title: "Bốn bước đầu tiên", steps: [
+        { text: "Dừng một nhịp, đừng trả lời ngay", illus: "pause-button" },
+        { text: "Cảm ơn ngắn: “Cảm ơn bạn đã nói”", illus: "folded-hands" },
+        { text: "Hỏi một ví dụ: “Đoạn nào khó hiểu nhất?”", illus: "red-question-mark" },
+        { text: "Nhắc lại ý chính bằng lời của mình", illus: "counterclockwise-arrows-button" } ] },
+      lines: [
+        L("l1", null, "Pause. Breathe. The first seconds are when defensive words slip out.", "Dừng một nhịp, hít một hơi. Mấy giây đầu dễ buột ra câu phòng thủ nhất."),
+        L("l2", null, "Thank them briefly: Thanks for telling me. It doesn't mean you agree.", "Cảm ơn ngắn: “Cảm ơn bạn đã nói.” Không có nghĩa là bạn đồng ý."),
+        L("l3", null, "Ask for an example: Which part was the most confusing?", "Hỏi ví dụ: “Bạn chỉ giúp mình đoạn nào khó hiểu nhất?”"),
+        L("l4", null, "Repeat it in your words: So part two has too many numbers, right?", "Nhắc lại: “Tức là phần hai nhiều số quá, khó theo, đúng không?”"),
+      ] },
+    { id: "s10", module: "DLG-01", ref: "p7,p8",
+      data: { set: "campus", label: "Tua lại buổi tập",
+        actors: [{ id: "lan", side: "left" }, { id: "dung", side: "right" }],
+        verdict: { ok: false, label: "Bào chữa ngay, không hỏi thêm",
+          why: "Không hỏi, không tập lại; hôm thật vẫn nói nhanh, đọc slide, bị nhận xét trước cả lớp." } },
+      lines: [
+        L("l1", "lan", "You speak too fast, and you keep looking at the slides.", "Dũng nói nhanh quá, lại nhìn slide suốt.", { pose: "explain" }),
+        L("l2", "dung", "I'm just nervous. It will be different on the real day.", "Tại hồi hộp thôi, lên thật sẽ khác.", { pose: "shrug", face: "stern", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "No questions, no practice. On the real day, the teacher said the same two things to the class.", "Không hỏi, không tập lại. Hôm thật, cô nhận xét đúng y hai điều đó trước cả lớp."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử lại nhé.", { phase: "redo" }),
+        L("l6", "dung", "Thanks for telling me. Which part was the hardest to follow?", "Cảm ơn Lan đã nói. Đoạn nào khó theo nhất?", { phase: "redo", face: "thinking", pose: "think" }),
+        L("l7", "dung", "So I speak too fast and read the slides. Right?", "Tức là mình nói nhanh và đọc slide, đúng không?", { phase: "redo", pose: "explain" }),
+        L("l8", "det", "Feedback at practice is cheaper than criticism on the real day.", "Góp ý ở buổi tập rẻ hơn lời chê ở buổi thật.", { phase: "redo", face: "happy" }),
+      ] },
+
+    // ---------- Phần 3 ----------
+    { id: "s11", module: "HOST-03", data: { n: 3, of: 6, title: "Góp ý bằng chữ" },
+      lines: [L("l1", "det", "Part three: comments in a shared file or a chat.", "Phần ba: góp ý trong tài liệu chung, nhóm chat.")] },
+    { id: "s12", module: "HOST-02", ref: "p9",
+      data: { statement: "Góp ý bằng chữ thường nghe gắt hơn ý người viết", truth: true,
+        why: "Chữ thiếu giọng nói và nét mặt. Đọc lại khi đã bình tĩnh rồi mới trả lời." },
+      lines: [
+        L("l1", "det", "Written comments often sound harsher than the writer meant. True or false?", "Góp ý bằng chữ thường nghe gắt hơn ý người viết. Đúng hay sai?"),
+        L("l2", "det", "True. No voice, no face. Read it again when you're calm, then reply.", "Đúng. Chữ thiếu giọng nói, nét mặt. Bình tĩnh rồi đọc lại, mới trả lời.", { face: "happy" }),
+      ] },
+    { id: "s13", module: "LIST-01", ref: "p10",
+      data: { title: "Trả lời từng bình luận", items: ["“Đã sửa”", "“Mình giữ nguyên vì…”", "“Mình chưa hiểu ý này, bạn giải thích thêm được không?”", "Đừng xoá bình luận khi chưa xử lý"], illus: "memo" },
+      lines: [
+        L("l1", null, "Reply to each comment, briefly: Fixed.", "Trả lời từng bình luận, ngắn gọn: “Đã sửa.”"),
+        L("l2", null, "I'm keeping this, because...", "“Mình giữ nguyên vì…”"),
+        L("l3", null, "I don't get this one. Could you explain more?", "“Mình chưa hiểu ý này, bạn giải thích thêm được không?”"),
+        L("l4", null, "And don't delete a comment before you deal with it.", "Và đừng xoá bình luận khi chưa xử lý."),
+      ] },
+    { id: "s14", module: "CMP-06", ref: "p11",
+      data: { do: ["Cần bàn dài: gọi điện hoặc gặp riêng"], dont: ["Tranh luận qua lại trong nhóm chat"],
+        doIcons: ["telephone-receiver"], dontIcons: ["speech-balloon"] },
+      lines: [
+        L("l1", null, "A long discussion? Move it to a call or a private talk.", "Góp ý cần bàn dài? Chuyển sang gọi điện hoặc gặp riêng."),
+        L("l2", null, "Arguing in the chat turns feedback into winning in front of everyone.", "Cãi qua lại trong nhóm chat biến góp ý thành chuyện thắng thua."),
+      ] },
+    { id: "s15", module: "STORY-01", ref: "p12",
+      data: { context: "Một bạn mở tài liệu chung, thấy bạn cùng nhóm để mười mấy bình luận.",
+        action: "Đang mệt, bạn ấy bấm ẩn hết rồi nhắn: “Phần mình mình tự lo.”",
+        outcome: "Người góp ý thôi đọc giúp, hai lỗi số liệu vẫn nằm trong bài nộp.",
+        illus: ["page-facing-up", "see-no-evil-monkey", "bar-chart"] },
+      lines: [
+        L("l1", null, "One member finds over ten comments from a teammate.", "Một bạn thấy mười mấy bình luận của bạn cùng nhóm."),
+        L("l2", null, "Tired, she hides them all and writes: I'll handle my own part.", "Đang mệt, bạn ấy ẩn hết rồi nhắn: “Phần mình mình tự lo.”"),
+        L("l3", null, "The teammate stops reading. Two data errors stay in the final report.", "Người góp ý thôi đọc. Hai lỗi số liệu vẫn nằm trong bài nộp."),
+      ] },
+    { id: "s16", module: "TEXT-01", ref: "p13",
+      data: { text: "Xoá bình luận không xoá được lỗi.", illus: "wastebasket" },
+      lines: [L("l1", null, "Deleting comments doesn't delete mistakes.", "Xoá bình luận không xoá được lỗi.")] },
+
+    // ---------- Phần 4 ----------
+    { id: "s17", module: "HOST-03", data: { n: 4, of: 6, title: "Góp ý nào nên làm theo?" },
+      lines: [L("l1", "det", "Part four: which feedback should you follow?", "Phần bốn: góp ý nào nên làm theo, góp ý nào không?")] },
+    { id: "s18", module: "LIST-07", ref: "p14",
+      data: { title: "Ba cái lọc", items: [
+        { text: "Có sự việc cụ thể không?", illus: "magnifying-glass-tilted-left" },
+        { text: "Có nhiều người nói giống vậy không?", illus: "busts-in-silhouette" },
+        { text: "Sửa thì bài có tốt hơn không?", illus: "chart-increasing" } ] },
+      lines: [
+        L("l1", null, "You don't have to follow everything. When calm, use three filters.", "Không cần làm theo mọi góp ý. Bình tĩnh rồi, cho qua ba cái lọc."),
+        L("l2", null, "Is it specific? Do several people say the same?", "Có sự việc cụ thể không? Có nhiều người nói giống vậy không?"),
+        L("l3", null, "Would fixing it make the work better?", "Nếu sửa, bài có tốt hơn không?"),
+      ] },
+    { id: "s19", module: "CMP-01", ref: "p15",
+      data: { labels: ["Sự việc", "Chung chung"], left: "“Bảng hai thiếu số liệu tháng Tám”", right: "“Phần của bạn hơi ẩu”", illus: ["bar-chart", "thinking-face"] },
+      lines: [
+        L("l1", null, "Table two is missing August data: a fact. Check it now.", "“Bảng hai thiếu số liệu tháng Tám”: sự việc, kiểm tra được ngay."),
+        L("l2", null, "Your part is a bit careless: ask for an example first.", "“Phần của bạn hơi ẩu”: hỏi thêm ví dụ trước khi quyết."),
+        L("l3", null, "Rude words can still hold good information. Separate the way from the content.", "Góp ý nói vụng vẫn có thể đáng giá. Tách cách nói khỏi nội dung."),
+      ] },
+    { id: "s20", module: "SCENE-01", ref: "p16",
+      data: { set: "online", label: "Báo cáo tuần",
+        actors: [{ id: "lan", side: "left" }, { id: "thao", side: "center" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", null, "At work, Thảo sends a weekly report to her project team.", "Ở công ty, Thảo gửi báo cáo tuần cho nhóm dự án."),
+        L("l2", "dung", "Your report is too long.", "Báo cáo dài quá.", { to: "thao" }),
+        L("l3", "lan", "Next week: it's hard to find the main point.", "Tuần sau: khó tìm ý chính quá.", { to: "thao" }),
+        L("l4", null, "Then a third person asks: so, are we late or not?", "Rồi người thứ ba hỏi: “Tóm lại là trễ hay không trễ?”"),
+        L("l5", "thao", "Is it just their taste, or a real problem?", "Đây là gu riêng, hay vấn đề thật?", { face: "thinking", pose: "think" }),
+      ] },
+    { id: "s21", module: "TEXT-02", ref: "p17",
+      data: { text: "Một người nói là gu, ba người nói là dấu hiệu.", keywords: ["gu", "dấu hiệu"], illus: "triangular-flag" },
+      lines: [
+        L("l1", null, "One person may be taste. Three people pointing one way is a real problem.", "Một người nói có thể là gu. Ba người cùng chỉ một hướng là vấn đề thật."),
+        L("l2", null, "The fix: make it shorter, and put the conclusion first.", "Cách sửa: rút gọn báo cáo, đưa kết luận lên đầu."),
+      ] },
+
+    // ---------- Phần 5 ----------
+    { id: "s22", module: "HOST-03", data: { n: 5, of: 6, title: "Không đồng ý thì nói sao?" },
+      lines: [L("l1", "det", "Part five: how to disagree, politely.", "Phần năm: không đồng ý thì nói thế nào cho khéo?")] },
+    { id: "s23", module: "SCENE-01", ref: "p18",
+      data: { set: "campus", label: "Nói lý do",
+        actors: [{ id: "lan", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", null, "Disagreeing is normal. Give a factual reason, and a way to check.", "Không đồng ý là bình thường. Nói lý do bằng sự việc, đề xuất cách kiểm tra."),
+        L("l2", "dung", "I'm keeping this example, because the task asks for local data.", "Mình giữ ví dụ này vì đề bài yêu cầu số liệu trong nước.", { pose: "explain", to: "lan" }),
+        L("l3", "dung", "Or shall we ask the teacher, to be sure?", "Hay mình hỏi thầy một câu cho chắc nhé?", { face: "happy", react: { lan: "happy" } }),
+      ] },
+    { id: "s24", module: "SCENE-02", ref: "p19",
+      data: { set: "room", label: "Nói riêng sau đó",
+        actor: { id: "dung", side: "right" },
+        contact: { name: "Lan", illus: "woman-student" },
+        messages: [{ from: "me", text: "Lần sau có góp ý chi tiết, bạn nhắn riêng mình trước được không?", at: "l2" }] },
+      lines: [
+        L("l1", null, "Criticised in front of everyone, and it felt bad? Say it privately, later.", "Bị góp ý trước đông người, thấy không thoải mái? Nói riêng sau đó."),
+        L("l2", "dung", "Next time, could you message me first with detailed comments?", "Lần sau có góp ý chi tiết…", { face: "neutral" }),
+        L("l3", null, "You talk about the way, not reject the content.", "Nói về cách góp ý, không phủ nhận nội dung góp ý."),
+      ] },
+    { id: "s25", module: "SCENE-03", ref: "p20,p21",
+      data: { set: "campus", actors: [{ id: "lan", side: "left" }, { id: "dung", side: "right" }],
+        left: { label: "Trước: “ok mình sửa”", ok: false }, right: { label: "Sau: nói rõ từng ý", ok: true } },
+      lines: [
+        L("a1", "dung", "Okay, I'll fix it.", "ok mình sửa.", { phase: "a", face: "happy" }),
+        L("a2", null, "Said to every comment, then nothing changed. The group stops trusting okay.", "Ok với mọi góp ý, rồi giữ nguyên hết. Nhóm thôi tin chữ “ok”.", { phase: "a" }),
+        L("b1", "dung", "Points one and three are fixed. I'm keeping point two: the data is from an official report.", "Ý 1 và 3 mình sửa rồi. Ý 2 mình giữ, số liệu lấy từ báo cáo chính thức.", { phase: "b", pose: "explain" }),
+        L("b2", "dung", "Point four, I'm not sure. Can we talk for five minutes tomorrow?", "Ý 4 mình chưa chắc, mai gọi bàn năm phút được không?", { phase: "b", react: { lan: "happy" } }),
+        L("b3", null, "Which points are fixed, which are kept, and why.", "Nói rõ ý nào sửa, ý nào giữ, và vì sao.", { phase: "b" }),
+      ] },
+    { id: "s26", module: "TEXT-02", ref: "p22",
+      data: { text: "Gật đầu cho xong còn tệ hơn nói thẳng là chưa đồng ý.", keywords: ["Gật đầu cho xong", "nói thẳng"], illus: "face-with-diagonal-mouth" },
+      lines: [
+        L("l1", null, "A yes just to finish is worse than an honest no.", "Gật đầu cho xong còn tệ hơn nói thẳng là chưa đồng ý."),
+        L("l2", null, "They expect changes that never come.", "Người góp ý tưởng bạn sẽ sửa, mà rồi chẳng có gì đổi."),
+      ] },
+
+    // ---------- Phần 6 ----------
+    { id: "s27", module: "HOST-03", data: { n: 6, of: 6, title: "Sửa xong rồi thì làm gì?" },
+      lines: [L("l1", "det", "Last part: after you fix it.", "Phần cuối: sửa xong rồi thì làm gì tiếp?")] },
+    { id: "s28", module: "SCENE-02", ref: "p23,p24",
+      data: { set: "room", label: "Báo lại, xin góp ý",
+        actor: { id: "dung", side: "right" },
+        contact: { name: "Lan", illus: "woman-student" },
+        messages: [
+          { from: "me", text: "Mình đã rút phần hai còn một bảng, bạn xem lại giúp nhé.", at: "l1" },
+          { from: "me", text: "Bạn đọc nhanh giúp mình phần này, chỗ nào chưa ổn thì cứ nói thẳng nhé.", at: "l3" } ] },
+      lines: [
+        L("l1", "dung", "I've cut part two down to one table. Could you check it again?", "Mình đã rút phần hai…", { face: "happy" }),
+        L("l2", null, "Tell them what you changed. Often forgotten, but it's why they help next time.", "Báo lại đã sửa gì. Bước hay bị quên, nhưng là lý do họ sẵn lòng góp ý lần sau."),
+        L("l3", "dung", "Could you read this part quickly? Tell me straight what's not right.", "Bạn đọc nhanh giúp mình…"),
+        L("l4", null, "Ask before you're told. The feedback comes gentler, and more useful.", "Chủ động xin góp ý trước: lời góp ý nhẹ nhàng và hữu ích hơn."),
+      ] },
+    { id: "s29", module: "END-03", ref: "p25",
+      data: { title: "Khi nhận góp ý", illus: "clipboard", items: [
+        "Dừng một nhịp, cảm ơn, hỏi một ví dụ", "Cho góp ý qua ba cái lọc", "Trả lời từng bình luận, không xoá khi chưa xử lý",
+        "Nói rõ ý nào sửa, ý nào giữ", "Báo lại khi đã sửa xong" ] },
+      lines: [
+        L("l1", null, "Pause, thank them, ask for an example.", "Dừng một nhịp, cảm ơn, hỏi một ví dụ."),
+        L("l2", null, "Three filters.", "Cho qua ba cái lọc."),
+        L("l3", null, "Reply to each comment. Don't delete it first.", "Trả lời từng bình luận, không xoá khi chưa xử lý."),
+        L("l4", null, "Say what you fix and what you keep.", "Nói rõ ý nào sửa, ý nào giữ."),
+        L("l5", null, "Report back when it's done.", "Báo lại khi đã sửa xong."),
+      ] },
+
+    // ---------- Câu đố + kết ----------
+    { id: "s30", module: "QUIZ-01", ref: "questions[6]",
+      data: { q: "A teammate says your part is confusing, what is the most useful reply?",
+        options: [
+          "It is not confusing, you just did not read it carefully enough",
+          "Thank you, which paragraph was the most confusing for you",
+          "Fine, then you can rewrite my whole part if you think you are better",
+        ],
+        correct: 1, countdown: 5, illus: "red-question-mark",
+        why: "Hỏi một ví dụ cụ thể để biết chính xác cần sửa chỗ nào." },
+      lines: [
+        L("l1", null, "A teammate says your part is confusing, what is the most useful reply?", "Một bạn nói phần của bạn khó hiểu, câu trả lời hữu ích nhất là gì?"),
+        L("l2", null, "Thank you, which paragraph was the most confusing for you?", "Cảm ơn bạn, đoạn nào khó hiểu nhất với bạn?"),
+        L("l3", null, "One clear example shows exactly what to fix.", "Một ví dụ cụ thể cho biết chính xác cần sửa chỗ nào."),
+      ] },
+    { id: "s31", module: "QUIZ-01", ref: "questions[24]",
+      data: { q: "What does one person is taste, three people is a sign mean?",
+        options: [
+          "Personal taste is always wrong, so ignore any single comment",
+          "When several people give the same feedback, you should take it seriously",
+          "You should only listen to feedback when exactly three people agree on it",
+        ],
+        correct: 1, countdown: 5, illus: "triangular-flag",
+        why: "Nhiều người cùng nói một ý thì rất có thể là vấn đề thật." },
+      lines: [
+        L("l1", null, "What does one person is taste, three people is a sign mean?", "Câu “Một người nói là gu, ba người nói là dấu hiệu” nghĩa là gì?"),
+        L("l2", null, "When several people give the same feedback, you should take it seriously.", "Khi nhiều người cùng góp một ý, hãy coi trọng nó."),
+        L("l3", null, "One comment may be taste. Many saying the same is likely real.", "Một lời có thể là sở thích. Nhiều người cùng nói thì rất có thể là thật."),
+      ] },
+    { id: "s32", module: "END-05", data: { text: "Bốn mươi câu để nghe góp ý mà không tự ái", sub: "Nghe câu hỏi tiếng Anh, chọn đáp án đúng" },
+      lines: [L("l1", "det", "Your turn. Forty questions are waiting below.", "Đến lượt bạn. Bốn mươi câu hỏi đang chờ bên dưới.")] },
+  ],
+};

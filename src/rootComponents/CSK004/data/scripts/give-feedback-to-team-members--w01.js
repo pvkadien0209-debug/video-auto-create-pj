@@ -1,0 +1,245 @@
+// Kịch bản video W lần 3 (#110) — "Góp ý cho thành viên: nói thế nào để họ tiến bộ?" · chuỗi "Lần đầu làm trưởng nhóm"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub), chữ trên thẻ tiếng Việt. Đủ ý để làm 40 câu bài tập.
+const L = (id, who, say, sub, extra = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...extra });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "give-feedback-to-team-members--w01",
+  hook: "HOOK-05",
+  loop: { open: "s01", close: "s27" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "first-time-team-leaders", slug: "give-feedback-to-team-members", door: "ky-nang", level: "B1",
+    title: "Góp ý cho thành viên: nói thế nào để họ tiến bộ?", series: "Lần đầu làm trưởng nhóm" },
+  format: "W", mode: "text", audio: {},
+  notes: "Đổi tên: Hà (p3), “bạn”, “anh” (người góp ý) → Thảo; bạn cũ trong nhóm / thành viên → Dũng; sếp (p3) → Cô Hoa (chỉ nói câu nhận xét có trong bài). Vân (p25) giữ là “một trưởng nhóm” trên thẻ STORY-01, không gán nhân vật (tránh trùng chuyện của Thảo). Vai mới (#110): bài không có trẻ con, bà cụ, người nước ngoài → không dùng. Khuôn kết cục trước – tua lại: mở bằng kết cục 📌 p3 ở kỳ đánh giá (cảnh ba người duy nhất), DLG-01 s05 tua về ba tháng trước, làm lại theo câu mẫu ba bước p11. SCENE-03 s11 dựng từ 🔀 p8; LIST-06 s21 từ 🧪 p19. Phủ ý: 29/29.",
+  scenes: [
+    { id: "s01", module: "SCENE-01", ref: "p3",
+      data: { set: "meeting", label: "Kỳ đánh giá", actors: [{ id: "thao", side: "left" }, { id: "hoa", side: "center", pose: "hold" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", "hoa", "Dung, your work this quarter was not good enough.", "Dũng, quý này em làm chưa tốt.", { pose: "explain", to: "dung", react: { dung: "sad" } }),
+        L("l2", "dung", "Thao, you knew. Why did you not tell me sooner?", "Thảo, cậu biết mà sao không nói với tớ sớm?", { face: "sad", to: "thao", react: { thao: "worried" } }),
+        L("l3", null, "For three months, Thao fixed his reports in silence. Let's rewind.", "Suốt ba tháng, Thảo lặng lẽ sửa báo cáo của Dũng. Tua lại nhé.", { wait: 300 }),
+      ],
+      beats: { after: 700 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Góp ý để họ tiến bộ", pose: "present", items: ["Nói sớm, nói riêng", "Chỉ vào việc cụ thể", "Hỏi để nghe phía họ", "Chốt một việc, hẹn xem lại"] },
+      lines: [
+        L("l1", "det", "How do you give feedback so people really improve?", "Góp ý thế nào để người ta tiến bộ thật?"),
+        L("l2", "det", "Speak early and in private.", "Nói sớm, nói riêng."),
+        L("l3", "det", "Point to the work.", "Chỉ vào việc cụ thể."),
+        L("l4", "det", "Ask, and listen.", "Hỏi để nghe phía họ."),
+        L("l5", "det", "Agree on one action, and check again.", "Chốt một việc, hẹn xem lại."),
+      ] },
+    { id: "s03", module: "HOST-01",
+      data: { title: "Năm phần của video", pose: "point", items: ["Đừng sửa thay", "Chuẩn bị trước khi nói", "Mở lời không trách móc", "Khi họ cãi hoặc buồn", "Sau buổi góp ý"] },
+      lines: [
+        L("l1", "det", "Do not fix it for them.", "Một: đừng sửa thay."),
+        L("l2", "det", "Prepare before you speak.", "Hai: chuẩn bị trước khi nói."),
+        L("l3", "det", "Open without blame.", "Ba: mở lời không trách móc."),
+        L("l4", "det", "When they argue or get upset.", "Bốn: khi họ cãi hoặc buồn."),
+        L("l5", "det", "And after the talk.", "Năm: sau buổi góp ý."),
+      ] },
+
+    // ---------- Phần 1 ----------
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 5, title: "Đừng sửa thay" },
+      lines: [L("l1", "det", "Part one: three months earlier.", "Phần một: ba tháng trước.")] },
+    { id: "s05", module: "DLG-01", ref: "p1,p3,p4",
+      data: { set: "office", label: "Ba tháng trước",
+        actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }],
+        verdict: { ok: false, label: "Lặng lẽ sửa lại cho bạn", why: "Người kia không biết mình sai ở đâu, lỗi cứ lặp lại, còn bạn ôm thêm việc." } },
+      lines: [
+        L("l1", "dung", "Here is the client report.", "Báo cáo gửi khách đây cậu.", { pose: "give" }),
+        L("l2", "thao", "Thanks. I will just fix it myself, quietly.", "Ừ. Thôi mình tự sửa, khỏi nói.", { face: "worried", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "Fix it for him today, and the same mistake comes back tomorrow.", "Sửa thay hôm nay, lỗi lặp ngày mai."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử cách khác nhé.", { phase: "redo" }),
+        L("l6", "thao", "Yesterday's report was missing the costs. The client had to ask, so we lost a day.", "Báo cáo hôm qua thiếu phần chi phí, khách phải hỏi lại nên chậm một ngày.", { phase: "redo", pose: "explain" }),
+        L("l7", "thao", "Next time, check that part before you send it.", "Lần sau cậu rà lại phần đó trước khi gửi nhé.", { phase: "redo", face: "happy" }),
+        L("l8", "dung", "Got it. Thanks for telling me.", "Ừ, cảm ơn cậu đã nói.", { phase: "redo", face: "happy" }),
+      ] },
+    { id: "s06", module: "HOST-02", ref: "p2",
+      data: { statement: "Góp ý là bắt lỗi, là coi mình hơn người", truth: false, why: "Góp ý là giúp: được nhắc sớm thì sửa kịp trước khi sếp hay khách thấy." },
+      lines: [
+        L("l1", "det", "Giving feedback means you think you are better. True or false?", "Góp ý là bắt lỗi, là coi mình hơn người. Đúng hay sai?"),
+        L("l2", "det", "False. It is help. Told early, they can fix it before the boss or client sees.", "Sai. Đó là giúp: nhắc sớm thì sửa kịp trước khi sếp, khách thấy.", { face: "happy" }),
+        L("l3", "det", "“Why did you not tell me sooner?” means they wanted that chance.", "Câu “sao không nói sớm?” nghĩa là họ muốn có cơ hội ấy."),
+      ] },
+
+    // ---------- Phần 2 ----------
+    { id: "s07", module: "HOST-03", data: { n: 2, of: 5, title: "Chuẩn bị trước khi nói" },
+      lines: [L("l1", "det", "Part two: prepare before you speak.", "Phần hai: chuẩn bị trước khi nói.")] },
+    { id: "s08", module: "CMP-01", ref: "p5",
+      data: { labels: ["Nói sớm", "Nhưng đừng lúc đang bực"], left: "Trong vài ngày, khi việc còn mới", right: "Giọng sẽ thành trách móc, dù lời có đúng", illus: ["alarm-clock", "angry-face"] },
+      lines: [
+        L("l1", null, "Speak soon, while it is fresh, usually within a few days.", "Nói sớm, khi việc còn mới, thường trong vài ngày."),
+        L("l2", null, "But not while you are angry. Wait a day, calm down, then speak.", "Nhưng đừng nói lúc đang bực. Chờ một ngày cho bình tĩnh rồi nói."),
+      ] },
+    { id: "s09", module: "CMP-06", ref: "p6",
+      data: { do: ["Gặp riêng hai người", "Một cuộc gọi riêng"], dont: ["Nhóm chat chung", "Trước mặt cả nhóm"],
+        doIcons: ["busts-in-silhouette", "telephone-receiver"], dontIcons: ["mobile-phone", "loudspeaker"] },
+      lines: [
+        L("l1", null, "Choose a private place: a short talk for two, or a call.", "Chọn chỗ riêng: gặp ngắn hai người hoặc một cuộc gọi."),
+        L("l2", null, "Not the team chat, not in front of everyone. They will protect their face, not listen.", "Không nhóm chat chung, không trước cả nhóm. Người nghe lo giữ thể diện hơn là nghe."),
+      ] },
+    { id: "s10", module: "LIST-05", ref: "p7",
+      data: { title: "Ghi ra trước khi gặp", illus: "memo",
+        items: ["Việc cụ thể đã xảy ra", "Ảnh hưởng đến nhóm hoặc khách", "Điều bạn mong lần sau", "Một câu hỏi để nghe phía họ"] },
+      lines: [
+        L("l1", null, "Write four things down: what happened, its effect, what you hope for, and one question.", "Ghi bốn ý: việc xảy ra, ảnh hưởng, điều mong lần sau, một câu hỏi."),
+        L("l2", null, "You will feel less nervous, and speak more clearly.", "Bạn sẽ bớt run và nói gọn hơn."),
+      ] },
+    { id: "s11", module: "SCENE-03", ref: "p8",
+      data: { set: "meeting", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }],
+        left: { label: "Cách A: nhắc giữa họp", ok: false }, right: { label: "Cách B: nói riêng sau", ok: true } },
+      lines: [
+        L("l0", null, "In a meeting, Thao finds that Dung sent the wrong file to a client.", "Giữa buổi họp, Thảo phát hiện Dũng gửi nhầm tệp cho khách."),
+        L("a1", "thao", "Next time, check more carefully!", "Lần sau kiểm tra kỹ vào nhé!", { phase: "a", pose: "point", face: "stern" }),
+        L("a2", "dung", "Sorry.", "Xin lỗi.", { phase: "a", face: "sad" }),
+        L("b1", "thao", "After the meeting: got a few minutes? Let's look at the file together.", "Hết họp: cậu rảnh vài phút không? Mình cùng xem lại tệp nhé.", { phase: "b", pose: "explain" }),
+        L("b2", "dung", "Sure. Let's agree how to check before sending.", "Ừ, thống nhất cách kiểm tra trước khi gửi nhé.", { phase: "b", face: "happy" }),
+        L("l1", null, "Way A: he goes quiet, and speaks less for weeks. Way B: he keeps face and fixes it.", "Cách A: bạn ấy im lặng, ít phát biểu hẳn. Cách B: giữ thể diện, vẫn sửa được lỗi."),
+        L("l2", null, "Next week, when he does well, praise him in the meeting.", "Tuần sau bạn ấy làm tốt, khen ngay giữa buổi họp."),
+      ] },
+    { id: "s12", module: "TEXT-01", ref: "p9",
+      data: { text: "Khen thì nói giữa nhóm, góp ý thì nói riêng.", illus: "speech-balloon" },
+      lines: [L("l1", null, "Praise in front of the group. Correct in private.", "Khen giữa nhóm, góp ý nói riêng.")] },
+
+    // ---------- Phần 3 ----------
+    { id: "s13", module: "HOST-03", data: { n: 3, of: 5, title: "Mở lời không trách móc" },
+      lines: [L("l1", "det", "Part three: how to open without blame.", "Phần ba: mở lời thế nào để không thành trách móc.")] },
+    { id: "s14", module: "CMP-07", ref: "p10",
+      data: { wrong: "Bạn cẩu thả quá.", right: "Báo cáo hôm thứ Ba thiếu phần chi phí.", diff: ["cẩu thả"], note: "Một việc cụ thể thì sửa được, nhận xét tính cách chỉ làm tự ái" },
+      lines: [
+        L("l1", null, "Talk about the work, not the person. Not “You are careless.”", "Nói về việc, đừng nói về người. Không phải “Bạn cẩu thả quá”."),
+        L("l2", null, "But “Tuesday's report was missing the cost section.” That can be fixed.", "Mà là “Báo cáo thứ Ba thiếu phần chi phí”. Việc đó sửa được."),
+      ] },
+    { id: "s15", module: "LIST-07", ref: "p11",
+      data: { title: "Góp ý ba bước", items: [
+        { text: "Việc đã thấy", illus: "eyes" },
+        { text: "Ảnh hưởng của nó", illus: "chart-decreasing" },
+        { text: "Điều mong lần sau", illus: "check-mark-button" } ] },
+      lines: [
+        L("l1", null, "Three steps: what you saw, its effect, and what you hope for next time.", "Ba bước: việc đã thấy, ảnh hưởng, điều mong lần sau."),
+        L("l2", null, "“The plan came two days late, and the client waited. What got in the way?”", "“Kế hoạch tuần này đến trễ hai ngày, khách phải chờ. Vướng ở đâu vậy?”"),
+      ] },
+    { id: "s16", module: "CMP-01", ref: "p12,p13",
+      data: { labels: ["“Lúc nào cũng”, “chẳng bao giờ”", "Kẹp giữa hai lời khen"], left: "Người nghe cãi lại chữ đó, kể lần họ làm đúng", right: "Họ chỉ nhớ lời khen, hoặc nghi mọi lời khen của bạn", illus: ["anger-symbol", "sandwich"] },
+      lines: [
+        L("l1", null, "Avoid “always” and “never”. They argue with the word, and list the times they got it right.", "Tránh “lúc nào cũng”, “chẳng bao giờ”. Người nghe cãi chữ đó, kể lần họ làm đúng."),
+        L("l2", null, "Do not hide it between two compliments. Say it directly and kindly. That is respect.", "Đừng kẹp giữa hai lời khen. Nói thẳng, giọng nhẹ là đủ tôn trọng."),
+      ] },
+    { id: "s17", module: "CMP-02", ref: "p14,p15",
+      data: { title: "Cùng một lời góp ý", before: "“Dạo này em làm ẩu quá.” → “Ẩu ở chỗ nào ạ?”", after: "Báo cáo thứ Ba thiếu số liệu tháng Chín, khách hỏi lại hai lần; lần sau gửi trước một ngày",
+        illusBefore: "face-with-diagonal-mouth", illusAfter: "check-mark-button" },
+      lines: [
+        L("l1", null, "Before: “You have been careless lately.” “Careless where?” A fight.", "Trước: “Dạo này em làm ẩu quá.” “Ẩu chỗ nào ạ?” Thành cãi nhau."),
+        L("l2", null, "After: “Tuesday's report missed September's data. Next time, send it a day early.” Point at the work.", "Sau: “Báo cáo thứ Ba thiếu số liệu tháng Chín. Lần sau gửi trước một ngày.” Chỉ vào việc."),
+      ] },
+
+    // ---------- Phần 4 ----------
+    { id: "s18", module: "HOST-03", data: { n: 4, of: 5, title: "Khi họ cãi hoặc buồn" },
+      lines: [L("l1", "det", "Part four: when they explain, argue, or get upset.", "Phần bốn: khi họ giải thích, cãi lại hoặc buồn.")] },
+    { id: "s19", module: "SCENE-01", ref: "p16",
+      data: { set: "office", label: "Hỏi và nghe", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", "thao", "In your view, where is it getting stuck?", "Theo cậu, chỗ này đang vướng ở đâu?", { pose: "hold" }),
+        L("l2", "dung", "Honestly, I was not sure what the client needed.", "Thật ra mình không rõ khách cần gì.", { face: "worried" }),
+        L("l3", "thao", "Then that part is on me. I will explain more clearly next time.", "Vậy phần đó là lỗi giao việc của mình. Lần sau mình nói rõ hơn.", { face: "thinking", react: { dung: "happy" } }),
+        L("l4", null, "Ask, and really listen. Sometimes the cause is how you gave the task.", "Hỏi và thật sự nghe. Có khi gốc lỗi ở cách bạn giao việc."),
+      ] },
+    { id: "s20", module: "SCENE-01", ref: "p17,p18",
+      data: { set: "office", label: "Khi bạn ấy buồn", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", "dung", "You have really changed since you became leader.", "Làm trưởng nhóm rồi khác ghê.", { face: "sad", pose: "cross" }),
+        L("l2", "thao", "I say this because I want you and the team to do well, not because of the title.", "Mình góp ý vì muốn cậu làm tốt, nhóm chạy tốt, chứ không vì cái chức.", { pose: "explain" }),
+        L("l3", "thao", "I can see you are upset. Let's continue tomorrow morning.", "Mình hiểu cậu đang khó chịu. Sáng mai mình nói tiếp nhé.", { face: "happy", react: { dung: "neutral" } }),
+        L("l4", null, "Stay calm. Do not try to win. Name the feeling, and set a time to continue.", "Bình tĩnh, đừng cố tranh thắng. Ghi nhận cảm xúc, hẹn nói tiếp."),
+      ] },
+    { id: "s21", module: "LIST-06", ref: "p19,p20",
+      data: { title: "Một thành viên nộp trễ ba tuần liền", steps: [
+        { text: "Hỏi: “Tuần này bạn đang vướng gì không?”", illus: "red-question-mark" },
+        { text: "Nghe hết, không ngắt lời: đang làm thêm việc phòng khác", illus: "ear" },
+        { text: "Xử lý đúng gốc: bàn với sếp sắp lại việc", illus: "handshake" },
+        { text: "Hẹn xem lại sau một tuần", illus: "spiral-calendar" } ] },
+      lines: [
+        L("l1", null, "Late three weeks in a row? Before pointing it out, ask an open question.", "Nộp trễ ba tuần liền? Trước khi nhắc lỗi, hỏi một câu mở."),
+        L("l2", null, "Listen to the end. Extra work from another team. Take it to your boss, then check in a week.", "Nghe hết: hoá ra làm thêm việc phòng khác. Bàn với sếp, hẹn xem lại sau một tuần."),
+        L("l3", null, "Ask one question first, and you avoid blaming people unfairly later.", "Hỏi một câu trước, đỡ trách oan sau."),
+      ] },
+
+    // ---------- Phần 5 ----------
+    { id: "s22", module: "HOST-03", data: { n: 5, of: 5, title: "Sau buổi góp ý" },
+      lines: [L("l1", "det", "Last part: how do they really improve?", "Phần cuối: làm sao để họ tiến bộ thật?")] },
+    { id: "s23", module: "SCENE-01", ref: "p21",
+      data: { set: "office", label: "Chốt một việc", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", "thao", "From this week, send me the report one day before it goes to the client.", "Từ tuần này, trước khi gửi khách, cậu gửi mình xem trước một ngày nhé.", { pose: "explain" }),
+        L("l2", "dung", "Deal. One day before.", "Được, trước một ngày.", { face: "happy", pose: "thumb" }),
+        L("l3", null, "One clear action with a time is easier than ten pieces of advice.", "Một việc rõ, có mốc, dễ làm theo hơn mười lời khuyên chung."),
+      ] },
+    { id: "s24", module: "STORY-01", ref: "p22,p25,p26",
+      data: { context: "Một trưởng nhóm góp ý rất nhẹ nhàng về cách trả lời email khách.", action: "Rồi bận dự án mới, quên hẳn chuyện xem lại.", outcome: "Một tháng sau lỗi cũ lặp lại. Hai bên trách nhau.",
+        illus: ["woman-office-worker", "spiral-calendar", "pensive-face"] },
+      lines: [
+        L("l1", null, "A leader gives kind feedback, then gets busy and never checks again.", "Một trưởng nhóm góp ý nhẹ nhàng, rồi bận và quên xem lại."),
+        L("l2", null, "A month later, the old mistake is back. Each thinks the other did not care.", "Một tháng sau lỗi cũ lặp lại. Mỗi bên nghĩ bên kia không để tâm."),
+        L("l3", null, "Set a review date, usually in one or two weeks. No need to check every hour.", "Hẹn ngày xem lại, thường sau một hai tuần. Không cần hỏi từng giờ."),
+        L("l4", null, "After you talk, set a date. When the date comes, check.", "Nói xong thì hẹn, đến hẹn thì xem."),
+      ] },
+    { id: "s25", module: "SCENE-01", ref: "p23",
+      data: { set: "office", label: "Hai tuần sau", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", null, "When they improve, praise them soon, and be specific.", "Khi họ tiến bộ, khen ngay và khen cụ thể."),
+        L("l2", "thao", "This week's report has all the data. The client asked nothing. Thank you!", "Báo cáo tuần này đủ số liệu, khách không hỏi lại câu nào. Cảm ơn cậu!", { face: "happy", pose: "thumb", react: { dung: "happy" } }),
+      ] },
+    { id: "s26", module: "TEXT-04", ref: "p24",
+      data: { text: "Ghi vài dòng: ngày nói chuyện, việc gì, đã thống nhất gì.", marks: ["đã thống nhất gì"], illus: "memo" },
+      lines: [
+        L("l1", null, "Write a few lines: the date, the issue, and what you agreed.", "Ghi vài dòng: ngày nói chuyện, việc gì, đã thống nhất gì."),
+        L("l2", null, "When your boss asks, you rely on facts, not memory or feelings.", "Khi trao đổi với sếp, bạn dựa vào ghi chép, không dựa vào trí nhớ."),
+      ] },
+    { id: "s27", module: "SCENE-01", ref: "p27,p28",
+      data: { set: "meeting", label: "Thành chuyện bình thường", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", null, "Give small feedback often, praise and corrections. If you only call people in for mistakes, everyone gets nervous.", "Góp ý nhỏ, đều, cả khen lẫn nhắc. Chỉ gọi riêng khi có lỗi thì ai cũng hồi hộp."),
+        L("l2", "thao", "This week, was anything unclear in how I gave tasks?", "Tuần này mình giao việc có chỗ nào chưa rõ không?", { pose: "hold", face: "happy" }),
+        L("l3", "dung", "The deadline for the slides was not clear.", "Hạn của bộ slide chưa rõ lắm.", { pose: "explain", react: { thao: "thinking" } }),
+        L("l4", null, "When the leader takes feedback too, it is about work, not rank.", "Trưởng nhóm cũng nhận góp ý, thì đó là chuyện công việc, không phải trên dưới."),
+      ] },
+    { id: "s28", module: "LIST-09", ref: "p29",
+      data: { title: "Trước mỗi lần góp ý", illus: "clipboard", keywords: [
+        { text: "Nói sớm", illus: "alarm-clock" }, { text: "Nói riêng", illus: "busts-in-silhouette" },
+        { text: "Chỉ vào việc", illus: "index-pointing-at-the-viewer" }, { text: "Nói ảnh hưởng", illus: "chart-decreasing" },
+        { text: "Hỏi và nghe", illus: "ear" }, { text: "Chốt một việc", illus: "check-mark-button" },
+        { text: "Hẹn xem lại", illus: "spiral-calendar" }, { text: "Khen khi tiến bộ", illus: "thumbs-up" } ] },
+      lines: [
+        L("l1", null, "Early, private, specific. Say the effect. Ask and listen.", "Nói sớm, nói riêng, chỉ vào việc. Nói ảnh hưởng. Hỏi và nghe."),
+        L("l2", null, "Agree on one action, check again, and praise progress. Save this list.", "Chốt một việc, hẹn xem lại, khen khi tiến bộ. Lưu danh sách này lại."),
+      ] },
+
+    { id: "s29", module: "END-01", ref: "outro",
+      data: { takeaway: "Im lặng quá lâu mới làm mất lòng.", marks: ["Im lặng"], illus: "zipper-mouth-face" },
+      lines: [
+        L("l1", null, "Good feedback does not hurt. Long silence, public words, and vague judgments do.", "Góp ý tốt không làm mất lòng. Im lặng lâu, nói trước đám đông, nói chung chung mới làm mất lòng."),
+        L("l2", null, "This week, pick one small thing, write your four points, and book a private talk.", "Tuần này, chọn một việc nhỏ, ghi bốn ý, hẹn nói chuyện riêng."),
+      ] },
+    { id: "s30", module: "QUIZ-01", ref: "questions[20]",
+      data: {
+        q: "How should you end a feedback conversation?",
+        options: [
+          "Give a long list of general advice so they have many ideas to try",
+          "Agree on one specific action and a clear time, such as checking reports first",
+          "Just say good luck and trust them to work out the next steps alone",
+        ],
+        correct: 1, countdown: 5, illus: "spiral-calendar",
+        why: "Một việc cụ thể có mốc thời gian dễ làm theo hơn nhiều lời khuyên chung.",
+      },
+      lines: [
+        L("l1", null, "How should you end a feedback conversation?", "Nên kết thúc buổi góp ý như thế nào?"),
+        L("l2", null, "Agree on one specific action and a clear time, such as checking reports first.", "Chốt một việc cụ thể và mốc thời gian rõ."),
+        L("l3", null, "One clear action is easier than ten pieces of advice.", "Một việc rõ dễ làm hơn mười lời khuyên chung."),
+      ],
+      beats: { after: 600 } },
+    { id: "s31", module: "END-05", data: { text: "Bốn mươi câu hỏi đang chờ bạn", sub: "Góp ý để nhóm tiến bộ" },
+      lines: [L("l1", "det", "Your turn. Forty questions are waiting below.", "Đến lượt bạn. Bốn mươi câu hỏi đang chờ.", { face: "happy" })] },
+  ],
+};

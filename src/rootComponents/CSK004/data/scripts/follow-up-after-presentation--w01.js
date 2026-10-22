@@ -1,0 +1,256 @@
+// Kịch bản video W lần 3 (#110) — "Sau buổi báo cáo: theo dõi và xác nhận bằng văn bản" · chuỗi "Báo cáo và thuyết trình trước sếp"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub), chữ trên thẻ tiếng Việt. Đủ ý để làm 40 câu bài tập.
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "follow-up-after-presentation--w01",
+  hook: "HOOK-14",
+  loop: { open: "s01", close: "s24" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "presenting-to-managers", slug: "follow-up-after-presentation", door: "ky-nang", level: "B1",
+    title: "Sau buổi báo cáo: theo dõi và xác nhận bằng văn bản", series: "Báo cáo và thuyết trình trước sếp" },
+  format: "W", mode: "text", audio: {},
+  notes: "Đổi tên: Phong (bài đã đổi từ Kiên, #107) → Dũng; Ngọc, Phương, “bạn” (❓ p15) → Thảo; chị Mai (đồng nghiệp trong câu mẫu p1, p8) → Dũng (Thảo gọi “anh Dũng”); sếp (“anh”) → Cô Hoa (Thảo, Dũng gọi “chị”). Vai mới: không dùng (bài không có trẻ con, bà cụ, người nước ngoài). Chỗ đứng cả video: Thảo left, Dũng center, Cô Hoa right. HOOK-14: chuyện của Dũng (p4) bỏ lửng ở s01, đóng ở s24 cuối video (câu hỏi của sếp hôm sau + cách hỏi lại theo p2). SCENE-01 s05 là cảnh 3 người duy nhất. Phủ ý: 23/23. Câu đố questions[15] (p16). #112 nhịp hình (§9): tách hoặc đổi module các cảnh s22, giữ lời đọc và ref.",
+  scenes: [
+    // ---------- Mở đầu kể chuyện ----------
+    { id: "s01", module: "SCENE-01", ref: "p4",
+      data: { set: "office", label: "Chuyện của Dũng",
+        actors: [{ id: "dung", side: "center", pose: "explain" }, { id: "hoa", side: "right", pose: "hold" }] },
+      lines: [
+        { id: "l1", lang: "en", who: "dung", say: "…and that's my plan for the promotion.", sub: "…và đó là kế hoạch khuyến mãi của em ạ.", pose: "explain" },
+        { id: "l2", lang: "en", who: "hoa", say: "Sounds good.", sub: "Ừ, được đấy.", face: "happy" },
+        { id: "l3", lang: "en", who: "dung", say: "Approved! I'll launch it right away.", sub: "Duyệt rồi! Cho chạy chương trình luôn thôi.", face: "happy", pose: "thumb" },
+        { id: "l4", lang: "en", say: "The next day, his boss asks him something he didn't expect. What did 'sounds good' really mean?", sub: "Hôm sau, sếp hỏi Dũng một câu bất ngờ. “Được đấy” thật ra nghĩa là gì?", wait: 300 },
+      ] },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Giữ lại công sức buổi báo cáo", pose: "present",
+        items: ["Chốt lại trước khi rời phòng", "Gửi tóm tắt trong ngày", "Theo dõi đến khi xong"] },
+      lines: [
+        { id: "l1", lang: "en", who: "det", say: "A report's work is kept or lost after the meeting. Three steps:", sub: "Công sức buổi báo cáo được giữ hay mất ở bước sau đó. Ba bước:" },
+        { id: "l2", lang: "en", who: "det", say: "recap before you leave the room,", sub: "chốt lại trước khi rời phòng," },
+        { id: "l3", lang: "en", who: "det", say: "send a written summary the same day,", sub: "gửi tóm tắt bằng văn bản trong ngày," },
+        { id: "l4", lang: "en", who: "det", say: "and follow up until it's done.", sub: "rồi theo dõi đến khi việc xong." },
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Năm chặng sau buổi báo cáo", chapters: [
+        { label: "Chốt trước khi rời phòng", illus: "door" },
+        { label: "Tin tóm tắt", illus: "envelope" },
+        { label: "Sếp không trả lời", illus: "zipper-mouth-face" },
+        { label: "Cập nhật trong lúc làm", illus: "spiral-calendar" },
+        { label: "Việc xong rồi", illus: "check-mark-button" } ] },
+      lines: [
+        { id: "l1", lang: "en", who: "det", say: "Five stops: recap before leaving, then the written summary.", sub: "Năm chặng: chốt trước khi rời phòng, rồi tin tóm tắt." },
+        { id: "l2", lang: "en", who: "det", say: "A silent boss, updates while you work, and when it's done.", sub: "Khi sếp im lặng, cập nhật trong lúc làm, và khi việc xong." },
+      ] },
+
+    // ---------- Chương 1: Chốt trước khi rời phòng ----------
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 5, title: "Trước khi rời phòng, chốt gì?" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part one: what to confirm before you leave the room.", sub: "Phần một: trước khi rời phòng họp, cần chốt gì?" }] },
+    { id: "s05", module: "SCENE-01", ref: "p1",
+      data: { set: "meeting", label: "Vài phút cuối",
+        actors: [{ id: "thao", side: "left", pose: "explain" }, { id: "dung", side: "center" }, { id: "hoa", side: "right", pose: "hold" }] },
+      lines: [
+        { id: "l1", lang: "en", say: "Use the last few minutes to recap out loud.", sub: "Dành vài phút cuối để nhắc lại to." },
+        { id: "l2", lang: "en", who: "thao", say: "Let me recap. You approve option two.", sub: "Em xin chốt lại: chị duyệt phương án hai.", pose: "explain", to: "hoa" },
+        { id: "l3", lang: "en", who: "thao", say: "I handle the quote, Dung handles the contract. We review on Friday.", sub: "Em lo báo giá, anh Dũng lo hợp đồng, thứ Sáu mình xem lại ạ.", react: { dung: "happy", hoa: "happy" } },
+        { id: "l4", lang: "en", say: "If anyone understood it differently, they speak up now, while everyone is still here.", sub: "Ai hiểu khác sẽ lên tiếng ngay lúc đó, khi mọi người còn trong phòng." },
+      ] },
+    { id: "s06", module: "TEXT-07", ref: "p2",
+      data: { en: "So, do you approve it now, or should I send more numbers first?", vi: "Dạ, như vậy chị duyệt luôn hay cần em gửi thêm số liệu rồi chị quyết ạ?",
+        chunks: [{ en: "So, do you approve it now,", vi: "chị duyệt luôn" }, { en: "or should I send more numbers", vi: "hay em gửi thêm số liệu" }, { en: "first?", vi: "trước rồi chị quyết?" }], illus: "red-question-mark" },
+      lines: [
+        { id: "l1", lang: "en", say: "Not sure if it's approved, or just a direction? Ask directly:", sub: "Chưa rõ sếp đã duyệt hay mới đồng ý hướng đi? Hỏi thẳng:" },
+        { id: "l2", lang: "en", say: "So, do you approve it now, or should I send more numbers first?", sub: "“Dạ, như vậy chị duyệt luôn hay cần em gửi thêm số liệu rồi chị quyết ạ?”" },
+        { id: "l3", lang: "en", say: "A friendly nod may mean a good idea, not an approved plan.", sub: "Cái gật đầu có thể chỉ là “ý hay”, chưa chắc là một quyết định." },
+      ] },
+    { id: "s07", module: "LIST-05", ref: "p3",
+      data: { title: "Ghi chép buổi họp cần có", illus: "memo", items: [
+        "Quyết định đã chốt",
+        "Việc cần làm, ai làm, hạn bao giờ",
+        "Câu hỏi còn mở, ai tìm câu trả lời",
+        "Lần gặp hoặc cập nhật tiếp theo" ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Decisions made.", sub: "Quyết định đã chốt." },
+        { id: "l2", lang: "en", say: "Tasks: who does them, and by when.", sub: "Việc cần làm, ai làm, hạn bao giờ." },
+        { id: "l3", lang: "en", say: "Open questions, and who finds the answer, so they aren't forgotten.", sub: "Câu hỏi còn mở và ai tìm câu trả lời, để không bị quên." },
+        { id: "l4", lang: "en", say: "And the next meeting or update.", sub: "Và lần gặp hoặc lần cập nhật tiếp theo." },
+      ] },
+
+    // ---------- Chương 2: Tin tóm tắt ----------
+    { id: "s08", module: "HOST-03", data: { n: 2, of: 5, title: "Họp xong, viết tin tóm tắt" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part two: writing the summary after the meeting.", sub: "Phần hai: họp xong, viết tin tóm tắt thế nào." }] },
+    { id: "s09", module: "CMP-01", ref: "p6",
+      data: { labels: ["Gửi trong ngày", "Để qua vài hôm"], left: "Mọi người còn nhớ, sửa được ngay", right: "Mỗi người nhớ một kiểu, dễ thành tranh luận",
+        illus: ["envelope-with-arrow", "speech-balloon"] },
+      lines: [
+        { id: "l1", lang: "en", say: "Send it the same day, while people still remember.", sub: "Gửi trong ngày, khi mọi người còn nhớ." },
+        { id: "l2", lang: "en", say: "Wait a few days, and everyone remembers it differently. The summary turns into an argument.", sub: "Để vài hôm, mỗi người nhớ một kiểu, tin tóm tắt dễ thành tranh luận." },
+      ] },
+    { id: "s10", module: "LIST-07", ref: "p7",
+      data: { title: "Tin tóm tắt tốt có bốn phần", items: [
+        { text: "Đã quyết gì", illus: "check-mark-button" },
+        { text: "Ai làm gì, trước khi nào", illus: "spiral-calendar" },
+        { text: "Còn câu hỏi gì", illus: "red-question-mark" },
+        { text: "Khi nào cập nhật tiếp", illus: "alarm-clock" } ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Four short parts: what was decided, who does what by when,", sub: "Bốn phần ngắn: đã quyết gì, ai làm gì trước khi nào," },
+        { id: "l2", lang: "en", say: "open questions, and the next update.", sub: "còn câu hỏi gì, khi nào cập nhật tiếp." },
+        { id: "l3", lang: "en", say: "Use bullet points. Don't retell the whole meeting.", sub: "Viết gạch đầu dòng, không kể lại cả buổi họp." },
+      ] },
+    { id: "s11", module: "SCENE-02", ref: "p8,p9",
+      data: { set: "office", label: "Tin nhắn mẫu",
+        actor: { id: "thao", side: "left" }, contact: { name: "Nhóm dự án", illus: "busts-in-silhouette" },
+        messages: [
+          { from: "me", text: "Dạ, em tóm tắt buổi họp sáng nay.", at: "l1" },
+          { from: "me", text: "Đã quyết: chị duyệt phương án hai.", at: "l2" },
+          { from: "me", text: "Việc: em gửi báo giá trước thứ Tư, anh Dũng hoàn thiện hợp đồng trước thứ Sáu.", at: "l3" },
+          { from: "me", text: "Còn mở: chờ khách xác nhận số lượng.", at: "l4" },
+          { from: "me", text: "Nếu em hiểu sai chỗ nào, anh chị sửa giúp em ạ.", at: "l5" } ] },
+      lines: [
+        { id: "l1", lang: "en", who: "thao", say: "Here is a short summary of this morning's meeting.", sub: "Dạ, em tóm tắt buổi họp sáng nay." },
+        { id: "l2", lang: "en", who: "thao", say: "Decided: option two is approved.", sub: "Đã quyết: chị duyệt phương án hai." },
+        { id: "l3", lang: "en", who: "thao", say: "Tasks: I send the quote by Wednesday. Dung finishes the contract by Friday.", sub: "Việc: em gửi báo giá trước thứ Tư, anh Dũng hoàn thiện hợp đồng trước thứ Sáu." },
+        { id: "l4", lang: "en", who: "thao", say: "Open: waiting for the customer to confirm the quantity.", sub: "Còn mở: chờ khách xác nhận số lượng." },
+        { id: "l5", lang: "en", who: "thao", say: "If I got anything wrong, please correct me.", sub: "Nếu em hiểu sai chỗ nào, anh chị sửa giúp em ạ." },
+        { id: "l6", lang: "en", say: "That last line matters. People fix mistakes now, not weeks later with “I never agreed”.", sub: "Câu cuối rất quan trọng: mời đính chính ngay, thay vì về sau mới nói “tôi đâu có đồng ý”." },
+      ] },
+    { id: "s12", module: "HOST-02", ref: "p10",
+      data: { statement: "Tin tóm tắt chỉ cần gửi cho những ai có mặt trong họp", truth: false,
+        why: "Gửi sếp và mọi người có việc trong danh sách, kể cả người vắng hôm đó." },
+      lines: [
+        { id: "l1", lang: "en", who: "det", say: "Only people at the meeting need the summary. True or false?", sub: "Chỉ người có mặt trong họp mới cần tin tóm tắt. Đúng hay sai?" },
+        { id: "l2", lang: "en", who: "det", say: "False. Send it to your boss and everyone with a task, even if they missed the meeting.", sub: "Sai. Gửi sếp và mọi người có việc, kể cả người vắng hôm đó.", face: "stern" },
+        { id: "l3", lang: "en", who: "det", say: "Not the whole office. But a missing owner may never start the task.", sub: "Không cần gửi cả phòng. Nhưng thiếu người được giao, việc có thể không bắt đầu." },
+      ] },
+    { id: "s13", module: "DLG-01", ref: "p11,p12",
+      data: { set: "office", label: "Trước – sau",
+        actors: [{ id: "thao", side: "left" }],
+        verdict: { ok: false, label: "Không gửi gì vì nghĩ ai cũng đã nghe",
+          why: "Hai tuần sau, bên thiết kế vẫn chờ yêu cầu, còn mình tưởng họ đã bắt đầu.",
+          rule: "Nói xong thì quên, viết ra mới còn" } },
+      lines: [
+        { id: "l1", lang: "en", say: "After the meeting, the team agreed on the design for a new campaign.", sub: "Họp xong, cả nhóm đã thống nhất phần thiết kế cho chương trình mới." },
+        { id: "l2", lang: "en", who: "thao", say: "Everyone heard it. No need to send anything.", sub: "Ai cũng nghe rồi, khỏi gửi gì.", face: "happy", pose: "wave", stop: true },
+        { id: "l3", lang: "en", who: "det", say: "Wait a second!", sub: "Khoan đã!", face: "stern" },
+        { id: "l4", lang: "en", who: "det", say: "Two weeks later, each side waits for the other, and the work is late.", sub: "Hai tuần sau, hai bên chờ nhau, chỉ có công việc là trễ.", pose: "point" },
+        { id: "l5", lang: "en", who: "det", say: "Let's rewind and try again.", sub: "Tua lại, thử lại nhé.", phase: "redo" },
+        { id: "l6", lang: "en", who: "thao", say: "I'll send the design request by Tuesday. Design sends a draft by Friday.", sub: "Em gửi yêu cầu thiết kế trước thứ Ba, bên thiết kế gửi bản nháp trước thứ Sáu ạ.", phase: "redo", pose: "phone" },
+        { id: "l7", lang: "en", who: "det", say: "Two lines: who does what, by which day. Nobody has to guess.", sub: "Hai dòng ghi rõ ai làm gì, trước ngày nào. Không ai phải đoán.", phase: "redo", pose: "thumb", face: "happy" },
+      ] },
+
+    // ---------- Chương 3: Sếp không trả lời ----------
+    { id: "s14", module: "HOST-03", data: { n: 3, of: 5, title: "Sếp không trả lời tin tóm tắt" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part three: what if your boss doesn't reply?", sub: "Phần ba: sếp không trả lời tin tóm tắt thì sao?" }] },
+    { id: "s15", module: "CMP-01", ref: "p13,p14",
+      data: { labels: ["Việc thường đã chốt", "Chi tiền, ký với khách, đổi lịch với khách"], left: "Im lặng thường là sếp bận: cứ làm theo điều đã thống nhất",
+        right: "Đừng coi im lặng là đồng ý: nhắn “Chị xác nhận giúp em…”", illus: ["check-mark-button", "money-bag"] },
+      lines: [
+        { id: "l1", lang: "en", say: "For normal tasks agreed in the meeting, silence usually means busy, not no. Go ahead.", sub: "Việc thường đã chốt: im lặng thường là sếp bận, không phải phản đối. Cứ làm." },
+        { id: "l2", lang: "en", say: "Big things, like spending money, signing with a customer, or moving a customer date: silence isn't yes.", sub: "Việc lớn như chi tiền, ký với khách, đổi lịch với khách: im lặng không phải đồng ý." },
+      ] },
+    { id: "s16", module: "DLG-01", ref: "p15,p16",
+      data: { set: "office", label: "Thử nghĩ xem",
+        actors: [{ id: "thao", side: "left", pose: "phone" }],
+        verdict: { ok: false, label: "Coi im lặng là đồng ý chi tiền",
+          why: "Đặt hàng rồi sếp nói chưa từng duyệt, có thể mất cả tuần giải trình.",
+          rule: "Việc nhỏ cứ làm, việc tiền phải hỏi" } },
+      lines: [
+        { id: "l1", lang: "en", say: "Thao asked to buy more equipment. Three days later, still no reply.", sub: "Thảo gửi đề xuất mua thêm thiết bị. Ba ngày rồi sếp chưa trả lời." },
+        { id: "l2", lang: "en", who: "thao", say: "No reply means yes. I'll place the order now.", sub: "Im lặng là đồng ý rồi. Đặt hàng luôn thôi.", face: "happy", pose: "phone", stop: true },
+        { id: "l3", lang: "en", who: "det", say: "Wait a second!", sub: "Khoan đã!", face: "stern" },
+        { id: "l4", lang: "en", who: "det", say: "With money, silence is not a yes. You could spend a week explaining.", sub: "Việc tiêu tiền, im lặng không phải đồng ý. Có thể mất cả tuần giải trình.", pose: "point" },
+        { id: "l5", lang: "en", who: "det", say: "Let's rewind and try again.", sub: "Tua lại, thử lại nhé.", phase: "redo" },
+        { id: "l6", lang: "en", who: "thao", say: "Please confirm the equipment purchase so I can place the order.", sub: "Chị xác nhận giúp em khoản mua thiết bị để em đặt hàng ạ.", phase: "redo", pose: "phone", face: "thinking" },
+        { id: "l7", lang: "en", who: "thao", say: "I'll order after she replies.", sub: "Chờ chị trả lời rồi mình mới đặt.", phase: "redo", face: "happy" },
+      ] },
+
+    // ---------- Chương 4: Cập nhật trong lúc làm ----------
+    { id: "s17", module: "HOST-03", data: { n: 4, of: 5, title: "Trong lúc làm, cập nhật thế nào?" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Part four: updating your boss while you work.", sub: "Phần bốn: trong lúc làm, cập nhật cho sếp thế nào." }] },
+    { id: "s18", module: "LIST-13", ref: "p17,p19",
+      data: { title: "Cập nhật", items: [
+        { title: "Theo các mốc đã hẹn", detail: "Vài dòng: đã xong gì, đang làm gì, cần sếp giúp gì.", illus: "spiral-calendar" },
+        { title: "Khi có thay đổi so với điều đã chốt", detail: "Lùi hạn, đổi người làm: báo bằng văn bản, nói rõ lý do.", illus: "envelope" } ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Update at the agreed points, in a few lines: done, in progress, and help needed.", sub: "Cập nhật theo mốc đã hẹn, vài dòng: đã xong gì, đang làm gì, cần sếp giúp gì." },
+        { id: "l2", lang: "en", say: "When your boss doesn't have to ask, they feel calm.", sub: "Sếp không phải tự đi hỏi là sếp yên tâm." },
+        { id: "l3", lang: "en", say: "Something changed, like a deadline or the person in charge? Tell them in writing, with the reason.", sub: "Có thay đổi như lùi hạn, đổi người làm? Báo bằng văn bản, nói rõ lý do." },
+        { id: "l4", lang: "en", say: "Don't let your boss find out from someone else.", sub: "Đừng để sếp phát hiện thay đổi qua người khác." },
+      ] },
+    { id: "s19", module: "LIST-02", ref: "p18",
+      data: { title: "Gắn nhãn cho từng việc", illus: "label", items: [
+        { icon: "check-mark-button", illus: "check-mark-button", text: "Đúng tiến độ" },
+        { icon: "warning", illus: "warning", text: "Có rủi ro" },
+        { icon: "hourglass-not-done", illus: "hourglass-not-done", text: "Đang trễ" } ] },
+      lines: [
+        { id: "l1", lang: "en", say: "An easy format: label each task.", sub: "Một cách dễ đọc: gắn nhãn cho từng việc." },
+        { id: "l2", lang: "en", say: "On track, at risk, or late.", sub: "Đúng tiến độ, có rủi ro, đang trễ." },
+        { id: "l3", lang: "en", say: "One look, and your boss knows where to pay attention.", sub: "Sếp nhìn qua là biết chỗ nào cần chú ý." },
+      ] },
+
+    // ---------- Chương 5: Việc xong rồi ----------
+    { id: "s20", module: "HOST-03", data: { n: 5, of: 5, title: "Việc xong rồi, còn gì phải làm?" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Last part: the work is done. What's left?", sub: "Phần cuối: việc xong rồi, còn gì phải làm?" }] },
+    { id: "s21", module: "SCENE-01", ref: "p22",
+      data: { set: "office", label: "Tình huống thường gặp",
+        actors: [{ id: "thao", side: "left", face: "happy" }] },
+      lines: [
+        { id: "l1", lang: "en", who: "thao", say: "Project done, on time. My boss will see it herself.", sub: "Dự án xong đúng hạn. Sếp sẽ tự thấy thôi.", face: "happy", pose: "thumb" },
+        { id: "l2", lang: "en", say: "At the end of the quarter, the boss looks back at everyone's results.", sub: "Cuối quý, sếp nhìn lại kết quả từng người." },
+        { id: "l3", lang: "en", say: "She remembers the work that was reported in full. Thao's project feels faint.", sub: "Sếp nhớ rõ việc được báo cáo đầy đủ, còn dự án của Thảo thì mờ nhạt." },
+        { id: "l4", lang: "en", say: "Good work, but nobody clearly knew the results.", sub: "Việc đã làm tốt, chỉ là không ai biết rõ kết quả." },
+      ] },
+    { id: "s22", module: "LIST-13", ref: "p20,p21",
+      data: { title: "Khép lại cho trọn", items: [
+        { title: "Gửi một tin khép lại", detail: "Đã xong; kết quả so với điều đã báo cáo; điều rút kinh nghiệm.", illus: "envelope-with-arrow" },
+        { title: "Đừng bỏ bước này", detail: "Bỏ đi thì sếp không chắc việc đã thật sự xong.", illus: "thinking-face" },
+        { title: "Lưu vào một chỗ dễ tìm", detail: "Tóm tắt, xác nhận để trong thư mục dự án.", illus: "file-folder" },
+        { title: "Vài tháng sau vẫn trả lời được", detail: "“Sao hồi đó quyết vậy?”: mở ra là có câu trả lời.", illus: "magnifying-glass-tilted-left" } ] },
+      lines: [
+        { id: "l1", lang: "en", say: "Send a closing note: it's done, the result compared with the plan, and any lessons.", sub: "Gửi tin khép lại: việc đã xong, kết quả so với điều đã báo cáo, điều rút kinh nghiệm." },
+        { id: "l2", lang: "en", say: "Many people skip this, so the boss isn't sure it's really finished.", sub: "Nhiều người bỏ bước này, nên sếp không chắc việc đã thật sự xong." },
+        { id: "l3", lang: "en", say: "Keep summaries and confirmations in one place, like the project folder.", sub: "Lưu tóm tắt và các xác nhận vào một chỗ, như thư mục dự án." },
+        { id: "l4", lang: "en", say: "Months later, someone asks why you decided that. You open it, and there's the answer.", sub: "Vài tháng sau có người hỏi “sao hồi đó quyết vậy”, mở ra là có câu trả lời." },
+      ] },
+    { id: "s23", module: "TEXT-01", ref: "p23",
+      data: { text: "Làm xong thì báo xong, kèm kết quả.", illus: "trophy" },
+      lines: [{ id: "l1", lang: "en", say: "Finished? Say it's finished, with the results. That's how good work gets seen.", sub: "Làm xong thì báo xong, kèm kết quả, việc tốt mới được thấy." }] },
+
+    // ---------- Quay lại chuyện của Dũng ----------
+    { id: "s24", module: "SCENE-01", ref: "p2,p4,p5",
+      data: { set: "office", label: "Hôm sau",
+        actors: [{ id: "dung", side: "center" }, { id: "hoa", side: "right", pose: "hold" }, { id: "det", side: "det", enter: "pop", at: "l4" }] },
+      lines: [
+        { id: "l1", lang: "en", who: "hoa", say: "Dung, why haven't you sent me the cost sheet yet?", sub: "Dũng, sao em chưa gửi bảng chi phí cho chị xem?", face: "thinking", react: { dung: "surprised" } },
+        { id: "l2", lang: "en", say: "Back to Dung. To his boss, 'sounds good' only meant: good idea, keep working on it.", sub: "Quay lại Dũng. Với sếp, “được đấy” chỉ có nghĩa là “ý tưởng hay, làm tiếp đi”." },
+        { id: "l3", lang: "en", who: "dung", say: "So, is it approved now, or should I send more numbers first?", sub: "Dạ, vậy chị duyệt luôn hay em gửi thêm số liệu rồi chị quyết ạ?", face: "thinking", pose: "explain" },
+        { id: "l4", lang: "en", who: "det", say: "A nod is not an approval. Ask to be sure.", sub: "Gật đầu chưa phải là duyệt, hỏi lại mới chắc.", face: "happy", pose: "thumb" },
+      ] },
+    { id: "s25", module: "END-02", ref: "outro",
+      data: { points: ["Gật đầu chưa phải là duyệt", "Gửi tóm tắt bốn phần trong ngày", "Việc tiền phải hỏi, xong thì báo"],
+        icons: ["red-question-mark", "envelope", "check-mark-button"] },
+      lines: [
+        { id: "l1", lang: "en", say: "A good report only counts when what was agreed gets done.", sub: "Buổi báo cáo chỉ thật sự có giá trị khi điều đã chốt được làm đến nơi." },
+        { id: "l2", lang: "en", say: "Save a four-part summary template on your phone today.", sub: "Hôm nay, soạn sẵn mẫu tin tóm tắt bốn phần trong điện thoại." },
+      ] },
+
+    // ---------- Câu đố ----------
+    { id: "s26", module: "QUIZ-01", ref: "questions[15]",
+      data: {
+        q: "Which short rule helps you decide when silence is enough to go ahead?",
+        options: [
+          "Small tasks can go ahead, but anything involving money needs a clear yes",
+          "Silence always means yes, whether the task is small or involves a lot of money",
+          "Silence always means no, so you should never start anything without a written reply",
+        ],
+        correct: 0, countdown: 5, illus: "money-bag",
+        why: "Việc nhỏ đã chốt thì cứ làm, việc liên quan đến tiền phải có xác nhận rõ.",
+      },
+      lines: [
+        { id: "l1", lang: "en", say: "Which short rule helps you decide when silence is enough to go ahead?", sub: "Nguyên tắc ngắn nào giúp bạn biết khi nào im lặng là đủ để làm tiếp?" },
+        { id: "l2", lang: "en", say: "Small tasks can go ahead, but anything involving money needs a clear yes.", sub: "Việc nhỏ cứ làm, việc dính đến tiền cần một câu đồng ý rõ ràng." },
+        { id: "l3", lang: "en", say: "Easy to remember: small tasks, just do them. Money tasks, always ask.", sub: "Dễ nhớ: việc nhỏ cứ làm, việc tiền phải hỏi." },
+      ] },
+    { id: "s27", module: "END-05",
+      data: { text: "Bốn mươi câu cho bước cuối", sub: "Nghe câu hỏi tiếng Anh, chọn đáp án đúng" },
+      lines: [{ id: "l1", lang: "en", who: "det", say: "Last step of the series. Forty questions are waiting below.", sub: "Bước cuối của chuỗi. Bốn mươi câu hỏi đang chờ bên dưới." }] },
+  ],
+};

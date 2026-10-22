@@ -1,0 +1,228 @@
+// Kịch bản video W lần 3 (#110) — "So sánh hai lời mời làm việc: không chỉ nhìn mức lương" · chuỗi "Từ giảng đường đến công việc đầu tiên"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub), chữ trên thẻ tiếng Việt. Đủ ý để làm 40 câu bài tập.
+const L = (id, who, say, sub, extra = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...extra });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "compare-two-job-offers--w01",
+  hook: "HOOK-03",
+  loop: { open: "s01", close: "s22" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "final-year-students", slug: "compare-two-job-offers", door: "ky-nang", level: "B1",
+    title: "So sánh hai lời mời làm việc: không chỉ nhìn mức lương", series: "Từ giảng đường đến công việc đầu tiên" },
+  format: "W", mode: "text", audio: {},
+  notes: "Đổi tên: “bạn” (người có hai lời mời) → Lan; phụ huynh (p20) → Bác Bình (bố); người quản lý tương lai / nhà tuyển dụng (p3, p10, p15, p21) → Cô Hoa (chỉ đáp câu trung lập: “Hỏi hay đấy, để chị nói rõ”, “Để chị xem lại rồi báo em”); Khánh (p25) → Dũng (trên thẻ STORY-01); Nhân (p12) giữ là “bạn thứ nhất” trên thẻ CMP-03. Vai mới (#110): bài không có trẻ con, bà cụ, người nước ngoài → không dùng. Mở bằng ❓ p16 (câu hỏi “nơi nào thật sự trả cao hơn?”), lời giải ở LIST-06 s17 theo p16 (hai mươi ngày làm, trừ nửa tiếng của nơi B, còn khoảng năm mươi giờ). Câu “chọn chỗ lương cao hơn” của Bác Bình lấy từ lời khuyên phổ biến nêu ở intro; DLG-01 s20 nhận xét hành động “chọn hộ con” theo p20. Câu “Dòng thời gian đi lại làm con lo nhất” chỉ là lời đáp nối với ❓ p16. Phủ ý: 26/26.",
+  scenes: [
+    { id: "s01", module: "SCENE-01", ref: "intro,p16",
+      data: { set: "home", label: "Hai lời mời", actors: [{ id: "lan", side: "left", pose: "phone" }, { id: "binh", side: "right" }] },
+      lines: [
+        L("l1", null, "Lan has two offers. A pays a little more, but it is three hours a day on the road.", "Lan có hai lời mời. Nơi A trả nhỉnh hơn, nhưng mỗi ngày đi về gần ba tiếng."),
+        L("l2", "binh", "Easy. Take the one that pays more.", "Dễ mà. Chọn chỗ lương cao hơn.", { pose: "explain" }),
+        L("l3", "lan", "But B is only fifteen minutes from home…", "Nhưng nơi B gần nhà, đi mười lăm phút…", { face: "thinking", react: { binh: "thinking" } }),
+        L("l4", null, "So which one really pays more?", "Vậy nơi nào thật sự trả cao hơn?", { wait: 300 }),
+      ],
+      beats: { after: 700 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Đặt lên cân, không chỉ lương", pose: "present", items: ["Tiền về tay", "Việc học được, người dẫn đường", "Thời gian và sức khoẻ", "Chọn theo hoàn cảnh mình"] },
+      lines: [
+        L("l1", "det", "Two offers. How do you choose, beyond the salary?", "Hai lời mời, chọn thế nào khi không chỉ nhìn lương?"),
+        L("l2", "det", "Take-home pay.", "Tiền về tay."),
+        L("l3", "det", "What you learn, and who guides you.", "Việc học được, người dẫn đường."),
+        L("l4", "det", "Your time and health.", "Thời gian và sức khoẻ."),
+        L("l5", "det", "And your own situation.", "Và hoàn cảnh của chính mình."),
+      ] },
+    { id: "s03", module: "HOST-01",
+      data: { title: "Năm phần của video", pose: "point", items: ["Có phải trả lời ngay", "So lương cho đúng", "Ngoài lương", "Thời gian, đường đi", "Chọn, đề nghị, từ chối"] },
+      lines: [
+        L("l1", "det", "Must you answer at once?", "Một: có phải trả lời ngay không."),
+        L("l2", "det", "Comparing pay correctly.", "Hai: so lương cho đúng."),
+        L("l3", "det", "Beyond the salary.", "Ba: ngoài lương."),
+        L("l4", "det", "Time and travel.", "Bốn: thời gian, đường đi."),
+        L("l5", "det", "Choosing, asking for more, saying no.", "Năm: chọn, đề nghị thêm, từ chối."),
+      ] },
+
+    // ---------- Phần 1 ----------
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 5, title: "Có phải trả lời ngay" },
+      lines: [L("l1", "det", "Part one: do you have to answer right away?", "Phần một: nhận được lời mời, có phải trả lời ngay không?")] },
+    { id: "s05", module: "SCENE-02", ref: "p1,p2",
+      data: { set: "room", label: "Xin thời gian", actor: { id: "lan", side: "left" }, contact: { name: "Nhà tuyển dụng", illus: "office-building" },
+        messages: [
+          { from: "me", text: "Em rất vui được nhận lời mời. Em xin phép trả lời anh chị trước thứ Sáu tuần này được không ạ?", at: "l2" },
+          { from: "me", text: "Anh chị gửi giúp em thư mời qua email: vị trí, mức lương, ngày bắt đầu, thời gian thử việc ạ.", at: "l3" },
+          { from: "them", text: "Được em, chiều nay chị gửi.", at: "l4" } ] },
+      lines: [
+        L("l1", "lan", "No need to answer at once. Most companies accept a few days.", "Không cần trả lời ngay. Phần lớn nơi tuyển chấp nhận vài ngày.", { face: "thinking" }),
+        L("l2", "lan", "I am very happy to get this offer. May I answer you by this Friday?", "Em rất vui được nhận lời mời. Em xin trả lời trước thứ Sáu tuần này được không ạ?"),
+        L("l3", "lan", "Could you email the offer: role, salary, start date, and probation period?", "Anh chị gửi giúp em thư mời qua email: vị trí, lương, ngày bắt đầu, thử việc ạ."),
+        L("l4", "them", "Sure, I will send it this afternoon.", "Được em, chiều nay chị gửi."),
+        L("l5", null, "A phone promise is easy to remember differently. Get it in writing.", "Lời hứa qua điện thoại dễ mỗi bên nhớ một kiểu. Hãy xin văn bản."),
+      ] },
+    { id: "s06", module: "SCENE-01", ref: "p3",
+      data: { set: "office", label: "Nơi mình thích hơn", actors: [{ id: "lan", side: "left" }, { id: "hoa", side: "center", pose: "hold" }] },
+      lines: [
+        L("l1", "lan", "I just received another offer. Could you tell me roughly when you will decide?", "Em vừa nhận được một lời mời khác. Anh chị cho em biết khoảng khi nào có kết quả không ạ?", { pose: "explain" }),
+        L("l2", "hoa", "Thank you for telling me. I will check and let you know.", "Cảm ơn em đã báo. Để chị xem rồi báo em.", { face: "happy" }),
+        L("l3", null, "Said honestly and politely, this is a normal question, not pressure.", "Nói thật, nhẹ nhàng, đây là câu hỏi bình thường, không phải ép buộc."),
+      ] },
+
+    // ---------- Phần 2 ----------
+    { id: "s07", module: "HOST-03", data: { n: 2, of: 5, title: "So lương cho đúng" },
+      lines: [L("l1", "det", "Part two: how to compare pay correctly.", "Phần hai: so lương thế nào cho đúng.")] },
+    { id: "s08", module: "CMP-01", ref: "p4",
+      data: { labels: ["Lương gộp", "Lương thực nhận"], left: "Trước khi trừ bảo hiểm bắt buộc và thuế", right: "Tiền về tay, sau khi đã trừ", illus: ["money-bag", "money-with-wings"] },
+      lines: [
+        L("l1", null, "The number may be gross pay, before insurance and tax. Or take-home pay, after.", "Con số có thể là lương gộp, trước khi trừ bảo hiểm và thuế, hoặc là thực nhận."),
+        L("l2", null, "Ask first. Two similar numbers can be quite different in your hand.", "Hỏi rõ trước khi so. Hai con số giống nhau có thể chênh đáng kể khi về tay."),
+      ] },
+    { id: "s09", module: "LIST-05", ref: "p5",
+      data: { title: "Ngoài lương cơ bản, hỏi thêm", illus: "clipboard",
+        items: ["Lương thử việc, thử việc bao lâu", "Phụ cấp ăn trưa, đi lại, điện thoại", "Thưởng cố định hay tuỳ kết quả", "Bảo hiểm đóng trên mức lương nào", "Bao lâu thì xét tăng lương"] },
+      lines: [
+        L("l1", null, "Probation pay and length. Allowances for lunch, travel, phone. Fixed or results-based bonus.", "Lương và thời gian thử việc. Phụ cấp ăn trưa, đi lại, điện thoại. Thưởng cố định hay tuỳ kết quả."),
+        L("l2", null, "Social and health insurance, and on which salary. It affects sick pay and maternity pay.", "Bảo hiểm xã hội, y tế, đóng trên mức lương nào: ảnh hưởng chế độ ốm đau, thai sản."),
+        L("l3", null, "And how often pay rises are reviewed.", "Và bao lâu thì xét tăng lương."),
+      ] },
+    { id: "s10", module: "HOST-02", ref: "p6,p7,p8",
+      data: { statement: "Con số lớn hơn trong thư mời là sẽ nhận nhiều tiền hơn", truth: false,
+        why: "Có thể là lương gộp, gồm cả thưởng khó đạt. Hỏi rõ phần cố định.", kicker: "So tiền về tay, đừng so con số trên giấy" },
+      lines: [
+        L("l1", "det", "A bigger number in the offer means more money. True or false?", "Con số lớn hơn trong thư mời là nhiều tiền hơn. Đúng hay sai?"),
+        L("l2", "det", "False. Fifteen million with only eight fixed can bring home less than twelve million fixed.", "Sai. Mười lăm triệu mà chỉ tám triệu cố định có thể ít hơn mười hai triệu cố định.", { face: "stern" }),
+        L("l3", "det", "A bonus “up to” a big number is not sure money. Count the fixed part first.", "Thưởng “có thể lên đến” chưa phải tiền chắc. Cộng phần cố định trước."),
+        L("l4", "det", "Ask: how much is fixed, how is the bonus counted, gross or take-home? Compare the money in your hand.", "Hỏi: cố định bao nhiêu, thưởng tính sao, gộp hay thực nhận. So tiền về tay, đừng so con số trên giấy."),
+      ] },
+
+    // ---------- Phần 3 ----------
+    { id: "s11", module: "HOST-03", data: { n: 3, of: 5, title: "Ngoài lương" },
+      lines: [L("l1", "det", "Part three: what else does a first job give you?", "Phần ba: ngoài lương, công việc đầu tiên cho mình những gì?")] },
+    { id: "s12", module: "SCENE-01", ref: "p9,p10",
+      data: { set: "office", label: "Gặp người quản lý", actors: [{ id: "lan", side: "left" }, { id: "hoa", side: "center", pose: "hold" }] },
+      lines: [
+        L("l1", null, "In your first year, the skills and habits you build stay with you for your whole career.", "Năm đầu, kỹ năng và thói quen làm việc theo bạn cả chặng đường dài."),
+        L("l2", null, "Ask who will guide you, if there is training, and what your daily tasks are.", "Hỏi: ai hướng dẫn, có đào tạo không, việc hằng ngày có gần hướng mình muốn."),
+        L("l3", "lan", "How do you usually give tasks and feedback to new people?", "Anh chị thường giao việc và góp ý cho người mới thế nào ạ?", { pose: "explain", face: "thinking" }),
+        L("l4", "hoa", "Good question. Let me explain.", "Hỏi hay đấy. Để chị nói rõ.", { face: "happy" }),
+        L("l5", null, "Your direct manager shapes your first year. Try to talk with them before you accept.", "Người quản lý trực tiếp ảnh hưởng nhiều đến năm đầu. Cố gặp họ trước khi nhận lời."),
+      ] },
+    { id: "s13", module: "LIST-01", ref: "p11",
+      data: { title: "Hỏi về sự ổn định", items: ["Việc lâu dài hay theo một dự án ngắn", "Nhóm đã có bao nhiêu người", "Người làm trước đã ở bao lâu"],
+        illus: "classical-building", icons: ["calendar", "users", "hourglass"] },
+      lines: [
+        L("l1", null, "Ask about stability: long-term or one project? How big is the team? How long did the last person stay?", "Hỏi về sự ổn định: lâu dài hay theo dự án? Nhóm bao nhiêu người? Người trước ở bao lâu?"),
+        L("l2", null, "A hesitant answer is also information.", "Câu trả lời ngập ngừng cũng là một thông tin."),
+      ] },
+    { id: "s14", module: "CMP-03", ref: "p12,p13",
+      data: { title: "Hai bạn cùng lớp ra trường cùng lúc", illus: "graduation-cap",
+        a: { label: "Bạn thứ nhất", do: "Công ty tên tuổi, không ai hướng dẫn", result: "Sáu tháng nhập liệu", illus: "office-building" },
+        b: { label: "Bạn thứ hai", do: "Công ty nhỏ, việc thật, góp ý mỗi tuần", result: "Nửa năm tự làm được", illus: "seedling" } },
+      lines: [
+        L("l1", null, "A famous name, but nobody has time to guide him: six months of data entry.", "Tên tuổi, nhưng nhóm thiếu người, không ai hướng dẫn: sáu tháng nhập liệu."),
+        L("l2", null, "A small company, real tasks, weekly feedback: she does the whole job in half a year.", "Công ty nhỏ, việc thật, góp ý mỗi tuần: nửa năm tự làm được cả phần việc."),
+      ] },
+    { id: "s14b", module: "TEXT-01", ref: "p13",
+      data: { text: "Chọn người dẫn đường, đừng chỉ chọn biển hiệu.", illus: "compass" },
+      lines: [
+        L("l1", null, "Choose the person who will guide you, not only the sign above the door.", "Chọn người dẫn đường, đừng chỉ chọn biển hiệu."),
+      ] },
+
+    // ---------- Phần 4 ----------
+    { id: "s15", module: "HOST-03", data: { n: 4, of: 5, title: "Thời gian, đường đi" },
+      lines: [L("l1", "det", "Part four: time, travel, and health. Back to Lan's question.", "Phần bốn: thời gian, đường đi, sức khoẻ. Quay lại câu hỏi của Lan.")] },
+    { id: "s16", module: "SCENE-01", ref: "p15",
+      data: { set: "office", label: "Hỏi giờ làm", actors: [{ id: "lan", side: "left" }, { id: "hoa", side: "center", pose: "hold" }] },
+      lines: [
+        L("l1", "lan", "Does the team often work overtime? And how is that time counted?", "Nhóm mình có thường làm thêm giờ không ạ, và thời gian đó được tính ra sao ạ?", { pose: "explain" }),
+        L("l2", "hoa", "Good question. Let me explain our rules.", "Hỏi hay đấy. Để chị nói rõ quy định.", { face: "happy" }),
+        L("l3", null, "Ask about hours, Saturdays, and overtime. Clear answers are a good sign. “We will see” is not.", "Hỏi giờ làm, thứ Bảy, tăng ca. Trả lời rõ là dấu hiệu tốt; “để xem” thì chưa."),
+      ] },
+    { id: "s17", module: "LIST-06", ref: "p14,p16,p17",
+      data: { title: "Nơi A trả nhỉnh hơn, nhưng xa", steps: [
+        { text: "Khoảng hai mươi ngày làm mỗi tháng", illus: "spiral-calendar" },
+        { text: "Ba tiếng mỗi ngày: khoảng sáu mươi giờ", illus: "motor-scooter" },
+        { text: "Trừ nửa tiếng đi về của nơi B", illus: "house" },
+        { text: "Còn khoảng năm mươi giờ không lương", illus: "hourglass-not-done" } ] },
+      lines: [
+        L("l1", null, "Divide the pay by all the hours you give, including the road.", "Chia lương cho tổng số giờ bỏ ra, kể cả giờ trên đường."),
+        L("l2", null, "About twenty work days. Three hours a day is sixty hours. Minus B's half hour: about fifty unpaid hours.", "Khoảng hai mươi ngày làm. Ba tiếng mỗi ngày là sáu mươi giờ. Trừ nửa tiếng của nơi B: còn khoảng năm mươi giờ."),
+        L("l3", null, "More than six working days, plus fuel and tiredness. Try the trip once at rush hour before you say yes.", "Hơn sáu ngày làm, chưa kể xăng và mệt. Trước khi nhận lời, đi thử một lần giờ cao điểm."),
+        L("l4", null, "Hours on the road are working hours nobody pays you for.", "Giờ ngồi xe cũng là giờ làm không lương."),
+      ] },
+
+    // ---------- Phần 5 ----------
+    { id: "s18", module: "HOST-03", data: { n: 5, of: 5, title: "Chọn, đề nghị, từ chối" },
+      lines: [L("l1", "det", "Last part: put it on the scale, ask, and say no nicely.", "Phần cuối: đặt lên bàn cân, đề nghị thêm, từ chối cho đẹp.")] },
+    { id: "s19", module: "LIST-01", ref: "p18",
+      data: { title: "Bảng so hai lời mời", items: ["Tiền về tay", "Việc học được", "Người quản lý", "Đường đi và giờ làm", "Sự ổn định", "Hướng đi sau một hai năm"],
+        illus: "balance-scale", icons: ["wallet", "book-open", "user", "bus", "shield", "compass"] },
+      lines: [
+        L("l1", null, "Make one table with the same criteria for both offers. Score each place.", "Kẻ một bảng, cùng tiêu chí cho cả hai nơi. Chấm điểm từng nơi."),
+        L("l2", null, "Then circle the two criteria that matter most to you right now.", "Rồi khoanh hai tiêu chí quan trọng nhất với bạn lúc này."),
+      ] },
+    { id: "s20", module: "DLG-01", ref: "p19,p20",
+      data: { set: "home", label: "Cùng xem bảng",
+        actors: [{ id: "lan", side: "left" }, { id: "binh", side: "right" }],
+        verdict: { ok: false, label: "Bố mẹ chọn hộ con", why: "Mỗi người một hoàn cảnh. Bố mẹ hỏi giúp con thấy điều bỏ sót, quyết định vẫn là của con." } },
+      lines: [
+        L("l1", "lan", "Here is my table. Pay, learning, manager, travel, stability.", "Đây là bảng của con: lương, việc học được, quản lý, đường đi, ổn định.", { pose: "give" }),
+        L("l2", "binh", "No need. I choose A for you.", "Khỏi xem. Bố chọn nơi A cho con.", { pose: "explain", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "No choice is right for everyone. If the family needs money, pay weighs more. To grow first, learning weighs more.", "Không có lựa chọn đúng cho mọi người. Nhà cần tiền thì tiền về tay nặng hơn; muốn vững nghề thì việc học nặng hơn."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử cách khác nhé.", { phase: "redo" }),
+        L("l6", "binh", "Let's go through each line. What do you think about this one?", "Mình xem từng dòng nhé. Con nghĩ sao về dòng này?", { phase: "redo", face: "thinking", pose: "point" }),
+        L("l7", "lan", "The travel time worries me most.", "Dòng thời gian đi lại làm con lo nhất.", { phase: "redo", face: "thinking" }),
+        L("l8", "det", "Parents ask. The child decides. Not by what friends chose.", "Bố mẹ hỏi, con quyết. Không chọn theo bạn bè.", { phase: "redo", face: "happy" }),
+      ] },
+    { id: "s21", module: "SCENE-01", ref: "p21,p22",
+      data: { set: "office", label: "Đề nghị thêm lương", actors: [{ id: "lan", side: "left" }, { id: "hoa", side: "center", pose: "hold" }] },
+      lines: [
+        L("l0", "lan", "I really want to work here.", "Em rất muốn làm ở đây.", { face: "happy" }),
+        L("l1", "lan", "With my data analysis experience from my thesis, could you consider a slightly higher salary?", "Với kinh nghiệm phân tích số liệu trong đồ án, anh chị cân nhắc mức cao hơn một chút được không ạ?", { pose: "explain" }),
+        L("l2", "hoa", "Let me check and get back to you.", "Để chị xem lại rồi báo em.", { face: "thinking" }),
+        L("l3", null, "Have a reason: the market rate, a specific skill, or another offer. Ask gently, once.", "Cần lý do: mặt bằng lương, một kỹ năng cụ thể, hay một lời mời khác. Nói nhẹ, một lần."),
+        L("l4", null, "Never invent another offer. The industry is small, and a lie can cost you this offer.", "Đừng bịa ra lời mời khác. Giới làm nghề nhỏ lắm, lộ ra là mất luôn lời mời đang có."),
+      ] },
+    { id: "s22", module: "SCENE-02", ref: "p23",
+      data: { set: "room", label: "Từ chối cho đẹp", actor: { id: "lan", side: "left" }, contact: { name: "Nơi thứ hai", illus: "office-building" },
+        messages: [{ from: "me", text: "Em rất cảm ơn anh chị đã dành thời gian và tin tưởng em.", at: "l2" },
+          { from: "me", text: "Sau khi cân nhắc, em xin nhận một vị trí khác gần hướng em muốn theo hơn. Mong có dịp làm việc cùng anh chị sau này ạ.", at: "l3" }] },
+      lines: [
+        L("l1", "lan", "I chose. Now I tell the other place, soon and kindly.", "Mình chọn xong rồi. Giờ báo nơi kia, sớm và tử tế.", { face: "thinking" }),
+        L("l2", "lan", "Thank you very much for your time and your trust in me.", "Em rất cảm ơn anh chị đã dành thời gian và tin tưởng em."),
+        L("l3", "lan", "I have accepted a role closer to my direction. I hope we can work together one day.", "Em xin nhận vị trí gần hướng em muốn theo hơn. Mong có dịp làm việc cùng anh chị."),
+        L("l4", null, "Short, sincere, early. One honest reason is enough.", "Ngắn, thật lòng, báo sớm. Một lý do thật là đủ."),
+      ] },
+    { id: "s23", module: "STORY-01", ref: "p24,p25",
+      data: { context: "Dũng nhận lời nơi thứ nhất cho chắc, vẫn đi phỏng vấn nơi thứ hai.", action: "Nơi thứ hai nhận, Dũng nhắn xin rút hai ngày trước ngày đi làm.", outcome: "Một năm sau, người phỏng vấn Dũng lại là trưởng nhóm cũ của nơi thứ nhất.",
+        illus: ["man-student", "mobile-phone", "face-with-open-mouth"] },
+      lines: [
+        L("l1", null, "Do not accept both and go silent, or say yes and not show up. They held the place, and may have turned others away.", "Đừng nhận cả hai rồi im lặng, hay nhận rồi không đến. Họ đã giữ chỗ, có thể đã từ chối người khác."),
+        L("l2", null, "Dung withdraws two days before starting. A year later, his interviewer is that company's old team leader.", "Dũng xin rút hai ngày trước ngày đi làm. Một năm sau, người phỏng vấn lại là trưởng nhóm cũ nơi ấy."),
+        L("l3", null, "He recognises Dung at once. People move between companies.", "Anh nhận ra Dũng ngay. Người ta chuyển việc qua lại nhiều lắm."),
+      ] },
+
+    { id: "s24", module: "END-01", ref: "p26,outro",
+      data: { takeaway: "Chưa chắc thì xin thời gian, đã nhận thì giữ lời.", marks: ["giữ lời"], illus: "handshake" },
+      lines: [
+        L("l1", null, "If unsure, ask for time. Once you accept, keep your word.", "Chưa chắc thì xin thời gian, đã nhận thì giữ lời."),
+        L("l2", null, "Fill in the table for both offers. Unknown lines become questions to ask.", "Điền bảng cho cả hai nơi. Dòng nào chưa biết, viết sẵn câu hỏi."),
+      ] },
+    { id: "s25", module: "QUIZ-01", ref: "questions[23]",
+      data: {
+        q: "Which saying reminds you to count travel time in a job offer?",
+        options: [
+          "Travel time never matters if the salary is a little higher than elsewhere",
+          "Long rides are free time, so they make any job feel more relaxing",
+          "Hours on the road are working hours that nobody pays you for",
+        ],
+        correct: 2, countdown: 5, illus: "motor-scooter",
+        why: "Giờ ngồi xe cũng là giờ làm không lương.",
+      },
+      lines: [
+        L("l1", null, "Which saying reminds you to count travel time in a job offer?", "Câu nào nhắc bạn tính thời gian đi lại vào lời mời làm việc?"),
+        L("l2", null, "Hours on the road are working hours that nobody pays you for.", "Giờ ngồi xe cũng là giờ làm không lương."),
+        L("l3", null, "Divide the pay by all the hours you give, road included.", "Chia lương cho tổng số giờ bỏ ra, kể cả giờ trên đường."),
+      ],
+      beats: { after: 600 } },
+    { id: "s26", module: "END-05", data: { text: "Bốn mươi câu hỏi đang chờ bạn", sub: "So sánh hai lời mời" },
+      lines: [L("l1", "det", "Your turn. Forty questions are waiting below.", "Đến lượt bạn. Bốn mươi câu hỏi đang chờ.", { face: "happy" })] },
+  ],
+};

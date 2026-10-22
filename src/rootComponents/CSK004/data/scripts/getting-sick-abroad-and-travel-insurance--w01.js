@@ -1,0 +1,263 @@
+// Kịch bản video W lần 3 (#110) — "Bị ốm ở nước ngoài thì làm thế nào? Cách dùng bảo hiểm du lịch" · chuỗi "Gặp sự cố ở nước ngoài: làm gì ngay"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub); nhân vật hoạt hình + thẻ. Đủ ý để làm 40 câu.
+const L = (id, who, say, sub, x = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...x });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "getting-sick-abroad-and-travel-insurance--w01",
+  hook: "HOOK-07",
+  loop: { open: "s01", close: "s23" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "travellers-in-trouble", slug: "getting-sick-abroad-and-travel-insurance", door: "ky-nang", level: "B1",
+    title: "Bị ốm ở nước ngoài thì làm thế nào? Cách dùng bảo hiểm du lịch", series: "Gặp sự cố ở nước ngoài: làm gì ngay" },
+  format: "W", mode: "text", audio: {},
+  notes: "Claude sửa (#110): bỏ số hợp đồng tự đặt (#088). Đổi tên: “bạn” trong ❓ p7 → Thảo, “mẹ bạn” → Cô Hoa; Hoà (p11) → Dũng, kể qua thẻ REL-02, không lên hình (tránh nhầm với Cô Hoa); người gọi tổng đài ở SCENE-02 (p10, “bạn”) → Bác Bình; “bạn” trong ✍️ p16 → Bác Bình; dược sĩ ở nước ngoài (p16, không tên) → Sam (vai mới, người nước ngoài); tổng đài bảo hiểm (p10) là giọng “them” trong SCENE-02. Vai mới: Sam (s17). HOOK-07: người kể mời người xem đặt mình vào vai Thảo. s02 nhắc bài không thay lời khuyên của bác sĩ (mở bài). Câu tiếng Anh mẫu p5, p9, p13, p15, p16, p18 đọc nguyên văn. Câu đố giữ questions[15]. Phủ ý: 22/22. #112 nhịp hình (§9): tách hoặc đổi module các cảnh s05, s21, giữ lời đọc và ref.",
+  scenes: [
+    { id: "s01", module: "SCENE-01", ref: "p7",
+      data: { set: "room", label: "Nửa đêm", actors: [{ id: "thao", side: "left" }, { id: "hoa", side: "right", face: "worried" }] },
+      lines: [
+        L("l1", null, "Imagine you're Thao. Midnight in a hotel abroad.", "Giả sử bạn là Thảo. Nửa đêm, ở khách sạn nước ngoài."),
+        L("l2", "hoa", "My chest feels tight. I can't breathe well.", "Mẹ tức ngực quá, khó thở.", { face: "worried", pose: "hold" }),
+        L("l3", "thao", "Where's the insurance email? Does it pay for an ambulance?", "Email bảo hiểm đâu nhỉ? Cấp cứu có được trả không?", { face: "worried", pose: "phone" }),
+        L("l4", null, "Sick abroad: where do you go, and who do you call first?", "Ốm ở nước ngoài: đi đâu, gọi ai trước?"),
+      ],
+      beats: { after: 500 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Ốm ở nước ngoài: chia ba mức", pose: "present", illus: "stethoscope",
+        items: ["Nguy kịch: gọi cấp cứu ngay", "Cần khám: gọi bảo hiểm trước", "Nhẹ: hỏi dược sĩ, theo dõi"] },
+      lines: [
+        L("l1", "det", "This video doesn't replace a doctor. But it helps you choose: three levels.", "Video không thay lời khuyên bác sĩ, nhưng giúp bạn chọn: ba mức."),
+        L("l2", "det", "Serious: call an ambulance now.", "Nguy kịch: gọi cấp cứu ngay."),
+        L("l3", "det", "Need a doctor today: call your insurer first.", "Cần khám trong ngày: gọi bảo hiểm trước."),
+        L("l4", "det", "Mild: ask a pharmacist and watch. And always keep your papers.", "Nhẹ: hỏi dược sĩ, theo dõi. Và luôn giữ giấy tờ."),
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Hôm nay mình đi qua",
+        chapters: [
+          { label: "Ốm mức nào, đi đâu", illus: "thermometer" },
+          { label: "Nguy hiểm: gọi ai, nói gì", illus: "ambulance" },
+          { label: "Chưa gấp: gọi bảo hiểm", illus: "telephone-receiver" },
+          { label: "Ở nhà thuốc", illus: "pill" },
+          { label: "Giấy tờ để bảo hiểm trả", illus: "receipt" },
+          { label: "Báo ai, những ngày còn lại", illus: "mobile-phone" } ] },
+      lines: [
+        L("l1", null, "Six stops. Which level. Emergencies. Calling the insurer.", "Sáu chặng. Mức nào. Cấp cứu. Gọi bảo hiểm."),
+        L("l2", null, "The pharmacy. Papers. And who to tell.", "Nhà thuốc. Giấy tờ. Và báo ai."),
+      ] },
+
+    // Chương 1: p1–p4
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 6, title: "Ốm mức nào, đi đâu" },
+      lines: [L("l1", "det", "Part one: how sick, and where to go?", "Phần một: ốm mức nào, đi đâu?")] },
+    { id: "s05", module: "LIST-13", ref: "p1,p2,p3",
+      data: { title: "Ba mức",
+        items: [
+          { title: "Khẩn cấp", detail: "Đau ngực, khó thở, ngất, chảy máu nhiều, tai nạn nặng, lú lẫn đột ngột.", illus: "ambulance" },
+          { title: "Gọi cấp cứu ngay", detail: "Số khẩn cấp nơi đó, hoặc nhờ lễ tân gọi. Không cần gọi bảo hiểm trước.", illus: "telephone-receiver" },
+          { title: "Khám trong ngày", detail: "Sốt cao, nôn nhiều, đau kéo dài, vết thương cần khâu.", illus: "hospital" },
+          { title: "Gọi bảo hiểm, rồi đi khám", detail: "Đường dây nóng bảo hiểm hoặc lễ tân tìm nơi phù hợp. Chờ chỉ nặng thêm.", illus: "mobile-phone" } ] },
+      lines: [
+        L("l1", null, "Emergency: chest pain, trouble breathing, fainting, heavy bleeding, a bad accident, sudden confusion.", "Khẩn cấp: đau ngực, khó thở, ngất, chảy máu nhiều, tai nạn nặng, lú lẫn đột ngột."),
+        L("l2", null, "Call the local emergency number, or ask reception to call now. No need to call the insurer first.", "Gọi số khẩn cấp nơi đó, hoặc nhờ lễ tân gọi ngay. Không cần gọi bảo hiểm trước."),
+        L("l3", null, "Need a doctor today: high fever, lots of vomiting, long pain, a cut that needs stitches.", "Cần khám trong ngày: sốt cao, nôn nhiều, đau kéo dài, vết thương cần khâu."),
+        L("l4", null, "Call the insurance hotline or ask reception for a suitable clinic. Then go. Waiting makes it worse.", "Gọi đường dây nóng bảo hiểm hoặc hỏi lễ tân tìm nơi phù hợp, rồi đi khám. Chờ chỉ nặng thêm."),
+      ] },
+    { id: "s05b", module: "LIST-13", ref: "p1,p2,p3",
+      data: { title: "Mức nhẹ",
+        items: [
+          { title: "Hỏi dược sĩ, nghỉ, theo dõi", detail: "Cảm nhẹ, đau bụng thoáng qua, côn trùng cắn.", illus: "pill" },
+          { title: "Không đỡ thì lên mức trên", detail: "Nặng lên thì chuyển mức, đừng cố chịu.", illus: "warning" } ] },
+      lines: [
+        L("l5", null, "Mild: a light cold, a passing stomach ache, insect bites. Ask a pharmacist, rest, and watch.", "Nhẹ: cảm nhẹ, đau bụng thoáng qua, côn trùng cắn. Hỏi dược sĩ, nghỉ, theo dõi."),
+        L("l6", null, "Not better, or getting worse? Move up a level. Don't just put up with it.", "Không đỡ hoặc nặng lên? Chuyển lên mức trên, đừng cố chịu."),
+      ] },
+    { id: "s06", module: "CMP-01", ref: "p4",
+      data: { labels: ["Sai lầm 1", "Sai lầm 2"], left: "Chịu đựng quá lâu vì sợ tốn tiền", right: "Vào phòng cấp cứu vì việc nhỏ",
+        illus: ["money-with-wings", "ambulance"] },
+      lines: [
+        L("l1", null, "Three levels help you avoid two opposite mistakes.", "Ba mức giúp tránh hai sai lầm ngược nhau."),
+        L("l2", null, "Waiting too long because you fear the cost.", "Chịu đựng quá lâu vì sợ tốn tiền."),
+        L("l3", null, "Or going to the emergency room for something small, when a better choice exists.", "Hoặc vào phòng cấp cứu vì việc nhỏ, trong khi có lựa chọn hợp hơn."),
+      ] },
+
+    // Chương 2: p5–p8
+    { id: "s07", module: "HOST-03", data: { n: 2, of: 6, title: "Nguy hiểm: gọi ai, nói gì" },
+      lines: [L("l1", "det", "Part two: an emergency. Who to call, what to say.", "Phần hai: nguy hiểm thì gọi ai, nói gì.")] },
+    { id: "s08", module: "DLG-01", ref: "p5,p6,p7,p8",
+      data: { set: "room", label: "Nửa đêm",
+        actors: [{ id: "thao", side: "left" }, { id: "hoa", side: "right", face: "worried", pose: "hold" }],
+        verdict: { ok: false, label: "Đọc hợp đồng bảo hiểm trước khi gọi cấp cứu",
+          why: "Tức ngực, khó thở là mức khẩn cấp. Đọc hợp đồng có thể mất nửa tiếng.",
+          rule: "Nguy kịch thì gọi cấp cứu, giấy tờ để sau" } },
+      lines: [
+        L("l1", "hoa", "My chest… I can't breathe well.", "Mẹ tức ngực… khó thở quá.", { face: "worried" }),
+        L("l2", "thao", "Hold on, Mum. Let me read the insurance policy first.", "Mẹ chờ chút, con đọc hợp đồng bảo hiểm đã.", { pose: "phone", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern", pose: "stop" }),
+        L("l4", "det", "Reading the policy can take half an hour. With chest pain, every minute counts.", "Đọc hợp đồng có thể mất nửa tiếng. Đau ngực thì mỗi phút đều đáng kể."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử lần nữa nhé.", { phase: "redo" }),
+        L("l6", "thao", "Please call an ambulance. My mother has chest pain.", "Làm ơn gọi xe cấp cứu. Mẹ tôi bị đau ngực.", { phase: "redo", pose: "phone", face: "stern" }),
+        L("l7", null, "Don't know the number? Ask reception, your travel partner, or any staff nearby to call.", "Chưa biết số khẩn cấp? Nhờ lễ tân, người đi cùng hay nhân viên gần nhất gọi giúp.", { phase: "redo" }),
+        L("l8", "thao", "Passport, her list of medicines, the insurance card. Ready.", "Hộ chiếu, danh sách thuốc mẹ dùng, thẻ bảo hiểm. Xong.", { phase: "redo", pose: "give" }),
+        L("l9", "det", "But never let the papers slow the call. Tell the insurer as soon as you can, after.", "Đừng để tìm giấy tờ làm chậm cuộc gọi. Báo bảo hiểm sớm nhất có thể, sau đó.", { phase: "redo" }),
+      ] },
+    { id: "s09", module: "TEXT-02", ref: "p8",
+      data: { text: "Nguy kịch thì gọi cấp cứu, giấy tờ để sau.", keywords: ["gọi cấp cứu", "giấy tờ để sau"], illus: "ambulance" },
+      lines: [L("l1", "det", "In a serious emergency, call for help first. Papers later.", "Nguy kịch thì gọi cấp cứu, giấy tờ để sau.")] },
+
+    // Chương 3: p9–p13
+    { id: "s10", module: "HOST-03", data: { n: 3, of: 6, title: "Chưa gấp: gọi bảo hiểm" },
+      lines: [L("l1", "det", "Part three: not urgent, but you need a doctor today.", "Phần ba: chưa gấp, nhưng cần khám trong ngày.")] },
+    { id: "s11", module: "TEXT-07", ref: "p9",
+      data: { en: "I have travel insurance. I need to see a doctor today.", vi: "Tôi có bảo hiểm du lịch. Hôm nay tôi cần gặp bác sĩ.",
+        chunks: [{ en: "I have travel insurance.", vi: "tôi có bảo hiểm du lịch" }, { en: "I need to see a doctor", vi: "tôi cần gặp bác sĩ" }, { en: "today.", vi: "hôm nay" }], illus: "telephone-receiver" },
+      lines: [
+        L("l1", null, "Many policies ask you to call before a visit that isn't an emergency.", "Nhiều hợp đồng yêu cầu báo trước khi khám nếu không phải cấp cứu."),
+        L("l2", null, "They may send you to a clinic they pay directly. The number is on your card or policy email.", "Họ có thể chỉ bạn đến nơi họ thanh toán thẳng. Số nằm trên thẻ hoặc email hợp đồng."),
+        L("l3", null, "Say: I have travel insurance. I need to see a doctor today.", "Nói: I have travel insurance. I need to see a doctor today."),
+      ] },
+    { id: "s12", module: "SCENE-02", ref: "p10",
+      data: { set: "hotel", label: "Gọi tổng đài", actor: { id: "binh", side: "left" },
+        contact: { name: "Tổng đài bảo hiểm", illus: "telephone-receiver" },
+        messages: [
+          { from: "me", text: "Tôi ở khách sạn trung tâm. Sốt cao từ hôm qua. Số hợp đồng tôi gửi kèm.", at: "l1" },
+          { from: "me", text: "Tôi nên đến đâu? Phải trả trước không? Cần giữ giấy gì?", at: "l2" },
+          { from: "them", text: "Phòng khám gần đó, chúng tôi trả thẳng. Giữ hoá đơn và giấy chẩn đoán.", at: "l3" } ] },
+      lines: [
+        L("l1", "binh", "I'm at a hotel in the centre. High fever since yesterday. My policy number is attached.", "Tôi ở khách sạn trung tâm. Sốt cao từ hôm qua. Số hợp đồng tôi gửi kèm.", { face: "worried" }),
+        L("l2", "binh", "Where should I go? Do I pay first? Which papers should I keep?", "Tôi nên đến đâu? Phải trả trước không? Cần giữ giấy gì?", { face: "thinking" }),
+        L("l3", "them", "A clinic nearby. We pay them directly. Keep the bill and the diagnosis.", "Phòng khám gần đó, chúng tôi trả thẳng. Giữ hoá đơn và giấy chẩn đoán."),
+        L("l4", null, "Tell them where you are, your symptoms, since when, and your policy number.", "Nói rõ: đang ở đâu, triệu chứng gì, từ khi nào, số hợp đồng."),
+      ] },
+    { id: "s13", module: "REL-02", ref: "p11,p12",
+      data: { chain: ["Dũng đau tai hai ngày", "Tự đến phòng khám tư sang, trả tiền", "Không gọi đường dây nóng trước", "Hồ sơ chỉ được xem xét một phần"],
+        illus: ["ear", "hospital", "telephone-receiver", "page-facing-up"] },
+      lines: [
+        L("l1", null, "Dung had ear pain for two days.", "Dũng bị đau tai hai ngày."),
+        L("l2", null, "He found a fancy private clinic near the hotel, paid, and left.", "Anh tự tìm phòng khám tư sang trọng gần khách sạn, trả tiền rồi về."),
+        L("l3", null, "Back home, he read the policy: not an emergency? Call the hotline first.", "Về nước mới đọc kỹ: không phải cấp cứu thì phải gọi trước khi khám."),
+        L("l4", null, "He skipped that call, so his claim was only partly considered.", "Bỏ qua cuộc gọi đó, hồ sơ chỉ được xem xét một phần."),
+        L("l5", "det", "Not urgent? Call your insurer before you call a taxi.", "Chưa gấp thì gọi bảo hiểm trước khi gọi xe."),
+      ] },
+    { id: "s14", module: "TEXT-07", ref: "p13",
+      data: { en: "I have had a high fever since yesterday. I am allergic to penicillin.", vi: "Tôi bị sốt cao từ hôm qua. Tôi dị ứng penicillin.",
+        chunks: [{ en: "I have had a high fever", vi: "tôi bị sốt cao" }, { en: "since yesterday.", vi: "từ hôm qua" }, { en: "I am allergic to penicillin.", vi: "tôi dị ứng penicillin" }], illus: "stethoscope" },
+      lines: [
+        L("l1", null, "With the doctor, keep it short: when it started, how bad, what you take, any allergies.", "Gặp bác sĩ, tả ngắn: bắt đầu khi nào, nặng ra sao, đang dùng thuốc gì, dị ứng gì."),
+        L("l2", null, "I have had a high fever since yesterday. I am allergic to penicillin.", "Tôi bị sốt cao từ hôm qua. Tôi dị ứng penicillin."),
+        L("l3", null, "Not sure you understood? Ask the doctor to write it down.", "Không chắc đã hiểu? Nhờ bác sĩ viết ra giấy."),
+      ] },
+
+    // Chương 4: p14–p17
+    { id: "s15", module: "HOST-03", data: { n: 4, of: 6, title: "Ở nhà thuốc" },
+      lines: [L("l1", "det", "Part four: a mild illness, at the pharmacy.", "Phần bốn: bệnh nhẹ, ra nhà thuốc.")] },
+    { id: "s16", module: "CMP-06", ref: "p14,p15",
+      data: { do: ["Mang hộp thuốc cũ hoặc ảnh hộp thuốc", "Nói dị ứng và thuốc đang dùng trước", "Hỏi cách dùng: “How many times a day?”"],
+        dont: ["Uống thuốc do người lạ đưa"], doIcons: ["pill", "speech-balloon", "red-question-mark"], dontIcons: ["prohibited"] },
+      lines: [
+        L("l1", null, "Bring your old medicine box, or a photo of it.", "Mang theo hộp thuốc cũ, hoặc ảnh hộp thuốc."),
+        L("l2", null, "Names differ by country. The active ingredient on the box tells the pharmacist what you need.", "Tên thuốc mỗi nước một khác, tên hoạt chất trên hộp giúp dược sĩ hiểu."),
+        L("l3", null, "Always mention allergies and the medicines you take, before you get anything.", "Luôn nói dị ứng và thuốc đang dùng trước khi nhận thuốc."),
+        L("l4", null, "Ask how to take it: How many times a day?", "Hỏi cách dùng: How many times a day?"),
+        L("l5", null, "A friendly stranger offers pills? Thank them, say no, and ask a pharmacist.", "Người lạ tốt bụng đưa thuốc? Cảm ơn, từ chối, rồi hỏi dược sĩ."),
+      ] },
+    { id: "s17", module: "SCENE-03", ref: "p16,p17",
+      data: { set: "shop", actors: [{ id: "binh" }, { id: "sam", pose: "hold" }],
+        left: { label: "Trước: chỉ triệu chứng", ok: false }, right: { label: "Sau: nói dị ứng", ok: true } },
+      lines: [
+        L("l0", null, "Binh has a sore throat. He's allergic to one group of antibiotics.", "Bác Bình đau họng, lại dị ứng một nhóm kháng sinh."),
+        L("a1", "binh", "Sore throat.", "Đau họng.", { phase: "a", pose: "point" }),
+        L("a2", "sam", "Here you are. Take these.", "Của bác đây. Bác uống thuốc này nhé.", { phase: "a", pose: "give" }),
+        L("a3", null, "He takes it at once. It could be the very kind he's allergic to, and she'd never know.", "Bác uống luôn. Có khi đúng loại bác dị ứng, mà dược sĩ không hề biết."),
+        L("b1", "binh", "Sore throat. I am allergic to penicillin. Is this medicine safe for me?", "Đau họng. Tôi dị ứng penicillin. Thuốc này có an toàn cho tôi không?", { phase: "b", pose: "give", face: "thinking" }),
+        L("b2", "sam", "Thank you for telling me. Let me choose a different one.", "Cảm ơn bác đã báo. Để tôi chọn loại khác.", { phase: "b", face: "happy", pose: "explain" }),
+        L("l1", null, "A note written in English works even when you're tired or forget the words.", "Tờ giấy viết sẵn bằng tiếng Anh dùng được cả lúc mệt hay quên từ."),
+        L("l2", null, "Say what you're allergic to before you take any medicine.", "Dị ứng gì, nói trước khi nhận thuốc."),
+      ] },
+
+    // Chương 5: p18–p21
+    { id: "s18", module: "HOST-03", data: { n: 5, of: 6, title: "Giấy tờ để bảo hiểm trả" },
+      lines: [L("l1", "det", "Part five: papers, so the insurer pays.", "Phần năm: giữ giấy tờ gì để bảo hiểm trả.")] },
+    { id: "s19", module: "LIST-05", ref: "p18",
+      data: { title: "Khám xong, giữ lại",
+        items: ["Hoá đơn chi tiết từng khoản, không chỉ tổng tiền", "Đơn thuốc và hoá đơn nhà thuốc", "Giấy chẩn đoán hoặc kết quả khám", "Kết quả xét nghiệm nếu có"], illus: "receipt" },
+      lines: [
+        L("l1", null, "An itemised bill, every charge, not just the total.", "Hoá đơn chi tiết từng khoản, không chỉ tổng tiền."),
+        L("l2", null, "The prescription, and the pharmacy receipt.", "Đơn thuốc và hoá đơn nhà thuốc."),
+        L("l3", null, "The diagnosis, and any test results.", "Giấy chẩn đoán, và kết quả xét nghiệm nếu có."),
+        L("l4", null, "Ask: Could I have an itemised receipt, please?", "Hỏi: Could I have an itemised receipt, please?"),
+      ] },
+    { id: "s20", module: "LIST-06", ref: "p19",
+      data: { title: "Giữ hồ sơ khỏi thất lạc",
+        steps: [
+          { text: "Chụp ảnh từng tờ ngay tại chỗ", illus: "camera-with-flash" },
+          { text: "Gửi vào email của mình", illus: "e-mail" },
+          { text: "Hỏi thời hạn nộp, nộp sớm", illus: "spiral-calendar" } ] },
+      lines: [
+        L("l1", null, "Photograph each page right there, before you leave the clinic.", "Chụp ảnh từng tờ ngay tại chỗ, trước khi rời phòng khám."),
+        L("l2", null, "Email them to yourself. Papers get lost easily.", "Gửi vào email của mình. Giấy tờ dễ thất lạc."),
+        L("l3", null, "Ask the insurer for the claim deadline, and send it early.", "Hỏi bảo hiểm thời hạn nộp hồ sơ, và nộp sớm."),
+      ] },
+    { id: "s21", module: "TEXT-01", ref: "p20,p21",
+      data: { text: "Bị hen từ nhỏ, đang mua bảo hiểm du lịch", illus: "lungs" },
+      lines: [
+        L("l1", null, "You've had asthma since childhood, and you're buying travel insurance.", "Bạn bị hen từ nhỏ và đang mua bảo hiểm du lịch."),
+      ] },
+    { id: "s21a", module: "REL-01", ref: "p20,p21",
+      data: { cause: "Cách A: không khai, giấu bệnh cho rẻ", effect: "Vào viện, bảo hiểm xem tiền sử: hồ sơ có thể gặp khó",
+        causeIllus: "see-no-evil-monkey", effectIllus: "hospital" },
+      lines: [
+        L("l2", null, "Way A: hide it, to keep the price down. If an attack sends you to hospital, the insurer checks your history.", "Cách A: giấu cho rẻ. Lên cơn phải vào viện, bảo hiểm sẽ xem tiền sử và lời khai."),
+      ] },
+    { id: "s21c", module: "LIST-05", ref: "p20,p21",
+      data: { title: "Cách B: khai thật", items: ["Hỏi hợp đồng có trả cho bệnh có sẵn không", "Cần thì chọn gói phù hợp"], illus: "handshake" },
+      lines: [
+        L("l3", null, "Way B: declare it. Ask if existing illnesses are covered, and pick a fitting plan.", "Cách B: khai thật, hỏi có trả cho bệnh có sẵn không, chọn gói phù hợp."),
+      ] },
+    { id: "s21b", module: "TEXT-04", ref: "p20,p21",
+      data: { text: "Có thể tốn thêm một ít, nhưng khai thật lúc mua, yên tâm lúc dùng.", marks: ["khai thật lúc mua, yên tâm lúc dùng"], illus: "lungs" },
+      lines: [
+        L("l4", "det", "It may cost a little more. Be honest when you buy, and use it without worry.", "Có thể tốn thêm chút. Khai thật lúc mua, yên tâm lúc dùng."),
+      ] },
+
+    // Chương 6: p22
+    { id: "s22", module: "HOST-03", data: { n: 6, of: 6, title: "Báo ai, những ngày còn lại" },
+      lines: [L("l1", "det", "Last part: who to tell, and the days ahead.", "Phần cuối: báo ai, và những ngày còn lại.")] },
+    { id: "s23", module: "SCENE-02", ref: "p22",
+      data: { set: "hotel", label: "Nhắn công ty", actor: { id: "thao", side: "left" },
+        contact: { name: "Chị trưởng phòng", illus: "woman-office-worker" },
+        messages: [
+          { from: "me", text: "Em bị sốt, đã gọi bảo hiểm và đang khám ở phòng khám gần khách sạn, em sẽ báo kết quả.", at: "l2" },
+          { from: "them", text: "Em nghỉ ngơi nhé, có gì báo chị.", at: "l3" } ] },
+      lines: [
+        L("l1", null, "Tell family or your company how you are and where you're being seen.", "Nhắn người thân hoặc công ty biết tình trạng và nơi đang khám."),
+        L("l2", "thao", "I have a fever. I've called the insurer and I'm at a clinic near the hotel. I'll update you.", "Em bị sốt, đã gọi bảo hiểm, đang khám gần khách sạn, sẽ báo kết quả.", { face: "worried" }),
+        L("l3", "them", "Rest well, and keep me posted.", "Em nghỉ ngơi nhé, có gì báo chị."),
+        L("l4", null, "Too ill to fly as planned? Ask both your insurer and the airline about changing the flight.", "Ốm nặng ảnh hưởng lịch về? Hỏi cả bảo hiểm lẫn hãng bay về việc đổi chuyến."),
+      ] },
+
+    { id: "s24", module: "END-02", ref: "outro",
+      data: { points: ["Nguy kịch: cấp cứu, giấy tờ để sau", "Cần khám: gọi bảo hiểm trước", "Nhẹ: hỏi dược sĩ, nói dị ứng trước"], icons: ["ambulance", "telephone-receiver", "pill"] },
+      lines: [
+        L("l1", null, "First, decide the level. Serious: emergency help.", "Trước hết, phân mức. Nguy kịch: cấp cứu."),
+        L("l2", null, "Need a doctor: call the insurer first. Mild: ask a pharmacist and watch.", "Cần khám: gọi bảo hiểm trước. Nhẹ: hỏi dược sĩ, theo dõi."),
+        L("l3", null, "And keep every paper, on the spot.", "Và giữ đủ giấy tờ ngay tại chỗ."),
+      ] },
+    { id: "s25", module: "QUIZ-01", ref: "questions[15]",
+      data: {
+        q: "Which papers do insurers usually need after you see a doctor abroad?",
+        options: [
+          "Only your passport, since it proves you were in that country",
+          "Only a photo of the hospital building and your boarding pass",
+          "The itemised bill, the prescription, the diagnosis and any test results",
+        ],
+        correct: 2, countdown: 5, illus: "receipt",
+        why: "Thiếu một tờ có thể làm hồ sơ chậm lại.",
+      },
+      lines: [
+        L("l1", null, "Which papers do insurers usually need after you see a doctor abroad?", "Bảo hiểm thường cần những giấy tờ gì sau khi bạn khám ở nước ngoài?"),
+        L("l2", null, "The itemised bill, the prescription, the diagnosis and any test results.", "Hoá đơn chi tiết, đơn thuốc, giấy chẩn đoán và kết quả xét nghiệm."),
+        L("l3", null, "Missing one can slow your claim. Photograph each one on the spot.", "Thiếu một tờ có thể làm hồ sơ chậm. Chụp ảnh từng tờ ngay tại chỗ."),
+      ] },
+    { id: "s26", module: "END-05", ref: "outro",
+      data: { text: "Lưu số bảo hiểm và số khẩn cấp ngay", sub: "Rồi làm bốn mươi câu bên dưới" },
+      lines: [L("l1", "det", "Right now, save your insurance hotline and the local emergency number. Then try the forty questions!", "Ngay bây giờ, lưu số bảo hiểm và số khẩn cấp nơi bạn ở. Rồi thử bốn mươi câu nhé!", { face: "happy" })] },
+  ],
+};

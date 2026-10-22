@@ -1,0 +1,240 @@
+// Kịch bản video W lần 3 (#110) — "Vừa làm đồ án tốt nghiệp vừa tìm việc: sắp xếp thế nào?" · chuỗi "Từ giảng đường đến công việc đầu tiên"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub), chữ trên thẻ tiếng Việt. Đủ ý để làm 40 câu bài tập.
+const L = (id, who, say, sub, extra = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...extra });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "balance-thesis-and-job-search--w01",
+  hook: "HOOK-05",
+  loop: { open: "s01", close: "s27" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "final-year-students", slug: "balance-thesis-and-job-search", door: "ky-nang", level: "B1",
+    title: "Vừa làm đồ án tốt nghiệp vừa tìm việc: sắp xếp thế nào?", series: "Từ giảng đường đến công việc đầu tiên" },
+  format: "W", mode: "text", audio: {},
+  notes: "Đổi tên: Quyên (p17), “bạn” → Lan; Lan (p4, nộp hồ sơ tràn lan), Đức (p9) → Dũng (Dũng đi từ cách sai p4 sang lịch tuần p9); giảng viên hướng dẫn (p3), hội đồng bảo vệ (p17) → Bác Bình (chỉ nói câu trung lập); người báo nhận việc → Cô Hoa; bố mẹ (p21, p24) → “Bố” trong tin nhắn SCENE-02 và chữ trên thẻ, không lên hình. Vai mới (#110): bài không có trẻ con, bà cụ, người nước ngoài → không dùng. Khuôn kết cục trước – tua lại: mở kết cục 📌 p17, tua về ba tuần trước ở DLG-01 s21; câu hỏi của hội đồng “Em giải thích giúp kết quả này” dựng từ “mấy câu hỏi của hội đồng”. DLG-01 thứ hai s27 dựng từ ❓ p22. Câu kể đồ án ở s17 giữ chung chung theo p13 (vấn đề, cách làm, khó khăn), không bịa nội dung đồ án. Phủ ý: 24/24.",
+  scenes: [
+    { id: "s01", module: "SCENE-01", ref: "p17",
+      data: { set: "campus", label: "Ngày bảo vệ", actors: [{ id: "lan", side: "left" }, { id: "binh", side: "right", pose: "hold" }] },
+      lines: [
+        L("l1", "binh", "Could you explain this result for us?", "Em giải thích giúp hội đồng kết quả này nhé?", { pose: "explain" }),
+        L("l2", "lan", "Um… I… I am sorry.", "Dạ… em… em xin lỗi ạ.", { face: "worried", react: { binh: "thinking" } }),
+        L("l3", null, "Lan's score is lower than she hoped. Three weeks earlier, she got a job. Let's rewind.", "Điểm của Lan thấp hơn mong. Ba tuần trước, Lan vừa được nhận việc. Tua lại nhé.", { wait: 300 }),
+      ],
+      beats: { after: 700 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Đồ án và tìm việc cùng lúc", pose: "present", items: ["Hạn cứng làm trước", "Khối giờ cố định", "Tìm việc có chọn lọc", "Nói rõ lịch của mình"] },
+      lines: [
+        L("l1", "det", "Thesis and job hunting at the same time. How do you fit both?", "Vừa đồ án vừa tìm việc, sắp xếp thế nào cho kịp cả hai?"),
+        L("l2", "det", "Fixed deadlines first.", "Hạn cứng làm trước."),
+        L("l3", "det", "Fixed blocks of time.", "Chia tuần thành khối giờ cố định."),
+        L("l4", "det", "Apply to fewer, better places.", "Tìm việc có chọn lọc."),
+        L("l5", "det", "And tell people your schedule.", "Và nói rõ lịch của mình."),
+      ] },
+    { id: "s03", module: "HOST-01",
+      data: { title: "Năm phần của video", pose: "point", items: ["Cái gì đi trước", "Chia tuần", "Tìm việc gọn", "Khi trùng lịch bảo vệ", "Giữ sức, thôi so sánh"] },
+      lines: [
+        L("l1", "det", "What comes first.", "Một: cái gì đi trước."),
+        L("l2", "det", "Planning your week.", "Hai: chia tuần."),
+        L("l3", "det", "Job hunting that does not eat your time.", "Ba: tìm việc mà không ngốn giờ."),
+        L("l4", "det", "When it clashes with your defence.", "Bốn: khi trùng lịch bảo vệ."),
+        L("l5", "det", "Keeping your strength.", "Năm: giữ sức, thôi so sánh."),
+      ] },
+
+    // ---------- Phần 1 ----------
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 5, title: "Cái gì đi trước" },
+      lines: [L("l1", "det", "Part one: thesis first, or job hunting first?", "Phần một: nên ưu tiên đồ án hay tìm việc?")] },
+    { id: "s05", module: "CMP-01", ref: "p1",
+      data: { labels: ["Đồ án: hạn cứng", "Tìm việc: co giãn"], left: "Ngày nộp, ngày bảo vệ không đổi theo ý bạn", right: "Sát mốc thì lùi lại, nhưng mỗi tuần vẫn giữ một phần nhỏ", illus: ["graduation-cap", "briefcase"] },
+      lines: [
+        L("l1", null, "Your thesis has fixed dates. They will not move for you. Job hunting can bend.", "Đồ án có hạn cứng, không đổi theo ý bạn. Tìm việc thì co giãn được."),
+        L("l2", null, "Near a thesis deadline, the thesis comes first. Other weeks, keep a small job slot, so you keep the rhythm.", "Sát mốc thì đồ án đi trước. Tuần khác vẫn giữ một phần nhỏ cho tìm việc, để khỏi đứt mạch."),
+      ] },
+    { id: "s06", module: "LIST-05", ref: "p2",
+      data: { title: "Mọi mốc trên một lịch", illus: "spiral-calendar",
+        items: ["Nộp đề cương", "Báo cáo giữa kỳ", "Nộp bản cuối", "Bảo vệ", "Hạn nộp hồ sơ vài nơi nhắm tới"] },
+      lines: [
+        L("l1", null, "Put every date on one calendar: outline, mid-term report, final copy, defence, and application deadlines.", "Ghi mọi mốc lên một lịch: đề cương, giữa kỳ, bản cuối, bảo vệ, hạn nộp hồ sơ."),
+        L("l2", null, "One look shows which weeks will be tight, so you can prepare early.", "Nhìn một lịch là thấy tuần nào căng, để chuẩn bị trước."),
+      ] },
+    { id: "s07", module: "SCENE-01", ref: "p3",
+      data: { set: "campus", label: "Gặp thầy hướng dẫn", actors: [{ id: "lan", side: "left" }, { id: "binh", side: "right", pose: "hold" }] },
+      lines: [
+        L("l1", "lan", "I am job hunting at the same time. May I keep our meetings on Wednesday mornings?", "Em đang tìm việc song song, em xin giữ lịch gặp thầy vào sáng thứ Tư ạ.", { pose: "explain", to: "binh" }),
+        L("l2", "lan", "If an interview clashes, I will tell you early.", "Nếu có lịch phỏng vấn trùng, em sẽ báo trước ạ.", { face: "happy", to: "binh" }),
+        L("l3", "binh", "Thank you for telling me early.", "Cảm ơn em đã báo sớm.", { face: "happy", to: "lan" }),
+        L("l4", null, "Told early, teachers understand. A surprise absence, much less.", "Báo sớm thì thầy cô thông cảm, vắng mặt bất ngờ thì khó."),
+      ] },
+    { id: "s08", module: "STORY-01", ref: "p4,p5",
+      data: { context: "Thấy bạn bè có việc, Dũng sốt ruột, gửi hồ sơ tràn lan, có tuần phỏng vấn ba buổi.", action: "Để kịp các buổi đó, Dũng bỏ lỡ hai lần gặp thầy hướng dẫn.", outcome: "Phần phân tích số liệu dồn lại, tuần cuối chưa xong, phải xin lùi hạn.",
+        illus: ["man-student", "spiral-calendar", "hourglass-not-done"] },
+      lines: [
+        L("l1", null, "Dung panics, applies everywhere, and has three interviews in one week. He misses two supervisor meetings.", "Dũng sốt ruột, nộp tràn lan, có tuần phỏng vấn ba buổi, lỡ hai lần gặp thầy."),
+        L("l2", null, "His data analysis piles up, and he must ask for a later deadline.", "Phần phân tích số liệu dồn lại, Dũng phải xin lùi hạn nộp."),
+        L("l3", null, "Fixed deadlines first. Flexible tasks fit around them.", "Hạn cứng làm trước, việc mềm xếp sau."),
+      ] },
+
+    // ---------- Phần 2 ----------
+    { id: "s09", module: "HOST-03", data: { n: 2, of: 5, title: "Chia tuần" },
+      lines: [L("l1", "det", "Part two: split your week so both get time.", "Phần hai: chia tuần thế nào cho đủ cả hai.")] },
+    { id: "s10", module: "CMP-01", ref: "p6",
+      data: { labels: ["Các buổi sáng tỉnh táo", "Hai buổi chiều mỗi tuần"], left: "Làm đồ án, việc khó nhất", right: "Tìm việc: sửa hồ sơ, nộp đơn, luyện phỏng vấn", illus: ["books", "briefcase"] },
+      lines: [
+        L("l1", null, "Split the week into fixed blocks. For example, fresh mornings for the thesis.", "Chia tuần thành khối giờ cố định. Ví dụ: buổi sáng tỉnh táo cho đồ án."),
+        L("l2", null, "Two afternoons for jobs: your CV, applications, interview practice. No need to decide again every day.", "Hai buổi chiều cho tìm việc: hồ sơ, nộp đơn, luyện phỏng vấn. Khỏi phải quyết lại mỗi ngày."),
+      ] },
+    { id: "s11", module: "CMP-07", ref: "p7",
+      data: { wrong: "Today: do chapter three.", right: "Today: rerun the data for table three.", diff: ["do", "chapter"], note: "Việc nhỏ, làm xong trong một buổi thì dễ bắt đầu" },
+      lines: [
+        L("l1", null, "Break the thesis into tasks you can finish in one session.", "Chia đồ án thành việc nhỏ, làm xong trong một buổi."),
+        L("l2", null, "“Do chapter three” is big and vague. “Rerun the data for table three” is easy to start.", "“Làm chương ba” to và mơ hồ. “Chạy lại số liệu bảng ba” thì dễ bắt đầu."),
+      ] },
+    { id: "s12", module: "LIST-05", ref: "p8",
+      data: { title: "Mười lăm phút cuối tuần", illus: "spiral-calendar",
+        items: ["Mốc đồ án tuần tới", "Hồ sơ cần nộp", "Lịch phỏng vấn", "Một buổi nghỉ thật sự"] },
+      lines: [
+        L("l1", null, "Each weekend, fifteen minutes: next thesis goals, applications to send, interview dates.", "Cuối tuần, mười lăm phút: mốc đồ án tuần tới, hồ sơ cần nộp, lịch phỏng vấn."),
+        L("l2", null, "And one real break: no thesis, no job search. Rest keeps you going.", "Và một buổi nghỉ thật: không đồ án, không tìm việc. Nghỉ để đi tiếp được."),
+      ] },
+    { id: "s13", module: "STORY-06", ref: "p9,p10",
+      data: { label: "Tình huống minh hoạ", title: "Lịch tuần mới của Dũng", entries: [
+        { time: "Sáng T2, T4, T6", text: "Đồ án ở thư viện, mỗi buổi một việc", illus: "books" },
+        { time: "Chiều T3, T5", text: "Sửa CV và nộp đơn", illus: "page-facing-up" },
+        { time: "Tối Chủ nhật", text: "Xem lại tuần, chỉnh lịch tuần sau", illus: "spiral-calendar" } ] },
+      lines: [
+        L("l1", null, "Dung tries again. For two days, he notes when he feels sharpest: the morning.", "Dũng làm lại. Hai ngày, Dũng ghi lúc nào mình tỉnh nhất: buổi sáng."),
+        L("l2", null, "Monday, Wednesday, Friday mornings: thesis in the library, one task each. Tuesday, Thursday afternoons: CV and applications.", "Sáng thứ Hai, Tư, Sáu: đồ án ở thư viện, mỗi buổi một việc. Chiều thứ Ba, Năm: CV, nộp đơn."),
+        L("l3", null, "Set time, set place, one clear task. Less scrolling. Your freshest hours, for your hardest work.", "Rõ giờ, rõ chỗ, rõ việc, ít lướt điện thoại. Giờ tỉnh nhất cho việc khó nhất."),
+      ] },
+
+    // ---------- Phần 3 ----------
+    { id: "s14", module: "HOST-03", data: { n: 3, of: 5, title: "Tìm việc gọn" },
+      lines: [L("l1", "det", "Part three: job hunting that does not eat all your time.", "Phần ba: tìm việc thế nào để không ngốn hết thời gian.")] },
+    { id: "s15", module: "CMP-01", ref: "p11",
+      data: { labels: ["Một hồ sơ, hàng chục nơi", "Vài nơi thật sự hợp"], left: "Tốn giờ, ít được gọi lại", right: "Mỗi hồ sơ chỉnh vài dòng cho đúng vị trí, chuẩn bị phỏng vấn kỹ hơn", illus: ["package", "bullseye"] },
+      lines: [
+        L("l1", null, "Choose a few places that really fit, instead of one CV for dozens.", "Chọn vài nơi thật sự hợp, thay vì một hồ sơ cho hàng chục nơi."),
+        L("l2", null, "Adjust a few lines for each role. You get more replies, and prepare better.", "Mỗi hồ sơ chỉnh vài dòng cho đúng vị trí: được gọi lại nhiều hơn, chuẩn bị kỹ hơn."),
+      ] },
+    { id: "s16", module: "LIST-01", ref: "p12",
+      data: { title: "Bảng theo dõi đơn đã nộp", items: ["Công ty, vị trí", "Ngày nộp", "Tình trạng", "Bước tiếp theo"],
+        illus: "clipboard", icons: ["building", "calendar", "hourglass", "arrow-right"] },
+      lines: [
+        L("l1", null, "Keep one table: company, role, date, status, next step.", "Lập một bảng: công ty, vị trí, ngày nộp, tình trạng, bước tiếp theo."),
+        L("l2", null, "A few minutes to update. No forgotten interviews, no double applications, and you know when to follow up.", "Vài phút cập nhật: không quên lịch hẹn, không nộp trùng, biết lúc nào nên hỏi lại."),
+      ] },
+    { id: "s17", module: "SCENE-01", ref: "p13",
+      data: { set: "campus", label: "Luyện phỏng vấn", actors: [{ id: "lan", side: "left" }, { id: "dung", side: "center" }] },
+      lines: [
+        L("l1", "dung", "Tell me about a challenge you solved.", "Kể mình nghe một khó khăn cậu đã giải quyết.", { pose: "explain", to: "lan" }),
+        L("l2", "lan", "In my thesis, I worked on one real problem. Here is my method, and the hardest part.", "Trong đồ án, mình giải một vấn đề thật. Đây là cách làm, và chỗ khó nhất.", { pose: "explain", face: "happy", to: "dung" }),
+        L("l3", null, "Your thesis is great interview material. Prepare a short story about it.", "Đồ án là chất liệu tốt cho phỏng vấn. Chuẩn bị một đoạn kể ngắn về nó."),
+      ] },
+
+    // ---------- Phần 4 ----------
+    { id: "s18", module: "HOST-03", data: { n: 4, of: 5, title: "Khi trùng lịch bảo vệ" },
+      lines: [L("l1", "det", "Part four: an interview or a job, right at defence time.", "Phần bốn: được mời phỏng vấn hay đi làm đúng lúc bảo vệ.")] },
+    { id: "s19", module: "SCENE-02", ref: "p14",
+      data: { set: "room", label: "Xin đổi lịch", actor: { id: "lan", side: "left" }, contact: { name: "Nhà tuyển dụng", illus: "office-building" },
+        messages: [{ from: "me", text: "Tuần đó em bảo vệ đồ án tốt nghiệp, em xin phép hẹn sang tuần sau, hoặc chiều thứ Hai nếu anh chị tiện ạ.", at: "l2" }, { from: "them", text: "Được em, chiều thứ Hai nhé.", at: "l3" }] },
+      lines: [
+        L("l1", "lan", "The interview is in my defence week. I will ask to move it, honestly.", "Lịch phỏng vấn trùng tuần bảo vệ. Mình xin đổi, nói thật lý do.", { face: "thinking" }),
+        L("l2", "lan", "That week I defend my thesis. Could we meet next week, or Monday afternoon if it suits you?", "Tuần đó em bảo vệ đồ án, em xin hẹn sang tuần sau, hoặc chiều thứ Hai nếu anh chị tiện ạ."),
+        L("l3", "them", "Sure, Monday afternoon.", "Được em, chiều thứ Hai nhé."),
+        L("l4", null, "Places hiring graduates expect defence dates. They usually understand.", "Nơi tuyển sinh viên sắp ra trường quen lịch bảo vệ, thường sẽ hiểu."),
+      ] },
+    { id: "s21", module: "DLG-01", ref: "p15,p17,p18",
+      data: { set: "office", label: "Ba tuần trước",
+        actors: [{ id: "lan", side: "left" }, { id: "hoa", side: "farright" }],
+        verdict: { ok: false, label: "Hứa đi làm ngay khi sắp bảo vệ", why: "Ngày đi làm, đêm sửa slide; hôm bảo vệ lúng túng trước hội đồng." } },
+      lines: [
+        L("l0", null, "Now back to Lan, three weeks before her defence.", "Giờ quay lại Lan, ba tuần trước buổi bảo vệ."),
+        L("l1", "hoa", "You are hired! When can you start?", "Em được nhận rồi! Khi nào em đi làm được?", { face: "happy", pose: "explain" }),
+        L("l2", "lan", "Next Monday!", "Thứ Hai tuần sau ạ!", { face: "happy", pose: "thumb", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "Work by day, slides by night, for three weeks. A start date can be arranged. A defence day cannot.", "Ngày đi làm, đêm sửa slide suốt ba tuần. Ngày đi làm thì hẹn được, ngày bảo vệ thì không."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử cách khác nhé.", { phase: "redo" }),
+        L("l6", "lan", "My defence is in three weeks. Could I start after that, or work fewer days at first?", "Ba tuần nữa em bảo vệ. Em xin bắt đầu sau ngày đó, hoặc làm ít ngày hơn lúc đầu được không ạ?", { phase: "redo", pose: "explain" }),
+        L("l7", "hoa", "That is fine.", "Được em.", { phase: "redo", face: "happy" }),
+      ] },
+    { id: "s22", module: "LIST-05", ref: "p16",
+      data: { title: "Công ty hỏi bằng mà chưa nhận", illus: "scroll",
+        items: ["Hỏi phòng đào tạo của trường", "Giấy chứng nhận tốt nghiệp tạm thời hoặc giấy xác nhận", "Nói rõ ngày dự kiến có bằng", "Không nói đã có bằng khi chưa có"] },
+      lines: [
+        L("l1", null, "The company asks for your diploma, but you do not have it yet?", "Công ty hỏi bằng tốt nghiệp mà bạn chưa nhận?"),
+        L("l2", null, "Ask the training office about a temporary certificate or a letter, by your school's rules, and give the expected date.", "Hỏi phòng đào tạo về giấy chứng nhận tạm thời hoặc giấy xác nhận, tuỳ trường, và nói rõ ngày dự kiến có bằng."),
+        L("l3", null, "Never say you have it when you do not. It is untrue, and easy to check.", "Đừng nói đã có bằng khi chưa có: sai sự thật, lại dễ bị kiểm tra."),
+      ] },
+
+    // ---------- Phần 5 ----------
+    { id: "s23", module: "HOST-03", data: { n: 5, of: 5, title: "Giữ sức, thôi so sánh" },
+      lines: [L("l1", "det", "Last part: tired, and comparing yourself with friends?", "Phần cuối: mệt và cứ so mình với bạn bè, giữ sức thế nào?")] },
+    { id: "s24", module: "LIST-02", ref: "p19",
+      data: { title: "Không phải xa xỉ", illus: "battery", items: [
+        { icon: "moon", illus: "bed", text: "Ngủ đủ" },
+        { icon: "utensils", illus: "bento-box", text: "Ăn đúng bữa" },
+        { icon: "footprints", illus: "person-walking", text: "Vận động nhẹ" } ] },
+      lines: [
+        L("l1", null, "Sleep, regular meals, light exercise. Too little sleep slows down both jobs.", "Ngủ đủ, ăn đúng bữa, vận động nhẹ. Thiếu ngủ kéo dài làm chậm cả hai việc."),
+        L("l2", null, "Poor sleep or anxiety for weeks? Tell your family, and go to the school counselling office or a clinic.", "Mất ngủ, lo âu kéo dài nhiều tuần? Nói với người thân, tìm phòng tư vấn tâm lý của trường hoặc cơ sở y tế."),
+      ] },
+    { id: "s25", module: "TEXT-02", ref: "p20",
+      data: { text: "Bạn bè khoe có việc là phần đẹp nhất họ chọn kể.", keywords: ["phần đẹp nhất"], illus: "mobile-phone" },
+      lines: [
+        L("l1", null, "Friends posting new jobs show the best part they chose to share. Everyone has their own pace.", "Bạn bè khoe có việc là kể phần đẹp nhất. Mỗi người một ngành, một nhịp riêng."),
+        L("l2", null, "A better measure: your own plan from last week.", "Thước đo đáng tin hơn: kế hoạch của chính bạn tuần trước."),
+      ] },
+    { id: "s26", module: "SCENE-02", ref: "p21",
+      data: { set: "room", label: "Nhắn về nhà", actor: { id: "lan", side: "left" },
+        contact: { name: "Bố", illus: "old-man" },
+        messages: [ { from: "me", text: "Hai tháng tới con tập trung đồ án là chính, mỗi tuần con vẫn dành hai buổi tìm việc. Bảo vệ xong con sẽ dồn sức hơn.", at: "l2" } ] },
+      lines: [
+        L("l1", "lan", "Fewer questions every weekend. I will tell my family my plan.", "Bớt những câu hỏi dồn mỗi cuối tuần: nói kế hoạch với gia đình.", { face: "thinking" }),
+        L("l2", "lan", "For two months, my thesis comes first, with two job sessions a week. After the defence, I will push harder.", "Hai tháng tới con tập trung đồ án, mỗi tuần hai buổi tìm việc. Bảo vệ xong con dồn sức hơn.", { face: "happy" }),
+      ] },
+    { id: "s27", module: "DLG-01", ref: "p22,p23",
+      data: { set: "room", label: "Mười giờ tối",
+        actors: [{ id: "lan", side: "left" }],
+        verdict: { ok: false, label: "Gấp đồ án, nộp vội vài đơn", why: "Đơn nộp vội lúc nửa đêm thường sơ sài, còn buổi đồ án bỏ dở thì mai lại phải bù." } },
+      lines: [
+        L("l1", null, "Ten p.m. Lan is halfway through a chapter. A friend posts a new job.", "Mười giờ tối, Lan đang làm dở một chương. Một người bạn khoe việc mới."),
+        L("l2", "lan", "I will close this and send a few quick applications.", "Thôi gấp máy, nộp vội vài đơn cho đỡ lo.", { face: "worried", pose: "phone", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "Midnight applications are often careless. And tomorrow you must make up this session.", "Đơn nộp vội nửa đêm thường sơ sài. Mai lại phải bù buổi đồ án này."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử cách khác nhé.", { phase: "redo" }),
+        L("l6", "lan", "I will keep working, and switch off notifications at night.", "Mình làm tiếp, và tắt thông báo mạng xã hội buổi tối.", { phase: "redo", face: "thinking" }),
+        L("l7", "lan", "Today I finished one section, and sent one good application. I am moving.", "Hôm nay xong một mục, nộp một đơn chỉn chu. Mình vẫn đang tiến.", { phase: "redo", face: "happy" }),
+        L("l8", "det", "Compare yourself with yesterday, not with a friend today.", "So với mình hôm qua, đừng so với bạn hôm nay.", { phase: "redo", face: "happy" }),
+      ] },
+    { id: "s28", module: "CMP-01", ref: "p24",
+      data: { labels: ["Nếu bạn là phụ huynh, thay vì", "Hãy thử hỏi"], left: "“Đã xin được việc chưa?” mỗi cuối tuần", right: "“Đồ án tuần này thế nào, bố mẹ giúp gì được không?”", illus: ["anxious-face-with-sweat", "red-heart"] },
+      lines: [
+        L("l1", null, "Parents: “Got a job yet?” every weekend becomes pressure.", "Phụ huynh: câu “đã xin được việc chưa” mỗi cuối tuần dễ thành áp lực."),
+        L("l2", null, "Try: “How is your thesis this week? Can we help with anything?”", "Thử thay bằng: “Đồ án tuần này thế nào, bố mẹ giúp gì được không?”"),
+      ] },
+
+    { id: "s29", module: "END-02", ref: "outro",
+      data: { points: ["Sát mốc, đồ án đi trước", "Tìm việc đều mà chọn lọc", "Đủ ngủ để đi hết chặng"], icons: ["graduation-cap", "bullseye", "bed"] },
+      lines: [
+        L("l1", null, "The last months do not need to be perfect. They need a rhythm.", "Những tháng cuối không cần hoàn hảo, chỉ cần có nhịp."),
+        L("l2", null, "Open your calendar. Mark every thesis date and application deadline, then block your hours.", "Mở lịch, ghi mọi mốc đồ án và hạn nộp hồ sơ, rồi khoanh khối giờ cho từng việc."),
+      ] },
+    { id: "s30", module: "QUIZ-01", ref: "questions[19]",
+      data: {
+        q: "A company invites you to an interview during your thesis defense week, what should you do?",
+        options: [
+          "Ignore the invitation and hope they contact you after graduation",
+          "Explain honestly that you are defending your thesis and suggest another time",
+          "Skip the defense, because a job interview may never come again",
+        ],
+        correct: 1, countdown: 5, illus: "graduation-cap",
+        why: "Nơi tuyển sinh viên sắp ra trường thường hiểu lịch bảo vệ. Nói thật, đề xuất giờ khác.",
+      },
+      lines: [
+        L("l1", null, "A company invites you to an interview during your thesis defense week, what should you do?", "Một công ty mời phỏng vấn đúng tuần bạn bảo vệ đồ án, bạn nên làm gì?"),
+        L("l2", null, "Explain honestly that you are defending your thesis and suggest another time.", "Nói thật là mình bảo vệ đồ án, và đề xuất giờ khác."),
+        L("l3", null, "Skipping your defence is far too big a price.", "Bỏ buổi bảo vệ là cái giá quá lớn."),
+      ],
+      beats: { after: 600 } },
+    { id: "s31", module: "END-05", data: { text: "Bốn mươi câu hỏi đang chờ bạn", sub: "Đồ án và tìm việc" },
+      lines: [L("l1", "det", "Your turn. Forty questions are waiting below.", "Đến lượt bạn. Bốn mươi câu hỏi đang chờ.", { face: "happy" })] },
+  ],
+};

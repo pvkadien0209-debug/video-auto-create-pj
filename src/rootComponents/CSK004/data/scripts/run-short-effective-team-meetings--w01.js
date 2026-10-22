@@ -1,0 +1,227 @@
+// Kịch bản video W lần 3 (#110) — "Họp nhóm ngắn mà hiệu quả" · chuỗi "Lần đầu làm trưởng nhóm"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub), chữ trên thẻ tiếng Việt. Đủ ý để làm 40 câu bài tập.
+const L = (id, who, say, sub, extra = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...extra });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "run-short-effective-team-meetings--w01",
+  hook: "HOOK-03",
+  loop: { open: "s01", close: "s24" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "first-time-team-leaders", slug: "run-short-effective-team-meetings", door: "ky-nang", level: "B1",
+    title: "Họp nhóm ngắn mà hiệu quả", series: "Lần đầu làm trưởng nhóm" },
+  format: "W", mode: "text", audio: {},
+  notes: "Đổi tên: “bạn” (người chủ trì), My (p16), Hiếu (p20) → Thảo; hai bạn tranh luận màu biểu tượng (p11) → Dũng và Lan; Hoa (thành viên ít nói, p16), Minh (p14) → Lan (không dùng tên Hoa vì trùng Cô Hoa). Vai mới (#110): bài không có trẻ con, bà cụ, người nước ngoài → không dùng. Mở bằng ❓ p11 (câu hỏi “để tiếp hay dừng?”), lời giải ở DLG-01 s14 (nay chỉ Thảo và Dũng, để cảnh ba người duy nhất là s01). Lời tranh luận “Mình không ưng màu này” chỉ dựng từ “tranh luận về màu của biểu tượng”. p10 (bản đã sửa #107) nay có ở LIST-07 s13. Chuyện 📌 p20 để trên thẻ REL-02 (không gán thêm cho Thảo, vì Thảo đã đóng chuyện p16). Thoả thuận đọc lại ở s21 là ví dụ dựng cho p18. Phủ ý: 24/24.",
+  scenes: [
+    { id: "s01", module: "SCENE-01", ref: "p11",
+      data: { set: "meeting", label: "Họp chốt kế hoạch", actors: [{ id: "thao", side: "left" }, { id: "lan", side: "center" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", null, "Thao calls a meeting to finalise the launch plan.", "Thảo gọi cả nhóm họp để chốt kế hoạch ra mắt."),
+        L("l2", "dung", "Wait, I do not like the colour of this icon.", "Khoan, mình không ưng màu biểu tượng này.", { pose: "point", to: "lan" }),
+        L("l3", "lan", "Really? I think the colour works!", "Thật à? Mình thấy màu ổn mà!", { face: "surprised", pose: "explain", to: "dung", react: { thao: "worried" } }),
+        L("l4", null, "Soon, the whole room joins in. Let it run, or stop it?", "Cả phòng cuốn theo. Để tranh luận tiếp, hay dừng lại?", { wait: 300 }),
+      ],
+      beats: { after: 700 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Năm thói quen của cuộc họp gọn", pose: "present", items: ["Chỉ họp khi cần bàn", "Gửi nội dung trước", "Giữ đúng mục tiêu", "Ai cũng lên tiếng", "Chốt ai làm gì"] },
+      lines: [
+        L("l0", "det", "How do you keep a meeting short, and still useful? Five habits.", "Họp thế nào cho ngắn mà vẫn hiệu quả? Năm thói quen."),
+        L("l1", "det", "Meet only when you need to discuss.", "Chỉ họp khi cần cùng bàn."),
+        L("l2", "det", "Send the plan first.", "Gửi nội dung trước."),
+        L("l3", "det", "Keep to the goal.", "Giữ đúng mục tiêu."),
+        L("l4", "det", "Let everyone speak.", "Để ai cũng lên tiếng."),
+        L("l5", "det", "And agree who does what.", "Và chốt ai làm gì."),
+      ] },
+    { id: "s03", module: "HOST-01",
+      data: { title: "Năm phần của video", pose: "point", items: ["Có cần họp không", "Chuẩn bị trước giờ họp", "Trong lúc họp", "Ai cũng lên tiếng", "Chốt, và họp trực tuyến"] },
+      lines: [
+        L("l1", "det", "Do you need it?", "Một: có cần họp không."),
+        L("l2", "det", "Before the meeting.", "Hai: chuẩn bị trước giờ họp."),
+        L("l3", "det", "During the meeting.", "Ba: trong lúc họp."),
+        L("l4", "det", "Everyone speaks.", "Bốn: ai cũng lên tiếng."),
+        L("l5", "det", "Closing, and online meetings.", "Năm: chốt lại, và họp trực tuyến."),
+      ] },
+
+    // ---------- Phần 1 ----------
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 5, title: "Có cần họp không" },
+      lines: [L("l1", "det", "Part one: do you really need this meeting?", "Phần một: cuộc họp này có thật sự cần không?")] },
+    { id: "s05", module: "CMP-01", ref: "p1",
+      data: { labels: ["Họp", "Tin nhắn"], left: "Để cùng bàn và cùng quyết", right: "Thông báo một chiều: nhanh hơn, giữ giờ cho mọi người", illus: ["busts-in-silhouette", "mobile-phone"] },
+      lines: [
+        L("l1", null, "Meetings are for discussing and deciding together.", "Họp là để cùng bàn và cùng quyết."),
+        L("l2", null, "Just sharing an update? A clear message is faster, and respects everyone's time.", "Chỉ thông báo một chiều? Một tin nhắn rõ nhanh hơn, tôn trọng thời gian mọi người."),
+      ] },
+    { id: "s06", module: "LIST-05", ref: "p2",
+      data: { title: "Chỉ họp khi đánh dấu được một ô", illus: "calendar",
+        items: ["Cả nhóm cần cùng quyết một việc", "Cần nhiều người góp ý cùng lúc", "Có chỗ vướng phải gỡ cùng nhau"] },
+      lines: [
+        L("l1", null, "Must the team decide together? Give ideas together? Solve a block together?", "Cả nhóm cần cùng quyết? Cùng góp ý? Cùng gỡ một chỗ vướng?"),
+        L("l2", null, "No box ticked? A message is enough.", "Không đánh được ô nào? Một tin nhắn là đủ."),
+      ] },
+    { id: "s07", module: "SCENE-03", ref: "p3,p4",
+      data: { set: "meeting", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }],
+        left: { label: "Cách A: đọc lại", ok: false }, right: { label: "Cách B: bàn chỗ vướng", ok: true } },
+      lines: [
+        L("l0", null, "The team needs to know who is doing what each day.", "Nhóm cần biết mỗi ngày ai đang làm gì."),
+        L("a1", "dung", "Yesterday, task one. Then task two. Then task three…", "Hôm qua em làm việc một, rồi việc hai, rồi việc ba…", { phase: "a", pose: "explain" }),
+        L("a2", "thao", "Okay… next person.", "Ừ… người tiếp theo.", { phase: "a", face: "sad" }),
+        L("b1", "thao", "The board shows who does what. Fifteen minutes: who is stuck?", "Bảng việc đã ghi ai làm gì. Mười lăm phút thôi: ai đang vướng?", { phase: "b", pose: "explain", face: "happy" }),
+        L("b2", "dung", "Me. I need help with the supplier data.", "Em ạ. Em cần người giúp phần số liệu nhà cung cấp.", { phase: "b", face: "thinking" }),
+        L("l1", null, "Way A repeats what people can read alone. After three weeks, nobody listens.", "Cách A lặp lại thứ ai cũng tự đọc được. Ba tuần sau, không ai nghe nữa."),
+        L("l2", null, "If people can read it, do not meet. Sit together only to discuss.", "Đọc được thì đừng họp, cần bàn mới ngồi."),
+      ] },
+
+    // ---------- Phần 2 ----------
+    { id: "s08", module: "HOST-03", data: { n: 2, of: 5, title: "Chuẩn bị trước giờ họp" },
+      lines: [L("l1", "det", "Part two: what to prepare before the meeting.", "Phần hai: trước giờ họp cần chuẩn bị gì.")] },
+    { id: "s09", module: "SCENE-02", ref: "p5",
+      data: { set: "office", label: "Gửi trước", actor: { id: "thao", side: "left" }, contact: { name: "Nhóm dự án", illus: "busts-in-silhouette" },
+        messages: [{ from: "me", text: "Chiều nay họp hai mươi phút để chốt lịch giao hàng tuần sau. Mỗi bạn mang theo số lượng phần mình phụ trách nhé.", at: "l2" }] },
+      lines: [
+        L("l1", "thao", "Send first: the goal in one sentence, a few topics, and what to bring.", "Gửi trước: mục tiêu một câu, vài mục cần bàn, ai mang theo gì.", { face: "thinking" }),
+        L("l2", "thao", "This afternoon: twenty minutes to fix next week's delivery plan. Bring the numbers for your part.", "Chiều nay họp hai mươi phút chốt lịch giao hàng tuần sau. Mỗi bạn mang số lượng phần mình nhé."),
+        L("l3", null, "People come prepared, so no time is lost looking for information.", "Mọi người đến đã chuẩn bị, không mất giờ đi tìm thông tin."),
+      ] },
+    { id: "s10", module: "CMP-06", ref: "p6,p7",
+      data: { do: ["Chỉ mời người cần bàn hoặc quyết", "Gửi biên bản cho người chỉ cần biết", "Bắt đầu đúng giờ"], dont: ["Chờ người đến muộn"],
+        doIcons: ["busts-in-silhouette", "memo", "alarm-clock"], dontIcons: ["hourglass-not-done"] },
+      lines: [
+        L("l1", null, "Invite only people who discuss or decide. Send the others the notes. They will thank you.", "Chỉ mời người cần bàn hoặc quyết. Người chỉ cần biết thì gửi biên bản, họ sẽ cảm ơn bạn."),
+        L("l2", null, "Pick a time that breaks the work least. Start on time, even if some are missing.", "Chọn giờ ít làm đứt mạch việc. Bắt đầu đúng giờ dù còn thiếu người."),
+        L("l3", null, "Waiting punishes those on time, and more people learn to come late.", "Chờ người muộn là bắt người đúng giờ chịu thiệt, lâu dần nhiều người quen đến muộn."),
+      ] },
+
+    // ---------- Phần 3 ----------
+    { id: "s11", module: "HOST-03", data: { n: 3, of: 5, title: "Trong lúc họp" },
+      lines: [L("l1", "det", "Part three: keep it tight during the meeting.", "Phần ba: trong lúc họp, giữ cho gọn thế nào.")] },
+    { id: "s12", module: "SCENE-01", ref: "p8",
+      data: { set: "meeting", label: "Mở đầu", actors: [{ id: "thao", side: "left" }, { id: "lan", side: "center" }] },
+      lines: [
+        L("l1", "thao", "Today we need to decide two things. We finish at ten.", "Hôm nay mình cần chốt hai việc, họp đến mười giờ.", { pose: "explain" }),
+        L("l2", "lan", "I will lead the first topic.", "Mục đầu em dẫn nhé.", { face: "happy", react: { thao: "happy" } }),
+        L("l3", null, "Open with the goal and the end time. Follow the list you sent, one leader per topic, so it does not drift.", "Mở đầu bằng mục tiêu và giờ kết thúc. Đi theo danh sách, mỗi mục một người dẫn, khỏi trôi."),
+      ] },
+    { id: "s13", module: "LIST-07", ref: "p10",
+      data: { title: "Họp ngắn hằng ngày, mỗi người ba ý", items: [
+        { text: "Hôm qua xong gì", illus: "check-mark-button" },
+        { text: "Hôm nay làm gì", illus: "hammer-and-wrench" },
+        { text: "Đang vướng gì", illus: "construction" } ] },
+      lines: [
+        L("l1", null, "Daily meeting, no task board? Each person says three things: done, today, stuck.", "Họp ngắn hằng ngày, chưa có bảng việc? Mỗi người ba ý: xong gì, làm gì, vướng gì."),
+        L("l2", null, "Have a board? Just say where you are stuck. A long block? Only the people involved stay after.", "Có bảng việc rồi? Chỉ nói chỗ vướng. Vướng cần bàn lâu thì chỉ người liên quan ở lại sau."),
+      ] },
+    { id: "s14", module: "DLG-01", ref: "p11,p12",
+      data: { set: "meeting", label: "Tua lại cuộc họp",
+        actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }],
+        verdict: { ok: false, label: "Để chuyện bên lề chạy tiếp", why: "Dễ hết giờ mà kế hoạch chưa chốt, cả nhóm phải họp thêm buổi nữa." } },
+      lines: [
+        L("l1", "dung", "But the icon colour matters too!", "Nhưng màu biểu tượng cũng quan trọng mà!", { pose: "explain", to: "thao" }),
+        L("l2", "thao", "Fine, let's keep talking until everyone is done.", "Thôi, cứ bàn tiếp cho đủ ý nhé.", { pose: "shrug", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "Time runs out, the plan is not decided, and everyone needs another meeting.", "Hết giờ mà kế hoạch chưa chốt, cả nhóm phải họp thêm buổi nữa."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử cách khác nhé.", { phase: "redo" }),
+        L("l6", "thao", "We need to finalise the plan now. Let's talk about the colour this afternoon.", "Mình đang cần chốt kế hoạch, chuyện màu mình hẹn chiều nay nhé.", { phase: "redo", pose: "explain", face: "happy" }),
+        L("l7", "dung", "Sounds good.", "Được ạ.", { phase: "redo", face: "happy" }),
+        L("l8", "det", "Keep to the target. Do not chase every side topic.", "Giữ đúng đích, đừng đuổi theo chuyện bên lề.", { phase: "redo", face: "happy" }),
+      ] },
+    { id: "s15", module: "TEXT-04", ref: "p9",
+      data: { text: "Chuyện lạc đề mà quan trọng: ghi vào mục “để sau” và hẹn bàn riêng.", marks: ["để sau"], illus: "memo" },
+      lines: [
+        L("l1", null, "Important but off topic? Write it on the later list.", "Lạc đề mà quan trọng? Ghi vào mục “để sau”."),
+        L("l2", null, "“Good idea. Let's note it and talk with you two after the meeting.”", "“Ý này hay, mình ghi lại và bàn riêng với hai bạn sau họp nhé.”"),
+      ] },
+
+    // ---------- Phần 4 ----------
+    { id: "s16", module: "HOST-03", data: { n: 4, of: 5, title: "Ai cũng lên tiếng" },
+      lines: [L("l1", "det", "Part four: everyone speaks, not only the loud ones.", "Phần bốn: ai cũng lên tiếng, không chỉ người nói nhiều.")] },
+    { id: "s17", module: "SCENE-01", ref: "p13,p14",
+      data: { set: "meeting", label: "Hỏi theo vòng", actors: [{ id: "thao", side: "left" }, { id: "lan", side: "center" }] },
+      lines: [
+        L("l1", null, "Quiet people often keep good ideas inside, if nobody asks. Go around, one short idea each.", "Người ít nói hay giữ ý hay trong lòng nếu không ai hỏi. Hỏi theo vòng, mỗi người một ý."),
+        L("l2", "thao", "Lan, you work on this part directly. What do you think?", "Lan, em làm trực tiếp phần này, em thấy sao?", { face: "happy", to: "lan", pose: "explain" }),
+        L("l3", "lan", "Thank you. I do have an idea.", "Dạ, em có một ý ạ.", { face: "happy", react: { thao: "happy" } }),
+        L("l4", null, "Or give a few minutes to write ideas first, so quiet voices are not covered.", "Hoặc cho vài phút viết ý ra giấy trước, để ý người ít nói không bị lấn át."),
+      ] },
+    { id: "s18", module: "STORY-01", ref: "p16",
+      data: { context: "Thảo mở mỗi cuộc họp bằng “chị nghĩ mình nên làm thế này”. Cả nhóm: “vâng ạ”.", action: "Một tháng sau, dự án vấp đúng chỗ Lan đã thấy từ đầu.", outcome: "Lan không dám nói, vì “chị Thảo quyết rồi mà”.",
+        illus: ["woman-office-worker", "construction", "zipper-mouth-face"] },
+      lines: [
+        L("l1", null, "Thao opens every meeting with her own plan, and everyone says yes.", "Thảo mở mỗi buổi họp bằng ý mình, cả nhóm “vâng ạ”."),
+        L("l2", null, "A month later, the project hits the problem Lan saw at the start. She kept quiet.", "Một tháng sau, dự án vấp đúng chỗ Lan đã thấy. Lan không dám nói."),
+        L("l3", null, "Better: ask for the team's ideas and worries first, and share your plan after.", "Tốt hơn: hỏi ý và mối lo của nhóm trước, rồi mới nói kế hoạch của mình."),
+      ] },
+    { id: "s19", module: "HOST-02", ref: "p15,p17",
+      data: { statement: "Trưởng nhóm nên nói ý mình trước để cả nhóm có hướng", truth: false,
+        why: "Bạn nói trước, nhiều người chỉ gật theo cho yên chuyện.", kicker: "Mình nói sau cùng, nhóm mới nói thật lòng" },
+      lines: [
+        L("l1", "det", "The leader should share an opinion first, to guide the team. True or false?", "Trưởng nhóm nên nói ý mình trước. Đúng hay sai?"),
+        L("l2", "det", "False. Speak first, and many people just nod along. Speak last.", "Sai. Bạn nói trước, nhiều người chỉ gật theo. Hãy nói sau cùng.", { face: "stern" }),
+        L("l3", "det", "When I speak last, my team speaks from the heart.", "Mình nói sau cùng, nhóm mới nói thật lòng."),
+      ] },
+
+    // ---------- Phần 5 ----------
+    { id: "s20", module: "HOST-03", data: { n: 5, of: 5, title: "Chốt, và họp trực tuyến" },
+      lines: [L("l1", "det", "Last part: end with work that moves, and meeting online.", "Phần cuối: kết thúc để việc chạy, và họp trực tuyến.")] },
+    { id: "s21", module: "SCENE-01", ref: "p18",
+      data: { set: "meeting", label: "Vài phút cuối", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", "thao", "So: we chose the launch date. Lan does the slides by Thursday. You call the supplier by Wednesday. Right?", "Vậy: đã chốt ngày ra mắt. Lan làm slide trước thứ Năm. Em gọi nhà cung cấp trước thứ Tư. Đúng không?", { pose: "explain" }),
+        L("l2", "dung", "Right. Wednesday.", "Đúng ạ, thứ Tư.", { face: "happy", pose: "thumb" }),
+        L("l3", null, "Last few minutes: what was decided, who does what, by when. Read it back once.", "Vài phút cuối: đã quyết gì, ai làm gì, hạn nào. Đọc to lại một lần."),
+      ] },
+    { id: "s22", module: "REL-02", ref: "p20,p21",
+      data: { chain: ["Họp vui, ai cũng gật, không ai ghi lại", "Tuần sau mỗi người nhớ một kiểu", "Hai người làm trùng, một việc quan trọng không ai làm"], illus: ["smiling-face-with-smiling-eyes", "thinking-face", "warning"] },
+      lines: [
+        L("l1", null, "A friendly meeting, everyone nods, nobody writes anything. A week later, each remembers it differently.", "Họp vui, ai cũng gật, không ai ghi. Tuần sau, mỗi người nhớ một kiểu."),
+        L("l2", null, "Two people do the same task, and an important one is done by nobody.", "Hai bạn làm trùng một việc, còn một việc quan trọng thì không ai làm."),
+        L("l3", null, "A meeting with no clear decision is like no meeting at all.", "Họp không chốt, coi như chưa họp."),
+      ] },
+    { id: "s23", module: "LIST-05", ref: "p19",
+      data: { title: "Biên bản ngắn, gửi trong ngày", illus: "memo",
+        items: ["Những điều đã quyết", "Việc, người làm, hạn", "Những việc để sau"] },
+      lines: [
+        L("l1", null, "Send a short note the same day: decisions, tasks with names and deadlines, and later topics.", "Gửi biên bản ngắn ngay trong ngày: điều đã quyết, việc kèm người và hạn, việc để sau."),
+        L("l2", null, "A few clear lines beat a long page nobody reads.", "Vài dòng rõ ràng hơn một trang dài không ai đọc."),
+      ] },
+    { id: "s24", module: "SCENE-01", ref: "p22,p23",
+      data: { set: "online", label: "Họp trực tuyến", actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", null, "Online, join a few minutes early to check the connection and the link.", "Họp trực tuyến: vào trước vài phút, kiểm tra đường truyền và đường dẫn."),
+        L("l2", "thao", "Cameras on if you can, mute when you are not speaking. I am sharing the screen now.", "Mọi người bật camera nếu được, tắt micro khi không nói nhé. Mình chia sẻ màn hình đây.", { pose: "explain" }),
+        L("l3", "thao", "Dung, what do you think about this part?", "Dũng, em thấy phần này thế nào?", { face: "happy", to: "dung" }),
+        L("l4", "dung", "Thanks for asking. One small worry.", "Cảm ơn chị đã hỏi. Em có một lo nhỏ.", { face: "thinking", react: { thao: "thinking" } }),
+        L("l5", null, "It is hard to jump in online, so ask each person by name more often.", "Trên mạng rất khó chen lời, nên hỏi ý từng người rõ hơn."),
+      ] },
+    { id: "s25", module: "TEXT-04", ref: "p24",
+      data: { text: "Vài tuần một lần, hỏi: cuộc họp nào có ích, cuộc nào bỏ hoặc rút ngắn được?", marks: ["bỏ hoặc rút ngắn"], illus: "wrench" },
+      lines: [
+        L("l1", null, "Every few weeks, ask: which meetings help, and which can we drop or shorten?", "Vài tuần một lần, hỏi nhóm: cuộc họp nào có ích, cuộc nào bỏ hoặc rút ngắn được?"),
+        L("l2", null, "Team needs change. Meetings need adjusting, like any other work.", "Nhu cầu của nhóm thay đổi. Cuộc họp cũng cần được chỉnh như mọi việc khác."),
+      ] },
+
+    { id: "s26", module: "END-01", ref: "outro",
+      data: { takeaway: "Họp không chốt, coi như chưa họp.", marks: ["chốt"], illus: "check-mark-button" },
+      lines: [
+        L("l1", null, "A good meeting is not measured in minutes, but in everyone knowing what to do next.", "Họp tốt không đo bằng số phút, mà bằng việc ra về ai cũng biết mình làm gì."),
+        L("l2", null, "This week, replace one meeting with a message, and send the plan before the next one.", "Tuần này, thay một cuộc họp bằng tin nhắn, và gửi nội dung trước cho cuộc tiếp theo."),
+      ] },
+    { id: "s27", module: "QUIZ-01", ref: "questions[27]",
+      data: {
+        q: "What should a short meeting note include?",
+        options: [
+          "Decisions made, tasks with names and deadlines, and topics left for later",
+          "Only the names of people who attended and the start time of the meeting",
+          "Every word that each person said, written in the exact order it happened",
+        ],
+        correct: 0, countdown: 5, illus: "memo",
+        why: "Đã quyết gì, ai làm gì, hạn nào, việc để sau. Gửi ngay trong ngày.",
+      },
+      lines: [
+        L("l1", null, "What should a short meeting note include?", "Biên bản họp ngắn nên có những gì?"),
+        L("l2", null, "Decisions made, tasks with names and deadlines, and topics left for later.", "Điều đã quyết, việc kèm người làm và hạn, việc để sau."),
+        L("l3", null, "Send it the same day, while people still remember.", "Gửi ngay trong ngày, khi mọi người còn nhớ."),
+      ],
+      beats: { after: 600 } },
+    { id: "s28", module: "END-05", data: { text: "Bốn mươi câu hỏi đang chờ bạn", sub: "Họp ngắn mà hiệu quả" },
+      lines: [L("l1", "det", "Your turn. Forty questions are waiting below.", "Đến lượt bạn. Bốn mươi câu hỏi đang chờ.", { face: "happy" })] },
+  ],
+};

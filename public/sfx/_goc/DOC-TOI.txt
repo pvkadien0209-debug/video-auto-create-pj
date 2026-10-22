@@ -1,0 +1,6 @@
+Thư mục này chứa ÂM THẬT anh tải về (mp3, wav, ogg, m4a, flac).
+1. Tìm trên Pixabay Sound Effects / Mixkit / Freesound (lọc CC0). Danh sách cần tìm + từ khoá: VID\KHO-SFX.md, mục "Cần tìm".
+2. Đổi tên tệp đúng khoá, vd. lat-sach.mp3, but-viet.mp3, van-phong.mp3 (có dấu cũng được: "Lật sách.mp3" → lat-sach).
+3. Chạy:  node tools/sfx-kho.mjs
+   → tự cắt lặng, chuẩn hoá, nối vòng âm nền, ghi public\sfx\<khoá>.wav và cập nhật danh mục.
+Video đã gắn sẵn các khoá này; chưa có tệp thì bỏ qua, có tệp là tự phát ở lần render sau.

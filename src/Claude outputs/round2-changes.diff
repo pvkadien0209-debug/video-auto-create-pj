@@ -1,0 +1,166 @@
+--- /mnt/user-data/uploads/src/components/ActionOrchestrator/actions/ImageViewActionToID.jsx	2026-09-12 02:31:21.376266082 +0000
++++ fix/ImageViewActionToID.jsx	2026-09-12 02:32:46.164264143 +0000
+@@ -27,7 +27,13 @@
+ 
+   if (!img) return null;
+ 
+-  console.log(action.toID, "toIDImg");
++  // ⚡ Log này trước đây chạy VÔ ĐIỀU KIỆN mỗi frame cho mọi ImageView đang active
++  // (kể cả khi không dùng toID) — tốn I/O đáng kể khi render video dài nhiều ảnh.
++  // Giờ chỉ chạy trong dev (Remotion render CLI mặc định NODE_ENV=production nên
++  // lúc render thật sẽ tự động tắt hẳn).
++  if (process.env.NODE_ENV === "development") {
++    console.log(action.toID, "toIDImg");
++  }
+ 
+   // ✅ Merge styles
+   const mergedStyle = mergeStyles(
+--- /mnt/user-data/uploads/src/components/ActionOrchestrator/actions/TypingTextAction.jsx	2026-09-12 02:31:21.192266087 +0000
++++ fix/TypingTextAction.jsx	2026-09-12 02:32:51.456264022 +0000
+@@ -70,7 +70,11 @@
+       return null;
+     }
+ 
+-    console.log("🎯 TypingTextAction rendering to ID:", action.toID);
++    // ⚡ Trước đây log này chạy mỗi frame khi action còn active — chỉ bật lại
++    // trong dev, tự tắt lúc render thật (Remotion CLI mặc định NODE_ENV=production).
++    if (process.env.NODE_ENV === "development") {
++      console.log("🎯 TypingTextAction rendering to ID:", action.toID);
++    }
+ 
+     // ⭐ Dùng React Portal để render vào element có ID
+     return createPortal(typingTextComponent, targetElement);
+--- /mnt/user-data/uploads/src/components/ActionOrchestrator/actions/DivActionToID.jsx	2026-09-12 02:31:22.456266058 +0000
++++ fix/DivActionToID.jsx	2026-09-12 02:32:55.552263928 +0000
+@@ -41,7 +41,11 @@
+       return null;
+     }
+ 
+-    console.log("🎯 DivAction rendering to ID:", action.toID);
++    // ⚡ Trước đây log này chạy mỗi frame khi action còn active — chỉ bật lại
++    // trong dev, tự tắt lúc render thật (Remotion CLI mặc định NODE_ENV=production).
++    if (process.env.NODE_ENV === "development") {
++      console.log("🎯 DivAction rendering to ID:", action.toID);
++    }
+ 
+     // ⭐ Dùng React Portal để render vào element có ID
+     return createPortal(
+--- /mnt/user-data/uploads/src/components/ActionOrchestrator/smallComponents/media/DivView.jsx	2026-09-12 02:31:54.124265333 +0000
++++ fix/DivView.jsx	2026-09-12 02:33:00.696263811 +0000
+@@ -63,8 +63,13 @@
+       )
+     : baseStyleWithTransition;
+ 
+-  // Debug
+-  if (currentFrame % 60 === 0 && elementId) {
++  // Debug — chỉ log trong dev (Remotion render CLI mặc định NODE_ENV=production
++  // nên lúc render thật sẽ tự tắt), tránh in mỗi 60 frame cho mọi DivView.
++  if (
++    process.env.NODE_ENV === "development" &&
++    currentFrame % 60 === 0 &&
++    elementId
++  ) {
+     console.log(`🎬 DivView [${elementId}] - Frame ${currentFrame}`, {
+       containerSelector,
+       hasContainerAnimation: !!animationStyles[containerSelector],
+--- /mnt/user-data/uploads/src/components/ActionOrchestrator/smallComponents/text/TypingText.jsx	2026-09-12 02:01:13.294132283 +0000
++++ fix/TypingText.jsx	2026-09-12 02:34:04.584262349 +0000
+@@ -221,8 +221,11 @@
+   );
+ }
+ 
+-function renderWordSafe2Layer(text, visibleChars = Infinity) {
+-  const tokens = tokenizeText(text);
++function renderWordSafe2Layer(text, visibleChars = Infinity, precomputedTokens) {
++  // ⚡ Nếu component gọi đã tokenize sẵn (useMemo theo text) thì dùng luôn,
++  // tránh chạy lại regex tokenizeText() mỗi frame. Không truyền vẫn tự tokenize
++  // như cũ (backward compatible với bất kỳ chỗ nào khác đang gọi hàm này).
++  const tokens = precomputedTokens || tokenizeText(text);
+   let charIndex = 0;
+ 
+   return tokens.map((token, tokenIdx) => {
+@@ -292,6 +295,7 @@
+   actionStartFrame,
+   fps,
+   totalCharCount,
++  precomputedTokens, // ⚡ NEW — optional, xem renderWordSafe2Layer ở trên
+ ) {
+   if (!text || !textEffect) return null;
+ 
+@@ -309,7 +313,7 @@
+   const effectDurationFrames = effectConfig.durationSec * slowMultiplier * fps;
+   const staggerDelayFrames = effectConfig.staggerDelaySec * slowMultiplier * fps;
+ 
+-  const tokens = tokenizeText(text);
++  const tokens = precomputedTokens || tokenizeText(text);
+   let charIndex = 0;
+ 
+   return tokens.map((token, tokenIdx) => {
+@@ -431,11 +435,22 @@
+   const slideDirection =
+     dataAction.slideDirection || data.slideDirection || "left";
+ 
++  // Combined text — tính trước visibility check (đặt cùng chỗ với các hook khác
++  // ở trên để không phá quy tắc "hooks không được gọi có điều kiện").
++  const combinedText = useMemo(
++    () => text.map((item) => item.text).join(""),
++    [text],
++  );
++
++  // ⚡ Tokenize (regex tách từ/khoảng trắng) MỘT LẦN khi text đổi, thay vì chạy
++  // lại trong renderWordSafe2Layer/renderWordSafeWithEffect2Layer mỗi frame.
++  // Nội dung hiển thị (số ký tự visible) vẫn đổi theo frame bình thường —
++  // chỉ việc TÁCH text thành token là được cache lại.
++  const tokens = useMemo(() => tokenizeText(combinedText), [combinedText]);
++
+   // Visibility check
+   if (frame < startFrame || frame > endFrame) return null;
+ 
+-  // Combined text
+-  const combinedText = text.map((item) => item.text).join("");
+   const totalCharCount = combinedText.length;
+ 
+   // ⭐ SHORT TEXT SLOWDOWN — áp dụng cho typing speed
+@@ -478,6 +493,7 @@
+             startFrame,
+             fps,
+             totalCharCount,
++            tokens,
+           )}
+         </div>
+       );
+@@ -485,7 +501,7 @@
+ 
+     return (
+       <div id={elementId} className={elementClass} style={containerStyle}>
+-        {renderWordSafe2Layer(combinedText, visibleChars)}
++        {renderWordSafe2Layer(combinedText, visibleChars, tokens)}
+       </div>
+     );
+   }
+@@ -529,6 +545,7 @@
+             startFrame,
+             fps,
+             totalCharCount,
++            tokens,
+           )}
+         </div>
+       );
+@@ -536,7 +553,7 @@
+ 
+     return (
+       <div id={elementId} className={elementClass} style={slideStyle}>
+-        {renderWordSafe2Layer(combinedText)}
++        {renderWordSafe2Layer(combinedText, Infinity, tokens)}
+       </div>
+     );
+   }
+@@ -556,7 +573,7 @@
+ 
+   return (
+     <div id={elementId} className={elementClass} style={containerStyle}>
+-      {renderWordSafe2Layer(combinedText, fbVisible)}
++      {renderWordSafe2Layer(combinedText, fbVisible, tokens)}
+     </div>
+   );
+ };

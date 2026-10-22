@@ -1,0 +1,277 @@
+// Kịch bản video W lần 3 (#110) — "Lấy lại buổi tối: 90 phút, ba tối mỗi tuần" · chuỗi "Sống trọn 24 giờ — dùng giờ ngoài công sở cho chính mình"
+// Giọng đọc tiếng Anh (say), phụ đề tiếng Việt (sub); nhân vật hoạt hình + thẻ. Đủ ý để làm 40 câu.
+const L = (id, who, say, sub, x = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...x });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "take-back-your-evenings--w01",
+  hook: "HOOK-08",
+  loop: { open: "s01", close: "s22" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "office-workers-own-time", slug: "take-back-your-evenings", door: "ky-nang", level: "B1",
+    title: "Lấy lại buổi tối: 90 phút, ba tối mỗi tuần", series: "Sống trọn 24 giờ — dùng giờ ngoài công sở cho chính mình" },
+  format: "W", mode: "text", audio: {},
+  notes: "Đổi tên: Khánh Linh (p3) và “bạn” trong khung ❓ p7 → Thảo; anh Toàn → Dũng (vợ con không lên hình); đứa bạn rủ đi chơi (p7, p22, không tên) → giọng “them” trong tin nhắn ở s01, Dũng ở s25. Vai mới: không dùng (con của Dũng ở p11 chỉ được nhắc, không lên hình; bài không có bà cụ hay người nước ngoài). HOOK-08: tin nhắn rủ xem phim lúc tám giờ (p7), câu hỏi “mệt thật không” được trả lời ở s10. Câu từ chối ở s25 lấy từ câu mẫu p22. Khung 9:00–11:30 (p24) theo bài hiện tại, kèm gợi ý 8:00–10:30. Phủ ý: 25/25.",
+  scenes: [
+    { id: "s01", module: "SCENE-02", ref: "p7",
+      data: { set: "home", label: "Bảy rưỡi tối", actor: { id: "thao", side: "left" },
+        contact: { name: "Bạn thân", illus: "woman" },
+        messages: [
+          { from: "them", text: "Tám giờ đi xem phim mới không? Xong ghé quán cà phê quen!", at: "l2" },
+          { from: "me", text: "Đi! Chờ mình mười phút!", at: "l3" } ] },
+      lines: [
+        L("l1", "thao", "I'm so tired today. I can't study tonight.", "Hôm nay mệt quá, không học nổi đâu.", { face: "sad" }),
+        L("l2", "them", "Movie at eight? Then our usual café?", "Tám giờ đi xem phim mới không? Xong ghé quán cà phê quen!"),
+        L("l3", "thao", "Yes! Give me ten minutes!", "Đi! Chờ mình mười phút!", { face: "happy" }),
+        L("l4", null, "So, was she really too tired?", "Vậy lúc nãy có thật là mệt?"),
+      ],
+      beats: { after: 500 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Lấy lại buổi tối", pose: "present", illus: "night-with-stars",
+        items: ["90 phút, ba tối mỗi tuần", "Bữa tối không cắt đôi buổi tối", "Khung giờ rộng hơn việc cần làm"] },
+      lines: [
+        L("l1", "det", "How do you take back your evenings? You don't need the whole evening. Just this:", "Làm sao lấy lại buổi tối? Không cần cả buổi. Chỉ cần:"),
+        L("l2", "det", "Ninety minutes, three evenings a week.", "Chín mươi phút, ba tối mỗi tuần."),
+        L("l3", "det", "Dinner that doesn't cut the evening in half.", "Bữa tối không cắt đôi buổi tối."),
+        L("l4", "det", "And a time slot wider than the task.", "Và khung giờ rộng hơn việc cần làm."),
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Hôm nay mình đi qua",
+        chapters: [
+          { label: "Buổi tối đi đâu mất", illus: "crescent-moon" },
+          { label: "Mệt thật hay mệt vì chán", illus: "tired-face" },
+          { label: "Bữa tối đặt ở đâu", illus: "fork-and-knife-with-plate" },
+          { label: "90 phút, ba tối", illus: "spiral-calendar" },
+          { label: "Bạn rủ đúng tối hẹn", illus: "speech-balloon" },
+          { label: "Chừa đường lui", illus: "hourglass-not-done" } ] },
+      lines: [
+        L("l1", null, "Six stops. Where evenings go. Tired or bored. Dinner.", "Sáu chặng. Buổi tối đi đâu. Mệt hay chán. Bữa tối."),
+        L("l2", null, "Ninety minutes, three nights. Friends. And room for surprises.", "Chín mươi phút, ba tối. Bạn rủ. Và đường lui."),
+      ] },
+
+    // Chương 1: p1–p4
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 6, title: "Buổi tối đi đâu mất" },
+      lines: [L("l1", "det", "Part one: where did the evening go?", "Phần một: buổi tối đã đi đâu mất?")] },
+    { id: "s05", module: "CMP-01", ref: "p1,p2",
+      data: { labels: ["Thời Bennett", "Hôm nay"], left: "Ăn tối, gặp bạn, chơi bài, hút thuốc, lần lữa mới ngủ",
+        right: "Điện thoại, phim bộ, nhóm chat: thứ gần tay nhất", illus: ["flower-playing-cards", "mobile-phone"] },
+      lines: [
+        L("l1", null, "Bennett describes an office worker's evening: home tired, dinner, friends, cards, smoking, a slow bedtime.", "Bennett tả buổi tối người nhân viên: về mệt, ăn tối, gặp bạn, chơi bài, hút thuốc, lần lữa mới ngủ."),
+        L("l2", null, "About six hours vanish like a dream, leaving almost nothing.", "Khoảng sáu tiếng biến mất như giấc mơ, gần như chẳng để lại gì."),
+        L("l3", null, "Today: phones, series, group chats instead of cards.", "Hôm nay: điện thoại, phim bộ, nhóm chat thay cho ván bài."),
+        L("l4", null, "None of it is bad. But none of it was chosen. The evening drifts to whatever is closest.", "Không việc nào xấu, nhưng không việc nào được chọn trước. Buổi tối trôi theo thứ gần tay."),
+      ] },
+    { id: "s06", module: "STORY-06", ref: "p3,p4",
+      data: { label: "Tình huống minh hoạ", title: "Buổi tối của Thảo",
+        entries: [
+          { time: "18:45", text: "Về đến nhà, tự hứa học tiếng Anh một tiếng", illus: "house" },
+          { time: "19:45", text: "Ăn xong, mở tin nhắn nhóm, rồi video ngắn, rồi một tập phim", illus: "mobile-phone" },
+          { time: "22:30", text: "Cuốn sách vẫn nằm trong túi. “Mai bắt đầu.”", illus: "closed-book" } ] },
+      lines: [
+        L("l1", null, "Thao, an accountant, gets home at quarter to seven. One hour of English, she promises.", "Thảo làm kế toán, sáu giờ bốn lăm về nhà, tự hứa học tiếng Anh một tiếng."),
+        L("l2", null, "Dinner ends at quarter to eight. Group messages, short videos, an episode.", "Ăn xong bảy giờ bốn lăm. Tin nhắn nhóm, video ngắn, một tập phim."),
+        L("l3", null, "Half past ten: the book is still in her bag. Tomorrow, she says. Three weeks like that.", "Mười rưỡi: sách vẫn trong túi. “Mai bắt đầu.” Ba tuần liền như vậy."),
+        L("l4", "det", "Don't plan your evening, and your phone will plan it for you.", "Buổi tối không có kế hoạch thì điện thoại lên kế hoạch giúp bạn."),
+      ] },
+
+    // Chương 2: p5–p8
+    { id: "s07", module: "HOST-03", data: { n: 2, of: 6, title: "Mệt thật hay mệt vì chán?" },
+      lines: [L("l1", "det", "Part two: really tired, or just bored?", "Phần hai: mệt thật, hay mệt vì chán?")] },
+    { id: "s08", module: "RSN-08", ref: "p5",
+      data: { beats: [
+        { text: "Tan làm, tưởng mình kiệt sức", illus: "tired-face" },
+        { text: "Có hẹn đi xem hát", link: "but", illus: "performing-arts" },
+        { text: "Chải chuốt cẩn thận, đi chơi bốn năm tiếng chẳng kêu mệt", link: "therefore", illus: "dress" },
+        { text: "Sáu giờ chiều: thành thật nhận mình chưa mệt đến thế", link: "therefore", illus: "six-oclock" } ] },
+      lines: [
+        L("l1", null, "Bennett noticed: a worker thinks he's exhausted after work.", "Bennett để ý: người ta tưởng mình kiệt sức sau giờ làm."),
+        L("l2", null, "But invite him to the theatre, and he dresses up with care.", "Nhưng có hẹn xem hát là chải chuốt cẩn thận."),
+        L("l3", null, "And stays out four or five hours, with no complaints.", "Rồi đi chơi bốn năm tiếng mà chẳng kêu mệt."),
+        L("l4", null, "So at six in the evening, honestly admit you're not that tired.", "Nên lúc sáu giờ chiều, hãy thành thật nhận mình chưa mệt đến thế."),
+      ] },
+    { id: "s09", module: "LIST-13", ref: "p6",
+      data: { title: "Cái mệt cuối ngày",
+        items: [
+          { title: "Thường là mệt của việc lặp lại", detail: "Không phải hết sạch sức. Đổi sang việc khác hẳn, do mình chọn, đầu óc lại tỉnh.", illus: "counterclockwise-arrows-button" },
+          { title: "Ốm thật, mệt thật", detail: "Hôm đó nghỉ là đúng.", illus: "face-with-thermometer" } ] },
+      lines: [
+        L("l1", null, "Most end of day tiredness comes from one kind of repeated work.", "Phần lớn cái mệt cuối ngày là mệt của một kiểu việc lặp đi lặp lại."),
+        L("l2", null, "Not from having no energy. A different task you chose can wake your mind up.", "Không phải hết sức. Đổi sang việc khác do mình chọn lại làm đầu óc tỉnh ra."),
+        L("l3", null, "Of course, some days you're truly sick or worn out. Rest then.", "Tất nhiên có hôm ốm thật, mệt thật. Hôm đó nghỉ là đúng."),
+      ] },
+    { id: "s10", module: "TEXT-02", ref: "p7,p8",
+      data: { text: "Mệt thật thì nghỉ, mệt vì chán thì bắt đầu.", keywords: ["Mệt thật", "mệt vì chán"], illus: "admission-tickets" },
+      lines: [
+        L("l1", null, "Back to Thao. She jumped up for the movie. Her energy was there.", "Quay lại Thảo: bật dậy đi xem phim được, vậy là còn sức."),
+        L("l2", null, "Nothing attractive was waiting for her. Bennett uses the same theatre example.", "Chỉ là chưa có gì hấp dẫn đang chờ. Bennett dùng đúng ví dụ đi xem hát."),
+        L("l3", null, "So give your ninety minutes a clear time, like a show you have a ticket for.", "Vậy hãy cho 90 phút một giờ hẹn rõ, như suất chiếu đã mua vé."),
+        L("l4", "det", "Rest when you're truly tired. Start when you're only bored.", "Mệt thật thì nghỉ, mệt vì chán thì bắt đầu."),
+      ] },
+
+    // Chương 3: p9–p12
+    { id: "s11", module: "HOST-03", data: { n: 3, of: 6, title: "Bữa tối đặt ở đâu?" },
+      lines: [L("l1", "det", "Part three: where to put dinner.", "Phần ba: bữa tối đặt ở đâu.")] },
+    { id: "s12", module: "TEXT-02", ref: "p9,p10",
+      data: { text: "Bữa ăn giữa buổi tối cắt nó thành hai mẩu ngắn; cần một khoảng liền ít nhất ba tiếng", keywords: ["ít nhất ba tiếng"], illus: "fork-and-knife-with-plate" },
+      lines: [
+        { id: "l1", lang: "en", say: "A meal in the middle cuts the evening into two short pieces. Neither is enough.", sub: "Bữa ăn đặt giữa buổi tối cắt nó thành hai mẩu ngắn, mẩu nào cũng không đủ." },
+        { id: "l2", lang: "en", say: "Bennett wants one free block of at least three hours.", sub: "Bennett muốn còn một khoảng liền ít nhất ba tiếng." },
+      ] },
+    { id: "s12b", module: "CMP-06", ref: "p9,p10",
+      data: { do: ["Ăn cùng giờ cố định với gia đình", "Dọn gọn rồi mới tính phần còn lại"], dont: ["Ăn lưng chừng, ngồi chờ, ăn tiếp, rồi mới tắm"], doIcons: ["fork-and-knife-with-plate", "broom"], dontIcons: ["hourglass-not-done"] },
+      lines: [
+        { id: "l3", lang: "en", say: "Easiest way: eat with your family at a fixed time, clear up, then use what's left.", sub: "Dễ nhất: ăn cùng giờ cố định với gia đình, dọn gọn, rồi dùng phần còn lại." },
+        { id: "l4", lang: "en", say: "Avoid eating in stages, waiting, then showering late. That makes fifteen minute scraps.", sub: "Tránh ăn lưng chừng, ngồi chờ, rồi mới tắm: buổi tối vụn thành mẩu mười lăm phút." },
+      ] },
+    { id: "s13", module: "SCENE-03", ref: "p11,p12",
+      data: { set: "home", actors: [{ id: "dung" }],
+        left: { label: "Cách A: nghỉ trước", ok: false }, right: { label: "Cách B: ăn sớm", ok: true } },
+      lines: [
+        L("l0", null, "Dung, an engineer, home at half past six. A wife and a small child.", "Dũng làm kỹ sư, sáu rưỡi về nhà, có vợ và một con nhỏ."),
+        L("a1", "dung", "Rest first. Dinner at eight, dishes at nine…", "Nằm nghỉ đã. Tám giờ ăn, chín giờ rửa bát…", { phase: "a", pose: "shrug" }),
+        L("a2", "dung", "Half past nine, laptop open. So sleepy. Tomorrow, then.", "Chín rưỡi mở laptop. Buồn ngủ quá. Để mai vậy.", { phase: "a", face: "sad" }),
+        L("b1", "dung", "Shower, dinner at seven with the family. Cleared up by quarter to eight.", "Tắm, bảy giờ ăn cùng vợ con. Bảy bốn lăm dọn xong.", { phase: "b", pose: "explain" }),
+        L("b2", "dung", "Play with my kid until bedtime. From half past eight, two free hours!", "Chơi với con tới khi con ngủ. Từ tám rưỡi, hai tiếng liền!", { phase: "b", face: "happy", pose: "thumb" }),
+        L("l1", null, "Same hours, different order. Don't let dinner cut your evening in half.", "Số giờ như nhau, chỉ khác thứ tự. Đừng để bữa tối cắt đôi buổi tối."),
+      ] },
+
+    // Chương 4: p13–p20
+    { id: "s14", module: "HOST-03", data: { n: 4, of: 6, title: "90 phút, ba tối" },
+      lines: [L("l1", "det", "Part four: why ninety minutes, and only three evenings?", "Phần bốn: vì sao 90 phút, và chỉ ba tối?")] },
+    { id: "s15", module: "LIST-13", ref: "p13,p14",
+      data: { title: "Bennett không đòi cả buổi tối",
+        items: [
+          { title: "90 phút, cách một tối", detail: "Nuôi trí óc có hệ thống: học, đọc nghiêm túc, nghĩ về một đề tài.", illus: "brain" },
+          { title: "Các tối còn lại", detail: "Chơi, gặp bạn, xem phim, ở bên gia đình.", illus: "people-hugging" },
+          { title: "Vì sao nhỏ?", detail: "Thói quen cũ khó đổi; mục tiêu quá sức dễ làm bỏ cuộc.", illus: "seedling" } ] },
+      lines: [
+        L("l1", null, "Bennett asks for ninety minutes, every other evening.", "Bennett đề nghị chín mươi phút, cách một tối một lần."),
+        L("l2", null, "For steady, serious learning: study, read, think about one subject.", "Cho việc nuôi trí óc có hệ thống: học, đọc nghiêm túc, nghĩ về một đề tài."),
+        L("l3", null, "Other evenings: play, meet friends, watch a film, be with family.", "Các tối khác: chơi, gặp bạn, xem phim, ở bên gia đình."),
+        L("l4", null, "Why so small? Old habits are hard to change, and big goals make people quit.", "Vì sao nhỏ? Thói quen cũ khó đổi, mục tiêu quá sức dễ làm bỏ cuộc."),
+        L("l5", null, "Three evenings show progress without taking your rest.", "Ba tối đủ thấy mình tiến lên, mà không lấy mất phần nghỉ."),
+      ] },
+    { id: "s16", module: "NUM-11", ref: "p15",
+      data: { title: "Bảy tiếng rưỡi mỗi tuần", illus: "spiral-calendar",
+        steps: [
+          { expr: "Nửa tiếng × 6 buổi sáng", result: "3 tiếng" },
+          { expr: "90 phút × 3 buổi tối", result: "4 tiếng rưỡi" },
+          { expr: "Cộng lại", op: "=", result: "7 tiếng rưỡi / 168 tiếng" } ],
+        source: "Arnold Bennett, How to Live on 24 Hours a Day (1908), chương VI" },
+      lines: [
+        L("l1", null, "In chapter six, Bennett adds up the week.", "Ở chương VI, Bennett cộng cả tuần."),
+        L("l2", null, "Half an hour on six mornings, ninety minutes on three evenings.", "Nửa tiếng sáu buổi sáng, chín mươi phút ba buổi tối."),
+        L("l3", null, "Seven and a half hours out of a hundred and sixty eight.", "Bảy tiếng rưỡi trên một trăm sáu mươi tám tiếng."),
+        L("l4", null, "This lesson is the evening part: four and a half hours a week.", "Bài này lo phần buổi tối: bốn tiếng rưỡi mỗi tuần."),
+      ] },
+    { id: "s17", module: "LIST-08", ref: "p16,p17",
+      data: { title: "Một tuần mẫu, làm 8 giờ đến 5 giờ",
+        items: [
+          { title: "Thứ Hai, Tư, Sáu", detail: "Khung 8:00–10:30, 90 phút học Excel", illus: "laptop" },
+          { title: "Thứ Ba, thứ Năm", detail: "Tự do; cà phê với bạn", illus: "hot-beverage" },
+          { title: "Cuối tuần", detail: "Gia đình và nghỉ ngơi", illus: "house" },
+          { title: "Thứ Sáu liên hoan?", detail: "Dời buổi học sang thứ Bảy", illus: "party-popper" } ] },
+      lines: [
+        L("l1", null, "A sample week, working eight to five.", "Một tuần mẫu, làm tám giờ đến năm giờ."),
+        L("l2", null, "Monday, Wednesday, Friday: eight to half past ten, ninety minutes of advanced Excel.", "Thứ Hai, Tư, Sáu: tám giờ đến mười rưỡi, 90 phút học Excel nâng cao."),
+        L("l3", null, "Tuesday free. Thursday, coffee with a friend. Weekends for family and rest.", "Thứ Ba tự do. Thứ Năm cà phê với bạn. Cuối tuần cho gia đình, nghỉ."),
+        L("l4", null, "A Friday office party? Move the session to Saturday.", "Thứ Sáu công ty liên hoan? Dời buổi học sang thứ Bảy."),
+        L("l5", null, "Put each slot in your phone calendar like an appointment, with a task: Excel, lookup functions, exercise three.", "Ghi vào lịch như cuộc hẹn, có tên việc: “Excel: hàm tra cứu, bài tập 3”."),
+        L("l6", "det", "Three evenings for yourself. Four for the rest of your life.", "Ba tối cho mình, bốn tối cho cuộc sống."),
+      ] },
+    { id: "s18", module: "STAT-01", ref: "p18,p19",
+      data: { stats: [{ value: 7, suffix: " ngày", label: "mỗi tuần Bennett làm việc, tới gần 40 tuổi" }, { value: 6, suffix: " ngày", label: "lại được việc hơn, theo những người lớn tuổi hơn" }], source: "Arnold Bennett, How to Live on 24 Hours a Day (1908), chương VI" },
+      lines: [
+        { id: "l1", lang: "en", say: "Bennett worked seven days a week until nearly forty.", sub: "Bennett làm việc bảy ngày mỗi tuần tới gần bốn mươi tuổi." },
+        { id: "l2", lang: "en", say: "Then older people persuaded him that six days got more done.", sub: "Rồi những người lớn tuổi hơn thuyết phục ông: làm sáu ngày được việc hơn." },
+      ] },
+    { id: "s18b", module: "OPEN-06", ref: "p18,p19",
+      data: { quote: "Lập kế hoạch cho sáu ngày; ngày thứ bảy nếu có làm thì coi như lộc.", highlight: "sáu ngày", who: "Arnold Bennett", source: "How to Live on 24 Hours a Day (1908), chương VI", label: "Trải nghiệm thật", illus: "spiral-calendar" },
+      lines: [
+        { id: "l3", lang: "en", say: "So plan for six. A seventh is a bonus, not counted in the main plan.", sub: "Nên kế hoạch tính sáu ngày; ngày thứ bảy là lộc, không tính vào phần chính." },
+        { id: "l4", lang: "en", who: "det", say: "A schedule with room to rest is one you can keep.", sub: "Lịch có chỗ nghỉ mới là lịch giữ được lâu." },
+      ] },
+    { id: "s19", module: "HOST-02", ref: "p20",
+      data: { statement: "Tuần đầu đang hăng thì học cả bảy tối cho nhanh", truth: false,
+        why: "Kế hoạch chính vẫn là ba tối; còn hứng thì làm thêm. Tuần bận, tuần ốm vẫn giữ được phần chính." },
+      lines: [
+        L("l1", "det", "Very eager in week one? Study seven evenings. True or false?", "Tuần đầu đang hăng thì học cả bảy tối. Đúng hay sai?"),
+        L("l2", "det", "False. Keep three as the plan. Extra evenings are a bonus.", "Sai. Giữ kế hoạch ba tối, tối thêm là phần lộc.", { face: "wink" }),
+        L("l3", "det", "Then in a busy week, or a sick week, you still keep the main part. No broken plan.", "Tuần bận, tuần ốm vẫn giữ được phần chính, không thấy mình phá kế hoạch."),
+      ] },
+
+    // Chương 5: p21–p23
+    { id: "s20", module: "HOST-03", data: { n: 5, of: 6, title: "Bạn rủ đúng tối hẹn" },
+      lines: [L("l1", "det", "Part five: a friend asks you out on your study night.", "Phần năm: bạn rủ đi chơi đúng tối đã hẹn với mình.")] },
+    { id: "s21", module: "OPEN-06", ref: "p21",
+      data: { quote: "Nói thật “mình phải ở nhà làm việc của mình” thì vô cùng khó nói.", highlight: "vô cùng khó nói", who: "Arnold Bennett",
+        source: "How to Live on 24 Hours a Day (1908)", label: "Phần khó nhất", illus: "speech-balloon" },
+      lines: [
+        L("l1", null, "Bennett admits the hardest part may be what you say to friends.", "Bennett thừa nhận phần khó nhất có khi là câu nói với bạn bè."),
+        L("l2", null, "An excuse like I have tennis is easy. I must stay home and do my own work? Very hard to say.", "Viện cớ “phải ra sân quần vợt” thì dễ. Nói thật “phải ở nhà làm việc của mình” thì rất khó."),
+      ] },
+    { id: "s22", module: "DLG-01", ref: "p22",
+      data: { set: "office", label: "Chiều thứ Tư",
+        actors: [{ id: "dung", side: "left" }, { id: "thao", side: "right" }],
+        verdict: { ok: false, label: "Bỏ buổi đã hẹn với mình mỗi khi được rủ",
+          why: "90 phút cũng là một cuộc hẹn thật. Đưa ra ngày khác, bạn bè thường dễ chấp nhận." } },
+      lines: [
+        L("l1", "dung", "Drinks tonight after work?", "Tối nay đi uống gì không?", { pose: "wave", to: "thao" }),
+        L("l2", "thao", "Well… okay. I'll skip my study again.", "Ờ… thôi được. Lại bỏ buổi học vậy.", { face: "worried", pose: "shrug", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern", pose: "stop" }),
+        L("l4", "det", "Your ninety minutes is a real appointment. Offer another day.", "Chín mươi phút là một cuộc hẹn thật. Hẹn bạn ngày khác."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử lần nữa nhé.", { phase: "redo" }),
+        L("l6", "thao", "Sorry, Wednesday doesn't work for me. Can we go tomorrow?", "Tối thứ Tư mình kẹt rồi, mai đi được không?", { phase: "redo", face: "happy" }),
+        L("l7", "dung", "Sure, tomorrow then!", "Ừ, mai nhé!", { phase: "redo", face: "happy", pose: "thumb" }),
+        L("l8", "det", "A birthday or a wedding? Go. Then move the session to the nearest free evening.", "Sinh nhật, đám cưới? Cứ đi, rồi dời buổi học sang tối trống gần nhất.", { phase: "redo" }),
+      ] },
+    { id: "s23", module: "TEXT-03", ref: "p23",
+      data: { text: "Bắt đầu lặng lẽ, giữ đều ba tháng rồi mới “hát to hơn”.", illus: "zipper-mouth-face" },
+      lines: [
+        L("l1", null, "Bennett also says: start quietly, without show.", "Bennett cũng khuyên: bắt đầu lặng lẽ, không phô trương."),
+        L("l2", null, "Keep it steady for about three months before you sing louder.", "Giữ đều khoảng ba tháng rồi mới “hát to hơn”."),
+        L("l3", null, "Tell everyone, then quit halfway? The most embarrassed person is you.", "Nói trước với mọi người rồi bỏ giữa chừng, người ngượng nhất là mình."),
+      ] },
+
+    // Chương 6: p24–p25
+    { id: "s24", module: "HOST-03", data: { n: 6, of: 6, title: "Chừa đường lui" },
+      lines: [L("l1", "det", "Last part: plans break. Leave room.", "Phần cuối: kế hoạch hay vỡ, chừa đường lui.")] },
+    { id: "s25", module: "CMP-01", ref: "p24",
+      data: { labels: ["Theo Bennett", "Nhịp sống ở mình"], left: "Việc 90 phút: khung 9:00 đến 11:30 tối", right: "Có thể hợp hơn: 8:00 đến 10:30 tối",
+        illus: ["nine-oclock", "eight-oclock"] },
+      lines: [
+        L("l1", null, "A ninety minute task gets a much wider slot.", "Việc chín mươi phút thì xếp vào khung rộng hơn hẳn."),
+        L("l2", null, "Bennett's example: nine to half past eleven. Room for surprises, and for human nature.", "Bennett lấy ví dụ chín giờ đến mười một rưỡi: chừa chỗ cho chuyện bất ngờ, và bản tính con người."),
+        L("l3", null, "For our rhythm, eight to half past ten may fit better.", "Với nhịp sống ở mình, tám giờ đến mười rưỡi có thể hợp hơn."),
+      ] },
+    { id: "s26", module: "LIST-05", ref: "p25",
+      data: { title: "Trước mỗi tối của mình",
+        items: ["Ba tối cố định, khung rộng hơn 90 phút", "Ăn tối, dọn dẹp xong trước khung", "Điện thoại ngoài tầm tay; sách, vở, laptop sẵn từ sáng", "Lỡ hỏng thì dời sang tối trống gần nhất, không học bù gấp đôi"],
+        illus: "clipboard" },
+      lines: [
+        L("l1", null, "Three fixed evenings, with a slot wider than ninety minutes.", "Ba tối cố định, khung rộng hơn chín mươi phút."),
+        L("l2", null, "Dinner and clearing up done before it starts.", "Ăn tối, dọn dẹp xong trước khung."),
+        L("l3", null, "Phone out of reach. Books, notebook, laptop ready from the morning.", "Điện thoại ngoài tầm tay. Sách, vở, laptop sẵn từ sáng."),
+        L("l4", null, "An evening goes wrong? Move it to the nearest free evening. Never double the next one.", "Tối nào hỏng thì dời sang tối trống gần nhất, không học bù gấp đôi."),
+      ] },
+
+    { id: "s27", module: "QUIZ-01", ref: "questions[32]",
+      data: {
+        q: "You feel very eager in the first week, should you study seven evenings?",
+        options: [
+          "Yes, and add early mornings too, since a bigger start always lasts longer",
+          "No, keep three as the plan and treat any extra evening as a bonus",
+          "Yes, use the energy while it lasts, because it will disappear soon anyway",
+        ],
+        correct: 1, countdown: 5, illus: "spiral-calendar",
+        why: "Kế hoạch chính vẫn là ba tối; còn hứng thì làm thêm.",
+      },
+      lines: [
+        L("l1", null, "You feel very eager in the first week, should you study seven evenings?", "Tuần đầu bạn đang rất hăng, có nên học cả bảy tối không?"),
+        L("l2", null, "No, keep three as the plan and treat any extra evening as a bonus.", "Không, giữ kế hoạch ba tối, tối thêm chỉ là phần thưởng."),
+        L("l3", null, "Three evenings is the plan. Extra ones are a bonus, so busy weeks don't break it.", "Kế hoạch chính là ba tối; tối thêm là phần lộc, tuần bận vẫn không vỡ."),
+      ] },
+    { id: "s28", module: "END-05", ref: "outro",
+      data: { text: "Ba tối, ba khung 90 phút", sub: "Ghi vào lịch, rồi làm bốn mươi câu" },
+      lines: [L("l1", "det", "Today, put three ninety minute slots in your calendar, each with a task. Then try the forty questions!", "Hôm nay ghi ba khung chín mươi phút vào lịch, mỗi khung một việc. Rồi thử bốn mươi câu nhé!", { face: "laugh" })] },
+  ],
+};

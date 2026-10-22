@@ -1,0 +1,278 @@
+// Kịch bản video W lần 3 (#110) — "Câu hỏi đuôi và cách trả lời" · chuỗi "Ngữ pháp tiếng Anh cần biết"
+const L = (id, who, say, sub, x = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...x });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "question-tags-and-how-to-answer-them--w01",
+  hook: "HOOK-05",
+  loop: { open: "s01", close: "s26" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (B)
+  unit: { audience: "grammar-relearners", slug: "question-tags-and-how-to-answer-them", door: "kien-thuc", level: "B1",
+    title: "Câu hỏi đuôi và cách trả lời", series: "Ngữ pháp tiếng Anh cần biết" },
+  format: "W", mode: "text", audio: {},
+  notes: "Lần 3 (#110). Đổi tên: người trả lời “Yes” khi chưa nhận hợp đồng (⚖️ p13) → Dũng; đối tác hỏi (p13, trước là Bác Bình) → Sam; đồng nghiệp nước ngoài được nhờ trong cuộc gọi (p19, trước là Dũng) → Sam; người nhờ, người chốt họp → Thảo; khách mới nhận email đặt cọc (p22) → không lên hình. HOOK-05: s01 cho thấy kết cục trước (Dũng vẫn chờ hợp đồng, đối tác không gửi lại — theo p13), chương cuối s26 tua lại cuộc gọi và làm đúng. Tin nhắn hỏi thăm ở s01 là câu dựng thêm cho cảnh (không mang thông tin mới). Phủ ý: 25/25.",
+  scenes: [
+    { id: "s01", module: "SCENE-02", ref: "p13",
+      data: { set: "room", label: "Vẫn chờ hợp đồng",
+        actor: { id: "dung", side: "left" },
+        contact: { name: "Sam (đối tác)", illus: "man-office-worker" },
+        messages: [{ from: "me", text: "Hello, is there any news about the contract?", at: "l2" }] },
+      lines: [
+        L("l1", null, "Dung is still waiting for the contract. But the partner won't send it again.", "Dũng vẫn chờ hợp đồng. Nhưng đối tác sẽ không gửi lại."),
+        L("l2", "dung", "Hello, is there any news about the contract?", "Hello, is there any news about the contract?", { face: "worried" }),
+        L("l3", null, "Why? It all comes down to one word in yesterday's call.", "Vì sao? Chỉ vì một chữ trong cuộc gọi hôm qua."),
+      ] },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Hỏi đuôi, trả lời sao cho khỏi ngược?", pose: "present",
+        items: ["Lập đuôi: đổi chiều trợ động từ", "Chắc thì xuống giọng, không chắc thì lên", "Trả lời theo sự thật"] },
+      lines: [
+        L("l1", "det", "Many of us answer question tags the wrong way round. How do we fix it?", "Người Việt hay trả lời ngược câu hỏi đuôi. Gỡ thế nào?"),
+        L("l2", "det", "Flip the helping verb to make the tag.", "Lập đuôi: đổi chiều trợ động từ."),
+        L("l3", "det", "Choose your tone: sure, or not sure.", "Chọn ngữ điệu: chắc hay không chắc."),
+        L("l4", "det", "And answer with the facts.", "Và trả lời theo sự thật."),
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Năm chặng của video",
+        chapters: [
+          { label: "Lập đuôi", illus: "puzzle-piece" },
+          { label: "Câu đặc biệt", illus: "sparkles" },
+          { label: "Lên giọng hay xuống giọng", illus: "chart-increasing" },
+          { label: "Dùng đuôi cho khéo", illus: "handshake" },
+          { label: "Yes hay no", illus: "check-mark-button" } ] },
+      lines: [L("l1", null, "Five parts. The last one rewinds Dung's call.", "Năm chặng, chặng cuối tua lại cuộc gọi của Dũng.")] },
+
+    // Chương 1
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 5, title: "Lập đuôi" },
+      lines: [L("l1", "det", "Part one: making the tag.", "Phần một: lập câu hỏi đuôi.")] },
+    { id: "s05", module: "TEXT-07", ref: "p1",
+      data: { en: "You're coming to the meeting, aren't you?", vi: "Bạn sẽ đến họp, phải không?",
+        chunks: [{ en: "You're coming", vi: "bạn sẽ đến" }, { en: "to the meeting,", vi: "buổi họp" }, { en: "aren't you?", vi: "phải không?" }],
+        illus: "busts-in-silhouette" },
+      lines: [
+        L("l1", null, "A question tag is a short question at the end, like phải không or nhỉ. You're coming to the meeting, aren't you?", "Câu hỏi đuôi là phần hỏi ngắn ở cuối, giống “phải không?”, “nhỉ?”: You're coming to the meeting, aren't you?"),
+        L("l2", null, "Positive sentence, negative tag. Negative sentence, positive tag.", "Câu khẳng định thì đuôi phủ định; câu phủ định thì đuôi khẳng định."),
+      ] },
+    { id: "s06", module: "LIST-01", ref: "p2",
+      data: { title: "Đuôi dùng trợ động từ của câu chính",
+        items: ["She can join, can't she?", "They haven't paid, have they?", "You work in finance, don't you?", "He called you, didn't he?"],
+        illus: "puzzle-piece" },
+      lines: [
+        L("l1", null, "Use the same helping verb plus a pronoun. She can join, can't she? They haven't paid, have they?", "Đuôi dùng đúng trợ động từ của câu chính cộng đại từ: She can join, can't she? They haven't paid, have they?"),
+        L("l2", null, "No helping verb? Borrow do, does or did. You work in finance, don't you? He called you, didn't he?", "Không có trợ động từ thì mượn do, does, did: You work in finance, don't you? He called you, didn't he?"),
+      ] },
+    { id: "s07", module: "LIST-06", ref: "p3",
+      data: { title: "Ba bước lập đuôi: “The manager called you…”",
+        steps: [
+          { text: "Tìm trợ động từ; không có thì dùng do, does, did → did", illus: "magnifying-glass-tilted-left" },
+          { text: "Đổi chiều: khẳng định thành phủ định → didn't", illus: "counterclockwise-arrows-button" },
+          { text: "Chủ ngữ thành đại từ: the manager → he, she", illus: "bust-in-silhouette" } ] },
+      lines: [
+        L("l1", null, "Three steps. Find the helping verb, or use do, does, did. Flip it. Change the subject to a pronoun.", "Ba bước: tìm trợ động từ, không có thì do, does, did; đổi chiều; chủ ngữ thành đại từ."),
+        L("l2", null, "The manager called you, didn't he? Or didn't she?", "The manager called you, didn't he? hoặc didn't she?"),
+      ] },
+
+    // Chương 2
+    { id: "s08", module: "HOST-03", data: { n: 2, of: 5, title: "Câu đặc biệt" },
+      lines: [L("l1", "det", "Part two: special cases.", "Phần hai: những câu đặc biệt.")] },
+    { id: "s09", module: "LIST-13", ref: "p4",
+      data: { title: "Ba trường hợp hay gặp",
+        items: [
+          { title: "I'm late, aren't I?", detail: "Không dùng “amn't I”", illus: "alarm-clock" },
+          { title: "Let's start, shall we?", detail: "Let's đi với shall we", illus: "rocket" },
+          { title: "Send me the file, could you?", detail: "Mệnh lệnh dùng will you hoặc could you", illus: "page-facing-up" } ] },
+      lines: [
+        L("l1", null, "I'm late, aren't I? Not amn't I.", "I'm late, aren't I? Không dùng amn't I."),
+        L("l2", null, "Let's start, shall we?", "Let's start, shall we?"),
+        L("l3", null, "Commands take will you or could you. Send me the file, could you?", "Câu mệnh lệnh dùng will you hoặc could you: Send me the file, could you?"),
+      ] },
+    { id: "s10", module: "CMP-05", ref: "p5",
+      data: { title: "Đuôi của câu đặc biệt",
+        columns: [{ label: "Câu chính", illus: "memo" }, { label: "Đuôi", illus: "puzzle-piece" }],
+        rows: [
+          { label: "never, nothing, hardly", cells: ["You've never been to Japan,", "have you?"] },
+          { label: "everyone, nobody", cells: ["Everyone has arrived,", "haven't they?"] },
+          { label: "this, that", cells: ["That was a good presentation,", "wasn't it?"] },
+          { label: "there is", cells: ["There's a meeting at three,", "isn't there?"] } ] },
+      lines: [
+        L("l1", null, "Never, nothing, nobody and hardly make the sentence negative, so the tag is positive. You've never been to Japan, have you?", "Never, nothing, nobody, hardly coi là phủ định nên đuôi khẳng định: You've never been to Japan, have you?"),
+        L("l2", null, "Everyone and nobody take they. Everyone has arrived, haven't they?", "Everyone, nobody dùng they ở đuôi: Everyone has arrived, haven't they?"),
+        L("l3", null, "This and that take it. That was a good presentation, wasn't it?", "This, that dùng it: That was a good presentation, wasn't it?"),
+        L("l4", null, "There is keeps there. There's a meeting at three, isn't there?", "There is giữ there: There's a meeting at three, isn't there?"),
+      ] },
+
+    // Chương 3
+    { id: "s11", module: "HOST-03", data: { n: 3, of: 5, title: "Lên giọng hay xuống giọng?" },
+      lines: [L("l1", "det", "Part three: rising or falling tone?", "Phần ba: lên giọng hay xuống giọng?")] },
+    { id: "s12", module: "CMP-01", ref: "p6",
+      data: { labels: ["Xuống giọng ↘", "Lên giọng ↗"], left: "Khá chắc, muốn người kia đồng ý: Busy week, isn't it?",
+        right: "Không chắc, đang hỏi thật: The deadline is Friday, isn't it?", illus: ["down-arrow", "up-arrow"] },
+      lines: [
+        L("l1", null, "Same words, different tone, different meaning. Falling: you're fairly sure and want agreement. Busy week, isn't it?", "Cùng một câu, ngữ điệu đổi nghĩa. Xuống giọng: khá chắc, muốn người kia đồng ý. Busy week, isn't it?"),
+        L("l2", null, "Rising: you're not sure, it's a real question. The deadline is Friday, isn't it?", "Lên giọng: không chắc, đang hỏi thật. The deadline is Friday, isn't it?"),
+      ] },
+    { id: "s13", module: "SCENE-01", ref: "p7,p8",
+      data: { set: "meeting", label: "Chốt cuộc họp",
+        actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right", face: "thinking" }] },
+      lines: [
+        L("l1", null, "Thao isn't sure about the date. But her voice goes down.", "Thảo không nhớ rõ hạn, nhưng giọng lại đi xuống."),
+        L("l2", "thao", "So the deadline is Friday, isn't it?", "So the deadline is Friday, isn't it? ↘", { pose: "explain" }),
+        L("l3", null, "The real deadline is Thursday. Will anyone correct her?", "Hạn thật là thứ Năm. Liệu có ai lên tiếng sửa không?"),
+      ] },
+    { id: "s14", module: "QUIZ-01", ref: "questions[9]",
+      data: {
+        q: "In the deadline question, why might nobody correct you if you use a falling tone?",
+        options: [
+          "A falling tone makes listeners think you are already sure about Friday",
+          "Nobody in a meeting ever knows the real deadline, not even the manager",
+          "Everyone is too tired at the end of a meeting to listen carefully",
+        ],
+        correct: 0, countdown: 5, illus: "spiral-calendar",
+        why: "Giọng đi xuống nghe như lời khẳng định, nên người nghe ngại sửa dù hạn thật là thứ Năm.",
+      },
+      lines: [
+        L("l1", null, "In the deadline question, why might nobody correct you if you use a falling tone?", "Trong câu hỏi về hạn chót, vì sao có thể không ai sửa nếu bạn xuống giọng?"),
+        L("l2", null, "A falling tone makes listeners think you are already sure about Friday.", "Giọng xuống khiến người nghe tưởng bạn đã chắc là thứ Sáu."),
+        L("l3", null, "So they don't interrupt, and the team may follow the wrong date.", "Nên họ ngại cắt ngang, và cả nhóm có thể làm theo lịch sai."),
+      ] },
+    { id: "s15", module: "SCENE-01", ref: "p9",
+      data: { set: "meeting", label: "Hỏi lại cho chắc",
+        actors: [{ id: "thao", side: "left" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", "thao", "Is the deadline Thursday or Friday?", "Is the deadline Thursday or Friday?", { pose: "explain", face: "thinking" }),
+        L("l2", "dung", "Thursday, I think.", "Thứ Năm, em nghĩ vậy.", { face: "happy", react: { thao: "happy" } }),
+        L("l3", null, "Not sure? Use a rising tone, or ask directly. Then someone corrects you.", "Không chắc thì lên giọng, hoặc hỏi thẳng. Người nhớ đúng sẽ sửa ngay."),
+      ] },
+
+    // Chương 4
+    { id: "s16", module: "HOST-03", data: { n: 4, of: 5, title: "Dùng đuôi cho khéo" },
+      lines: [L("l1", "det", "Part four: using tags kindly at work.", "Phần bốn: dùng câu hỏi đuôi cho khéo ở chỗ làm.")] },
+    { id: "s17", module: "LIST-13", ref: "p17",
+      data: { title: "Ba việc câu hỏi đuôi làm tốt",
+        items: [
+          { title: "Xác nhận thông tin", detail: "We agreed on twenty percent, didn't we?", illus: "handshake" },
+          { title: "Nhắc khéo", detail: "You'll send the slides today, won't you?", illus: "bell" },
+          { title: "Bắt chuyện", detail: "Busy week, isn't it?", illus: "speech-balloon" } ] },
+      lines: [
+        L("l1", null, "Tags confirm facts: We agreed on twenty percent, didn't we?", "Xác nhận thông tin: We agreed on twenty percent, didn't we?"),
+        L("l2", null, "They remind gently: You'll send the slides today, won't you?", "Nhắc khéo: You'll send the slides today, won't you?"),
+        L("l3", null, "And they start small talk: Busy week, isn't it?", "Và bắt chuyện: Busy week, isn't it?"),
+      ] },
+    { id: "s18", module: "SCENE-03", ref: "p18,p19,p20",
+      data: { set: "online", actors: [{ id: "thao", side: "left" }, { id: "sam", side: "right" }],
+        left: { label: "Mệnh lệnh trống trơn", ok: false }, right: { label: "Thêm cái đuôi", ok: true } },
+      lines: [
+        L("l1", null, "On a call, Thao needs help from Sam, a colleague abroad.", "Trong cuộc gọi, Thảo cần nhờ Sam, đồng nghiệp nước ngoài."),
+        L("a1", "thao", "Help me check this file.", "Help me check this file.", { phase: "a", pose: "point", react: { sam: "neutral" } }),
+        L("b1", "thao", "You couldn't check this file for me, could you?", "You couldn't check this file for me, could you?", { phase: "b", pose: "explain", face: "happy" }),
+        L("b2", "sam", "Sure, no problem.", "Sure, no problem.", { phase: "b", face: "happy", pose: "thumb" }),
+        L("l2", null, "A bare order can feel like a boss giving work. A negative plus could you makes Sam feel asked.", "Mệnh lệnh trống trơn nghe như sếp giao việc. Câu phủ định cộng could you cho Sam cảm giác được hỏi ý."),
+        L("l3", null, "Asking for help when you speak? Add a tag to make it softer.", "Nhờ việc khi nói, thêm cái đuôi cho mềm."),
+      ] },
+    { id: "s19a", module: "TEXT-04", ref: "p21",
+      data: { text: "Email trang trọng: Could you confirm the payment date?", marks: ["Could you confirm"], illus: "envelope" },
+      lines: [
+        L("l0", null, "On paper, a tag has no tone, so it can feel like pressure. In formal emails, ask directly: Could you confirm the payment date?", "Trên giấy, câu hỏi đuôi không có ngữ điệu, dễ thành gây áp lực. Email trang trọng: Could you confirm the payment date?"),
+      ] },
+    { id: "s19", module: "CMP-03", ref: "p22,p23",
+      data: { title: "Nhắc khách mới về tiền đặt cọc qua email", illus: "envelope",
+        a: { label: "Câu hỏi đuôi", do: "“You will pay the deposit by Friday, won't you?”", result: "Trên giấy nghe như thúc ép", illus: "pouting-face" },
+        b: { label: "Hỏi trực tiếp", do: "“Could you confirm when the deposit will be paid?”", result: "Khách được mời xác nhận, không bị ép", illus: "handshake" } },
+      lines: [
+        L("l2", null, "Option A: You will pay the deposit by Friday, won't you? The reply may turn cold.", "Cách A: You will pay the deposit by Friday, won't you? Thư trả lời có thể lạnh hẳn đi."),
+        L("l3", null, "Option B: Could you confirm when the deposit will be paid? Same reminder, friendly tone.", "Cách B: Could you confirm when the deposit will be paid? Vẫn nhắc hạn mà dễ chịu."),
+      ] },
+    { id: "s20", module: "TEXT-04", ref: "p24",
+      data: { text: "You're coming, right? Dễ dùng, nhưng kém trang trọng.", marks: ["right?"], illus: "speech-balloon" },
+      lines: [
+        L("l1", null, "In casual speech, right can replace a tag. You're coming, right?", "Văn nói thân mật, right? thay được câu hỏi đuôi: You're coming, right?"),
+        L("l2", null, "It's easy, with no verb to change, but it's less formal.", "Dễ dùng vì không phải chia trợ động từ, nhưng kém trang trọng hơn."),
+      ] },
+
+    // Chương 5
+    { id: "s21", module: "HOST-03", data: { n: 5, of: 5, title: "Yes hay no?" },
+      lines: [L("l1", "det", "Part five: yes or no? Back to Dung's call.", "Phần năm: yes hay no? Quay lại cuộc gọi của Dũng.")] },
+    { id: "s22", module: "TEXT-02", ref: "p10",
+      data: { text: "Yes đi với câu khẳng định, No đi với câu phủ định: dựa vào sự thật.", keywords: ["Yes", "No", "sự thật"], illus: "balance-scale" },
+      lines: [
+        L("l1", null, "The golden rule: yes goes with a positive answer, no with a negative one.", "Quy tắc vàng: Yes đi với câu khẳng định, No đi với câu phủ định."),
+        L("l2", null, "Answer by the facts, not by how the question is asked.", "Dựa vào sự thật, không dựa vào cách người kia đặt câu hỏi."),
+      ] },
+    { id: "s23", module: "CMP-01", ref: "p11",
+      data: { labels: ["Chưa nhận", "Đã nhận"], left: "No, I didn't.", right: "Yes, I did. It came this morning.", illus: ["cross-mark", "check-mark-button"] },
+      lines: [
+        L("l1", null, "You didn't receive my email, did you? Not received? No, I didn't.", "You didn't receive my email, did you? Chưa nhận: No, I didn't."),
+        L("l2", null, "Received? Yes, I did. It came this morning.", "Đã nhận: Yes, I did. It came this morning."),
+        L("l3", null, "In Vietnamese we say ừ, chưa nhận, so we blurt out yes. The listener hears: I got it.", "Tiếng Việt hay nói “Ừ, chưa nhận”, nên dễ buột miệng Yes, và người nghe hiểu là đã nhận."),
+      ] },
+    { id: "s24", module: "LIST-06", ref: "p12",
+      data: { title: "Mẹo trả lời câu hỏi đuôi phủ định",
+        steps: [
+          { text: "Bỏ qua phần đuôi", illus: "scissors" },
+          { text: "Tự hỏi câu khẳng định: “Mình đã nhận email chưa?”", illus: "thinking-face" },
+          { text: "Đã nhận: Yes, I did · Chưa nhận: No, I didn't", illus: "check-mark-button" },
+          { text: "Thêm nửa câu sau yes hay no", illus: "speech-balloon" } ] },
+      lines: [
+        L("l1", null, "Trick: ignore the tag. Ask yourself the positive question: did I get the email?", "Mẹo: bỏ qua phần đuôi, tự hỏi câu khẳng định: mình đã nhận email chưa?"),
+        L("l2", null, "Got it? Yes, I did. Didn't? No, I didn't. Then add half a sentence, so nobody misreads.", "Đã nhận: Yes, I did; chưa nhận: No, I didn't. Thêm nửa câu sau để không ai hiểu nhầm."),
+      ] },
+    { id: "s25", module: "CMP-09", ref: "p13",
+      data: { myth: "Đáp “Yes” nghĩa là “ừ, chưa nhận”",
+        fact: "Yes luôn đi với khẳng định: người hỏi hiểu là đã nhận",
+        illusMyth: "face-with-raised-eyebrow", illusFact: "page-facing-up" },
+      lines: [
+        L("l1", null, "Many think yes to you didn't get the contract, did you means: right, I didn't.", "Nhiều người nghĩ đáp Yes nghĩa là “ừ, đúng là chưa nhận”, như tiếng Việt."),
+        L("l2", null, "But yes always goes with the positive. He hears yes, I did, and won't resend it.", "Nhưng Yes luôn đi với khẳng định: người hỏi hiểu “Yes, I did”, sẽ không gửi lại."),
+      ] },
+    { id: "s26", module: "DLG-01", ref: "p13,p14",
+      data: { set: "online", label: "Cuộc gọi hôm qua",
+        actors: [{ id: "dung", side: "left" }, { id: "sam", side: "right" }],
+        verdict: { ok: false, label: "Chưa nhận mà đáp “Yes”", why: "Yes luôn đi với câu khẳng định: người hỏi hiểu là bạn đã có hợp đồng.",
+          rule: "Trả lời theo sự thật, không theo cách hỏi" } },
+      lines: [
+        L("l1", "sam", "You didn't get the contract, did you?", "You didn't get the contract, did you?", { pose: "explain" }),
+        L("l2", "dung", "Yes.", "Yes. (ý là: ừ, chưa nhận)", { face: "happy", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "Yes goes with the positive: yes, I did. Sam thinks you have it.", "Yes đi với khẳng định: yes, I did. Sam tưởng Dũng đã nhận."),
+        L("l5", "det", "Let's rewind and try again.", "Tua lại, thử lần nữa nhé.", { phase: "redo" }),
+        L("l6", "dung", "No, I didn't. Could you send it again?", "No, I didn't. Could you send it again?", { phase: "redo", pose: "explain", react: { sam: "happy" } }),
+        L("l7", "dung", "Said it wrong? Fix it fast: Sorry, I mean I didn't get it.", "Lỡ nói nhầm? Sửa ngay: Sorry, I mean I didn't get it.", { phase: "redo" }),
+      ] },
+    { id: "s27", module: "LIST-13", ref: "p15,p16",
+      data: { title: "Trả lời cho tự nhiên, cho nhẹ",
+        items: [
+          { title: "It's a long trip, isn't it?", detail: "Yes, it is. About five hours.", illus: "airplane" },
+          { title: "You haven't met Linh, have you?", detail: "No, I haven't. Is she in your team?", illus: "handshake" },
+          { title: "Không đồng ý", detail: "Actually, I don't think so. · Well, not really.", illus: "feather" } ] },
+      lines: [
+        L("l1", null, "Add the helping verb, or one more line. It's a long trip, isn't it? Yes, it is. About five hours.", "Thêm trợ động từ hoặc một câu bổ sung: It's a long trip, isn't it? Yes, it is. About five hours."),
+        L("l2", null, "You haven't met Linh, have you? No, I haven't. Is she in your team?", "You haven't met Linh, have you? No, I haven't. Is she in your team?"),
+        L("l3", null, "Disagree gently: Actually, I don't think so. Or: Well, not really. No, you're wrong sounds much harsher.", "Không đồng ý thì nói nhẹ: Actually, I don't think so; Well, not really. “No, you're wrong” nghe gắt hơn nhiều."),
+      ] },
+
+    // Tổng kết
+    { id: "s28", module: "END-03", ref: "p25,outro",
+      data: { title: "Luyện mỗi ngày", illus: "clipboard",
+        items: ["Ba câu hỏi đuôi về công việc, đọc to cả hai kiểu ngữ điệu", "Nhờ bạn hỏi câu phủ định, trả lời theo sự thật", "Luôn thêm nửa câu sau yes hoặc no"] },
+      lines: [
+        L("l1", null, "Each day, say three work tags aloud, with both tones.", "Mỗi ngày đặt ba câu hỏi đuôi về công việc, đọc to cả hai kiểu ngữ điệu."),
+        L("l2", null, "Ask a friend to try negative tags on you, like You haven't finished, have you? Answer by the facts, and add half a sentence.", "Nhờ bạn hỏi câu phủ định như You haven't finished, have you?, trả lời theo sự thật, thêm nửa câu sau."),
+      ] },
+    { id: "s29", module: "QUIZ-01", ref: "questions[14]",
+      data: {
+        q: "If you answer yes to you didn't get the contract, did you, what will the partner understand?",
+        options: [
+          "That you already have the contract, so they will not send it again",
+          "That you are on holiday, so nobody can sign anything that week",
+          "That you want a different contract, so they should start a new draft",
+        ],
+        correct: 0, countdown: 5, illus: "page-facing-up",
+        why: "Yes luôn đi với câu khẳng định: người hỏi hiểu là “Yes, I did”, nên sẽ không gửi lại.",
+      },
+      lines: [
+        L("l1", null, "If you answer yes to you didn't get the contract, did you, what will the partner understand?", "Nếu bạn đáp yes cho câu you didn't get the contract, did you, đối tác sẽ hiểu thế nào?"),
+        L("l2", null, "That you already have the contract, so they will not send it again.", "Rằng bạn đã có hợp đồng, nên họ sẽ không gửi lại."),
+        L("l3", null, "Yes always goes with the positive. That's why Dung is still waiting.", "Yes luôn đi với khẳng định. Vì vậy Dũng vẫn phải chờ."),
+      ] },
+    { id: "s30", module: "END-05", data: { text: "Bốn mươi câu hỏi đang chờ, phải không?", sub: "Nghe câu hỏi tiếng Anh, chọn đáp án đúng" },
+      lines: [L("l1", "det", "You haven't tried the forty questions yet, have you? Go on!", "Bạn chưa thử bốn mươi câu hỏi, phải không? Làm ngay nhé!", { face: "wink" })] },
+  ],
+};

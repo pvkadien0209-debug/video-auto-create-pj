@@ -1,0 +1,272 @@
+// Kịch bản video W lần 3 (#110) — "Trả lời câu hỏi về mức lương mong muốn bằng tiếng Anh" · chuỗi "Trả lời phỏng vấn bằng tiếng Anh"
+// Giọng đọc tiếng Anh, phụ đề tiếng Việt; hoạt hình + thẻ. Đủ ý cho 40 câu bài tập.
+const L = (id, who, say, sub, extra = {}) => ({ id, lang: "en", ...(who ? { who } : {}), say, sub, ...extra });
+
+export default {
+  schema: "detpro.video-script/0.2",
+  id: "how-to-answer-salary-expectation-questions-in-english--w01",
+  hook: "HOOK-01",
+  loop: { open: "s01", close: "s30" }, // #112 KC-Q6, tự điền bằng tools/add-loop.mjs (C)
+  unit: { audience: "english-interview-candidates", slug: "how-to-answer-salary-expectation-questions-in-english", door: "ky-nang", level: "B1",
+    title: "Trả lời câu hỏi về mức lương mong muốn bằng tiếng Anh", series: "Trả lời phỏng vấn bằng tiếng Anh" },
+  format: "W", mode: "text", audio: {},
+  notes: "Đổi tên (lần 3, #110): Nghĩa → Dũng; quản lý người nước ngoài ở 📌 p6 → Sam (trước là Bác Bình); Xuân → Thảo; ứng viên không tên ở ✍️ p11 và 🔀 p15 → Thảo; người phỏng vấn không nói quốc tịch (p11, p15, p17) → Cô Hoa như cả chuỗi. Vai mới: Sam. Câu trả lời “Gross.” của Sam ở s01 rút từ p6 (“Câu trả lời là gross”). Câu mẫu giữ nguyên “X to Y” như bài (bài không cho con số cụ thể). Lời than của người phỏng vấn ở Cách A s20 đúng chữ p15. Phủ ý: 22/22.",
+  scenes: [
+    // ── Mở đầu kể chuyện
+    { id: "s01", module: "SCENE-01", ref: "p6",
+      data: { set: "office", label: "Con số đầu tiên",
+        actors: [{ id: "sam", side: "left", pose: "hold" }, { id: "dung", side: "right" }] },
+      lines: [
+        L("l1", "sam", "The budget for this role is around this figure per month.", "Ngân sách cho vị trí này khoảng mức này mỗi tháng.", { pose: "explain" }),
+        L("l2", null, "The number sounds good. Dũng almost nods right away.", "Con số vừa ý, Dũng suýt gật đầu ngay.", { react: { dung: "happy" } }),
+        L("l3", "dung", "Sorry, is that gross or net?", "Xin lỗi, đó là gross hay net ạ?", { face: "thinking", pose: "think" }),
+        L("l4", "sam", "Gross.", "Gross."),
+      ],
+      beats: { after: 500 } },
+    { id: "s02", module: "HOST-01", ref: "intro",
+      data: { title: "Nói về tiền, điềm tĩnh", pose: "present", items: ["Một khoảng lương hợp lý", "Nói rõ gross hay net", "Sẵn sàng bàn cả gói phúc lợi"] },
+      lines: [
+        L("l1", "det", "What are your salary expectations? Here is the calm, safe answer.", "“What are your salary expectations?” Đây là cách trả lời an toàn."),
+        L("l2", "det", "Give a fair range, based on the market.", "Đưa một khoảng lương hợp lý, dựa trên thị trường."),
+        L("l3", "det", "Say clearly: gross or net.", "Nói rõ gross hay net."),
+        L("l4", "det", "And show you are open to the whole package.", "Và cho thấy bạn sẵn sàng bàn cả gói phúc lợi."),
+      ] },
+    { id: "s03", module: "TOC-01", ref: "intro",
+      data: { title: "Sáu chặng của video", chapters: [
+        { label: "Chuẩn bị con số", illus: "magnifying-glass-tilted-left" },
+        { label: "Gross hay net", illus: "receipt" },
+        { label: "Nói số cho lịch sự", illus: "speech-balloon" },
+        { label: "Hỏi ngân sách, lương hiện tại", illus: "red-question-mark" },
+        { label: "Mức thấp hơn mong đợi", illus: "chart-decreasing" },
+        { label: "Phúc lợi và lúc thương lượng", illus: "wrapped-gift" } ] },
+      lines: [
+        L("l1", null, "Six stops: prepare, gross or net, say it politely…", "Sáu chặng: chuẩn bị, gross hay net, nói số lịch sự…"),
+        L("l2", null, "…tricky questions, a low offer, and the whole package.", "…câu hỏi khó, mức thấp hơn mong đợi, và cả gói phúc lợi."),
+      ] },
+
+    // ── Chương 1: Chuẩn bị con số (p1–p3)
+    { id: "s04", module: "HOST-03", data: { n: 1, of: 6, title: "Chuẩn bị con số" },
+      lines: [L("l1", "det", "Part one: prepare your number before the interview.", "Phần một: chuẩn bị con số trước buổi phỏng vấn.")] },
+    { id: "s05", module: "TEXT-04", ref: "p1",
+      data: { text: "Tìm mặt bằng lương cho vị trí tương tự, cùng thành phố, cùng mức kinh nghiệm.",
+        marks: ["cùng thành phố", "cùng mức kinh nghiệm"], illus: "magnifying-glass-tilted-left" },
+      lines: [
+        L("l1", null, "Don't let the salary question surprise you.", "Đừng để câu hỏi về lương làm bạn bất ngờ."),
+        L("l2", null, "Research similar roles, in the same city, at the same experience level.", "Tìm mặt bằng cho vị trí tương tự, cùng thành phố, cùng kinh nghiệm."),
+        L("l3", null, "The same job title can pay quite differently in another field or place.", "Cùng chức danh, khác ngành khác nơi có thể chênh nhau khá nhiều."),
+      ] },
+    { id: "s06", module: "LIST-02", ref: "p2",
+      data: { title: "Tìm mặt bằng lương ở đâu?", illus: "magnifying-glass-tilted-left", items: [
+        { icon: "newspaper", illus: "newspaper", text: "Tin tuyển dụng có ghi lương" },
+        { icon: "users", illus: "busts-in-silhouette", text: "Anh chị, bạn bè cùng nghề" },
+        { icon: "phone", illus: "telephone-receiver", text: "Người tuyển dụng liên hệ bạn" },
+        { icon: "pencil", illus: "memo", text: "Ghi mức thấp nhất chấp nhận được" } ] },
+      lines: [
+        L("l1", null, "Job ads that show the salary.", "Tin tuyển dụng có ghi lương cho vị trí tương tự."),
+        L("l2", null, "Friends and seniors in the same field.", "Anh chị, bạn bè đang làm cùng nghề."),
+        L("l3", null, "The recruiter, if they contact you first.", "Người tuyển dụng, nếu họ liên hệ bạn trước."),
+        L("l4", null, "Then write down the lowest number you can accept.", "Rồi ghi ra mức thấp nhất mình chấp nhận được."),
+      ] },
+    { id: "s07", module: "RSN-05", ref: "p3",
+      data: { if: "Mức thấp của khoảng lương dưới con số bạn vui lòng nhận", then: "Nhà tuyển dụng nghe và nhớ mức thấp đó trước",
+        else: "Đặt mức thấp gần mức bạn thật sự mong", illus: "chart-decreasing", thenIllus: "ear" },
+      lines: [
+        L("l1", null, "Set a range that is not too wide.", "Đặt một khoảng lương không quá rộng."),
+        L("l2", null, "Employers usually hear the low number first.", "Nhà tuyển dụng thường nghe mức thấp trước."),
+        L("l3", null, "So keep the low end close to what you really want, never below it.", "Nên mức thấp phải gần mức bạn thật sự mong, đừng thấp hơn."),
+      ] },
+
+    // ── Chương 2: Gross hay net (p4–p7)
+    { id: "s08", module: "HOST-03", data: { n: 2, of: 6, title: "Gross hay net?" },
+      lines: [L("l1", "det", "Part two: gross or net? Why you must say it.", "Phần hai: gross hay net, vì sao phải nói rõ?")] },
+    { id: "s09", module: "CMP-01", ref: "p4",
+      data: { labels: ["Gross", "Net"], left: "Trước khi trừ thuế thu nhập và bảo hiểm bắt buộc", right: "Số tiền bạn thực nhận",
+        illus: ["receipt", "money-bag"] },
+      lines: [
+        L("l1", null, "Gross is before income tax and compulsory insurance.", "Gross là trước khi trừ thuế thu nhập và bảo hiểm bắt buộc."),
+        L("l2", null, "Net is what you actually take home.", "Net là số tiền bạn thực nhận."),
+        L("l3", null, "Many people think in net, but many companies count in gross.", "Nhiều người quen nghĩ theo net, nhiều công ty lại tính theo gross."),
+      ] },
+    { id: "s10", module: "LIST-07", ref: "p5",
+      data: { title: "Câu mẫu có gross, net", items: [
+        { text: "I'm looking for around X million dong gross per month.", illus: "receipt" },
+        { text: "My expectation is about X million dong net, that is, after tax and insurance.", illus: "money-bag" },
+        { text: "Is that gross or net?", illus: "red-question-mark" } ] },
+      lines: [
+        L("l1", null, "I'm looking for around X million dong gross per month.", "Tôi mong khoảng X triệu đồng gross mỗi tháng."),
+        L("l2", null, "My expectation is about X million dong net, that is, after tax and insurance.", "Tôi mong khoảng X triệu net, tức là sau thuế và bảo hiểm."),
+        L("l3", null, "If they say a number, ask back: Is that gross or net?", "Họ nói một con số thì hỏi lại: “Đó là gross hay net?”"),
+      ] },
+    { id: "s11", module: "REL-02", ref: "p6,p7",
+      data: { chain: ["Hỏi lại: gross hay net?", "Về nhà tính: thực nhận thấp hơn khá nhiều", "Vòng sau hỏi thêm thưởng, phúc lợi rồi mới nhận"],
+        illus: ["red-question-mark", "abacus", "wrapped-gift"] },
+      lines: [
+        L("l1", null, "Back to Dũng. He asked, and the answer was gross.", "Quay lại Dũng. Cậu hỏi lại, và câu trả lời là gross."),
+        L("l2", null, "At home, his real pay was much lower than he thought.", "Về nhà tính lại, số thực nhận thấp hơn cậu nghĩ khá nhiều."),
+        L("l3", null, "So in the next round, he asked about bonus and benefits first.", "Nên ở vòng sau, cậu chủ động hỏi về thưởng và phúc lợi trước."),
+        L("l4", null, "One word, gross or net, changes a whole year of income.", "Một chữ gross hay net, đổi cả năm thu nhập."),
+      ] },
+
+    // ── Chương 3: Nói con số lịch sự (p8–p12)
+    { id: "s12", module: "HOST-03", data: { n: 3, of: 6, title: "Nói con số cho lịch sự" },
+      lines: [L("l1", "det", "Part three: saying the number politely.", "Phần ba: nói con số bằng tiếng Anh cho lịch sự.")] },
+    { id: "s13", module: "TEXT-07", ref: "p8",
+      data: { en: "I'm looking for something in the range of X to Y million dong gross per month.",
+        vi: "Tôi mong một mức trong khoảng X đến Y triệu đồng gross mỗi tháng.",
+        chunks: [{ en: "Based on my research and experience,", vi: "dựa trên tìm hiểu và kinh nghiệm" }, { en: "I'm looking for something", vi: "tôi mong một mức" }, { en: "in the range of X to Y", vi: "trong khoảng X đến Y" }, { en: "gross per month.", vi: "gross mỗi tháng" }],
+        illus: "money-bag" },
+      lines: [
+        L("l1", null, "Based on my research and experience…", "Dựa trên tìm hiểu và kinh nghiệm của tôi…"),
+        L("l2", null, "…I'm looking for something in the range of X to Y million dong gross per month.", "…tôi mong mức trong khoảng X đến Y triệu đồng gross mỗi tháng."),
+        L("l3", null, "Of course, I'm open to discussing the full package.", "Tất nhiên, tôi sẵn sàng trao đổi về cả gói phúc lợi."),
+      ] },
+    { id: "s14", module: "CMP-07", ref: "p9",
+      data: { wrong: "I want salary 20 million", right: "I'm looking for 20 million dong gross per month",
+        diff: ["I want", "salary"], note: "Dùng “I'm looking for…”, “My expectation is…”; nói rõ tháng hay năm, đúng đơn vị tiền" },
+      lines: [
+        L("l1", null, "Use I'm looking for, or My expectation is. A direct I want salary sounds blunt.", "Dùng “I'm looking for…” hay “My expectation is…”. “I want salary…” nghe cộc."),
+      ] },
+    { id: "s14b", module: "TEXT-04", ref: "p9",
+      data: { text: "Luôn nói rõ theo tháng hay theo năm, dùng đơn vị tiền như trong tin tuyển dụng.", marks: ["theo tháng hay theo năm"], illus: "spiral-calendar" },
+      lines: [
+        L("l1", null, "Always say per month or per year, in the currency the job ad uses.", "Luôn nói theo tháng hay theo năm, dùng đơn vị tiền trong tin tuyển dụng."),
+      ] },
+    { id: "s15", module: "CMP-01", ref: "p10",
+      data: { labels: ["Khoảng vừa phải", "Khoảng quá rộng"], left: "Cho thấy bạn đã tìm hiểu mặt bằng", right: "Từ mức này đến gấp ba: họ chỉ nhớ số thấp nhất",
+        illus: ["check-mark-button", "warning"] },
+      lines: [
+        L("l1", null, "Keep the range modest.", "Khoảng lương nên vừa phải."),
+        L("l2", null, "From one number to three times that number? It shows you haven't researched.", "Từ mức này đến gấp ba mức này? Cho thấy bạn chưa tìm hiểu."),
+        L("l3", null, "And the recruiter will only remember the lowest figure.", "Và người tuyển dụng sẽ chỉ nhớ con số thấp nhất."),
+      ] },
+    { id: "s16", module: "DLG-01", ref: "p11,p12",
+      data: { set: "meeting", label: "Trước – sau",
+        actors: [{ id: "hoa", side: "left", pose: "hold" }, { id: "thao", side: "right" }],
+        verdict: { ok: false, label: "“Mức nào cũng được”",
+          why: "Để công ty tự chọn số; thư mời ghi mức thấp thì khó thương lượng lại." } },
+      lines: [
+        L("l1", "hoa", "What are your salary expectations?", "Em mong muốn mức lương bao nhiêu?"),
+        L("l2", "thao", "Whatever you think is fair is fine with me.", "Mức nào chị thấy hợp lý thì em cũng được ạ.", { face: "happy", pose: "hold", stop: true }),
+        L("l3", "det", "Wait a second!", "Khoan đã!", { face: "stern" }),
+        L("l4", "det", "It sounds modest, but now the company picks the number for you.", "Nghe khiêm tốn, nhưng thế là để công ty chọn số thay bạn."),
+        L("l5", "det", "Let's rewind and say a number.", "Tua lại, nói ra một con số nhé.", { phase: "redo" }),
+        L("l6", "thao", "Based on my research, I'm looking for a range of X to Y gross per month.", "Theo tìm hiểu của em, em mong khoảng X đến Y, gross, mỗi tháng.", { phase: "redo", pose: "explain" }),
+        L("l7", "thao", "And I'm open to discussing the whole package.", "Và em sẵn sàng trao đổi cả gói phúc lợi.", { phase: "redo", face: "happy", react: { hoa: "happy" } }),
+      ] },
+    { id: "s17", module: "TEXT-01", ref: "p12",
+      data: { text: "Bạn không nói con số, người khác sẽ nói thay bạn.", illus: "speech-balloon" },
+      lines: [L("l1", "det", "If you don't say a number, someone else will say it for you.", "Bạn không nói con số, người khác sẽ nói thay bạn.")] },
+
+    // ── Chương 4: Hỏi ngân sách, lương hiện tại (p13–p16)
+    { id: "s18", module: "HOST-03", data: { n: 4, of: 6, title: "Hỏi ngân sách, lương hiện tại" },
+      lines: [L("l1", "det", "Part four: ask about the budget, or talk about your current pay.", "Phần bốn: hỏi ngân sách, hoặc khi bị hỏi lương hiện tại.")] },
+    { id: "s19", module: "LIST-08", ref: "p13,p14",
+      data: { title: "Hai câu mẫu", items: [
+        { title: "Chưa rõ công việc", detail: "Could you share the budgeted range for this position?", illus: "red-question-mark" },
+        { title: "Bị hỏi lương hiện tại", detail: "This role has broader responsibilities, so I'm looking for a salary that reflects that.", illus: "chart-increasing" } ] },
+      lines: [
+        L("l1", null, "Not sure about the role yet? I'd like to learn a bit more about the role before giving a number.", "Chưa rõ công việc? “Tôi muốn hiểu thêm về vị trí trước khi nói số.”"),
+        L("l2", null, "Could you share the budgeted range for this position? Many companies will tell you.", "“Anh chị cho biết khoảng ngân sách của vị trí này?” Nhiều nơi sẽ nói."),
+      ] },
+    { id: "s19b", module: "LIST-08", ref: "p14",
+      data: { title: "Bị hỏi lương hiện tại", items: [{ title: "Nói thật, nối sang vị trí mới", detail: "I'm currently earning around X gross…", illus: "speech-balloon" }, { title: "Không muốn nói", detail: "Chuyển hướng nhẹ về giá trị bạn mang lại", illus: "gem-stone" }] },
+      lines: [
+        L("l1", null, "Asked about your current pay? I'm currently earning around X gross.", "Bị hỏi lương hiện tại? “Hiện tôi nhận khoảng X, gross.”"),
+        L("l2", null, "This role has broader responsibilities, so I'm looking for a salary that reflects that.", "“Vị trí này trách nhiệm rộng hơn, nên tôi mong mức lương tương xứng.”"),
+        L("l3", null, "Prefer not to say? Gently move to the value you bring.", "Không muốn nói thì nhẹ nhàng chuyển về giá trị bạn mang lại."),
+      ] },
+    { id: "s20", module: "SCENE-03", ref: "p15",
+      data: { set: "meeting", actors: [{ id: "hoa", side: "left", pose: "hold" }, { id: "thao", side: "right" }],
+        left: { label: "Cách A: né tiếp", ok: false }, right: { label: "Cách B: đưa khoảng", ok: true } },
+      lines: [
+        L("a0", null, "You already asked about the budget once. Now they ask for a number again.", "Bạn đã hỏi ngân sách một lần, người phỏng vấn hỏi con số lần hai."),
+        L("a1", "thao", "I'd prefer not to say yet.", "Em xin phép chưa nói ạ.", { phase: "a", face: "worried" }),
+        L("a2", "hoa", "We need a number to continue.", "Chúng tôi cần một con số để tiếp tục.", { phase: "a", face: "stern" }),
+        L("b1", "thao", "My range is X to Y gross, but I'm flexible depending on the benefits.", "Em mong X đến Y gross, nhưng có thể linh động tuỳ phúc lợi.", { phase: "b", pose: "explain" }),
+        L("b2", "hoa", "Good, let's talk about the package.", "Tốt, mình bàn về gói phúc lợi nhé.", { phase: "b", face: "happy" }),
+        L("b3", null, "Way A may still pass, but the notes now say hard to work with. Way B keeps room to negotiate.", "Cách A vẫn có thể qua vòng, nhưng bị ghi “khó hợp tác”. Cách B còn chỗ thương lượng."),
+      ] },
+    { id: "s21", module: "TEXT-02", ref: "p16",
+      data: { text: "Hỏi lại một lần là khéo, né ba lần là khó.", keywords: ["một lần", "ba lần"], illus: "repeat-button" },
+      lines: [L("l1", "det", "Asking back once is smart. Dodging three times is difficult.", "Hỏi lại một lần là khéo, né ba lần là khó.")] },
+
+    // ── Chương 5: Mức thấp hơn mong muốn (p17–p19)
+    { id: "s22", module: "HOST-03", data: { n: 5, of: 6, title: "Mức thấp hơn mong muốn" },
+      lines: [L("l1", "det", "Part five: what if they offer less than you hoped?", "Phần năm: họ đưa mức thấp hơn mong muốn thì sao?")] },
+    { id: "s23", module: "SCENE-01", ref: "p17,p18",
+      data: { set: "office", label: "Chuyện của Thảo",
+        actors: [{ id: "hoa", side: "left", pose: "hold" }, { id: "thao", side: "right" }] },
+      lines: [
+        L("l1", null, "Thảo hears a range lower than she wanted. She almost says: Then I'm not interested.", "Thảo nghe mức thấp hơn mong, định nói: “Vậy em không quan tâm.”", { react: { thao: "worried" } }),
+        L("l2", "thao", "Thank you for sharing that. It's a bit lower than I expected.", "Cảm ơn chị đã chia sẻ. Mức này hơi thấp hơn em mong.", { face: "thinking" }),
+        L("l3", "thao", "Is there any flexibility, or other benefits like a bonus or training budget?", "Có linh động được không, hay có thưởng, ngân sách đào tạo?", { pose: "explain" }),
+        L("l4", "hoa", "There's a performance bonus, help with a course, and a pay review after probation.", "Có thưởng theo kết quả, hỗ trợ một khoá học, xét tăng lương sau thử việc.", { face: "happy", react: { thao: "happy" } }),
+        L("l5", null, "Thảo weighs the whole package again, and accepts.", "Thảo cân nhắc lại cả gói rồi nhận lời."),
+      ] },
+    { id: "s24", module: "TEXT-01", ref: "p19",
+      data: { text: "Đừng gật hay lắc khi mới nghe một nửa.", illus: "ear" },
+      lines: [L("l1", "det", "Don't nod or shake your head after hearing only half.", "Đừng gật hay lắc khi mới nghe một nửa.")] },
+
+    // ── Chương 6: Ngoài lương, lúc thương lượng (p20–p22)
+    { id: "s25", module: "HOST-03", data: { n: 6, of: 6, title: "Phúc lợi và lúc thương lượng" },
+      lines: [L("l1", "det", "Part six: beyond the salary, and when to negotiate.", "Phần sáu: ngoài lương, và lúc nào mới thương lượng.")] },
+    { id: "s26", module: "LIST-09", ref: "p20",
+      data: { title: "Tổng thu nhập không chỉ là lương cơ bản", illus: "wrapped-gift", keywords: [
+        { text: "Thưởng kết quả, cuối năm", illus: "trophy" },
+        { text: "Bảo hiểm sức khoẻ thêm", illus: "stethoscope" },
+        { text: "Ngân sách đào tạo", illus: "books" },
+        { text: "Số ngày phép", illus: "beach-with-umbrella" },
+        { text: "Làm việc linh hoạt", illus: "house" },
+        { text: "Lịch xét tăng lương", illus: "spiral-calendar" } ] },
+      lines: [
+        L("l1", null, "Total income is more than base pay.", "Tổng thu nhập không chỉ là lương cơ bản."),
+        L("l2", null, "Performance and year-end bonuses, extra health insurance, a training budget.", "Thưởng theo kết quả, cuối năm; bảo hiểm sức khoẻ thêm; ngân sách đào tạo."),
+        L("l3", null, "Days of leave, flexible work, and when pay is reviewed.", "Số ngày phép, làm việc linh hoạt, lịch xét tăng lương."),
+      ] },
+    { id: "s27", module: "RSN-01", ref: "p21",
+      data: { claim: "Thương lượng chi tiết sau khi có offer, trước khi đồng ý", illus: "handshake",
+        reasons: [{ text: "Vòng đầu: chỉ đưa khoảng lương hợp lý", illus: "speech-balloon" }, { text: "Giữ thái độ cởi mở", illus: "smiling-face" }] },
+      lines: [
+        L("l1", null, "The best time to negotiate details is after you get the offer, and before you say yes.", "Lúc tốt nhất để thương lượng chi tiết: sau khi có offer, trước khi đồng ý."),
+        L("l2", null, "Not in the first round.", "Không phải ở vòng đầu."),
+        L("l3", null, "In round one, just give a fair range and stay open.", "Vòng đầu chỉ cần đưa khoảng hợp lý và giữ thái độ cởi mở."),
+      ] },
+    { id: "s28", module: "END-03", ref: "p22",
+      data: { title: "Danh sách mang theo", illus: "clipboard",
+        items: ["Một khoảng lương đã tìm hiểu", "Ghi rõ gross hay net, theo tháng", "“I'm open to discussing the full package”", "Câu hỏi ngân sách", "Câu hỏi thưởng, phúc lợi khi mức thấp"] },
+      lines: [
+        L("l1", null, "Take with you: a researched range, marked gross or net, per month.", "Mang theo: khoảng lương đã tìm hiểu, ghi rõ gross hay net, theo tháng."),
+        L("l2", null, "The line: I'm open to discussing the full package.", "Câu: “I'm open to discussing the full package.”"),
+        L("l3", null, "A budget question, and a bonus and benefits question for a low offer.", "Câu hỏi ngân sách, và câu hỏi thưởng, phúc lợi khi mức thấp hơn mong đợi."),
+      ] },
+
+    // ── Câu đố và kết
+    { id: "s29", module: "QUIZ-01", ref: "questions[4]",
+      data: {
+        q: "The interviewer offers a number, what short question should you ask?",
+        options: [
+          "Is that gross or net, and is that per month or per year",
+          "Why is your company so cheap compared with all the others",
+          "Can you double that number for me, since I have great skills",
+        ],
+        correct: 0, countdown: 5, illus: "money-bag",
+        why: "Hỏi gross hay net, theo tháng hay năm để tránh hiểu lầm.",
+      },
+      lines: [
+        L("l1", null, "The interviewer offers a number, what short question should you ask?", "Người phỏng vấn đưa ra một con số, bạn nên hỏi lại câu ngắn nào?"),
+        L("l2", null, "Is that gross or net, and is that per month or per year.", "Gross hay net, theo tháng hay theo năm?"),
+        L("l3", null, "A short question avoids a costly misunderstanding.", "Một câu hỏi ngắn giúp tránh hiểu lầm."),
+      ] },
+    { id: "s30", module: "END-02", ref: "p7,p12,p16",
+      data: { kicker: "Rút ra", illus: "money-bag",
+        points: ["Một chữ gross hay net, đổi cả năm thu nhập", "Bạn không nói số, người khác nói thay", "Hỏi lại một lần là khéo, né ba lần là khó"],
+        icons: ["receipt", "speech-balloon", "repeat-button"] },
+      lines: [
+        L("l1", null, "Check gross or net.", "Hỏi rõ gross hay net."),
+        L("l2", null, "Name your own number.", "Tự nói ra con số của mình."),
+        L("l3", null, "Ask back once, but don't dodge three times. Talking about pay isn't greedy.", "Hỏi lại một lần, đừng né ba lần. Nói về lương không phải là tham lam."),
+      ] },
+    { id: "s31", module: "END-05", data: { text: "Bốn mươi câu hỏi đang chờ bạn", sub: "Luyện nói về lương" },
+      lines: [L("l1", "det", "Your turn. Try the forty questions below.", "Đến lượt bạn. Thử bốn mươi câu hỏi bên dưới nhé.")] },
+  ],
+};
