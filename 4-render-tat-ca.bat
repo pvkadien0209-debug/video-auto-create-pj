@@ -16,11 +16,11 @@ if not exist "public\illus\laptop.svg" (
 echo [1/2] Lap danh sach bai da du giong Kokoro ...
 python tools\kokoro\ds-bai-du-giong.py
 if errorlevel 1 (
-  echo Chua co bai nao du giong (hoac loi doc loi_doc.json). Chay truoc:  3-tao-giong-kokoro.bat all
+  echo Chua co bai nao du giong - hoac loi doc danh sach. Chay truoc:  3-tao-giong-kokoro.bat all
   pause
   exit /b 1
 )
-echo [2/2] Render (scale %SC%), bo qua video da co ...
+echo [2/2] Render - scale %SC% - bo qua video da co ...
 call npx tsx render-CSK004.js --only-file=renders\dp\_ds-render.txt --scale=%SC% --skip-done
 echo.
 echo Xong. Video o thu muc renders\dp  ^|  nhat ky: renders\dp\_log
