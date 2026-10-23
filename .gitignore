@@ -28,3 +28,5 @@ out/
 # giữ lại vài tệp nhỏ cần để render trên máy khác (các dòng trên đang chặn *.zip, *.wav)
 !public/illus.zip
 !public/sfx/*.wav
+# #178: khoá đọc Drive cho máy không có SEO-PT-projectjs — không đưa vào git
+drive-key.txt

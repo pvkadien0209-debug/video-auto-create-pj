@@ -118,7 +118,7 @@ const End04 = ({ data, ctx }) => {
           {data.illus === false ? <Icon name="arrow-down" size={110} color={ctx.accent} stroke={3} /> : <Illus name={data.illus || "backhand-index-pointing-down"} size={160} />}
         </div>
       </div>
-      <div style={{ ...fadeUp(frame, 24, 12), position: "absolute", bottom: -60, fontSize: 34, fontWeight: 700, color: COLORS.muted }}>{data.brand || "Mỗi ngày biết thêm"}</div>
+      <div style={{ ...fadeUp(frame, 24, 12), position: "absolute", bottom: -60, fontSize: 34, fontWeight: 700, color: COLORS.muted }}>{data.brand || "DetPro · Mỗi ngày biết thêm một điều hay"}</div>
     </Stage>
   );
 };

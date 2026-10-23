@@ -60,6 +60,9 @@ BƯỚC 3 — ĐƯA VIDEO LÊN WEB detpro.vercel.app (#153)
 -------------------------------------------------
 1. Mở thư mục Google Drive "DetProMedia" (thư mục đã khai trong client\src\components\HocKienThuc\config.js).
 2. Kéo thả tệp  renders\dp\<bài>--w01.mp4  vào đó. GIỮ NGUYÊN TÊN (vd. ielts-task2-guide--w01.mp4).
+   (#165) Có thể chia DetProMedia thành thư mục con:  video\ (mp4)  ·  img\ (jpg ảnh bìa)  ·  audio\ (mp3).
+   Web đọc cả thư mục con (trừ thư mục tên "audio" — web chưa dùng, bỏ qua cho trang mở nhanh).
+   Thư mục con nằm TRONG DetProMedia nên tự theo quyền chia sẻ; không cần đổi mã thư mục trong config.js.
    - Đã có tệp cũ cùng tên: xoá/đổi tên tệp cũ, hoặc dùng "Quản lý phiên bản → Tải lên phiên bản mới".
      Drive tự thêm " (1)" vào tên tệp trùng → web KHÔNG tìm thấy.
 3. Chờ Drive xử lý video (vài phút; mở thử trên Drive phát được là xong).
@@ -73,6 +76,57 @@ Không hiện video? Kiểm lần lượt:
   https://detpro.vercel.app/*  (và http://localhost:3000/* khi chạy thử trên máy).
 - Bài đó đã có trên web (trang bài mở được).
 - Mở F12 → Console/Network: lỗi 403 ở googleapis.com = khoá API chưa cho phép trang detpro.vercel.app.
+
+
+ẢNH BÌA VIDEO (#164)
+-------------------
+Ảnh bìa 16:9 (Đét + tên bài + chuỗi bài + màu cửa học) dùng làm ảnh đại diện trên web (trang Video, khung xem
+tóm tắt) và dùng lại làm ảnh bìa YouTube/TikTok.
+    5-tao-anh-bia.bat                          (ảnh cho mọi bài có kịch bản, bỏ qua ảnh đã có — vài phút)
+    5-tao-anh-bia.bat ielts-task2-guide--w01   (chỉ một bài)
+    5-tao-anh-bia.bat lai                      (vẽ lại tất cả, sau khi đổi mẫu ảnh bìa)
+- Ảnh ra:  renders\dp\img\<bài>--w01.jpg  (1280x720) — thư mục riêng, tải lên Drive DetProMedia\img.
+- #166: hai lệnh tách riêng — 4-render-tat-ca.bat CHỈ làm video (mp4), 5-tao-anh-bia.bat CHỈ làm ảnh.
+- Tải .jpg lên thư mục Drive DetProMedia (hoặc thư mục con img\ — #165), GIỮ NGUYÊN TÊN. Web tự lấy ảnh theo tên;
+  chưa có .jpg thì web dùng khung đầu của video như trước.
+- Sửa mẫu ảnh bìa: src\rootComponents\CSK004\script\Poster.jsx (xem thử trong Remotion Studio, thư mục DP-POSTER).
+
+
+GÓI ĐĂNG BÀI FACEBOOK / ZALO (#172)
+----------------------------------
+Soạn sẵn chữ + ảnh để đăng tay lên Facebook / Zalo, ghép từ bài đã có (tên bài, đoạn mở, 40 câu hỏi, video, ảnh bìa).
+    6-goi-dang-bai.bat                         (mọi bài đã có video hoặc ảnh bìa, bỏ qua gói đã có)
+    6-goi-dang-bai.bat delegate-clearly-and-follow-up   (chỉ một bài)
+    6-goi-dang-bai.bat lai                     (làm lại tất cả)
+- Chạy ở máy 01 (cần thư mục SEO-PT-projectjs để đọc dữ liệu bài).
+- Mỗi bài: 1 bài video Facebook · 3 "Câu hỏi hôm nay" (ảnh 1080x1350 + chữ, kèm chữ đáp án cho bình luận đầu tiên)
+  cho Facebook và Zalo · 1 tin nhắn Zalo ngắn. Đường dẫn có gắn nguồn (utm) để biết người đến từ đâu.
+- Mở renders\social\index.html → chọn bài. KHÔNG cần tải ảnh/video về — tệp đã nằm sẵn trên máy (#173):
+  1. "Sao chép chữ" → mở Facebook/Zalo → bấm vào ô viết bài → Ctrl+V.
+  2. Ảnh: "Chép ảnh" → bấm vào ô viết bài → Ctrl+V (ảnh tự vào bài).
+  3. Video (hoặc khi Chép ảnh không được): "Chép đường dẫn" → trên Facebook/Zalo bấm Ảnh/video → hộp chọn tệp
+     hiện ra → dán vào ô "File name" → Open. Hoặc kéo tệp từ thư mục Windows (renders\social\<bài>, video ở
+     renders\dp) thả vào ô đăng — chạy 6-goi-dang-bai.bat <bài> sẽ tự mở thư mục của bài.
+  4. Đăng xong → tích "Đã đăng" (lưu trong trình duyệt của máy này).
+- Bài pháp lý / tài chính / sức khoẻ tự có dòng lưu ý chung cuối bài đăng.
+- Chỉ soạn chữ, không dựng ảnh (nhanh):  npx tsx goi-dang-bai.js --khong-anh --only=<bài>
+
+
+KIỂM VIDEO NÀO ĐÃ LÊN DRIVE (#178)
+--------------------------------
+    8-kiem-drive.bat          (so với Drive, chép tệp chưa có ra thư mục mới để tải lên)
+    8-kiem-drive.bat xem      (chỉ xem báo cáo, không chép)
+- So renders\dp\*.mp4 và renders\dp\img\*.jpg với Drive DetProMedia (cả thư mục con video\, img\; bỏ audio\).
+- Tệp CHƯA có trên Drive → chép sang  renders\dp-toPush[ngày - giờ]\video\  và  …\img\  (thư mục tự mở):
+  kéo video\ vào DetProMedia\video, img\ vào DetProMedia\img. Giữ nguyên tên.
+- Tệp ĐÃ có nhưng bản trên máy mới hơn (render lại) → …\thay-the\ : trên Drive bấm chuột phải tệp cùng tên →
+  Quản lý phiên bản → Tải lên phiên bản mới (tải thành tệp mới thì Drive thêm " (1)" vào tên → web không tìm thấy).
+- Danh sách đầy đủ: DANH-SACH.txt trong thư mục vừa tạo. Tải xong thì xoá thư mục dp-toPush[…] cho đỡ chật ổ.
+- Khoá đọc Drive nằm trong Remotion: tools\drive\drive-key.txt (một dòng; .gitignore đã chặn "drive-key.txt").
+  Máy 01: chạy 9-lay-khoa-drive.bat — tự chép apiKey từ SEO-PT-projectjs (config.js) vào drive-key.txt (#179).
+  Máy 02: chép tệp drive-key.txt từ máy 01 sang cùng chỗ (tools\drive\), hoặc chạy 9-lay-khoa-drive.bat và dán khoá khi được hỏi.
+  Đổi khoá trong config.js thì xoá drive-key.txt rồi chạy lại 9-lay-khoa-drive.bat.
+  Tệp này không đưa vào git.
 
 
 TĂNG TỐC RENDER (#150)

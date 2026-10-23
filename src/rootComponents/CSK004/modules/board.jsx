@@ -508,7 +508,7 @@ const VignetteFrame = ({ it, p, ctx, hand, old, wrap }) => {
         <div style={{ position: "absolute", left: 0, top: 0, width: w, height: bar, borderRadius: "12px 12px 0 0", background: "#eef1f5", borderBottom: "1px solid #d6dbe3" }}>
           {["#ff5f57", "#febc2e", "#28c840"].map((c, i) => <div key={i} style={{ position: "absolute", left: bar * 0.4 + i * bar * 0.42, top: bar / 2 - bar * 0.13, width: bar * 0.26, height: bar * 0.26, borderRadius: "50%", background: c }} />)}
           <div style={{ position: "absolute", left: w * 0.22, top: bar * 0.2, width: w * 0.56, height: bar * 0.6, borderRadius: bar, background: "#fff", border: "1px solid #d6dbe3", boxSizing: "border-box",
-            fontFamily: FONT, fontSize: bar * 0.34, lineHeight: `${bar * 0.6 - 2}px`, color: COLORS.muted, paddingLeft: bar * 0.4, whiteSpace: "nowrap", overflow: "hidden" }}>{it.url || "detpro.vn/xem"}</div>
+            fontFamily: FONT, fontSize: bar * 0.34, lineHeight: `${bar * 0.6 - 2}px`, color: COLORS.muted, paddingLeft: bar * 0.4, whiteSpace: "nowrap", overflow: "hidden" }}>{it.url || "detpro.vercel.app"}</div>
           {lq > 0 && lq < 1 && <div style={{ position: "absolute", left: 0, top: bar - 4, width: w * lq, height: 4, background: accentOf({ ...ctx, pal: LIGHT }) }} />}
         </div>
       </>;

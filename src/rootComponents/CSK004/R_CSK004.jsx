@@ -11,6 +11,8 @@ import { REGISTRY } from "./modules/index.js";
 import { SAMPLES } from "./data/samples.js";
 import { FORMATS } from "./core/theme.js";
 import { SCRIPTS } from "./data/scripts/index.js";
+import { SocialQuiz, SOCIAL_QUIZ, SAMPLE_QUIZ } from "./script/SocialQuiz.jsx"; // #172: ảnh "Câu hỏi hôm nay" (6-goi-dang-bai.bat)
+import { Poster } from "./script/Poster.jsx"; // #164: ảnh bìa P-<mã video> (5-tao-anh-bia.bat)
 import { LabRoot } from "./lab/LabRoot.jsx"; // #099: thư mục LAB — cảnh thử hoạt hình cắt giấy (không phải video thật)
 
 const { width, height, fps } = FORMATS.W;
@@ -52,6 +54,17 @@ const compW = (id, script) => (
 export const RemotionVideo = () => (
   <>
     <Folder name="DP-W">{SCRIPTS.map((s) => compW(s.id.replace(/[^a-zA-Z0-9-]/g, "-"), s))}</Folder>
+    {/* #164: ảnh bìa 16:9 — một khung cho mỗi video (render bằng renderStill) */}
+    <Folder name="DP-POSTER">
+      {SCRIPTS.map((s) => (
+        <Composition key={`P-${s.id}`} id={`P-${s.id.replace(/[^a-zA-Z0-9-]/g, "-")}`} component={Poster} fps={fps} width={width} height={height}
+          durationInFrames={1} defaultProps={{ script: s }} />
+      ))}
+    </Folder>
+    {/* #172: ảnh mạng xã hội — dựng bằng renderStill với inputProps (goi-dang-bai.js) */}
+    <Folder name="DP-SOCIAL">
+      <Composition id="S-QUIZ" component={SocialQuiz} fps={fps} width={SOCIAL_QUIZ.width} height={SOCIAL_QUIZ.height} durationInFrames={1} defaultProps={SAMPLE_QUIZ} />
+    </Folder>
     <Folder name="Gallery">
       {Object.keys(REGISTRY).flatMap((code, i) => [
         comp(`G-${code}`, one(code, SAMPLES[code].thuong, i), true),

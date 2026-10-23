@@ -872,6 +872,8 @@ const End05 = ({ data, ctx }) => {
       </div>
       <div style={{ position: "absolute", left: DX - 200, width: 400, top: DY + 40, textAlign: "center", fontSize: 56, fontWeight: 800, opacity: ramp(t, P.close + 100, P.close + 400) }}>
         Det<span style={{ color: RING }}>Pro</span>
+        {/* #167: khẩu hiệu thương hiệu dưới chữ DetPro */}
+        <div style={{ marginTop: 6, fontSize: 30, fontWeight: 600, color: "#aab4c8", whiteSpace: "nowrap" }}>Mỗi ngày biết thêm một điều hay</div>
       </div>
     </AbsoluteFill>
   );

@@ -137,7 +137,7 @@ const main = async () => {
 
   // [B] danh sách video
   const allComps = await getCompositions(serveUrl);
-  const isW = (c) => !c.id.startsWith("G-") && !c.id.startsWith("LAB-") && c.id !== "GalleryReel";
+  const isW = (c) => !c.id.startsWith("G-") && !c.id.startsWith("LAB-") && !c.id.startsWith("P-") && !c.id.startsWith("S-") && c.id !== "GalleryReel"; // #164: P- = ảnh bìa · #172: S- = ảnh mạng xã hội
   let comps = allComps.filter((c) => (ONLY ? ONLY.includes(c.id) : isW(c) || (GALLERY && c.id === "GalleryReel")));
   if (ONLY) {
     const miss = ONLY.filter((id) => !comps.some((c) => c.id === id));

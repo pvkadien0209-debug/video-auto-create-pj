@@ -1,6 +1,7 @@
 @echo off
 chcp 65001 >nul
 REM #154 Render HANG LOAT moi video DA CO DU GIONG KOKORO (bai nao chua co giong thi bo qua).
+REM #166 CHI TAO VIDEO (mp4 trong renders\dp). Anh bia rieng: 5-tao-anh-bia.bat
 REM   4-render-tat-ca.bat            -> ban 1280x720 (dat len web)
 REM   4-render-tat-ca.bat 0.5        -> ban nhe 960x540 (xem nhanh)
 REM Video da render roi (co mp4 trong renders\dp) se BO QUA -> dung giua chung (Ctrl+C) roi chay lai la lam tiep.
