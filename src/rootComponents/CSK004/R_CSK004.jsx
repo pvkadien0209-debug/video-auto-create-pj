@@ -6,6 +6,7 @@
 import React from "react";
 import { Composition, Folder } from "remotion";
 import { ScriptVideo, scriptFrames, loadAudioMs } from "./script/ScriptVideo.jsx";
+import { trimBundle } from "./core/voice.js";
 import { REGISTRY } from "./modules/index.js";
 import { SAMPLES } from "./data/samples.js";
 import { FORMATS } from "./core/theme.js";
@@ -43,7 +44,7 @@ const compW = (id, script) => (
   <Composition key={id} id={id} component={ScriptVideo} fps={fps} width={width} height={height}
     durationInFrames={scriptFrames(script, fps)} defaultProps={{ script, showCode: false }}
     calculateMetadata={async ({ props }) => {
-      const audioMs = await loadAudioMs();
+      const audioMs = trimBundle(props.script, await loadAudioMs()); // #159: chỉ câu của bài này
       return { durationInFrames: scriptFrames(props.script, fps, audioMs), props: { ...props, audioMs } };
     }} />
 );

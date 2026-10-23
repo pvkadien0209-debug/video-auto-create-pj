@@ -22,3 +22,11 @@ export const pickVoice = (script, bundle = {}) => {
     : all && k === all ? "kokoro" : all && g === all ? "google" : k >= g ? "kokoro" : "google";
   return { src, audioMs: b[src] || {}, dir: VOICE_DIRS[src] };
 };
+
+// #159: chỉ giữ độ dài các câu CỦA BÀI NÀY. calculateMetadata trả audioMs vào props của từng video;
+//   để cả bảng (~800 KB) thì ~490 video × 800 KB ≈ 400 MB props → getCompositions đứng rất lâu sau bước đóng gói.
+export const trimBundle = (script, bundle = {}) => {
+  const codes = codesOf(script);
+  const pick = (m) => Object.fromEntries(codes.filter((c) => (m || {})[c] != null).map((c) => [c, m[c]]));
+  return { kokoro: pick(bundle.kokoro), google: pick(bundle.google) };
+};
