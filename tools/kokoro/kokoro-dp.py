@@ -7,6 +7,7 @@
 #   python tools\kokoro\kokoro-dp.py --slug bai-1 --slug bai-2          nhiều bài
 #   python tools\kokoro\kokoro-dp.py --all-scripts                      mọi bài đã có kịch bản video
 #   thêm --force để đọc lại cả câu đã có; --dry để xem sẽ đọc bao nhiêu câu
+#   (#195) --all-scripts bỏ qua các bài trong kokoro\_da-don.txt (giọng đã dọn vì video đã lên Drive)
 # Lần đầu: tự tải mô hình (~330 MB) vào tools\kokoro\model\.
 import argparse, glob, hashlib, json, os, re, subprocess, sys, time, urllib.request
 
@@ -50,7 +51,11 @@ for f in glob.glob(os.path.join(a.scripts, "*--w01.js")):
     slug = os.path.basename(f)[: -len("--w01.js")]
     sc = load_script(f)
     if sc: scripts[slug] = who_map(sc, slug)
-slugs = set(a.slug) | (set(scripts) if a.all_scripts else set())
+# #195: bài đã dọn giọng vì video đã lên Drive (kokoro\_da-don.txt) — --all-scripts bỏ qua; --slug <bài> vẫn tạo lại được
+don_path = os.path.join(a.out, "_da-don.txt")
+da_don = {l.split("\t")[0].strip() for l in open(don_path, encoding="utf-8")} - {""} if os.path.exists(don_path) else set()
+slugs = set(a.slug) | ((set(scripts) - da_don) if a.all_scripts else set())
+if a.all_scripts and da_don & set(scripts): print(f"Bỏ qua {len(da_don & set(scripts))} bài đã dọn giọng (video đã lên Drive, xem _da-don.txt)")
 if not slugs: sys.exit("Chưa chọn bài: dùng --slug <bài> hoặc --all-scripts")
 
 # ---------- lời cần đọc ----------

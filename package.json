@@ -19,6 +19,7 @@
     "zod": "3.22.3"
   },
   "devDependencies": {
+    "@iconify-json/noto": "^1.2.9",
     "@remotion/eslint-config-flat": "4.0.286",
     "eslint": "9.19.0",
     "prettier": "3.3.3",

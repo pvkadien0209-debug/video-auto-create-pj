@@ -1,0 +1,4 @@
+Humaaans — Pablo Stanley (humaaans.com). Hinh minh hoa: Creative Commons Zero (CC0) — dung thuong mai, khong can ghi cong.
+https://www.humaaans.com/
+Hinh lay tu goi npm "humaaans" 1.7.0 (thanh phan React cua jktzes, MIT License, Copyright (c) 2019 jktzes),
+chuyen thanh SVG rieng tung phan (#203). Kiem lai giay phep tren humaaans.com truoc khi dung cho khach.

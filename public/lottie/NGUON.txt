@@ -1,0 +1,4 @@
+Hinh chuyen dong Lottie (.json) cho video — #198 IMG-Q4: dung IT, cho hieu ung nho (dau tich, phao giay, mui ten).
+Moi tep them 1 dong vao day:  <ten-tep>.json | <duong dan trang goc> | <giay phep> | <ngay tai>
+Chi lay tep "Free" tren LottieFiles (Lottie Simple License) hoac CC0. Khong lay tep phai ghi cong khi lam cho khach.
+Dung trong Remotion: npm i @remotion/lottie (cung phien ban remotion) -> <Lottie animationData={...} />.

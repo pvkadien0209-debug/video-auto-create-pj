@@ -40,6 +40,9 @@ else:
         if out: need[slug] = out
 
 kdir = os.path.join(VID, "public", "audio", "kokoro")
+# #195: bài đã dọn giọng vì video đã lên Drive — không tính vào "chưa có giọng"
+don_path = os.path.join(kdir, "_da-don.txt")
+da_don = {l.split("\t")[0].strip() for l in open(don_path, encoding="utf-8")} - {""} if os.path.exists(don_path) else set()
 ready, thieu, chua = [], [], []
 for slug in sorted(scripts):
     names = need.get(slug)
@@ -47,6 +50,7 @@ for slug in sorted(scripts):
     have = sum(os.path.exists(os.path.join(kdir, slug, n + ".mp3")) for n in names)
     if have == len(names): ready.append(slug)
     elif have: thieu.append(f"{slug} ({have}/{len(names)})")
+    elif slug in da_don: pass
     else: chua.append(slug)
 
 # ---------- #158: sửa durations.dat cho các bài đủ giọng ----------
@@ -93,4 +97,5 @@ open(a.out, "w", encoding="utf-8").write("\n".join(s + "--w01" for s in ready) +
 print(f"Đủ giọng Kokoro: {len(ready)} bài → {a.out}")
 if thieu: print(f"Giọng dở dang ({len(thieu)}): " + ", ".join(thieu[:10]) + (" …" if len(thieu) > 10 else ""))
 print(f"Chưa có giọng: {len(chua)} bài (chạy 3-tao-giong-kokoro.bat all để tạo)")
+if da_don & scripts: print(f"Đã dọn giọng (video đã lên Drive): {len(da_don & scripts)} bài")
 sys.exit(0 if ready else 2)

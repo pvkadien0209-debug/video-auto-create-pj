@@ -56,6 +56,20 @@ RENDER TẤT CẢ (#154)
 - Mỗi video ~7 phút, render vài chục phút/bài → để máy chạy qua đêm.
 
 
+RENDER CÁC VIDEO CHƯA CÓ TRÊN DRIVE (#180) — dùng ở máy chính render (máy 02)
+-----------------------------------------------------------------------
+    4b-render-chua-len-drive.bat           (bản 1280x720)
+    4b-render-chua-len-drive.bat 0.5       (bản nhẹ)
+- Giống 4-render-tat-ca.bat nhưng bỏ qua cả video ĐÃ CÓ TRÊN DRIVE (DetProMedia, kể cả thư mục con video\):
+  [1/3] lập danh sách bài đủ giọng → [2/3] bỏ bài đã có <bài>--w01.mp4 trên Drive → [3/3] render (vẫn bỏ qua
+  video đã có trong renders\dp). Danh sách: renders\dp\_ds-render-drive.txt.
+- 4-render-tat-ca.bat chỉ nhìn renders\dp trên máy; 4b nhìn Drive → máy mới / máy đã xoá video cũ không render lại
+  những bài đã đưa lên web.
+- Cần khoá đọc Drive: tools\drive\drive-key.txt (9-lay-khoa-drive.bat).
+- Render xong → 8-kiem-drive-toPush-folder.bat để gom video chưa lên Drive vào renders\dp-toPush[ngày - giờ] rồi tải lên
+  (liên kết cứng: không tốn thêm dung lượng; xoá thư mục dp-toPush không mất video gốc).
+
+
 BƯỚC 3 — ĐƯA VIDEO LÊN WEB detpro.vercel.app (#153)
 -------------------------------------------------
 1. Mở thư mục Google Drive "DetProMedia" (thư mục đã khai trong client\src\components\HocKienThuc\config.js).
@@ -114,8 +128,9 @@ Soạn sẵn chữ + ảnh để đăng tay lên Facebook / Zalo, ghép từ bà
 
 KIỂM VIDEO NÀO ĐÃ LÊN DRIVE (#178)
 --------------------------------
-    8-kiem-drive.bat          (so với Drive, chép tệp chưa có ra thư mục mới để tải lên)
-    8-kiem-drive.bat xem      (chỉ xem báo cáo, không chép)
+    8-kiem-drive-toPush-folder.bat      (so với Drive, đưa tệp chưa có vào thư mục dp-toPush mới để tải lên — liên kết cứng, 0 byte thêm)
+    8-kiem-drive-toPush-folder.bat xem  (chỉ xem báo cáo, không tạo thư mục)
+    Ổ đầy → báo "Ổ ĐĨA ĐẦY" và dừng; dưới 5 GB trống → cảnh báo (ổ gần đầy Windows có thể tự xoá Temp làm hỏng render).
 - So renders\dp\*.mp4 và renders\dp\img\*.jpg với Drive DetProMedia (cả thư mục con video\, img\; bỏ audio\).
 - Tệp CHƯA có trên Drive → chép sang  renders\dp-toPush[ngày - giờ]\video\  và  …\img\  (thư mục tự mở):
   kéo video\ vào DetProMedia\video, img\ vào DetProMedia\img. Giữ nguyên tên.
@@ -127,6 +142,17 @@ KIỂM VIDEO NÀO ĐÃ LÊN DRIVE (#178)
   Máy 02: chép tệp drive-key.txt từ máy 01 sang cùng chỗ (tools\drive\), hoặc chạy 9-lay-khoa-drive.bat và dán khoá khi được hỏi.
   Đổi khoá trong config.js thì xoá drive-key.txt rồi chạy lại 9-lay-khoa-drive.bat.
   Tệp này không đưa vào git.
+
+
+DỌN GIỌNG KOKORO ĐÃ DÙNG XONG (#195)
+-----------------------------------
+    7-don-giong-kokoro-video-da-len-drive.bat        (báo cáo, hỏi Y/N rồi mới xoá)
+    7-don-giong-kokoro-video-da-len-drive.bat xem    (chỉ báo cáo)
+- Bài đã có video <bài>--w01.mp4 trên Drive → giọng public\audio\kokoro\<bài>\ không cần nữa → xoá.
+- GIỮ giọng: bài đã render nhưng chưa lên Drive (tải bằng 8-kiem-drive-toPush-folder.bat) và bài chưa render (4b-render-chua-len-drive.bat).
+- Bài đã xoá ghi vào public\audio\kokoro\_da-don.txt; "3-tao-giong-kokoro.bat all" bỏ qua các bài này.
+- Cần render lại một bài đã dọn: 3-tao-giong-kokoro.bat <bài> (tạo lại giọng) rồi render.
+- Không chạy lúc đang tạo giọng Kokoro hoặc đang render.
 
 
 TĂNG TỐC RENDER (#150)

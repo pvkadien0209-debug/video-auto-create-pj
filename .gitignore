@@ -30,3 +30,6 @@ out/
 !public/sfx/*.wav
 # #178: khoá đọc Drive cho máy không có SEO-PT-projectjs — không đưa vào git
 drive-key.txt
+# #203: bo hinh tach tu npm (chay lai 0b-lay-bo-hinh-moi.bat la co) — khong dua vao git; public/humaaans/ GIU trong git
+public/illus-noto/
+public/illus-index.json
